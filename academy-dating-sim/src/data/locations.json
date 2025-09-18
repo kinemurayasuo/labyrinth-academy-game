@@ -1,0 +1,150 @@
+{
+  "locations": {
+    "classroom": {
+      "id": "classroom",
+      "name": "교실",
+      "description": "밝고 정돈된 교실. 수업이 진행되는 곳이다.",
+      "activities": [
+        {
+          "name": "수업 듣기",
+          "effect": { "intelligence": 2, "stamina": -1 },
+          "time": "morning"
+        },
+        {
+          "name": "자습하기",
+          "effect": { "intelligence": 1 },
+          "time": "any"
+        }
+      ],
+      "characters": ["luna"],
+      "sprite": "🏫"
+    },
+    "library": {
+      "id": "library",
+      "name": "도서관",
+      "description": "조용하고 아늑한 도서관. 책 냄새가 가득하다.",
+      "activities": [
+        {
+          "name": "책 읽기",
+          "effect": { "intelligence": 3, "charm": 1 },
+          "time": "any"
+        },
+        {
+          "name": "조용히 휴식",
+          "effect": { "stamina": 2 },
+          "time": "any"
+        }
+      ],
+      "characters": ["yuki"],
+      "sprite": "📚"
+    },
+    "training": {
+      "id": "training",
+      "name": "훈련장",
+      "description": "넓은 훈련장. 검술과 체육 활동이 이루어진다.",
+      "activities": [
+        {
+          "name": "운동하기",
+          "effect": { "stamina": 3, "intelligence": -1 },
+          "time": "any"
+        },
+        {
+          "name": "검술 연습",
+          "effect": { "stamina": 2, "charm": 1 },
+          "time": "afternoon"
+        }
+      ],
+      "characters": ["sakura"],
+      "sprite": "⚔️"
+    },
+    "cafeteria": {
+      "id": "cafeteria",
+      "name": "카페테리아",
+      "description": "학생들이 모여 식사하는 곳. 활기가 넘친다.",
+      "activities": [
+        {
+          "name": "식사하기",
+          "effect": { "stamina": 3 },
+          "time": "noon"
+        },
+        {
+          "name": "친구들과 대화",
+          "effect": { "charm": 2 },
+          "time": "any"
+        }
+      ],
+      "characters": ["luna", "yuki", "sakura"],
+      "sprite": "🍽️"
+    },
+    "garden": {
+      "id": "garden",
+      "name": "정원",
+      "description": "아름다운 꽃들이 피어있는 정원. 평화롭다.",
+      "activities": [
+        {
+          "name": "산책하기",
+          "effect": { "stamina": 1, "charm": 1 },
+          "time": "any"
+        },
+        {
+          "name": "꽃 구경",
+          "effect": { "charm": 2 },
+          "time": "afternoon"
+        }
+      ],
+      "characters": [],
+      "sprite": "🌸"
+    },
+    "dormitory": {
+      "id": "dormitory",
+      "name": "기숙사",
+      "description": "학생들이 생활하는 기숙사.",
+      "activities": [
+        {
+          "name": "휴식",
+          "effect": { "stamina": 5 },
+          "time": "evening"
+        },
+        {
+          "name": "일기 쓰기",
+          "effect": { "charm": 1, "intelligence": 1 },
+          "time": "night"
+        }
+      ],
+      "characters": [],
+      "sprite": "🏠"
+    },
+    "shop": {
+      "id": "shop",
+      "name": "매점",
+      "description": "각종 물건을 살 수 있는 학교 매점.",
+      "activities": [
+        {
+          "name": "쇼핑하기",
+          "effect": {},
+          "time": "any",
+          "special": "shop"
+        }
+      ],
+      "characters": [],
+      "sprite": "🏪"
+    },
+    "secretGarden": {
+      "id": "secretGarden",
+      "name": "비밀 정원",
+      "description": "숨겨진 아름다운 정원. 특별한 조건을 만족해야 갈 수 있다.",
+      "activities": [
+        {
+          "name": "비밀 데이트",
+          "effect": { "charm": 5 },
+          "time": "any"
+        }
+      ],
+      "characters": ["mystery"],
+      "sprite": "🌙",
+      "unlockCondition": {
+        "item": "mysteryKey"
+      }
+    }
+  }
+}

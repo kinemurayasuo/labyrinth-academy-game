@@ -1,0 +1,192 @@
+{
+  "events": [
+    {
+      "id": "sakura_training",
+      "name": "검술 훈련",
+      "trigger": {
+        "location": "training",
+        "character": "sakura",
+        "minAffection": 20,
+        "chance": 0.5
+      },
+      "description": "사쿠라가 검술 훈련을 제안한다.",
+      "choices": [
+        {
+          "text": "좋아, 함께 훈련하자!",
+          "effects": {
+            "affection": { "sakura": 10 },
+            "stats": { "stamina": 2 },
+            "text": "사쿠라와 즐거운 훈련 시간을 보냈다."
+          }
+        },
+        {
+          "text": "오늘은 좀 피곤해서...",
+          "effects": {
+            "affection": { "sakura": -5 },
+            "text": "사쿠라가 실망한 표정을 지었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yuki_library",
+      "name": "도서관 데이트",
+      "trigger": {
+        "location": "library",
+        "character": "yuki",
+        "minAffection": 30,
+        "chance": 0.4
+      },
+      "description": "유키가 함께 책을 읽자고 제안한다.",
+      "choices": [
+        {
+          "text": "좋은 생각이야!",
+          "effects": {
+            "affection": { "yuki": 15 },
+            "stats": { "intelligence": 3 },
+            "text": "유키와 조용한 시간을 보내며 친해졌다."
+          }
+        },
+        {
+          "text": "미안, 다른 약속이 있어.",
+          "effects": {
+            "affection": { "yuki": -3 },
+            "text": "유키가 아쉬워하는 표정을 지었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "luna_magic",
+      "name": "마법 수업",
+      "trigger": {
+        "location": "classroom",
+        "character": "luna",
+        "minAffection": 15,
+        "chance": 0.6
+      },
+      "description": "루나가 특별한 마법을 보여주겠다고 한다.",
+      "choices": [
+        {
+          "text": "와! 보고 싶어!",
+          "effects": {
+            "affection": { "luna": 12 },
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "루나의 환상적인 마법에 매료되었다."
+          }
+        },
+        {
+          "text": "마법은 위험하지 않아?",
+          "effects": {
+            "affection": { "luna": 5 },
+            "text": "루나가 안전하다고 안심시켜준다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "random_exam",
+      "name": "깜짝 시험",
+      "trigger": {
+        "location": "classroom",
+        "minDay": 5,
+        "chance": 0.2
+      },
+      "description": "갑작스러운 시험이 시작된다!",
+      "choices": [
+        {
+          "text": "열심히 푼다",
+          "condition": { "minIntelligence": 15 },
+          "effects": {
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "시험을 잘 봤다! 모두가 감탄한다."
+          }
+        },
+        {
+          "text": "대충 찍는다",
+          "effects": {
+            "stats": { "stamina": -1 },
+            "text": "시험을 망쳤다..."
+          }
+        }
+      ]
+    },
+    {
+      "id": "confession_sakura",
+      "name": "사쿠라의 고백",
+      "trigger": {
+        "character": "sakura",
+        "minAffection": 80,
+        "minDay": 20,
+        "once": true
+      },
+      "description": "사쿠라가 진지한 표정으로 다가온다...",
+      "choices": [
+        {
+          "text": "나도 좋아해",
+          "effects": {
+            "affection": { "sakura": 20 },
+            "flag": "sakura_route",
+            "text": "사쿠라와 연인이 되었다!"
+          }
+        },
+        {
+          "text": "미안, 친구로 남자",
+          "effects": {
+            "affection": { "sakura": -30 },
+            "text": "사쿠라가 슬픈 미소를 지으며 돌아섰다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mystery_encounter",
+      "name": "신비한 만남",
+      "trigger": {
+        "minDay": 10,
+        "totalAffection": 150,
+        "chance": 0.1,
+        "once": true
+      },
+      "description": "어둠 속에서 누군가 나타난다...",
+      "choices": [
+        {
+          "text": "누구세요?",
+          "effects": {
+            "unlockCharacter": "mystery",
+            "text": "신비로운 전학생을 만났다!"
+          }
+        }
+      ]
+    }
+  ],
+  "randomEvents": [
+    {
+      "id": "found_money",
+      "name": "동전 발견",
+      "chance": 0.1,
+      "effects": {
+        "item": "동전",
+        "text": "바닥에서 반짝이는 동전을 발견했다!"
+      }
+    },
+    {
+      "id": "cat_encounter",
+      "name": "고양이와의 만남",
+      "chance": 0.15,
+      "effects": {
+        "stats": { "charm": 1 },
+        "text": "귀여운 고양이를 쓰다듬었다. 기분이 좋아진다!"
+      }
+    },
+    {
+      "id": "rain_day",
+      "name": "비오는 날",
+      "chance": 0.2,
+      "effects": {
+        "stats": { "stamina": -1 },
+        "text": "갑작스런 비에 젖었다. 조금 피곤해진다."
+      }
+    }
+  ]
+}

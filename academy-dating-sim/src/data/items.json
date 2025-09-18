@@ -1,0 +1,118 @@
+{
+  "items": {
+    "flower": {
+      "id": "flower",
+      "name": "꽃다발",
+      "description": "아름다운 꽃다발. 누군가에게 선물하기 좋다.",
+      "type": "gift",
+      "effect": {
+        "affection": 10
+      },
+      "preferredBy": ["sakura", "luna"]
+    },
+    "book": {
+      "id": "book",
+      "name": "희귀한 책",
+      "description": "도서관에서도 찾기 힘든 희귀한 책.",
+      "type": "gift",
+      "effect": {
+        "affection": 15
+      },
+      "preferredBy": ["yuki"]
+    },
+    "charm": {
+      "id": "charm",
+      "name": "마법 부적",
+      "description": "신비한 힘이 느껴지는 부적.",
+      "type": "gift",
+      "effect": {
+        "affection": 12
+      },
+      "preferredBy": ["luna", "mystery"]
+    },
+    "studyGuide": {
+      "id": "studyGuide",
+      "name": "공부 가이드",
+      "description": "시험 대비용 완벽 가이드북.",
+      "type": "consumable",
+      "effect": {
+        "intelligence": 5
+      }
+    },
+    "energyDrink": {
+      "id": "energyDrink",
+      "name": "에너지 드링크",
+      "description": "피로를 회복시켜주는 음료.",
+      "type": "consumable",
+      "effect": {
+        "stamina": 3
+      }
+    },
+    "mirror": {
+      "id": "mirror",
+      "name": "마법 거울",
+      "description": "자신을 더 매력적으로 보이게 하는 거울.",
+      "type": "consumable",
+      "effect": {
+        "charm": 3
+      }
+    },
+    "lunchbox": {
+      "id": "lunchbox",
+      "name": "도시락",
+      "description": "정성스럽게 만든 도시락.",
+      "type": "gift",
+      "effect": {
+        "affection": 8,
+        "stamina": 2
+      },
+      "preferredBy": ["sakura", "yuki", "luna"]
+    },
+    "trainingGear": {
+      "id": "trainingGear",
+      "name": "훈련 장비",
+      "description": "검술 훈련에 유용한 장비.",
+      "type": "gift",
+      "effect": {
+        "affection": 20
+      },
+      "preferredBy": ["sakura"]
+    },
+    "mysteryKey": {
+      "id": "mysteryKey",
+      "name": "수수께끼의 열쇠",
+      "description": "어딘가의 문을 열 수 있을 것 같은 열쇠.",
+      "type": "special",
+      "effect": {
+        "unlockSecret": true
+      }
+    }
+  },
+  "shop": [
+    {
+      "itemId": "flower",
+      "price": 100,
+      "stock": -1
+    },
+    {
+      "itemId": "book",
+      "price": 200,
+      "stock": 3
+    },
+    {
+      "itemId": "energyDrink",
+      "price": 50,
+      "stock": -1
+    },
+    {
+      "itemId": "studyGuide",
+      "price": 300,
+      "stock": 2
+    },
+    {
+      "itemId": "lunchbox",
+      "price": 80,
+      "stock": -1
+    }
+  ]
+}
