@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Player, Character, Location } from '../types/game';
 import StatusBar from './StatusBar';
+import HPMPDisplay from './HPMPDisplay';
 import LocationView from './LocationView';
 import CharacterInteraction from './CharacterInteraction';
 import EventDialog from './EventDialog';
@@ -45,7 +46,14 @@ const GameUI: React.FC<GameUIProps> = ({
   const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters'>('location');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 pt-24 p-4">
+      {/* Fixed HP/MP Display at top */}
+      <HPMPDisplay
+        hp={player.hp}
+        maxHp={player.maxHp}
+        mp={player.mp}
+        maxMp={player.maxMp}
+      />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-4 mb-4">

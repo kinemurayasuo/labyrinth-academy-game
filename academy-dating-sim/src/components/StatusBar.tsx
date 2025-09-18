@@ -6,6 +6,10 @@ interface StatusBarProps {
 }
 
 const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
+  // Debug logging
+  console.log('StatusBar player data:', player);
+  console.log('HP:', player.hp, 'MaxHP:', player.maxHp);
+  console.log('MP:', player.mp, 'MaxMP:', player.maxMp);
   const getStatColor = (value: number, max: number = 20) => {
     const percentage = (value / max) * 100;
     if (percentage >= 75) return 'text-green-500';
@@ -29,8 +33,14 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
     return timeMap[timeOfDay] || timeOfDay;
   };
 
+  // Ensure HP/MP have default values
+  const currentHP = player.hp ?? 100;
+  const maxHP = player.maxHp ?? 100;
+  const currentMP = player.mp ?? 50;
+  const maxMP = player.maxMp ?? 50;
+
   return (
-    <div className="bg-gradient-to-r from-purple-800 via-pink-700 to-purple-800 text-white p-4 rounded-lg shadow-lg">
+    <div className="bg-gradient-to-r from-purple-800 via-pink-700 to-purple-800 text-white p-4 rounded-lg shadow-lg mb-4 border-4 border-white">
       {/* Prominent HP/MP Display at Top */}
       <div className="mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -47,19 +57,19 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-bold text-red-100">
-                  {player.hp || 100}
+                <span className="text-3xl font-bold text-white drop-shadow-lg">
+                  {currentHP}
                 </span>
-                <span className="text-red-300 text-lg">/{player.maxHp || 100}</span>
+                <span className="text-red-200 text-xl">/{maxHP}</span>
                 <div className="text-xs text-red-300 opacity-80">
-                  {Math.round(((player.hp || 100) / (player.maxHp || 100)) * 100)}%
+                  {Math.round((currentHP / maxHP) * 100)}%
                 </div>
               </div>
             </div>
             <div className="w-full bg-red-950/60 rounded-full h-4 shadow-inner">
               <div
                 className="bg-gradient-to-r from-red-500 via-red-400 to-red-300 h-4 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${((player.hp || 100) / (player.maxHp || 100)) * 100}%` }}
+                style={{ width: `${(currentHP / maxHP) * 100}%` }}
               />
             </div>
           </div>
@@ -77,19 +87,19 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-bold text-blue-100">
-                  {player.mp || 50}
+                <span className="text-3xl font-bold text-white drop-shadow-lg">
+                  {currentMP}
                 </span>
-                <span className="text-blue-300 text-lg">/{player.maxMp || 50}</span>
+                <span className="text-blue-200 text-xl">/{maxMP}</span>
                 <div className="text-xs text-blue-300 opacity-80">
-                  {Math.round(((player.mp || 50) / (player.maxMp || 50)) * 100)}%
+                  {Math.round((currentMP / maxMP) * 100)}%
                 </div>
               </div>
             </div>
             <div className="w-full bg-blue-950/60 rounded-full h-4 shadow-inner">
               <div
                 className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 h-4 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${((player.mp || 50) / (player.maxMp || 50)) * 100}%` }}
+                style={{ width: `${(currentMP / maxMP) * 100}%` }}
               />
             </div>
           </div>
