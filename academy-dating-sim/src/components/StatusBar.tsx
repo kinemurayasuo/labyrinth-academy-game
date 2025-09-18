@@ -48,18 +48,18 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
               </div>
               <div className="text-right">
                 <span className="text-2xl font-bold text-red-100">
-                  {player.hp}
+                  {player.hp || 100}
                 </span>
-                <span className="text-red-300 text-lg">/{player.maxHp}</span>
+                <span className="text-red-300 text-lg">/{player.maxHp || 100}</span>
                 <div className="text-xs text-red-300 opacity-80">
-                  {Math.round((player.hp / player.maxHp) * 100)}%
+                  {Math.round(((player.hp || 100) / (player.maxHp || 100)) * 100)}%
                 </div>
               </div>
             </div>
             <div className="w-full bg-red-950/60 rounded-full h-4 shadow-inner">
               <div
                 className="bg-gradient-to-r from-red-500 via-red-400 to-red-300 h-4 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${(player.hp / player.maxHp) * 100}%` }}
+                style={{ width: `${((player.hp || 100) / (player.maxHp || 100)) * 100}%` }}
               />
             </div>
           </div>
@@ -78,18 +78,18 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
               </div>
               <div className="text-right">
                 <span className="text-2xl font-bold text-blue-100">
-                  {player.mp}
+                  {player.mp || 50}
                 </span>
-                <span className="text-blue-300 text-lg">/{player.maxMp}</span>
+                <span className="text-blue-300 text-lg">/{player.maxMp || 50}</span>
                 <div className="text-xs text-blue-300 opacity-80">
-                  {Math.round((player.mp / player.maxMp) * 100)}%
+                  {Math.round(((player.mp || 50) / (player.maxMp || 50)) * 100)}%
                 </div>
               </div>
             </div>
             <div className="w-full bg-blue-950/60 rounded-full h-4 shadow-inner">
               <div
                 className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 h-4 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${(player.mp / player.maxMp) * 100}%` }}
+                style={{ width: `${((player.mp || 50) / (player.maxMp || 50)) * 100}%` }}
               />
             </div>
           </div>
