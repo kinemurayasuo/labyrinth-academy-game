@@ -5,87 +5,371 @@
       "name": "꽃다발",
       "description": "아름다운 꽃다발. 누군가에게 선물하기 좋다.",
       "type": "gift",
+      "rarity": "common",
+      "value": 100,
       "effect": {
         "affection": 10
       },
-      "preferredBy": ["sakura", "luna"]
+      "preferredBy": ["sakura", "luna"],
+      "icon": "🌸",
+      "category": "선물"
     },
     "book": {
       "id": "book",
       "name": "희귀한 책",
       "description": "도서관에서도 찾기 힘든 희귀한 책.",
       "type": "gift",
+      "rarity": "uncommon",
+      "value": 200,
       "effect": {
         "affection": 15
       },
-      "preferredBy": ["yuki"]
+      "preferredBy": ["yuki"],
+      "icon": "📚",
+      "category": "선물"
     },
     "charm": {
       "id": "charm",
       "name": "마법 부적",
       "description": "신비한 힘이 느껴지는 부적.",
       "type": "gift",
+      "rarity": "rare",
+      "value": 300,
       "effect": {
         "affection": 12
       },
-      "preferredBy": ["luna", "mystery"]
+      "preferredBy": ["luna", "mystery"],
+      "icon": "🧿",
+      "category": "선물"
     },
     "studyGuide": {
       "id": "studyGuide",
       "name": "공부 가이드",
       "description": "시험 대비용 완벽 가이드북.",
       "type": "consumable",
+      "rarity": "common",
+      "value": 150,
       "effect": {
         "intelligence": 5
-      }
+      },
+      "icon": "📖",
+      "category": "소모품"
     },
     "energyDrink": {
       "id": "energyDrink",
       "name": "에너지 드링크",
       "description": "피로를 회복시켜주는 음료.",
       "type": "consumable",
+      "rarity": "common",
+      "value": 50,
       "effect": {
-        "stamina": 3
-      }
+        "stamina": 3,
+        "hp": 20
+      },
+      "icon": "🥤",
+      "category": "소모품"
     },
     "mirror": {
       "id": "mirror",
       "name": "마법 거울",
       "description": "자신을 더 매력적으로 보이게 하는 거울.",
       "type": "consumable",
+      "rarity": "uncommon",
+      "value": 120,
       "effect": {
         "charm": 3
-      }
+      },
+      "icon": "🪞",
+      "category": "소모품"
     },
     "lunchbox": {
       "id": "lunchbox",
       "name": "도시락",
       "description": "정성스럽게 만든 도시락.",
       "type": "gift",
+      "rarity": "common",
+      "value": 80,
       "effect": {
         "affection": 8,
         "stamina": 2
       },
-      "preferredBy": ["sakura", "yuki", "luna"]
+      "preferredBy": ["sakura", "yuki", "luna"],
+      "icon": "🍱",
+      "category": "선물"
     },
     "trainingGear": {
       "id": "trainingGear",
       "name": "훈련 장비",
       "description": "검술 훈련에 유용한 장비.",
       "type": "gift",
+      "rarity": "rare",
+      "value": 500,
       "effect": {
         "affection": 20
       },
-      "preferredBy": ["sakura"]
+      "preferredBy": ["sakura"],
+      "icon": "⚔️",
+      "category": "선물"
     },
     "mysteryKey": {
       "id": "mysteryKey",
       "name": "수수께끼의 열쇠",
       "description": "어딘가의 문을 열 수 있을 것 같은 열쇠.",
       "type": "special",
+      "rarity": "legendary",
+      "value": 1000,
       "effect": {
         "unlockSecret": true
-      }
+      },
+      "icon": "🗝️",
+      "category": "특별"
+    },
+    "basicSword": {
+      "id": "basicSword",
+      "name": "연습용 검",
+      "description": "검술 연습용 나무 검. 기본적인 전투 능력을 제공한다.",
+      "type": "weapon",
+      "rarity": "common",
+      "value": 200,
+      "effect": {
+        "strength": 5,
+        "agility": 2
+      },
+      "requirements": {
+        "level": 1
+      },
+      "icon": "🗡️",
+      "category": "무기"
+    },
+    "steelSword": {
+      "id": "steelSword",
+      "name": "강철 검",
+      "description": "잘 단련된 강철 검. 상당한 공격력을 자랑한다.",
+      "type": "weapon",
+      "rarity": "uncommon",
+      "value": 800,
+      "effect": {
+        "strength": 12,
+        "agility": 5
+      },
+      "requirements": {
+        "level": 5,
+        "stats": { "strength": 15 }
+      },
+      "icon": "⚔️",
+      "category": "무기"
+    },
+    "mysticStaff": {
+      "id": "mysticStaff",
+      "name": "신비한 지팡이",
+      "description": "마법의 힘이 깃든 지팡이. 지적 능력과 마력을 증진시킨다.",
+      "type": "weapon",
+      "rarity": "rare",
+      "value": 1200,
+      "effect": {
+        "intelligence": 15,
+        "mp": 30,
+        "charm": 8
+      },
+      "requirements": {
+        "level": 8,
+        "stats": { "intelligence": 20 }
+      },
+      "icon": "🪄",
+      "category": "무기"
+    },
+    "leatherArmor": {
+      "id": "leatherArmor",
+      "name": "가죽 갑옷",
+      "description": "유연한 가죽으로 만든 갑옷. 기본적인 방어력을 제공한다.",
+      "type": "armor",
+      "rarity": "common",
+      "value": 300,
+      "effect": {
+        "hp": 20,
+        "agility": 3
+      },
+      "requirements": {
+        "level": 2
+      },
+      "icon": "🛡️",
+      "category": "방어구"
+    },
+    "plateArmor": {
+      "id": "plateArmor",
+      "name": "판갑옷",
+      "description": "견고한 금속 갑옷. 뛰어난 방어력을 자랑한다.",
+      "type": "armor",
+      "rarity": "uncommon",
+      "value": 1000,
+      "effect": {
+        "hp": 50,
+        "strength": 8
+      },
+      "requirements": {
+        "level": 6,
+        "stats": { "strength": 18 }
+      },
+      "icon": "🛡️",
+      "category": "방어구"
+    },
+    "mageRobe": {
+      "id": "mageRobe",
+      "name": "마법사 로브",
+      "description": "마법의 힘을 증폭시키는 신비한 로브.",
+      "type": "armor",
+      "rarity": "rare",
+      "value": 1500,
+      "effect": {
+        "mp": 40,
+        "intelligence": 12,
+        "charm": 10
+      },
+      "requirements": {
+        "level": 7,
+        "stats": { "intelligence": 22 }
+      },
+      "icon": "👘",
+      "category": "방어구"
+    },
+    "luckRing": {
+      "id": "luckRing",
+      "name": "행운의 반지",
+      "description": "착용자에게 행운을 가져다주는 마법의 반지.",
+      "type": "accessory",
+      "rarity": "uncommon",
+      "value": 600,
+      "effect": {
+        "luck": 10,
+        "charm": 5
+      },
+      "requirements": {
+        "level": 3
+      },
+      "icon": "💍",
+      "category": "장신구"
+    },
+    "strengthAmulet": {
+      "id": "strengthAmulet",
+      "name": "힘의 부적",
+      "description": "착용자의 물리적 능력을 향상시키는 부적.",
+      "type": "accessory",
+      "rarity": "rare",
+      "value": 900,
+      "effect": {
+        "strength": 8,
+        "stamina": 6,
+        "hp": 25
+      },
+      "requirements": {
+        "level": 5
+      },
+      "icon": "🧿",
+      "category": "장신구"
+    },
+    "wisdomPendant": {
+      "id": "wisdomPendant",
+      "name": "지혜의 펜던트",
+      "description": "착용자의 지적 능력과 마법력을 크게 향상시킨다.",
+      "type": "accessory",
+      "rarity": "epic",
+      "value": 1800,
+      "effect": {
+        "intelligence": 15,
+        "mp": 35,
+        "experience": 50
+      },
+      "requirements": {
+        "level": 10,
+        "stats": { "intelligence": 25 }
+      },
+      "icon": "📿",
+      "category": "장신구"
+    },
+    "healingPotion": {
+      "id": "healingPotion",
+      "name": "치유 물약",
+      "description": "체력을 회복시켜주는 마법의 물약.",
+      "type": "consumable",
+      "rarity": "common",
+      "value": 100,
+      "effect": {
+        "hp": 50
+      },
+      "icon": "🧪",
+      "category": "소모품"
+    },
+    "manaPotion": {
+      "id": "manaPotion",
+      "name": "마나 물약",
+      "description": "마법력을 회복시켜주는 신비한 물약.",
+      "type": "consumable",
+      "rarity": "common",
+      "value": 120,
+      "effect": {
+        "mp": 40
+      },
+      "icon": "🧪",
+      "category": "소모품"
+    },
+    "experienceScroll": {
+      "id": "experienceScroll",
+      "name": "경험치 두루마리",
+      "description": "사용하면 경험치를 얻을 수 있는 마법 두루마리.",
+      "type": "consumable",
+      "rarity": "uncommon",
+      "value": 250,
+      "effect": {
+        "experience": 100
+      },
+      "icon": "📜",
+      "category": "소모품"
+    },
+    "statBooster": {
+      "id": "statBooster",
+      "name": "능력치 강화제",
+      "description": "모든 능력치를 일시적으로 향상시키는 특별한 물약.",
+      "type": "consumable",
+      "rarity": "rare",
+      "value": 500,
+      "effect": {
+        "intelligence": 3,
+        "charm": 3,
+        "stamina": 3,
+        "strength": 3,
+        "agility": 3,
+        "luck": 3
+      },
+      "icon": "⚗️",
+      "category": "소모품"
+    },
+    "chocolateBox": {
+      "id": "chocolateBox",
+      "name": "고급 초콜릿 세트",
+      "description": "정성스럽게 포장된 고급 초콜릿. 특별한 사람에게 주기 좋다.",
+      "type": "gift",
+      "rarity": "uncommon",
+      "value": 350,
+      "effect": {
+        "affection": 18
+      },
+      "preferredBy": ["yuki", "luna"],
+      "icon": "🍫",
+      "category": "선물"
+    },
+    "jewelryBox": {
+      "id": "jewelryBox",
+      "name": "보석함",
+      "description": "아름다운 보석이 들어있는 고급 장신구 상자.",
+      "type": "gift",
+      "rarity": "epic",
+      "value": 1200,
+      "effect": {
+        "affection": 35
+      },
+      "preferredBy": ["luna", "mystery"],
+      "icon": "💎",
+      "category": "선물"
     }
   },
   "shop": [
@@ -106,13 +390,43 @@
     },
     {
       "itemId": "studyGuide",
-      "price": 300,
+      "price": 150,
       "stock": 2
     },
     {
       "itemId": "lunchbox",
       "price": 80,
       "stock": -1
+    },
+    {
+      "itemId": "healingPotion",
+      "price": 100,
+      "stock": -1
+    },
+    {
+      "itemId": "manaPotion",
+      "price": 120,
+      "stock": -1
+    },
+    {
+      "itemId": "basicSword",
+      "price": 200,
+      "stock": 1
+    },
+    {
+      "itemId": "leatherArmor",
+      "price": 300,
+      "stock": 1
+    },
+    {
+      "itemId": "luckRing",
+      "price": 600,
+      "stock": 1
+    },
+    {
+      "itemId": "chocolateBox",
+      "price": 350,
+      "stock": 5
     }
   ]
 }

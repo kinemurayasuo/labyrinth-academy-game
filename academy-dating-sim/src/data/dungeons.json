@@ -1,0 +1,235 @@
+{
+  "floors": [
+    {
+      "id": 1,
+      "name": "학원 지하실",
+      "description": "학원 건물 아래 숨겨진 지하실. 오래된 책과 수상한 물건들이 널려있다.",
+      "layout": [
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 2, 0, 1, 0, 3, 1],
+        [1, 0, 0, 0, 1, 0, 0, 1],
+        [1, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 4, 0, 0, 0, 5, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1]
+      ],
+      "enemies": [
+        {
+          "id": "dustBunny",
+          "name": "먼지 토끼",
+          "hp": 15,
+          "maxHp": 15,
+          "attack": 5,
+          "defense": 2,
+          "agility": 8,
+          "experience": 10,
+          "drops": [
+            { "itemId": "energyDrink", "chance": 0.3, "quantity": 1 }
+          ],
+          "sprite": "slime",
+          "description": "오래된 책에서 나온 작은 먼지 덩어리. 해롭지는 않다."
+        }
+      ],
+      "treasures": [
+        {
+          "id": "chest1",
+          "position": { "x": 2, "y": 2 },
+          "contents": [
+            { "itemId": "healingPotion", "chance": 1.0, "quantity": 2 },
+            { "itemId": "flower", "chance": 0.5, "quantity": 1 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "chest2",
+          "position": { "x": 6, "y": 2 },
+          "contents": [
+            { "itemId": "studyGuide", "chance": 1.0, "quantity": 1 }
+          ],
+          "opened": false
+        }
+      ],
+      "nextFloorRequirement": {
+        "bossDefeated": false
+      }
+    },
+    {
+      "id": 2,
+      "name": "마법 연구실",
+      "description": "버려진 마법 연구실. 여전히 마법의 잔재가 남아있다.",
+      "layout": [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+        [1, 0, 2, 0, 0, 0, 0, 3, 0, 1],
+        [1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+        [1, 1, 0, 1, 1, 1, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 4, 0, 1, 1, 0, 5, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 1, 0, 0, 6, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ],
+      "enemies": [
+        {
+          "id": "magicBook",
+          "name": "마법서",
+          "hp": 25,
+          "maxHp": 25,
+          "attack": 8,
+          "defense": 4,
+          "agility": 6,
+          "experience": 20,
+          "drops": [
+            { "itemId": "manaPotion", "chance": 0.4, "quantity": 1 },
+            { "itemId": "mirror", "chance": 0.2, "quantity": 1 }
+          ],
+          "sprite": "goblin",
+          "description": "스스로 날아다니는 마법서. 위험한 주문을 시전한다."
+        }
+      ],
+      "treasures": [
+        {
+          "id": "magicChest1",
+          "position": { "x": 2, "y": 2 },
+          "contents": [
+            { "itemId": "manaPotion", "chance": 1.0, "quantity": 3 },
+            { "itemId": "charm", "chance": 0.3, "quantity": 1 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "magicChest2",
+          "position": { "x": 7, "y": 2 },
+          "contents": [
+            { "itemId": "mysticStaff", "chance": 0.8, "quantity": 1 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "secretChest",
+          "position": { "x": 8, "y": 8 },
+          "contents": [
+            { "itemId": "mysteryKey", "chance": 1.0, "quantity": 1 }
+          ],
+          "opened": false
+        }
+      ],
+      "boss": {
+        "id": "shadowMage",
+        "name": "그림자 마법사",
+        "hp": 80,
+        "maxHp": 80,
+        "attack": 15,
+        "defense": 8,
+        "agility": 10,
+        "experience": 100,
+        "drops": [
+          { "itemId": "mageRobe", "chance": 0.8, "quantity": 1 },
+          { "itemId": "wisdomPendant", "chance": 0.3, "quantity": 1 },
+          { "itemId": "experienceScroll", "chance": 1.0, "quantity": 3 }
+        ],
+        "sprite": "skeleton",
+        "description": "어둠의 힘에 타락한 옛 마법사. 강력한 어둠 마법을 구사한다."
+      },
+      "nextFloorRequirement": {
+        "bossDefeated": true
+      }
+    },
+    {
+      "id": 3,
+      "name": "고대 유적",
+      "description": "학원 설립 이전부터 존재했던 고대 유적. 신비한 힘이 느껴진다.",
+      "layout": [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 2, 0, 1, 1, 1, 1, 0, 3, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 4, 0, 1, 1, 1, 1, 0, 5, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ],
+      "enemies": [
+        {
+          "id": "ancientGuardian",
+          "name": "고대 수호자",
+          "hp": 50,
+          "maxHp": 50,
+          "attack": 12,
+          "defense": 10,
+          "agility": 4,
+          "experience": 40,
+          "drops": [
+            { "itemId": "strengthAmulet", "chance": 0.2, "quantity": 1 },
+            { "itemId": "plateArmor", "chance": 0.1, "quantity": 1 }
+          ],
+          "sprite": "orc",
+          "description": "고대 유적을 지키는 돌 수호자. 느리지만 강력하다."
+        }
+      ],
+      "treasures": [
+        {
+          "id": "ancientChest1",
+          "position": { "x": 2, "y": 2 },
+          "contents": [
+            { "itemId": "steelSword", "chance": 0.7, "quantity": 1 },
+            { "itemId": "healingPotion", "chance": 1.0, "quantity": 5 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "ancientChest2",
+          "position": { "x": 9, "y": 2 },
+          "contents": [
+            { "itemId": "luckRing", "chance": 0.6, "quantity": 1 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "sacredAltar",
+          "position": { "x": 6, "y": 10 },
+          "contents": [
+            { "itemId": "jewelryBox", "chance": 1.0, "quantity": 1 },
+            { "itemId": "statBooster", "chance": 0.5, "quantity": 1 }
+          ],
+          "opened": false
+        }
+      ],
+      "boss": {
+        "id": "ancientDragon",
+        "name": "고대 드래곤",
+        "hp": 150,
+        "maxHp": 150,
+        "attack": 25,
+        "defense": 15,
+        "agility": 8,
+        "experience": 200,
+        "drops": [
+          { "itemId": "wisdomPendant", "chance": 1.0, "quantity": 1 },
+          { "itemId": "jewelryBox", "chance": 0.8, "quantity": 1 },
+          { "itemId": "experienceScroll", "chance": 1.0, "quantity": 5 }
+        ],
+        "sprite": "dragon",
+        "description": "고대 유적의 최고 수호자. 전설적인 힘을 지녔다."
+      },
+      "nextFloorRequirement": {
+        "bossDefeated": true,
+        "itemRequired": "mysteryKey"
+      }
+    }
+  ],
+  "legend": {
+    "0": "빈 공간",
+    "1": "벽",
+    "2": "시작 지점",
+    "3": "계단 (다음 층으로)",
+    "4": "상자",
+    "5": "적 출현 지점",
+    "6": "보스 방"
+  }
+}

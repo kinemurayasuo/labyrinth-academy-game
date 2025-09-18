@@ -20,9 +20,11 @@ const Inventory: React.FC<InventoryProps> = ({
 }) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showGiftTarget, setShowGiftTarget] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'gift' | 'consumable' | 'special'>('all');
+  const [filter, setFilter] = useState<'all' | 'gift' | 'consumable' | 'special' | 'weapon' | 'armor' | 'accessory'>('all');
 
   const getItemIcon = (item: Item) => {
+    if (item.icon) return item.icon;
+
     if (item.type === 'gift') {
       if (item.name.includes('꽃')) return '🌸';
       if (item.name.includes('초콜릿')) return '🍫';
@@ -37,6 +39,9 @@ const Inventory: React.FC<InventoryProps> = ({
       if (item.name.includes('음료')) return '🥤';
       return '💊';
     }
+    if (item.type === 'weapon') return '⚔️';
+    if (item.type === 'armor') return '🛡️';
+    if (item.type === 'accessory') return '💍';
     if (item.type === 'special') {
       if (item.name.includes('열쇠')) return '🗝️';
       if (item.name.includes('카드')) return '💳';
@@ -46,9 +51,15 @@ const Inventory: React.FC<InventoryProps> = ({
   };
 
   const getItemRarity = (item: Item) => {
-    if (item.type === 'special') return { color: 'border-yellow-400 bg-yellow-500/10', text: 'text-yellow-400' };
-    if (item.preferredBy && item.preferredBy.length > 0) return { color: 'border-purple-400 bg-purple-500/10', text: 'text-purple-400' };
-    return { color: 'border-gray-400 bg-gray-500/10', text: 'text-gray-400' };
+    const rarityColors = {
+      common: { color: 'border-gray-400 bg-gray-500/10', text: 'text-gray-400', name: '일반' },
+      uncommon: { color: 'border-green-400 bg-green-500/10', text: 'text-green-400', name: '고급' },
+      rare: { color: 'border-blue-400 bg-blue-500/10', text: 'text-blue-400', name: '희귀' },
+      epic: { color: 'border-purple-400 bg-purple-500/10', text: 'text-purple-400', name: '영웅' },
+      legendary: { color: 'border-yellow-400 bg-yellow-500/10', text: 'text-yellow-400', name: '전설' },
+    };
+
+    return item.rarity ? rarityColors[item.rarity] : rarityColors.common;
   };
 
   // Group items by id and count them
@@ -72,10 +83,38 @@ const Inventory: React.FC<InventoryProps> = ({
     if (item.type === 'gift') {
       setSelectedItem(item);
       setShowGiftTarget(true);
+    } else if (['weapon', 'armor', 'accessory'].includes(item.type)) {
+      // Equipment items - check requirements first
+      const canEquip = checkRequirements(item);
+      if (canEquip) {
+        onUseItem(item.id);
+        setSelectedItem(null);
+      } else {
+        alert('장비 요구 조건을 만족하지 않습니다.');
+      }
     } else {
       onUseItem(item.id);
       setSelectedItem(null);
     }
+  };
+
+  const checkRequirements = (item: Item) => {
+    if (!item.requirements) return true;
+
+    if (item.requirements.level && player.level < item.requirements.level) {
+      return false;
+    }
+
+    if (item.requirements.stats) {
+      for (const [stat, requiredValue] of Object.entries(item.requirements.stats)) {
+        const playerStat = player.stats[stat as keyof typeof player.stats];
+        if (playerStat < requiredValue) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   };
 
   const handleGiftToCharacter = (characterId: string) => {
@@ -84,6 +123,18 @@ const Inventory: React.FC<InventoryProps> = ({
       setSelectedItem(null);
       setShowGiftTarget(false);
     }
+  };
+
+  const getStatName = (stat: string) => {
+    const statNames: Record<string, string> = {
+      intelligence: '지력',
+      charm: '매력',
+      stamina: '체력',
+      strength: '힘',
+      agility: '민첩',
+      luck: '행운',
+    };
+    return statNames[stat] || stat;
   };
 
   const getCharacterEmoji = (characterId: string) => {
@@ -115,6 +166,9 @@ const Inventory: React.FC<InventoryProps> = ({
           { key: 'all', label: '전체', icon: '📦' },
           { key: 'gift', label: '선물', icon: '🎁' },
           { key: 'consumable', label: '소모품', icon: '💊' },
+          { key: 'weapon', label: '무기', icon: '⚔️' },
+          { key: 'armor', label: '방어구', icon: '🛡️' },
+          { key: 'accessory', label: '장신구', icon: '💍' },
           { key: 'special', label: '특별', icon: '⭐' },
         ].map(({ key, label, icon }) => (
           <button
@@ -172,22 +226,95 @@ const Inventory: React.FC<InventoryProps> = ({
                 <p className="text-sm text-purple-200 mb-4">{item.description}</p>
 
                 {/* Item Effects */}
-                <div className="space-y-2 mb-4">
+                <div className="space-y-1 mb-4">
                   {item.effect.affection && (
-                    <div className="text-xs text-pink-300">💕 호감도 +{item.effect.affection}</div>
+                    <div className="text-xs text-pink-300 flex items-center gap-1">
+                      💕 <span>호감도 +{item.effect.affection}</span>
+                    </div>
+                  )}
+                  {item.effect.hp && (
+                    <div className="text-xs text-red-300 flex items-center gap-1">
+                      ❤️ <span>체력 +{item.effect.hp}</span>
+                    </div>
+                  )}
+                  {item.effect.mp && (
+                    <div className="text-xs text-blue-300 flex items-center gap-1">
+                      💙 <span>마나 +{item.effect.mp}</span>
+                    </div>
                   )}
                   {item.effect.intelligence && (
-                    <div className="text-xs text-blue-300">🧠 지력 +{item.effect.intelligence}</div>
+                    <div className="text-xs text-blue-300 flex items-center gap-1">
+                      🧠 <span>지력 +{item.effect.intelligence}</span>
+                    </div>
                   )}
                   {item.effect.charm && (
-                    <div className="text-xs text-pink-300">✨ 매력 +{item.effect.charm}</div>
+                    <div className="text-xs text-pink-300 flex items-center gap-1">
+                      ✨ <span>매력 +{item.effect.charm}</span>
+                    </div>
                   )}
                   {item.effect.stamina && (
-                    <div className="text-xs text-green-300">💪 체력 +{item.effect.stamina}</div>
+                    <div className="text-xs text-green-300 flex items-center gap-1">
+                      💪 <span>체력 +{item.effect.stamina}</span>
+                    </div>
+                  )}
+                  {item.effect.strength && (
+                    <div className="text-xs text-orange-300 flex items-center gap-1">
+                      💪 <span>힘 +{item.effect.strength}</span>
+                    </div>
+                  )}
+                  {item.effect.agility && (
+                    <div className="text-xs text-cyan-300 flex items-center gap-1">
+                      🏃 <span>민첩 +{item.effect.agility}</span>
+                    </div>
+                  )}
+                  {item.effect.luck && (
+                    <div className="text-xs text-yellow-300 flex items-center gap-1">
+                      🍀 <span>행운 +{item.effect.luck}</span>
+                    </div>
+                  )}
+                  {item.effect.experience && (
+                    <div className="text-xs text-purple-300 flex items-center gap-1">
+                      ⭐ <span>경험치 +{item.effect.experience}</span>
+                    </div>
                   )}
                   {item.effect.unlockSecret && (
-                    <div className="text-xs text-yellow-300">🔓 비밀 해제</div>
+                    <div className="text-xs text-yellow-300 flex items-center gap-1">
+                      🔓 <span>비밀 해제</span>
+                    </div>
                   )}
+                </div>
+
+                {/* Item Requirements */}
+                {item.requirements && (
+                  <div className="mb-4 p-2 bg-red-900/20 rounded border border-red-500/30">
+                    <div className="text-xs text-red-300 font-medium mb-1">필요 조건:</div>
+                    <div className="space-y-1">
+                      {item.requirements.level && (
+                        <div className="text-xs text-red-400">레벨 {item.requirements.level} 이상</div>
+                      )}
+                      {item.requirements.stats && Object.entries(item.requirements.stats).map(([stat, value]) => (
+                        <div key={stat} className="text-xs text-red-400">
+                          {getStatName(stat)} {value} 이상
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Item Value */}
+                {item.value && (
+                  <div className="mb-3">
+                    <div className="text-xs text-yellow-300 flex items-center gap-1">
+                      💰 <span>가치: {item.value} 골드</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Rarity */}
+                <div className="mb-4">
+                  <div className={`text-xs font-medium ${rarity.text}`}>
+                    등급: {rarity.name}
+                  </div>
                 </div>
 
                 {/* Preferred By */}
@@ -207,15 +334,26 @@ const Inventory: React.FC<InventoryProps> = ({
                 {/* Use Button */}
                 <button
                   onClick={() => handleUseItem(item)}
+                  disabled={!checkRequirements(item)}
                   className={`w-full py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    item.type === 'gift'
+                    !checkRequirements(item)
+                      ? 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
+                      : item.type === 'gift'
                       ? 'bg-pink-600/80 hover:bg-pink-500/80 text-white'
                       : item.type === 'consumable'
                       ? 'bg-green-600/80 hover:bg-green-500/80 text-white'
+                      : ['weapon', 'armor', 'accessory'].includes(item.type)
+                      ? 'bg-blue-600/80 hover:bg-blue-500/80 text-white'
                       : 'bg-yellow-600/80 hover:bg-yellow-500/80 text-white'
                   }`}
                 >
-                  {item.type === 'gift' ? '선물하기' : item.type === 'consumable' ? '사용하기' : '확인하기'}
+                  {item.type === 'gift'
+                    ? '선물하기'
+                    : item.type === 'consumable'
+                    ? '사용하기'
+                    : ['weapon', 'armor', 'accessory'].includes(item.type)
+                    ? '장착하기'
+                    : '확인하기'}
                 </button>
               </div>
             );

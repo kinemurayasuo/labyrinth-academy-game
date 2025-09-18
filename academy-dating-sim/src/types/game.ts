@@ -1,17 +1,36 @@
 export interface Player {
   name: string;
+  level: number;
+  experience: number;
+  hp: number;
+  maxHp: number;
+  mp: number;
+  maxMp: number;
   stats: {
     intelligence: number;
     charm: number;
     stamina: number;
+    strength: number;
+    agility: number;
+    luck: number;
   };
   inventory: string[];
+  equipment: {
+    weapon?: string;
+    armor?: string;
+    accessory?: string;
+  };
   affection: Record<string, number>;
   location: string;
   day: number;
   timeOfDay: 'morning' | 'noon' | 'afternoon' | 'evening' | 'night';
   money: number;
   flags: Record<string, boolean>;
+  dungeonProgress: {
+    currentFloor: number;
+    maxFloorReached: number;
+    position: { x: number; y: number };
+  };
 }
 
 export interface Character {
@@ -70,15 +89,29 @@ export interface Item {
   id: string;
   name: string;
   description: string;
-  type: 'gift' | 'consumable' | 'special';
+  type: 'gift' | 'consumable' | 'special' | 'weapon' | 'armor' | 'accessory';
+  rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
+  value: number;
   effect: {
     affection?: number;
     intelligence?: number;
     charm?: number;
     stamina?: number;
+    strength?: number;
+    agility?: number;
+    luck?: number;
+    hp?: number;
+    mp?: number;
+    experience?: number;
     unlockSecret?: boolean;
   };
+  requirements?: {
+    level?: number;
+    stats?: Partial<Player['stats']>;
+  };
   preferredBy?: string[];
+  icon?: string;
+  category?: string;
 }
 
 export interface Location {
@@ -120,5 +153,93 @@ export interface Ending {
     maxDay?: number;
     minAffection?: Record<string, number>;
     flags?: string[];
+  };
+}
+
+export interface DungeonFloor {
+  id: number;
+  name: string;
+  description: string;
+  layout: number[][];
+  enemies: Monster[];
+  treasures: Treasure[];
+  boss?: Monster;
+  nextFloorRequirement?: {
+    bossDefeated?: boolean;
+    itemRequired?: string;
+  };
+}
+
+export interface Monster {
+  id: string;
+  name: string;
+  hp: number;
+  maxHp: number;
+  attack: number;
+  defense: number;
+  agility: number;
+  experience: number;
+  drops: Drop[];
+  sprite: string;
+  description: string;
+}
+
+export interface Drop {
+  itemId: string;
+  chance: number;
+  quantity: number;
+}
+
+export interface Treasure {
+  id: string;
+  position: { x: number; y: number };
+  contents: Drop[];
+  opened: boolean;
+}
+
+export interface CharacterImage {
+  id: string;
+  characterId: string;
+  emotion: 'neutral' | 'happy' | 'sad' | 'angry' | 'surprised' | 'love';
+  svgData: string;
+}
+
+export interface AffinityEvent {
+  id: string;
+  characterId: string;
+  minAffection: number;
+  title: string;
+  description: string;
+  choices: AffinityChoice[];
+  unlocked: boolean;
+}
+
+export interface AffinityChoice {
+  text: string;
+  effects: {
+    affection?: number;
+    stats?: Partial<Player['stats']>;
+    items?: string[];
+    flags?: string[];
+    specialEvent?: string;
+  };
+  requirements?: {
+    stats?: Partial<Player['stats']>;
+    items?: string[];
+    flags?: string[];
+  };
+}
+
+export interface UserProfile {
+  id: string;
+  username: string;
+  email: string;
+  avatar?: string;
+  createdAt: Date;
+  gameProgress: {
+    totalPlaytime: number;
+    charactersUnlocked: string[];
+    endingsUnlocked: EndingType[];
+    achievements: string[];
   };
 }

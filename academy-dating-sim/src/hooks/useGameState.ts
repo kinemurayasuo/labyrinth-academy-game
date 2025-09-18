@@ -13,12 +13,22 @@ const locations = locationsData as { locations: Record<string, Location> };
 
 const INITIAL_PLAYER: Player = {
   name: '주인공',
+  level: 1,
+  experience: 0,
+  hp: 100,
+  maxHp: 100,
+  mp: 50,
+  maxMp: 50,
   stats: {
     intelligence: 10,
     charm: 10,
     stamina: 10,
+    strength: 10,
+    agility: 10,
+    luck: 10,
   },
   inventory: [],
+  equipment: {},
   affection: {
     sakura: 5,
     yuki: 10,
@@ -29,6 +39,11 @@ const INITIAL_PLAYER: Player = {
   timeOfDay: 'morning',
   money: 1000,
   flags: {},
+  dungeonProgress: {
+    currentFloor: 1,
+    maxFloorReached: 1,
+    position: { x: 0, y: 0 },
+  },
 };
 
 const TIME_PHASES = ['morning', 'noon', 'afternoon', 'evening', 'night'] as const;
@@ -157,7 +172,8 @@ export const useGameState = () => {
           ...prev,
           day: nextDay,
           timeOfDay: 'morning',
-          stamina: Math.min(prev.stats.stamina + 5, 20), // Restore some stamina
+          hp: Math.min(prev.hp + 20, prev.maxHp), // Restore some HP
+          mp: Math.min(prev.mp + 10, prev.maxMp), // Restore some MP
         };
       }
 
