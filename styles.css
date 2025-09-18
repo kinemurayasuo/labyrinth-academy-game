@@ -1,0 +1,535 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameContainer {
+    width: 95%;
+    max-width: 1400px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#timeDisplay {
+    display: flex;
+    gap: 20px;
+    font-size: 1.2em;
+}
+
+#timeDisplay span {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+main {
+    display: flex;
+    min-height: 600px;
+}
+
+#gameScreen {
+    flex: 1;
+    padding: 20px;
+    position: relative;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+#locationDisplay {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#currentLocation {
+    color: #667eea;
+    font-size: 1.8em;
+}
+
+.text-box {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 150px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+#characterInteraction {
+    margin: 20px 0;
+}
+
+#characterInteraction.hidden {
+    display: none;
+}
+
+#characterSprite {
+    width: 200px;
+    height: 200px;
+    background: #e9ecef;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+#dialogueBox h3 {
+    color: #764ba2;
+    margin-bottom: 10px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.action-buttons button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.action-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.action-buttons button:active {
+    transform: translateY(0);
+}
+
+#dungeonInfo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#dungeonInfo h2 {
+    color: #dc3545;
+    font-size: 1.8em;
+}
+
+#battleArea {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+#battleArea.hidden {
+    display: none;
+}
+
+#enemyDisplay {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#enemyName {
+    color: #dc3545;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.hp-bar, .stat-bar, .affection-bar {
+    background: #e9ecef;
+    border-radius: 10px;
+    height: 25px;
+    position: relative;
+    overflow: hidden;
+    margin: 5px 0;
+}
+
+.hp-fill {
+    background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+    height: 100%;
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+.mp-fill {
+    background: linear-gradient(90deg, #007bff 0%, #0099ff 100%);
+    height: 100%;
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+.affection-fill {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff8787 100%);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.hp-bar span, .stat-bar span, .affection-bar span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#battleLog {
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    margin: 20px 0;
+}
+
+#statusPanel {
+    width: 350px;
+    background: #f8f9fa;
+    border-left: 2px solid #e9ecef;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#statusPanel h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.stat-item, .relationship-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 5px 0;
+}
+
+.stat-item span:first-child, .relationship-item span:first-child {
+    font-weight: bold;
+    color: #495057;
+}
+
+#playerStats, #relationshipStatus, #inventory {
+    margin-bottom: 30px;
+}
+
+#inventoryList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.inventory-item {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.inventory-item:hover {
+    background: #e9ecef;
+    transform: scale(1.05);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.modal-content button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.modal-content button:hover {
+    transform: scale(1.05);
+}
+
+/* 모바일 및 태블릿 최적화 */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    #gameContainer {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    #timeDisplay {
+        flex-direction: column;
+        gap: 5px;
+        font-size: 0.9em;
+    }
+
+    main {
+        flex-direction: column;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    #gameScreen {
+        padding: 15px;
+    }
+
+    #statusPanel {
+        width: 100%;
+        border-left: none;
+        border-top: 2px solid #e9ecef;
+        padding: 15px;
+        order: -1;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        min-width: unset;
+        padding: 15px 10px;
+        font-size: 0.95em;
+    }
+
+    .text-box {
+        padding: 15px;
+        min-height: 100px;
+        font-size: 1em;
+    }
+
+    #characterSprite {
+        width: 150px;
+        height: 150px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #inventoryList {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 모바일 가로 모드 */
+@media (max-width: 768px) and (orientation: landscape) {
+    #statusPanel {
+        max-height: 30vh;
+    }
+
+    .action-buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+
+    header h1 {
+        font-size: 1.3em;
+    }
+}
+
+/* PWA 설치 버튼 */
+.install-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    z-index: 1000;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.install-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+}
+
+/* iOS Standalone 모드 */
+.ios-standalone {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* 터치 디바이스 최적화 */
+@media (pointer: coarse) {
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .inventory-item {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #4a5c99 0%, #5a3a7f 100%);
+    }
+
+    #gameContainer {
+        background: rgba(30, 30, 30, 0.95);
+        color: #e0e0e0;
+    }
+
+    .text-box {
+        background: #2a2a2a;
+        border-color: #3a3a3a;
+        color: #e0e0e0;
+    }
+
+    #statusPanel {
+        background: #252525;
+        border-left-color: #3a3a3a;
+    }
+
+    .inventory-item {
+        background: #3a3a3a;
+        border-color: #4a4a4a;
+        color: #e0e0e0;
+    }
+
+    .inventory-item:hover {
+        background: #4a4a4a;
+    }
+
+    .modal-content {
+        background: #2a2a2a;
+        color: #e0e0e0;
+    }
+
+    #battleArea {
+        background: #3a3030;
+        border-color: #8b6914;
+    }
+}
+
+/* 고해상도 디스플레이 최적화 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}

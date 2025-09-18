@@ -1,0 +1,57 @@
+{
+  "name": "Labyrinth Academy - 미궁 아카데미",
+  "short_name": "미궁 아카데미",
+  "description": "아카데미 미궁 탐사 로그라이크 연애 시뮬레이션 RPG",
+  "lang": "ko-KR",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#667eea",
+  "background_color": "#764ba2",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot2.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "dir": "auto",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "shortcuts": [
+    {
+      "name": "새 게임",
+      "url": "/index.html?new=true",
+      "description": "새로운 게임 시작"
+    },
+    {
+      "name": "이어하기",
+      "url": "/index.html?continue=true",
+      "description": "저장된 게임 이어하기"
+    }
+  ]
+}
