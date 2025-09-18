@@ -243,3 +243,32 @@ export interface UserProfile {
     achievements: string[];
   };
 }
+
+export interface HeroineData {
+  id: string;
+  name: string;
+  affinity: number;
+  level: string;
+  eventsCompleted?: string[];
+}
+
+export interface GameState {
+  playerName: string;
+  currentDay: number;
+  experience: number;
+  hp?: number;
+  maxHp?: number;
+  mp?: number;
+  maxMp?: number;
+  stats: {
+    intelligence: number;
+    charm: number;
+    stamina: number;
+    strength?: number;
+    agility?: number;
+    luck?: number;
+  };
+  inventory: Item[];
+  money: number;
+  heroines: Record<string, HeroineData>;
+}

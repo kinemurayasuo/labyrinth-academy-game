@@ -31,10 +31,76 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
 
   return (
     <div className="bg-gradient-to-r from-purple-800 via-pink-700 to-purple-800 text-white p-4 rounded-lg shadow-lg">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      {/* Prominent HP/MP Display at Top */}
+      <div className="mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Prominent HP Bar */}
+          <div className="bg-gradient-to-br from-red-900/50 to-red-800/50 p-4 rounded-xl border border-red-500/30 shadow-xl">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-red-600/30 rounded-full flex items-center justify-center">
+                  <span className="text-red-300 text-xl">❤️</span>
+                </div>
+                <div>
+                  <span className="text-lg font-bold text-red-200">체력</span>
+                  <div className="text-xs text-red-300 opacity-80">Health Points</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-2xl font-bold text-red-100">
+                  {player.hp}
+                </span>
+                <span className="text-red-300 text-lg">/{player.maxHp}</span>
+                <div className="text-xs text-red-300 opacity-80">
+                  {Math.round((player.hp / player.maxHp) * 100)}%
+                </div>
+              </div>
+            </div>
+            <div className="w-full bg-red-950/60 rounded-full h-4 shadow-inner">
+              <div
+                className="bg-gradient-to-r from-red-500 via-red-400 to-red-300 h-4 rounded-full transition-all duration-500 shadow-sm"
+                style={{ width: `${(player.hp / player.maxHp) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Prominent MP Bar */}
+          <div className="bg-gradient-to-br from-blue-900/50 to-blue-800/50 p-4 rounded-xl border border-blue-500/30 shadow-xl">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-600/30 rounded-full flex items-center justify-center">
+                  <span className="text-blue-300 text-xl">💙</span>
+                </div>
+                <div>
+                  <span className="text-lg font-bold text-blue-200">마나</span>
+                  <div className="text-xs text-blue-300 opacity-80">Magic Points</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-2xl font-bold text-blue-100">
+                  {player.mp}
+                </span>
+                <span className="text-blue-300 text-lg">/{player.maxMp}</span>
+                <div className="text-xs text-blue-300 opacity-80">
+                  {Math.round((player.mp / player.maxMp) * 100)}%
+                </div>
+              </div>
+            </div>
+            <div className="w-full bg-blue-950/60 rounded-full h-4 shadow-inner">
+              <div
+                className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 h-4 rounded-full transition-all duration-500 shadow-sm"
+                style={{ width: `${(player.mp / player.maxMp) * 100}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Player Info and Money */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         {/* Player Info */}
         <div className="flex items-center gap-4">
-          <div className="text-lg font-bold text-pink-200">
+          <div className="text-xl font-bold text-pink-200">
             {player.name}
           </div>
           <div className="text-sm bg-purple-900/50 px-3 py-1 rounded-full">
@@ -46,47 +112,6 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
         <div className="flex items-center gap-2 bg-yellow-600/20 px-3 py-1 rounded-full">
           <span className="text-yellow-300">💰</span>
           <span className="font-semibold text-yellow-200">{player.money.toLocaleString()}원</span>
-        </div>
-      </div>
-
-      {/* HP/MP Bars */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        {/* HP Bar */}
-        <div className="bg-red-900/30 p-3 rounded-lg">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-red-300">❤️</span>
-              <span className="text-sm font-medium text-red-200">체력</span>
-            </div>
-            <span className="font-bold text-red-200">
-              {player.hp}/{player.maxHp}
-            </span>
-          </div>
-          <div className="w-full bg-red-950/50 rounded-full h-3">
-            <div
-              className="bg-gradient-to-r from-red-500 to-red-400 h-3 rounded-full transition-all duration-300"
-              style={{ width: `${(player.hp / player.maxHp) * 100}%` }}
-            />
-          </div>
-        </div>
-
-        {/* MP Bar */}
-        <div className="bg-blue-900/30 p-3 rounded-lg">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-blue-300">💙</span>
-              <span className="text-sm font-medium text-blue-200">마나</span>
-            </div>
-            <span className="font-bold text-blue-200">
-              {player.mp}/{player.maxMp}
-            </span>
-          </div>
-          <div className="w-full bg-blue-950/50 rounded-full h-3">
-            <div
-              className="bg-gradient-to-r from-blue-500 to-blue-400 h-3 rounded-full transition-all duration-300"
-              style={{ width: `${(player.mp / player.maxMp) * 100}%` }}
-            />
-          </div>
         </div>
       </div>
 
