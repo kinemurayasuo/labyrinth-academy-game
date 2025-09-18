@@ -18,7 +18,8 @@
       "Bash(npm run build:*)",
       "Bash(npm run type-check:*)",
       "Bash(npx tsc:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm run deploy:*)"
     ],
     "deny": [],
     "ask": []
