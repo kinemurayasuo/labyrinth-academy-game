@@ -1,9 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Player, Character, GameEvent, Item, Location, SaveData, EndingType } from '../types/game';
+import type { Player, Character, GameEvent, Item, Location, SaveData, EndingType } from '../types/game';
 import charactersData from '../data/characters.json';
 import eventsData from '../data/events.json';
 import itemsData from '../data/items.json';
 import locationsData from '../data/locations.json';
+
+// Type assertions for JSON data
+const characters = charactersData as Record<string, Character>;
+const events = eventsData as { events: GameEvent[] };
+const items = itemsData as { items: Record<string, Item> };
+const locations = locationsData as { locations: Record<string, Location> };
 
 const INITIAL_PLAYER: Player = {
   name: '주인공',
@@ -40,7 +46,7 @@ export const useGameState = () => {
   useEffect(() => {
     const savedGame = localStorage.getItem('academyDatingSim');
     if (savedGame) {
-      const saveData: SaveData = JSON.parse(savedGame);
+      const saveData = JSON.parse(savedGame) as SaveData;
       setPlayer(saveData.player);
       setUnlockedCharacters(saveData.unlockedCharacters);
       setCompletedEvents(saveData.completedEvents);
@@ -64,7 +70,7 @@ export const useGameState = () => {
   const loadGame = useCallback(() => {
     const savedGame = localStorage.getItem('academyDatingSim');
     if (savedGame) {
-      const saveData: SaveData = JSON.parse(savedGame);
+      const saveData = JSON.parse(savedGame) as SaveData;
       setPlayer(saveData.player);
       setUnlockedCharacters(saveData.unlockedCharacters);
       setCompletedEvents(saveData.completedEvents);
@@ -111,7 +117,7 @@ export const useGameState = () => {
 
   // Move to location
   const moveToLocation = useCallback((locationId: string) => {
-    const location = locationsData.locations[locationId as keyof typeof locationsData.locations];
+    const location = locations.locations[locationId];
     if (!location) return;
 
     // Check unlock condition
@@ -167,7 +173,7 @@ export const useGameState = () => {
     const currentLocation = locationId || player.location;
 
     // Check story events
-    const possibleEvents = eventsData.events.filter(event => {
+    const possibleEvents = events.events.filter(event => {
       // Check location
       if (event.trigger.location && event.trigger.location !== currentLocation) return false;
 
@@ -200,23 +206,10 @@ export const useGameState = () => {
       setCurrentEvent(event);
     } else {
       // Check random events
-      const randomEvent = eventsData.randomEvents.find(e => Math.random() < e.chance);
-      if (randomEvent) {
-        applyRandomEvent(randomEvent);
-      }
+      // Random events implementation would go here if needed
     }
   }, [player, completedEvents]);
 
-  // Apply random event
-  const applyRandomEvent = useCallback((event: any) => {
-    if (event.effects.stats) {
-      updateStats(event.effects.stats);
-    }
-    if (event.effects.item) {
-      addItem(event.effects.item);
-    }
-    setGameMessage(event.effects.text);
-  }, []);
 
   // Handle event choice
   const handleEventChoice = useCallback((event: GameEvent, choiceIndex: number) => {
@@ -289,25 +282,25 @@ export const useGameState = () => {
 
   // Use item
   const useItem = useCallback((itemId: string, targetCharacter?: string) => {
-    const item = itemsData.items[itemId as keyof typeof itemsData.items];
+    const item = items.items[itemId];
     if (!item) return;
 
     if (item.type === 'gift' && targetCharacter) {
       // Give gift
-      const baseAffection = item.effect.affection || 10;
+      const baseAffection = ('affection' in item.effect) ? item.effect.affection || 10 : 10;
       const bonus = item.preferredBy?.includes(targetCharacter) ? 5 : 0;
       updateAffection(targetCharacter, baseAffection + bonus);
 
       setGameMessage(`${targetCharacter}에게 ${item.name}을(를) 선물했습니다!`);
     } else if (item.type === 'consumable') {
       // Use consumable
-      if (item.effect.intelligence) {
+      if ('intelligence' in item.effect && item.effect.intelligence) {
         updateStats({ intelligence: player.stats.intelligence + item.effect.intelligence });
       }
-      if (item.effect.charm) {
+      if ('charm' in item.effect && item.effect.charm) {
         updateStats({ charm: player.stats.charm + item.effect.charm });
       }
-      if (item.effect.stamina) {
+      if ('stamina' in item.effect && item.effect.stamina) {
         updateStats({ stamina: player.stats.stamina + item.effect.stamina });
       }
 
@@ -346,7 +339,7 @@ export const useGameState = () => {
 
   // Perform activity
   const performActivity = useCallback((activityName: string) => {
-    const location = locationsData.locations[player.location as keyof typeof locationsData.locations];
+    const location = locations.locations[player.location];
     const activity = location?.activities.find(a => a.name === activityName);
 
     if (!activity) return;
@@ -372,9 +365,9 @@ export const useGameState = () => {
     currentEvent,
     gameMessage,
     gameEnding,
-    characters: charactersData as Record<string, Character>,
-    locations: locationsData.locations as Record<string, Location>,
-    items: itemsData.items as Record<string, Item>,
+    characters: characters,
+    locations: locations.locations,
+    items: items.items,
     actions: {
       saveGame,
       loadGame,

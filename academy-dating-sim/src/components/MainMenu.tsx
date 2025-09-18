@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { SaveData } from '../types/game';
+import type { SaveData } from '../types/game';
 
 interface MainMenuProps {
   onNewGame: () => void;
-  onLoadGame: () => void;
-  onStartGame: () => void;
-  hasSaveData: boolean;
+  onContinue: () => void;
 }
 
 const MainMenu: React.FC<MainMenuProps> = ({
   onNewGame,
-  onLoadGame,
-  onStartGame,
-  hasSaveData,
+  onContinue,
 }) => {
   const [saveData, setSaveData] = useState<SaveData | null>(null);
   const [showCredits, setShowCredits] = useState(false);
@@ -35,16 +31,14 @@ const MainMenu: React.FC<MainMenuProps> = ({
     setAnimationClass('animate-pulse');
     setTimeout(() => {
       onNewGame();
-      onStartGame();
     }, 300);
   };
 
-  const handleLoadGame = () => {
-    if (hasSaveData) {
+  const handleContinue = () => {
+    if (saveData) {
       setAnimationClass('animate-pulse');
       setTimeout(() => {
-        onLoadGame();
-        onStartGame();
+        onContinue();
       }, 300);
     }
   };
@@ -103,21 +97,21 @@ const MainMenu: React.FC<MainMenuProps> = ({
 
             {/* Continue Game Button */}
             <button
-              onClick={handleLoadGame}
-              disabled={!hasSaveData}
+              onClick={handleContinue}
+              disabled={!saveData}
               className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-300 transform flex items-center justify-center gap-3 text-lg ${
-                hasSaveData
+                saveData
                   ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white hover:scale-105 hover:shadow-lg'
                   : 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
               }`}
             >
               <span className="text-2xl">📂</span>
               게임 이어하기
-              {!hasSaveData && <span className="text-sm">(저장된 게임 없음)</span>}
+              {!saveData && <span className="text-sm">(저장된 게임 없음)</span>}
             </button>
 
             {/* Save Data Info */}
-            {hasSaveData && saveData && progress && (
+            {saveData && progress && (
               <div className="bg-purple-900/40 rounded-lg p-4 border border-purple-600/30">
                 <h3 className="text-pink-200 font-semibold mb-3 flex items-center gap-2">
                   <span>💾</span>

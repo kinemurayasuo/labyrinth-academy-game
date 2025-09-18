@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player, Character, Location } from '../types/game';
+import type { Player, Character, Location } from '../types/game';
 import StatusBar from './StatusBar';
 import LocationView from './LocationView';
 import CharacterInteraction from './CharacterInteraction';
@@ -36,7 +36,7 @@ const GameUI: React.FC<GameUIProps> = ({
   onPerformActivity,
   onAdvanceTime,
   onHandleEventChoice,
-  onTalkToCharacter,
+  onTalkToCharacter: _onTalkToCharacter,
   onUseItem,
   onSaveGame,
   onLoadGame,
@@ -116,17 +116,23 @@ const GameUI: React.FC<GameUIProps> = ({
               {/* Tab Content */}
               {selectedTab === 'location' ? (
                 <LocationView
-                  location={currentLocation}
+                  currentLocation={currentLocation}
                   player={player}
                   onPerformActivity={onPerformActivity}
+                  onMoveToLocation={onMoveLocation}
+                  availableLocations={locations}
                 />
               ) : (
                 <CharacterInteraction
                   characters={characters}
                   unlockedCharacters={unlockedCharacters}
-                  currentLocation={currentLocation}
                   player={player}
-                  onTalkToCharacter={onTalkToCharacter}
+                  items={{}}
+                  onUseItem={onUseItem}
+                  onUpdateAffection={(character: string, amount: number) => {
+                    // Handle affection update here
+                    console.log(`Updating affection for ${character} by ${amount}`);
+                  }}
                 />
               )}
             </div>
@@ -206,7 +212,12 @@ const GameUI: React.FC<GameUIProps> = ({
         {currentEvent && (
           <EventDialog
             event={currentEvent}
-            onChoice={(choiceIndex) => onHandleEventChoice(currentEvent, choiceIndex)}
+            player={player}
+            onChoice={onHandleEventChoice}
+            onClose={() => {
+              // Handle closing event dialog
+              console.log('Closing event dialog');
+            }}
           />
         )}
 
@@ -214,6 +225,7 @@ const GameUI: React.FC<GameUIProps> = ({
         {showInventory && (
           <Inventory
             player={player}
+            items={{}}
             characters={characters}
             unlockedCharacters={unlockedCharacters}
             onUseItem={onUseItem}

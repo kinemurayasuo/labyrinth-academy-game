@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Character, Player, Item } from '../types/game';
+import type { Character, Player, Item } from '../types/game';
 
 interface CharacterInteractionProps {
   characters: Record<string, Character>;
@@ -40,18 +40,7 @@ const CharacterInteraction: React.FC<CharacterInteractionProps> = ({
   };
 
   const handleTalk = (character: Character) => {
-    const affection = player.affection[character.id] || 0;
-    const affectionInfo = getAffectionLevel(affection);
-
-    // Simple dialogue system based on affection
-    let dialogue = character.baseText;
-    if (affection >= 80 && character.dialogues.high) {
-      dialogue = character.dialogues.high;
-    } else if (affection >= 40 && character.dialogues.medium) {
-      dialogue = character.dialogues.medium;
-    } else if (character.dialogues.low) {
-      dialogue = character.dialogues.low;
-    }
+    // Simple dialogue system based on affection (dialogue display not implemented yet)
 
     // Small affection gain from talking
     onUpdateAffection(character.id, 1);

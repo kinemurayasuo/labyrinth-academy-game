@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Player, Item, Character } from '../types/game';
+import type { Player, Item, Character } from '../types/game';
 
 interface InventoryProps {
   player: Player;
@@ -7,6 +7,7 @@ interface InventoryProps {
   characters: Record<string, Character>;
   unlockedCharacters: string[];
   onUseItem: (itemId: string, targetCharacter?: string) => void;
+  onClose: () => void;
 }
 
 const Inventory: React.FC<InventoryProps> = ({
@@ -15,6 +16,7 @@ const Inventory: React.FC<InventoryProps> = ({
   characters,
   unlockedCharacters,
   onUseItem,
+  onClose: _onClose,
 }) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showGiftTarget, setShowGiftTarget] = useState(false);

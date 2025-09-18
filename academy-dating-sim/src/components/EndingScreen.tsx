@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { EndingType, Player } from '../types/game';
+import type { EndingType, Player } from '../types/game';
 
 interface EndingScreenProps {
   endingType: EndingType;
   player: Player;
+  characters: Record<string, any>;
+  completedEvents: string[];
   onRestart: () => void;
   onMainMenu: () => void;
 }
@@ -20,6 +22,8 @@ interface EndingData {
 const EndingScreen: React.FC<EndingScreenProps> = ({
   endingType,
   player,
+  characters: _characters,
+  completedEvents: _completedEvents,
   onRestart,
   onMainMenu,
 }) => {
@@ -334,7 +338,7 @@ const EndingScreen: React.FC<EndingScreenProps> = ({
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           25% { transform: translateY(-10px) rotate(5deg); }

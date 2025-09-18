@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameEvent, Player } from '../types/game';
+import type { GameEvent, Player } from '../types/game';
 
 interface EventDialogProps {
   event: GameEvent;

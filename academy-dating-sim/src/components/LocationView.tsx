@@ -1,5 +1,5 @@
 import React from 'react';
-import { Location, Player } from '../types/game';
+import type { Location, Player } from '../types/game';
 
 interface LocationViewProps {
   currentLocation: Location;
