@@ -44,6 +44,7 @@ export interface Character {
   baseText: string;
   dialogues: Record<string, string>;
   sprite: string;
+  image?: string;
   unlockCondition?: {
     day?: number;
     totalAffection?: number;

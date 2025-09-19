@@ -23,7 +23,9 @@
       "WebFetch(domain:kinemurayasuo.github.io)",
       "Bash(git rm:*)",
       "Bash(npx vite build:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(npx gh-pages:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

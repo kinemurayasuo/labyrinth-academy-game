@@ -14,7 +14,7 @@ const VisualNovelDialog: React.FC<VisualNovelDialogProps> = ({
   character,
   player,
   onChoice,
-  onClose,
+  onClose: _onClose,
 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);

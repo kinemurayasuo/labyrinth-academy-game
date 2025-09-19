@@ -16,7 +16,7 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
   onInteract,
 }) => {
   const [selectedCell, setSelectedCell] = useState<{ x: number; y: number } | null>(null);
-  const [playerPosition, setPlayerPosition] = useState(player.dungeonProgress.position);
+  const [, setPlayerPosition] = useState(player.dungeonProgress.position);
   const [isMoving, setIsMoving] = useState(false);
   const [moveAnimation, setMoveAnimation] = useState<{ from: { x: number; y: number }, to: { x: number; y: number } } | null>(null);
 
