@@ -119,6 +119,32 @@ main {
     justify-content: center;
 }
 
+#characterButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+#characterButtons button {
+    flex: 1;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+#characterButtons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #ff5252 0%, #ff6b6b 100%);
+}
+
 .action-buttons button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -383,6 +409,22 @@ main {
         min-width: unset;
         padding: 15px 10px;
         font-size: 0.95em;
+    }
+
+    #characterButtons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 5px;
+    }
+
+    #characterButtons button {
+        flex: 0 0 auto;
+        min-width: 120px;
+        padding: 12px 15px;
+        font-size: 0.9em;
     }
 
     .text-box {
