@@ -127,7 +127,7 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
 
                 <div className="bg-black/30 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-border">
                   <h3 className="text-lg font-bold mb-4 text-text-primary">캐릭터 선택</h3>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex gap-4 justify-center overflow-x-auto">
                     {unlockedCharacters.map(characterId => {
                       const character = characters[characterId];
                       if (!character) return null;
@@ -136,16 +136,14 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
                         <button
                           key={characterId}
                           onClick={() => setSelectedCharacter(characterId)}
-                          className={`p-2 rounded-lg transition-all border-2 flex items-center gap-2 ${
+                          className={`px-6 py-3 rounded-lg transition-all border-2 flex flex-col items-center gap-2 min-w-[120px] ${
                             selectedCharacter === characterId
-                              ? 'border-primary bg-primary/20 scale-105'
-                              : 'border-border hover:border-primary hover:bg-primary/10'
+                              ? 'border-primary bg-primary/20 scale-105 shadow-lg'
+                              : 'border-border hover:border-primary hover:bg-primary/10 hover:shadow-md'
                           }`}
                         >
-                          <span className="text-2xl">{character.sprite}</span>
-                          <div>
-                            <div className="font-bold text-text-primary text-sm">{character.name}</div>
-                          </div>
+                          <span className="text-3xl">{character.sprite}</span>
+                          <div className="font-bold text-text-primary text-sm whitespace-nowrap">{character.name}</div>
                         </button>
                       );
                     })}

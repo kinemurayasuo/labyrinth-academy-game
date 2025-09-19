@@ -19,7 +19,10 @@
       "Bash(npm run type-check:*)",
       "Bash(npx tsc:*)",
       "Bash(npm uninstall:*)",
-      "Bash(npm run deploy:*)"
+      "Bash(npm run deploy:*)",
+      "WebFetch(domain:kinemurayasuo.github.io)",
+      "Bash(git rm:*)",
+      "Bash(npx vite build:*)"
     ],
     "deny": [],
     "ask": []
