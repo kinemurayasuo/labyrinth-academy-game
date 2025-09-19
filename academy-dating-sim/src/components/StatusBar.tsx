@@ -40,33 +40,33 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
   const maxMP = player.maxMp ?? 50;
 
   return (
-    <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 text-gray-800 p-6 mb-6">
+    <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border text-text-primary p-6 mb-6">
       {/* Prominent HP/MP Display at Top */}
       <div className="mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Prominent HP Bar */}
-          <div className="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl border border-red-200 shadow-lg">
+          <div className="bg-gradient-to-br from-red-900/20 to-red-800/20 p-4 rounded-xl border border-red-500/30 shadow-lg">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-xl">❤️</span>
                 </div>
                 <div>
-                  <span className="text-lg font-bold text-red-700">체력</span>
-                  <div className="text-xs text-red-600">Health Points</div>
+                  <span className="text-lg font-bold text-red-400">체력</span>
+                  <div className="text-xs text-red-300">Health Points</div>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-3xl font-bold text-red-700">
+                <span className="text-3xl font-bold text-red-400">
                   {currentHP}
                 </span>
-                <span className="text-red-600 text-xl">/{maxHP}</span>
-                <div className="text-xs text-red-600">
+                <span className="text-red-300 text-xl">/{maxHP}</span>
+                <div className="text-xs text-red-300">
                   {Math.round((currentHP / maxHP) * 100)}%
                 </div>
               </div>
             </div>
-            <div className="w-full bg-red-200 rounded-full h-4 shadow-inner">
+            <div className="w-full bg-red-950/50 rounded-full h-4 shadow-inner">
               <div
                 className="bg-gradient-to-r from-red-500 via-red-400 to-red-300 h-4 rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${(currentHP / maxHP) * 100}%` }}
@@ -75,28 +75,28 @@ const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
           </div>
 
           {/* Prominent MP Bar */}
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200 shadow-lg">
+          <div className="bg-gradient-to-br from-blue-900/20 to-blue-800/20 p-4 rounded-xl border border-blue-500/30 shadow-lg">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-xl">💙</span>
                 </div>
                 <div>
-                  <span className="text-lg font-bold text-blue-700">마나</span>
-                  <div className="text-xs text-blue-600">Magic Points</div>
+                  <span className="text-lg font-bold text-blue-400">마나</span>
+                  <div className="text-xs text-blue-300">Magic Points</div>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-3xl font-bold text-blue-700">
+                <span className="text-3xl font-bold text-blue-400">
                   {currentMP}
                 </span>
-                <span className="text-blue-600 text-xl">/{maxMP}</span>
-                <div className="text-xs text-blue-600">
+                <span className="text-blue-300 text-xl">/{maxMP}</span>
+                <div className="text-xs text-blue-300">
                   {Math.round((currentMP / maxMP) * 100)}%
                 </div>
               </div>
             </div>
-            <div className="w-full bg-blue-200 rounded-full h-4 shadow-inner">
+            <div className="w-full bg-blue-950/50 rounded-full h-4 shadow-inner">
               <div
                 className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 h-4 rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${(currentMP / maxMP) * 100}%` }}
