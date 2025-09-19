@@ -1,11 +1,12 @@
 import React from 'react';
 import type { Player, Character, Location } from '../types/game';
 import StatusBar from './StatusBar';
-import HPMPDisplay from './HPMPDisplay';
 import LocationView from './LocationView';
 import CharacterInteraction from './CharacterInteraction';
 import EventDialog from './EventDialog';
 import Inventory from './Inventory';
+import HeroineCharacterCards from './HeroineCharacterCards';
+import HeroineEvents from './HeroineEvents';
 
 interface GameUIProps {
   player: Player;
@@ -44,16 +45,13 @@ const GameUI: React.FC<GameUIProps> = ({
 }) => {
   const [showInventory, setShowInventory] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters'>('location');
+  const [showDungeonEntry, setShowDungeonEntry] = React.useState(false);
+  const [showCharacterCards, setShowCharacterCards] = React.useState(false);
+  const [showHeroineEvents, setShowHeroineEvents] = React.useState(false);
+  const [selectedHeroine, setSelectedHeroine] = React.useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 pt-24 p-4">
-      {/* Fixed HP/MP Display at top */}
-      <HPMPDisplay
-        hp={player.hp}
-        maxHp={player.maxHp}
-        mp={player.mp}
-        maxMp={player.maxMp}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
@@ -79,6 +77,18 @@ const GameUI: React.FC<GameUIProps> = ({
                 className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition"
               >
                 🎒 인벤토리
+              </button>
+              <button
+                onClick={() => setShowDungeonEntry(!showDungeonEntry)}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition animate-pulse"
+              >
+                ⚔️ 던전 입장
+              </button>
+              <button
+                onClick={() => setShowCharacterCards(!showCharacterCards)}
+                className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition"
+              >
+                👥 캐릭터 카드
               </button>
             </div>
           </div>
@@ -238,6 +248,111 @@ const GameUI: React.FC<GameUIProps> = ({
             unlockedCharacters={unlockedCharacters}
             onUseItem={onUseItem}
             onClose={() => setShowInventory(false)}
+          />
+        )}
+
+        {/* Dungeon Entry Modal */}
+        {showDungeonEntry && (
+          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-br from-gray-900 to-red-900 rounded-lg p-6 max-w-md w-full border border-red-500/30">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                  ⚔️ 던전 입장
+                </h2>
+                <button
+                  onClick={() => setShowDungeonEntry(false)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-4 text-white">
+                <p className="text-gray-300">
+                  위험한 던전에 입장하시겠습니까? 몬스터와의 전투가 있을 수 있습니다.
+                </p>
+
+                <div className="bg-red-800/30 p-3 rounded border border-red-600/50">
+                  <div className="text-sm text-red-300 mb-2">현재 상태:</div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>체력: {player.hp}/{player.maxHp}</div>
+                    <div>마나: {player.mp}/{player.maxMp}</div>
+                    <div>레벨: {player.level}</div>
+                    <div>층수: {player.dungeonProgress.currentFloor}</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setShowDungeonEntry(false);
+                      // Navigate to dungeon - this would be handled by parent component
+                      console.log('Entering dungeon...');
+                    }}
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition"
+                  >
+                    입장하기
+                  </button>
+                  <button
+                    onClick={() => setShowDungeonEntry(false)}
+                    className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded transition"
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Character Cards Modal */}
+        {showCharacterCards && (
+          <HeroineCharacterCards
+            characters={characters}
+            player={player}
+            unlockedCharacters={unlockedCharacters}
+            onClose={() => setShowCharacterCards(false)}
+            onInteract={(characterId) => {
+              setShowCharacterCards(false);
+              setSelectedHeroine(characterId);
+              setShowHeroineEvents(true);
+            }}
+          />
+        )}
+
+        {/* Heroine Events Modal */}
+        {showHeroineEvents && selectedHeroine && characters[selectedHeroine] && (
+          <HeroineEvents
+            character={characters[selectedHeroine]}
+            player={player}
+            onEventComplete={(effects) => {
+              // Handle event effects
+              if (effects.affection) {
+                Object.entries(effects.affection).forEach(([charId, amount]) => {
+                  // This would update affection through parent component
+                  console.log(`Updating affection for ${charId} by ${amount}`);
+                });
+              }
+              if (effects.stats) {
+                // Handle stat updates
+                console.log('Updating stats:', effects.stats);
+              }
+              if (effects.money) {
+                // Handle money changes
+                console.log('Money change:', effects.money);
+              }
+              if (effects.item) {
+                // Handle item addition
+                console.log('Adding item:', effects.item);
+              }
+
+              setShowHeroineEvents(false);
+              setSelectedHeroine(null);
+            }}
+            onClose={() => {
+              setShowHeroineEvents(false);
+              setSelectedHeroine(null);
+            }}
           />
         )}
       </div>

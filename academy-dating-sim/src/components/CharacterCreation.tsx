@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import CharacterPortrait from './CharacterPortrait';
 
 interface CharacterCreationData {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
   playerName: string;
   startingStats: {
     intelligence: number;
@@ -20,19 +16,16 @@ interface CharacterCreationData {
 
 interface CharacterCreationProps {
   onCreateCharacter: (data: CharacterCreationData) => boolean;
+  onCancel?: () => void;
 }
 
-const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter }) => {
+const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter, onCancel }) => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const [formData, setFormData] = useState<CharacterCreationData>({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
     playerName: '',
     startingStats: {
       intelligence: 10,
@@ -72,17 +65,6 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
   };
 
   const validateStep1 = () => {
-    if (!formData.username.trim()) return '아이디를 입력해주세요.';
-    if (formData.username.length < 3) return '아이디는 최소 3자 이상이어야 합니다.';
-    if (!formData.email.trim()) return '이메일을 입력해주세요.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return '올바른 이메일 형식을 입력해주세요.';
-    if (!formData.password.trim()) return '비밀번호를 입력해주세요.';
-    if (formData.password.length < 6) return '비밀번호는 최소 6자 이상이어야 합니다.';
-    if (formData.password !== formData.confirmPassword) return '비밀번호가 일치하지 않습니다.';
-    return null;
-  };
-
-  const validateStep2 = () => {
     if (!formData.playerName.trim()) return '캐릭터 이름을 입력해주세요.';
     if (formData.playerName.length < 2) return '캐릭터 이름은 최소 2자 이상이어야 합니다.';
     return null;
@@ -97,12 +79,6 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
         setError(error);
         return;
       }
-    } else if (currentStep === 2) {
-      const error = validateStep2();
-      if (error) {
-        setError(error);
-        return;
-      }
     }
 
     setCurrentStep(prev => prev + 1);
@@ -113,76 +89,23 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
     setIsLoading(true);
 
     try {
-      // Simulate account creation delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Simulate character creation delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       const success = onCreateCharacter(formData);
       if (success) {
-        navigate('/');
+        navigate('/game');
       } else {
-        setError('계정 생성 중 오류가 발생했습니다.');
+        setError('캐릭터 생성 중 오류가 발생했습니다.');
       }
     } catch (err) {
-      setError('계정 생성 중 오류가 발생했습니다.');
+      setError('캐릭터 생성 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const renderStep1 = () => (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2">계정 정보</h2>
-        <p className="text-purple-200">새 계정을 만들어 게임을 시작해보세요</p>
-      </div>
-
-      <div>
-        <label className="block text-white text-sm font-semibold mb-2">아이디</label>
-        <input
-          type="text"
-          value={formData.username}
-          onChange={(e) => handleInputChange('username', e.target.value)}
-          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          placeholder="아이디를 입력하세요 (3자 이상)"
-        />
-      </div>
-
-      <div>
-        <label className="block text-white text-sm font-semibold mb-2">이메일</label>
-        <input
-          type="email"
-          value={formData.email}
-          onChange={(e) => handleInputChange('email', e.target.value)}
-          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          placeholder="이메일을 입력하세요"
-        />
-      </div>
-
-      <div>
-        <label className="block text-white text-sm font-semibold mb-2">비밀번호</label>
-        <input
-          type="password"
-          value={formData.password}
-          onChange={(e) => handleInputChange('password', e.target.value)}
-          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          placeholder="비밀번호를 입력하세요 (6자 이상)"
-        />
-      </div>
-
-      <div>
-        <label className="block text-white text-sm font-semibold mb-2">비밀번호 확인</label>
-        <input
-          type="password"
-          value={formData.confirmPassword}
-          onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          placeholder="비밀번호를 다시 입력하세요"
-        />
-      </div>
-    </div>
-  );
-
-  const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-white mb-2">캐릭터 설정</h2>
@@ -215,7 +138,7 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
     </div>
   );
 
-  const renderStep3 = () => (
+  const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-white mb-2">능력치 분배</h2>
@@ -299,13 +222,13 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between text-sm text-purple-300 mb-2">
-            <span>단계 {currentStep}/3</span>
-            <span>{Math.round((currentStep / 3) * 100)}%</span>
+            <span>단계 {currentStep}/2</span>
+            <span>{Math.round((currentStep / 2) * 100)}%</span>
           </div>
           <div className="w-full bg-gray-700 rounded-full h-2">
             <div
               className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(currentStep / 3) * 100}%` }}
+              style={{ width: `${(currentStep / 2) * 100}%` }}
             />
           </div>
         </div>
@@ -313,7 +236,6 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
         {/* Content */}
         {currentStep === 1 && renderStep1()}
         {currentStep === 2 && renderStep2()}
-        {currentStep === 3 && renderStep3()}
 
         {/* Error Message */}
         {error && (
@@ -333,7 +255,7 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
             </button>
           )}
 
-          {currentStep < 3 ? (
+          {currentStep < 2 ? (
             <button
               onClick={handleNext}
               className="flex-1 py-3 px-6 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105"
@@ -352,7 +274,7 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
                   <span>생성 중...</span>
                 </div>
               ) : (
-                '계정 생성'
+                '캐릭터 생성'
               )}
             </button>
           )}
@@ -360,10 +282,10 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
 
         <div className="text-center mt-4">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => onCancel ? onCancel() : navigate('/')}
             className="text-purple-300 hover:text-white text-sm transition-colors"
           >
-            홈으로 돌아가기
+            {onCancel ? '취소' : '홈으로 돌아가기'}
           </button>
         </div>
       </div>

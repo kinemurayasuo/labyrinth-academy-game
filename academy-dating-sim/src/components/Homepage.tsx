@@ -3,15 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import CharacterPortrait from './CharacterPortrait';
 
 interface HomepageProps {
-  onStartGame: () => void;
+  onStartGame: () => boolean;
   onLoadGame: () => void;
   hasSavedGame: boolean;
+  isLoggedIn: boolean;
+  user: any;
 }
 
 const Homepage: React.FC<HomepageProps> = ({
   onStartGame,
   onLoadGame,
   hasSavedGame,
+  isLoggedIn,
+  user,
 }) => {
   const navigate = useNavigate();
   const [animationPhase, setAnimationPhase] = useState(0);
@@ -25,8 +29,10 @@ const Homepage: React.FC<HomepageProps> = ({
   }, []);
 
   const handleStartGame = () => {
-    onStartGame();
-    navigate('/game');
+    const result = onStartGame();
+    if (result) {
+      navigate('/character-creation');
+    }
   };
 
   const handleLoadGame = () => {
@@ -34,8 +40,8 @@ const Homepage: React.FC<HomepageProps> = ({
     navigate('/game');
   };
 
-  const handleCharacterCreation = () => {
-    navigate('/character-creation');
+  const handleAccountCreation = () => {
+    navigate('/account-creation');
   };
 
   const handleLogin = () => {
@@ -137,14 +143,25 @@ const Homepage: React.FC<HomepageProps> = ({
             {/* Main Actions */}
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-white mb-4">게임 시작</h3>
+              {isLoggedIn && user && (
+                <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-3 mb-4">
+                  <div className="text-green-300 text-sm">로그인됨</div>
+                  <div className="text-white font-medium">{user.username}</div>
+                </div>
+              )}
 
               <button
                 onClick={handleStartGame}
-                className="w-full py-4 px-6 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                disabled={!isLoggedIn}
+                className={`w-full py-4 px-6 text-white font-bold rounded-xl transition-all duration-300 transform shadow-lg ${
+                  isLoggedIn
+                    ? "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 hover:scale-105"
+                    : "bg-gray-500 cursor-not-allowed opacity-50"
+                }`}
               >
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-2xl">🎮</span>
-                  <span>새 게임 시작</span>
+                  <span>{isLoggedIn ? "새 게임 시작" : "로그인 후 이용 가능"}</span>
                 </div>
               </button>
 
@@ -161,12 +178,12 @@ const Homepage: React.FC<HomepageProps> = ({
               )}
 
               <button
-                onClick={handleCharacterCreation}
+                onClick={handleAccountCreation}
                 className="w-full py-4 px-6 bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-2xl">👤</span>
-                  <span>캐릭터 생성</span>
+                  <span>계정 생성</span>
                 </div>
               </button>
             </div>
@@ -196,7 +213,7 @@ const Homepage: React.FC<HomepageProps> = ({
               </button>
 
               <button
-                onClick={() => navigate('/about')}
+                onClick={() => navigate('/game-info')}
                 className="w-full py-3 px-6 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
               >
                 <div className="flex items-center justify-center gap-3">

@@ -8,6 +8,9 @@ import Login from './components/Login';
 import CharacterCreation from './components/CharacterCreation';
 import CharacterManagement from './components/CharacterManagement';
 import DungeonMap from './components/DungeonMap';
+import AccountCreation from './components/AccountCreation';
+import GameInfo from './components/GameInfo';
+import Settings from './components/Settings';
 import itemsData from './data/items.json';
 import dungeonsData from './data/dungeons.json';
 import type { DungeonFloor, Item } from './types/game';
@@ -17,8 +20,8 @@ const dungeonFloors = dungeonsData.floors as DungeonFloor[];
 
 function App() {
   // Force rebuild - v0.0.1
-  const [, setIsLoggedIn] = useState(false);
-  const [, setUser] = useState<any>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const [showCharacterManagement, setShowCharacterManagement] = useState(false);
   const [showDungeonMap, setShowDungeonMap] = useState(false);
 
@@ -34,20 +37,31 @@ function App() {
     return false;
   };
 
-  const handleCreateCharacter = (data: any) => {
-    // Simulate character creation
+  const handleCreateAccount = (data: any) => {
+    // Simulate account creation
     setIsLoggedIn(true);
     setUser({
       username: data.username,
       email: data.email,
-      playerName: data.playerName,
     });
-    // Apply starting stats to game state if needed
+    return true;
+  };
+
+  const handleCreateCharacter = (_data: any) => {
+    // Apply character data to game state
+    gameState.actions.resetGame();
+    // Set player name and starting stats in the game state
+    // This would require extending the resetGame function to accept initial data
     return true;
   };
 
   const handleStartGame = () => {
-    gameState.actions.resetGame();
+    if (!isLoggedIn) {
+      alert('게임을 시작하려면 먼저 로그인해주세요.');
+      return false;
+    }
+    // This will be handled by the Homepage component
+    return true;
   };
 
   const handleLoadGame = () => {
@@ -114,6 +128,8 @@ function App() {
                 onStartGame={handleStartGame}
                 onLoadGame={handleLoadGame}
                 hasSavedGame={hasSavedGame()}
+                isLoggedIn={isLoggedIn}
+                user={user}
               />
             }
           />
@@ -124,8 +140,23 @@ function App() {
           />
 
           <Route
+            path="/account-creation"
+            element={<AccountCreation onCreateAccount={handleCreateAccount} />}
+          />
+
+          <Route
             path="/character-creation"
             element={<CharacterCreation onCreateCharacter={handleCreateCharacter} />}
+          />
+
+          <Route
+            path="/game-info"
+            element={<GameInfo />}
+          />
+
+          <Route
+            path="/settings"
+            element={<Settings />}
           />
 
           <Route

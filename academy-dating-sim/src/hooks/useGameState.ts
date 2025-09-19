@@ -97,9 +97,25 @@ export const useGameState = () => {
 
   // Reset game
   const resetGame = useCallback(() => {
-    setPlayer(INITIAL_PLAYER);
+    // Create a fresh copy of INITIAL_PLAYER to ensure complete reset
+    const freshPlayer: Player = {
+      ...INITIAL_PLAYER,
+      stats: { ...INITIAL_PLAYER.stats },
+      inventory: [],
+      equipment: {},
+      affection: {},
+      flags: {},
+      dungeonProgress: {
+        currentFloor: 1,
+        maxFloorReached: 1,
+        position: { x: 0, y: 0 },
+      },
+    };
+
+    setPlayer(freshPlayer);
     setUnlockedCharacters(['sakura', 'yuki', 'luna']);
     setCompletedEvents([]);
+    setCurrentEvent(null);
     setGameEnding(null);
     setGameMessage('새로운 게임을 시작합니다!');
     localStorage.removeItem('academyDatingSim');
