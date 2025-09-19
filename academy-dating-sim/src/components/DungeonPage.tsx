@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Player, DungeonFloor } from '../types/game';
+import type { Player, DungeonFloor, Monster } from '../types/game';
 import DungeonMap from './DungeonMap';
+import BattleScreen from './BattleScreen';
 
 interface DungeonPageProps {
   player: Player;
@@ -24,6 +25,7 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isInBattle, setIsInBattle] = useState(false);
+  const [currentEnemy, setCurrentEnemy] = useState<Monster | null>(null);
   const [gameMessage, setGameMessage] = useState('던전에 입장했습니다!');
 
   const handleExitDungeon = () => {
@@ -36,15 +38,24 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
   const handlePlayerMove = (newX: number, newY: number) => {
     // Check for random encounters
     if (Math.random() < 0.3) {
+      const enemy: Monster = {
+        id: 'dungeon_monster',
+        name: '던전 몬스터',
+        hp: 50 + Math.floor(Math.random() * 30),
+        maxHp: 80,
+        attack: 15 + Math.floor(Math.random() * 10),
+        defense: 5 + Math.floor(Math.random() * 5),
+        agility: 10,
+        experience: 20,
+        drops: [],
+        sprite: '👾',
+        description: '던전의 어둠 속에서 나타난 몬스터'
+      };
+      setCurrentEnemy(enemy);
       setGameMessage('몬스터가 나타났습니다!');
       setIsInBattle(true);
       if (onBattle) {
-        onBattle({
-          name: '던전 몬스터',
-          hp: 50,
-          attack: 15,
-          defense: 5,
-        });
+        onBattle(enemy);
       }
     } else {
       setGameMessage('던전을 탐험 중입니다...');
@@ -73,6 +84,38 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
     }
     onInteract(x, y);
   };
+
+  const handleBattleVictory = (rewards: { exp: number; gold: number; items: string[] }) => {
+    setIsInBattle(false);
+    setCurrentEnemy(null);
+    setGameMessage(`승리! 경험치 +${rewards.exp}, 골드 +${rewards.gold}를 획득했습니다!`);
+  };
+
+  const handleBattleDefeat = () => {
+    setIsInBattle(false);
+    setCurrentEnemy(null);
+    setGameMessage('패배했습니다... 던전 입구로 돌아갑니다.');
+    // Reset player position
+  };
+
+  const handleFlee = () => {
+    setIsInBattle(false);
+    setCurrentEnemy(null);
+    setGameMessage('전투에서 도망쳤습니다.');
+  };
+
+  // Show battle screen if in battle
+  if (isInBattle && currentEnemy) {
+    return (
+      <BattleScreen
+        player={player}
+        enemy={currentEnemy}
+        onVictory={handleBattleVictory}
+        onDefeat={handleBattleDefeat}
+        onFlee={handleFlee}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-4">

@@ -30,8 +30,8 @@ const INITIAL_PLAYER: Player = {
   inventory: [],
   equipment: {},
   affection: {
-    sakura: 5,
-    yuki: 10,
+    sakura: 0,
+    yuki: 0,
     luna: 0,
   },
   location: 'classroom',
@@ -105,8 +105,8 @@ export const useGameState = () => {
       inventory: [],
       equipment: {},
       affection: {
-        sakura: 5,
-        yuki: 10,
+        sakura: 0,
+        yuki: 0,
         luna: 0,
       },
       flags: {},
@@ -409,12 +409,23 @@ export const useGameState = () => {
 
     // Special handling for rest activity - restore stamina instead of consuming
     if (activityName === '휴식하기' || activityName === '휴식') {
+      const restoredStamina = 10;
+      const restoredHp = 20;
+      const restoredMp = 10;
+
       const newStats = {
         ...player.stats,
-        stamina: Math.min(player.stats.stamina + 10, 20) // Restore 10 stamina up to max of 20
+        stamina: Math.min(player.stats.stamina + restoredStamina, 20) // Restore 10 stamina up to max of 20
       };
-      updateStats(newStats);
-      setGameMessage('휴식을 취해 체력이 회복되었습니다.');
+
+      setPlayer(prev => ({
+        ...prev,
+        stats: newStats,
+        hp: Math.min(prev.hp + restoredHp, prev.maxHp),
+        mp: Math.min(prev.mp + restoredMp, prev.maxMp)
+      }));
+
+      setGameMessage(`💤 휴식을 취했습니다! 체력 +${restoredStamina}, HP +${restoredHp}, MP +${restoredMp} 회복되었습니다.`);
       advanceTime();
       return;
     }

@@ -20,6 +20,11 @@ const Homepage: React.FC<HomepageProps> = ({
   const navigate = useNavigate();
   const [animationPhase, setAnimationPhase] = useState(0);
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimationPhase((prev) => (prev + 1) % 4);
@@ -193,12 +198,12 @@ const Homepage: React.FC<HomepageProps> = ({
               <h3 className="text-xl font-bold text-white mb-4">계정 관리</h3>
 
               <button
-                onClick={handleLogin}
+                onClick={isLoggedIn ? handleLogout : handleLogin}
                 className="w-full py-4 px-6 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">🔐</span>
-                  <span>로그인</span>
+                  <span className="text-2xl">{isLoggedIn ? '🚪' : '🔐'}</span>
+                  <span>{isLoggedIn ? '로그아웃' : '로그인'}</span>
                 </div>
               </button>
 

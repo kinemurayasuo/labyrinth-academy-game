@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import type { Player, Item, Character } from '../types/game';
+import itemsData from '../data/items.json';
 
 interface InventoryProps {
   player: Player;
-  items: Record<string, Item>;
+  items?: Record<string, Item>;
   characters: Record<string, Character>;
   unlockedCharacters: string[];
   onUseItem: (itemId: string, targetCharacter?: string) => void;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const Inventory: React.FC<InventoryProps> = ({
   player,
-  items,
+  items = itemsData.items as Record<string, Item>,
   characters,
   unlockedCharacters,
   onUseItem,

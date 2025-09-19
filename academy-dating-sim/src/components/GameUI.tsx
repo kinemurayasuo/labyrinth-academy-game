@@ -4,7 +4,7 @@ import type { Player, Character, Location } from '../types/game';
 import StatusBar from './StatusBar';
 import LocationView from './LocationView';
 import CharacterInteraction from './CharacterInteraction';
-import EventDialog from './EventDialog';
+import VisualNovelDialog from './VisualNovelDialog';
 import Inventory from './Inventory';
 import HeroineEvents from './HeroineEvents';
 
@@ -235,10 +235,11 @@ const GameUI: React.FC<GameUIProps> = ({
           </div>
         </div>
 
-        {/* Event Dialog */}
+        {/* Visual Novel Style Event Dialog */}
         {currentEvent && (
-          <EventDialog
+          <VisualNovelDialog
             event={currentEvent}
+            character={currentEvent.trigger.character ? characters[currentEvent.trigger.character] : undefined}
             player={player}
             onChoice={onHandleEventChoice}
             onClose={() => {
@@ -250,14 +251,28 @@ const GameUI: React.FC<GameUIProps> = ({
 
         {/* Inventory Modal */}
         {showInventory && (
-          <Inventory
-            player={player}
-            items={{}}
-            characters={characters}
-            unlockedCharacters={unlockedCharacters}
-            onUseItem={onUseItem}
-            onClose={() => setShowInventory(false)}
-          />
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-gray-800">🎒 인벤토리</h2>
+                <button
+                  onClick={() => setShowInventory(false)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="p-4">
+                <Inventory
+                  player={player}
+                  characters={characters}
+                  unlockedCharacters={unlockedCharacters}
+                  onUseItem={onUseItem}
+                  onClose={() => setShowInventory(false)}
+                />
+              </div>
+            </div>
+          </div>
         )}
 
 

@@ -80,10 +80,10 @@ const HeroineCharacterCards: React.FC<HeroineCharacterCardsProps> = ({
     for (const threshold of thresholds) {
       if (affectionLevel >= threshold) {
         const dialogue = character.dialogues[threshold.toString()];
-        return dialogue || "최근 대화가 없습니다";
+        return dialogue || "최근 대화가 없습니다. 만남을 가져보세요!";
       }
     }
-    return character.dialogues['0'] || "최근 대화가 없습니다";
+    return character.dialogues['0'] || "최근 대화가 없습니다. 만남을 가져보세요!";
   };
 
   const formatTime = () => {
@@ -120,8 +120,8 @@ const HeroineCharacterCards: React.FC<HeroineCharacterCardsProps> = ({
           </button>
         </div>
 
-        {/* Character Selection */}
-        <div className="flex gap-4 mb-6 justify-center">
+        {/* Character Selection - Horizontal at top */}
+        <div className="flex gap-4 mb-6 justify-center overflow-x-auto">
           {unlockedCharacters.map(characterId => {
             const character = characters[characterId];
             if (!character) return null;
@@ -130,7 +130,7 @@ const HeroineCharacterCards: React.FC<HeroineCharacterCardsProps> = ({
               <button
                 key={characterId}
                 onClick={() => setSelectedCharacter(characterId)}
-                className={`p-3 rounded-lg transition-all ${
+                className={`flex flex-col items-center p-3 rounded-lg transition-all min-w-[100px] ${
                   selectedCharacter === characterId
                     ? 'bg-purple-600 text-white scale-110'
                     : 'bg-white/20 text-white/80 hover:bg-white/30'
