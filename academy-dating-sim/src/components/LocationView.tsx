@@ -8,6 +8,7 @@ interface LocationViewProps {
   onMoveToLocation: (locationId: string) => void;
   availableLocations: Record<string, Location>;
   characters: Record<string, Character>;
+  onInteractCharacter?: (characterId: string) => void;
 }
 
 const LocationView: React.FC<LocationViewProps> = ({
@@ -17,6 +18,7 @@ const LocationView: React.FC<LocationViewProps> = ({
   onMoveToLocation,
   availableLocations,
   characters,
+  onInteractCharacter,
 }) => {
   const getActivityIcon = (activityName: string) => {
     const icons: Record<string, string> = {
@@ -212,13 +214,15 @@ const LocationView: React.FC<LocationViewProps> = ({
                 const character = characters[characterId];
                 if (!character) return null;
                 return (
-                    <div
+                    <button
                         key={characterId}
-                        className="bg-primary/20 px-4 py-2 rounded-full text-sm font-medium text-text-primary border border-border flex items-center gap-2"
+                        onClick={() => onInteractCharacter?.(characterId)}
+                        className="bg-primary/20 px-4 py-2 rounded-full text-sm font-medium text-text-primary border border-border flex items-center gap-2 hover:bg-primary/30 hover:scale-105 transition-all duration-200 cursor-pointer"
                     >
                         <span className='text-xl'>{character.sprite}</span>
                         <span>{character.name}</span>
-                    </div>
+                        <span className='text-xs text-pink-300'>💕</span>
+                    </button>
                 )
             })}
           </div>
