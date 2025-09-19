@@ -16,6 +16,7 @@ const items = itemsData.items as Record<string, Item>;
 const dungeonFloors = dungeonsData.floors as DungeonFloor[];
 
 function App() {
+  // Force rebuild - v0.0.1
   const [, setIsLoggedIn] = useState(false);
   const [, setUser] = useState<any>(null);
   const [showCharacterManagement, setShowCharacterManagement] = useState(false);
