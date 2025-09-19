@@ -11,6 +11,11 @@ const events = eventsData as { events: GameEvent[] };
 const items = itemsData as { items: Record<string, Item> };
 const locations = locationsData as { locations: Record<string, Location> };
 
+const initialAffection = Object.keys(characters).reduce((acc, charId) => {
+  acc[charId] = characters[charId].affectionStart || 0;
+  return acc;
+}, {} as Record<string, number>);
+
 const INITIAL_PLAYER: Player = {
   name: '주인공',
   level: 1,
@@ -29,11 +34,7 @@ const INITIAL_PLAYER: Player = {
   },
   inventory: [],
   equipment: {},
-  affection: {
-    sakura: 0,
-    yuki: 0,
-    luna: 0,
-  },
+  affection: initialAffection,
   location: 'classroom',
   day: 1,
   timeOfDay: 'morning',
@@ -104,11 +105,10 @@ export const useGameState = () => {
       stats: characterData?.startingStats || { ...INITIAL_PLAYER.stats },
       inventory: [],
       equipment: {},
-      affection: {
-        sakura: 0,
-        yuki: 0,
-        luna: 0,
-      },
+      affection: Object.keys(characters).reduce((acc, charId) => {
+        acc[charId] = characters[charId].affectionStart || 0;
+        return acc;
+      }, {} as Record<string, number>),
       flags: {},
       dungeonProgress: {
         currentFloor: 1,
@@ -134,6 +134,14 @@ export const useGameState = () => {
         ...prev.stats,
         ...stats,
       },
+    }));
+  }, []);
+
+  const updateHpMp = useCallback((hp: number, mp: number) => {
+    setPlayer(prev => ({
+      ...prev,
+      hp: Math.min(prev.maxHp, prev.hp + hp),
+      mp: Math.min(prev.maxMp, prev.mp + mp),
     }));
   }, []);
 
@@ -487,6 +495,7 @@ export const useGameState = () => {
       loadGame,
       resetGame,
       updateStats,
+      updateHpMp,
       updateAffection,
       moveToLocation,
       advanceTime,

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Location, Player } from '../types/game';
+import type { Location, Player, Character } from '../types/game';
 
 interface LocationViewProps {
   currentLocation: Location;
@@ -7,6 +7,7 @@ interface LocationViewProps {
   onPerformActivity: (activityName: string) => void;
   onMoveToLocation: (locationId: string) => void;
   availableLocations: Record<string, Location>;
+  characters: Record<string, Character>;
 }
 
 const LocationView: React.FC<LocationViewProps> = ({
@@ -15,6 +16,7 @@ const LocationView: React.FC<LocationViewProps> = ({
   onPerformActivity,
   onMoveToLocation,
   availableLocations,
+  characters,
 }) => {
   const getActivityIcon = (activityName: string) => {
     const icons: Record<string, string> = {
@@ -83,9 +85,16 @@ const LocationView: React.FC<LocationViewProps> = ({
         <div className="flex items-center gap-3 mb-3">
           <span className="text-3xl">{getLocationIcon(currentLocation.id)}</span>
           <div>
-            <h2 className="text-2xl font-bold text-pink-200">{currentLocation.name}</h2>
-            <p className="text-purple-300 text-sm">{currentLocation.description}</p>
+            <h2 className="text-2xl font-bold text-secondary">{currentLocation.name}</h2>
+            <p className="text-text-secondary text-sm">{currentLocation.description}</p>
           </div>
+        </div>
+        <div className="text-sm text-text-secondary italic">
+            {player.timeOfDay === 'morning' && '아침의 상쾌한 공기가 감돕니다.'}
+            {player.timeOfDay === 'noon' && '점심시간의 활기찬 분위기입니다.'}
+            {player.timeOfDay === 'afternoon' && '오후의 나른한 햇살이 내리쬐고 있습니다.'}
+            {player.timeOfDay === 'evening' && '저녁 노을이 지고 있습니다.'}
+            {player.timeOfDay === 'night' && '밤의 정적이 감돌고 있습니다.'}
         </div>
       </div>
 
@@ -192,27 +201,32 @@ const LocationView: React.FC<LocationViewProps> = ({
 
       {/* Present Characters */}
       {currentLocation.characters && currentLocation.characters.length > 0 && (
-        <div className="mt-6 bg-purple-900/40 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-pink-200 mb-4 flex items-center gap-2">
+        <div className="mt-6 bg-black/20 rounded-lg p-4">
+          <h3 className="text-lg font-semibold text-secondary mb-4 flex items-center gap-2">
             <span>👥</span>
             등장인물
           </h3>
 
           <div className="flex flex-wrap gap-3">
-            {currentLocation.characters.map((characterId) => (
-              <div
-                key={characterId}
-                className="bg-purple-800/60 px-4 py-2 rounded-full text-sm font-medium text-purple-200 border border-purple-600/50"
-              >
-                {characterId}
-              </div>
-            ))}
+            {currentLocation.characters.map((characterId) => {
+                const character = characters[characterId];
+                if (!character) return null;
+                return (
+                    <div
+                        key={characterId}
+                        className="bg-primary/20 px-4 py-2 rounded-full text-sm font-medium text-text-primary border border-border flex items-center gap-2"
+                    >
+                        <span className='text-xl'>{character.sprite}</span>
+                        <span>{character.name}</span>
+                    </div>
+                )
+            })}
           </div>
         </div>
       )}
 
       {/* Time and Stamina Warning */}
-      <div className="mt-4 flex justify-between items-center text-xs text-purple-400">
+      <div className="mt-4 flex justify-between items-center text-xs text-text-secondary">
         <div>
           {player.stats.stamina <= 2 && (
             <span className="text-red-400 font-medium">⚠️ 체력이 부족합니다!</span>

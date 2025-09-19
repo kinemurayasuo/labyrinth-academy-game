@@ -50,6 +50,13 @@ function App() {
     return true;
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+    // Optionally, clear any other user-related data from storage
+    localStorage.removeItem('user');
+  };
+
   const handleCreateCharacter = (data: any) => {
     // Apply character data to game state
     gameState.actions.resetGame(data);
@@ -135,6 +142,7 @@ function App() {
                 hasSavedGame={hasSavedGame()}
                 isLoggedIn={isLoggedIn}
                 user={user}
+                onLogout={handleLogout}
               />
             }
           />
@@ -172,6 +180,11 @@ function App() {
                 currentFloor={getCurrentDungeonFloor()}
                 onMovePlayer={handleMovePlayer}
                 onInteract={handleInteract}
+                characters={gameState.characters}
+                unlockedCharacters={gameState.unlockedCharacters}
+                onUseItem={gameState.actions.useItem}
+                onUpdateHpMp={gameState.actions.updateHpMp}
+                onAdvanceTime={gameState.actions.advanceTime}
                 onExitDungeon={() => {
                   // Handle exiting dungeon
                   console.log('Exiting dungeon...');

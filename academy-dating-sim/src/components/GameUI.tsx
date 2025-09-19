@@ -50,51 +50,51 @@ const GameUI: React.FC<GameUIProps> = ({
   const [selectedHeroine, setSelectedHeroine] = React.useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 via-pink-50 to-rose-50 p-4">
+    <div className="min-h-screen bg-background p-4 text-text-primary">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6 mb-6">
+        <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6 mb-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white text-2xl shadow-lg">
                 🎓
               </div>
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                   Academy Dating Simulator
                 </h1>
-                <p className="text-gray-600 text-sm">라비린스 아카데미에 오신 것을 환영합니다</p>
+                <p className="text-text-secondary text-sm">라비린스 아카데미에 오신 것을 환영합니다</p>
               </div>
             </div>
             <div className="flex gap-3">
               <button
                 onClick={() => navigate('/characters')}
-                className="px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl hover:from-pink-600 hover:to-rose-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 👥 캐릭터
               </button>
               <button
                 onClick={() => navigate('/dungeon')}
-                className="px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 ⚔️ 던전
               </button>
-              <div className="border-l border-gray-300 mx-2 h-10"></div>
+              <div className="border-l border-border mx-2 h-10"></div>
               <button
                 onClick={onSaveGame}
-                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 💾 저장
               </button>
               <button
                 onClick={onLoadGame}
-                className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 📂 불러오기
               </button>
               <button
                 onClick={() => setShowInventory(!showInventory)}
-                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-xl hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 🎒 인벤토리
               </button>
@@ -106,12 +106,12 @@ const GameUI: React.FC<GameUIProps> = ({
         <StatusBar player={player} />
 
         {/* Game Message */}
-        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-4 mb-6 shadow-lg">
+        <div className="bg-black/20 border border-border rounded-2xl p-4 mb-6 shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full flex items-center justify-center text-white text-sm">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">
               💭
             </div>
-            <p className="font-medium text-amber-800 flex-1">{gameMessage}</p>
+            <p className="font-medium text-text-primary flex-1">{gameMessage}</p>
           </div>
         </div>
 
@@ -119,15 +119,15 @@ const GameUI: React.FC<GameUIProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Panel - Location/Characters */}
           <div className="lg:col-span-2">
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
+            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
               {/* Tab Navigation */}
               <div className="flex gap-3 mb-6">
                 <button
                   onClick={() => setSelectedTab('location')}
                   className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
                     selectedTab === 'location'
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-105'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700 hover:scale-105'
+                      ? 'bg-primary text-white shadow-lg transform scale-105'
+                      : 'bg-background hover:bg-primary/50 text-text-primary hover:scale-105'
                   }`}
                 >
                   📍 현재 장소
@@ -136,8 +136,8 @@ const GameUI: React.FC<GameUIProps> = ({
                   onClick={() => setSelectedTab('characters')}
                   className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
                     selectedTab === 'characters'
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-105'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700 hover:scale-105'
+                      ? 'bg-primary text-white shadow-lg transform scale-105'
+                      : 'bg-background hover:bg-primary/50 text-text-primary hover:scale-105'
                   }`}
                 >
                   👥 캐릭터
@@ -152,6 +152,7 @@ const GameUI: React.FC<GameUIProps> = ({
                   onPerformActivity={onPerformActivity}
                   onMoveToLocation={onMoveLocation}
                   availableLocations={locations}
+                  characters={characters}
                 />
               ) : (
                 <CharacterInteraction
@@ -172,25 +173,25 @@ const GameUI: React.FC<GameUIProps> = ({
           {/* Right Panel - Time & Stats */}
           <div className="space-y-6">
             {/* Time Control */}
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
+            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white text-sm">
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">
                   ⏰
                 </div>
-                <h3 className="text-lg font-bold text-gray-800">시간</h3>
+                <h3 className="text-lg font-bold text-text-primary">시간</h3>
               </div>
               <div className="text-center">
-                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 mb-4">
-                  <div className="text-2xl font-bold text-gray-800 mb-1">
+                <div className="bg-black/20 rounded-xl p-4 mb-4">
+                  <div className="text-2xl font-bold text-text-primary mb-1">
                     Day {player.day}
                   </div>
-                  <div className="text-lg text-gray-600">
+                  <div className="text-lg text-text-secondary">
                     {getTimeEmoji(player.timeOfDay)} {getTimeKorean(player.timeOfDay)}
                   </div>
                 </div>
                 <button
                   onClick={onAdvanceTime}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
+                  className="w-full px-4 py-3 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
                 >
                   ⏭️ 시간 진행
                 </button>
@@ -198,12 +199,12 @@ const GameUI: React.FC<GameUIProps> = ({
             </div>
 
             {/* Character Affection */}
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
+            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full flex items-center justify-center text-white text-sm">
+                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white text-sm">
                   💕
                 </div>
-                <h3 className="text-lg font-bold text-gray-800">호감도</h3>
+                <h3 className="text-lg font-bold text-text-primary">호감도</h3>
               </div>
               <div className="space-y-4">
                 {Object.entries(player.affection).map(([charId, affection]) => {
@@ -211,19 +212,19 @@ const GameUI: React.FC<GameUIProps> = ({
                   if (!character || !unlockedCharacters.includes(charId)) return null;
 
                   return (
-                    <div key={charId} className="bg-gradient-to-r from-pink-25 to-rose-25 rounded-xl p-3 border border-pink-100">
+                    <div key={charId} className="bg-black/20 rounded-xl p-3 border border-border">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="text-2xl">{character.sprite}</span>
                         <div className="flex-1">
                           <div className="flex justify-between items-center mb-1">
-                            <span className="font-medium text-gray-800">{character.name}</span>
-                            <span className="text-sm font-bold text-pink-600">{affection}/100</span>
+                            <span className="font-medium text-text-primary">{character.name}</span>
+                            <span className="text-sm font-bold text-secondary">{affection}/100</span>
                           </div>
                         </div>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div className="w-full bg-black/50 rounded-full h-3 overflow-hidden">
                         <div
-                          className="bg-gradient-to-r from-pink-400 to-rose-500 h-3 rounded-full transition-all duration-500 ease-out"
+                          className="bg-secondary h-3 rounded-full transition-all duration-500 ease-out"
                           style={{ width: `${affection}%` }}
                         />
                       </div>
@@ -252,12 +253,12 @@ const GameUI: React.FC<GameUIProps> = ({
         {/* Inventory Modal */}
         {showInventory && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">🎒 인벤토리</h2>
+            <div className="bg-background rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-border">
+              <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border p-4 flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-text-primary">🎒 인벤토리</h2>
                 <button
                   onClick={() => setShowInventory(false)}
-                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                  className="text-text-secondary hover:text-text-primary text-2xl"
                 >
                   ✕
                 </button>

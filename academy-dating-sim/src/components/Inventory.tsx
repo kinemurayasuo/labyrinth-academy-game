@@ -20,6 +20,7 @@ const Inventory: React.FC<InventoryProps> = ({
   onClose: _onClose,
 }) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [detailedItem, setDetailedItem] = useState<Item | null>(null);
   const [showGiftTarget, setShowGiftTarget] = useState(false);
   const [filter, setFilter] = useState<'all' | 'gift' | 'consumable' | 'special' | 'weapon' | 'armor' | 'accessory'>('all');
 
@@ -149,14 +150,14 @@ const Inventory: React.FC<InventoryProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-purple-900 via-pink-800 to-purple-900 text-white rounded-lg shadow-lg p-6">
+    <div className="bg-background text-text-primary rounded-lg shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-pink-200 flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-secondary flex items-center gap-2">
           <span>🎒</span>
           인벤토리
         </h2>
 
-        <div className="text-sm text-purple-300">
+        <div className="text-sm text-text-secondary">
           총 {Object.values(inventoryItems).reduce((sum, { count }) => sum + count, 0)}개 아이템
         </div>
       </div>
@@ -177,8 +178,8 @@ const Inventory: React.FC<InventoryProps> = ({
             onClick={() => setFilter(key as any)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
               filter === key
-                ? 'bg-purple-600 text-white shadow-lg'
-                : 'bg-purple-800/40 text-purple-300 hover:bg-purple-700/40'
+                ? 'bg-primary text-white shadow-lg'
+                : 'bg-black/30 text-text-secondary hover:bg-primary/50'
             }`}
           >
             <span>{icon}</span>
@@ -189,12 +190,12 @@ const Inventory: React.FC<InventoryProps> = ({
 
       {/* Inventory Grid */}
       {Object.keys(inventoryItems).length === 0 ? (
-        <div className="text-center py-12 text-purple-400">
+        <div className="text-center py-12 text-text-secondary">
           <div className="text-4xl mb-3">📦</div>
           <p>인벤토리가 비어있습니다</p>
         </div>
       ) : filteredItems.length === 0 ? (
-        <div className="text-center py-12 text-purple-400">
+        <div className="text-center py-12 text-text-secondary">
           <div className="text-4xl mb-3">🔍</div>
           <p>해당 종류의 아이템이 없습니다</p>
         </div>
@@ -206,25 +207,25 @@ const Inventory: React.FC<InventoryProps> = ({
             return (
               <div
                 key={item.id}
-                className={`bg-purple-900/40 rounded-lg p-4 border transition-all duration-200 hover:scale-105 ${rarity.color}`}
-              >
+                onClick={() => setDetailedItem(item)}
+                className={`bg-black/30 rounded-lg p-4 border transition-all duration-200 hover:scale-105 cursor-pointer ${rarity.color}`}>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{getItemIcon(item)}</span>
                     <div>
-                      <h3 className="font-bold text-white">{item.name}</h3>
+                      <h3 className="font-bold text-text-primary">{item.name}</h3>
                       <p className={`text-xs ${rarity.text} capitalize`}>{item.type}</p>
                     </div>
                   </div>
 
                   {count > 1 && (
-                    <div className="bg-purple-700 text-white text-xs px-2 py-1 rounded-full font-bold">
+                    <div className="bg-primary text-white text-xs px-2 py-1 rounded-full font-bold">
                       ×{count}
                     </div>
                   )}
                 </div>
 
-                <p className="text-sm text-purple-200 mb-4">{item.description}</p>
+                <p className="text-sm text-text-secondary mb-4">{item.description}</p>
 
                 {/* Item Effects */}
                 <div className="space-y-1 mb-4">
@@ -340,7 +341,7 @@ const Inventory: React.FC<InventoryProps> = ({
                     !checkRequirements(item)
                       ? 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
                       : item.type === 'gift'
-                      ? 'bg-pink-600/80 hover:bg-pink-500/80 text-white'
+                      ? 'bg-secondary hover:bg-secondary/80 text-white'
                       : item.type === 'consumable'
                       ? 'bg-green-600/80 hover:bg-green-500/80 text-white'
                       : ['weapon', 'armor', 'accessory'].includes(item.type)
@@ -362,27 +363,56 @@ const Inventory: React.FC<InventoryProps> = ({
         </div>
       )}
 
-      {/* Gift Target Selection Modal */}
-      {showGiftTarget && selectedItem && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-          <div className="bg-gradient-to-br from-purple-900 via-pink-800 to-purple-900 text-white rounded-lg shadow-2xl max-w-md w-full">
+      {/* Item Details Modal */}
+      {detailedItem && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={() => setDetailedItem(null)}>
+          <div className="bg-background rounded-lg shadow-2xl max-w-md w-full border border-border" onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-pink-200">선물할 대상 선택</h3>
+                <h3 className="text-xl font-bold text-secondary">아이템 정보</h3>
                 <button
-                  onClick={() => setShowGiftTarget(false)}
-                  className="text-purple-300 hover:text-white text-2xl transition-colors duration-200"
+                  onClick={() => setDetailedItem(null)}
+                  className="text-text-secondary hover:text-text-primary text-2xl transition-colors duration-200"
                 >
                   ×
                 </button>
               </div>
 
-              <div className="bg-purple-900/40 rounded-lg p-4 mb-6">
+              <div className="bg-black/30 rounded-lg p-4 mb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-2xl">{getItemIcon(detailedItem)}</span>
+                  <div>
+                    <div className="font-bold text-text-primary">{detailedItem.name}</div>
+                    <div className="text-sm text-text-secondary">{detailedItem.description}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Gift Target Selection Modal */}
+      {showGiftTarget && selectedItem && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-background rounded-lg shadow-2xl max-w-md w-full border border-border">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-secondary">선물할 대상 선택</h3>
+                <button
+                  onClick={() => setShowGiftTarget(false)}
+                  className="text-text-secondary hover:text-text-primary text-2xl transition-colors duration-200"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="bg-black/30 rounded-lg p-4 mb-6">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl">{getItemIcon(selectedItem)}</span>
                   <div>
-                    <div className="font-bold text-white">{selectedItem.name}</div>
-                    <div className="text-sm text-purple-300">{selectedItem.description}</div>
+                    <div className="font-bold text-text-primary">{selectedItem.name}</div>
+                    <div className="text-sm text-text-secondary">{selectedItem.description}</div>
                   </div>
                 </div>
               </div>
@@ -400,16 +430,16 @@ const Inventory: React.FC<InventoryProps> = ({
                       onClick={() => handleGiftToCharacter(characterId)}
                       className={`w-full p-3 rounded-lg text-left transition-all duration-200 hover:scale-105 flex items-center gap-3 ${
                         isPreferred
-                          ? 'bg-yellow-600/60 hover:bg-yellow-500/60 border border-yellow-400/50'
-                          : 'bg-purple-800/60 hover:bg-purple-700/60'
+                          ? 'bg-accent/60 hover:bg-accent/50 border border-accent/50'
+                          : 'bg-primary/60 hover:bg-primary/50'
                       }`}
                     >
                       <span className="text-2xl">{getCharacterEmoji(characterId)}</span>
                       <div>
-                        <div className="font-medium text-white">{character.name}</div>
-                        <div className="text-xs text-purple-300">{character.role}</div>
+                        <div className="font-medium text-text-primary">{character.name}</div>
+                        <div className="text-xs text-text-secondary">{character.role}</div>
                         {isPreferred && (
-                          <div className="text-xs text-yellow-300 font-medium">⭐ 선호 아이템!</div>
+                          <div className="text-xs text-accent font-medium">⭐ 선호 아이템!</div>
                         )}
                       </div>
                     </button>

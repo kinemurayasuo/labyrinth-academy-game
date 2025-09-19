@@ -8,6 +8,7 @@ interface HomepageProps {
   hasSavedGame: boolean;
   isLoggedIn: boolean;
   user: any;
+  onLogout: () => void;
 }
 
 const Homepage: React.FC<HomepageProps> = ({
@@ -16,12 +17,13 @@ const Homepage: React.FC<HomepageProps> = ({
   hasSavedGame,
   isLoggedIn,
   user,
+  onLogout,
 }) => {
   const navigate = useNavigate();
   const [animationPhase, setAnimationPhase] = useState(0);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    onLogout();
     window.location.reload();
   };
 
@@ -54,7 +56,7 @@ const Homepage: React.FC<HomepageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-800 to-purple-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 text-text-primary">
       {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -76,13 +78,13 @@ const Homepage: React.FC<HomepageProps> = ({
       <div className="relative z-10 max-w-6xl w-full">
         {/* Main Title */}
         <div className="text-center mb-12">
-          <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-4 animate-pulse">
+          <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-secondary via-primary to-accent bg-clip-text text-transparent mb-4 animate-pulse">
             Labyrinth Academy
           </h1>
-          <h2 className="text-2xl md:text-3xl text-white/90 mb-2">
+          <h2 className="text-2xl md:text-3xl text-text-primary mb-2">
             데이팅 시뮬레이션 게임
           </h2>
-          <p className="text-lg text-purple-200">
+          <p className="text-lg text-text-secondary">
             마법과 모험이 가득한 학원에서 특별한 인연을 만나보세요
           </p>
         </div>
@@ -97,8 +99,8 @@ const Homepage: React.FC<HomepageProps> = ({
               className="hover:scale-110 transition-transform cursor-pointer"
             />
             <div className="text-center mt-2">
-              <div className="text-white font-semibold">사쿠라</div>
-              <div className="text-purple-300 text-sm">검술부 에이스</div>
+              <div className="text-text-primary font-semibold">사쿠라</div>
+              <div className="text-text-secondary text-sm">검술부 에이스</div>
             </div>
           </div>
 
@@ -110,8 +112,8 @@ const Homepage: React.FC<HomepageProps> = ({
               className="hover:scale-110 transition-transform cursor-pointer"
             />
             <div className="text-center mt-2">
-              <div className="text-white font-semibold">유키</div>
-              <div className="text-purple-300 text-sm">도서부 부장</div>
+              <div className="text-text-primary font-semibold">유키</div>
+              <div className="text-text-secondary text-sm">도서부 부장</div>
             </div>
           </div>
 
@@ -123,8 +125,8 @@ const Homepage: React.FC<HomepageProps> = ({
               className="hover:scale-110 transition-transform cursor-pointer"
             />
             <div className="text-center mt-2">
-              <div className="text-white font-semibold">루나</div>
-              <div className="text-purple-300 text-sm">마법학부 수석</div>
+              <div className="text-text-primary font-semibold">루나</div>
+              <div className="text-text-secondary text-sm">마법학부 수석</div>
             </div>
           </div>
 
@@ -136,31 +138,31 @@ const Homepage: React.FC<HomepageProps> = ({
               className="hover:scale-110 transition-transform cursor-pointer"
             />
             <div className="text-center mt-2">
-              <div className="text-white font-semibold">???</div>
-              <div className="text-purple-300 text-sm">수수께끼의 전학생</div>
+              <div className="text-text-primary font-semibold">???</div>
+              <div className="text-text-secondary text-sm">수수께끼의 전학생</div>
             </div>
           </div>
         </div>
 
         {/* Game Menu */}
-        <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+        <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-border">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Main Actions */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-white mb-4">게임 시작</h3>
+              <h3 className="text-xl font-bold text-text-primary mb-4">게임 시작</h3>
               {isLoggedIn && user && (
                 <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-3 mb-4">
                   <div className="text-green-300 text-sm">로그인됨</div>
-                  <div className="text-white font-medium">{user.username}</div>
+                  <div className="text-text-primary font-medium">{user.username}</div>
                 </div>
               )}
 
               <button
                 onClick={handleStartGame}
                 disabled={!isLoggedIn}
-                className={`w-full py-4 px-6 text-white font-bold rounded-xl transition-all duration-300 transform shadow-lg ${
+                className={`w-full py-4 px-6 text-text-primary font-bold rounded-xl transition-all duration-300 transform shadow-lg ${
                   isLoggedIn
-                    ? "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 hover:scale-105"
+                    ? "bg-primary hover:bg-secondary hover:scale-105"
                     : "bg-gray-500 cursor-not-allowed opacity-50"
                 }`}
               >
@@ -173,7 +175,7 @@ const Homepage: React.FC<HomepageProps> = ({
               {hasSavedGame && (
                 <button
                   onClick={handleLoadGame}
-                  className="w-full py-4 px-6 bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  className="w-full py-4 px-6 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   <div className="flex items-center justify-center gap-3">
                     <span className="text-2xl">📂</span>
@@ -184,7 +186,7 @@ const Homepage: React.FC<HomepageProps> = ({
 
               <button
                 onClick={handleAccountCreation}
-                className="w-full py-4 px-6 bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="w-full py-4 px-6 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-2xl">👤</span>
@@ -195,11 +197,11 @@ const Homepage: React.FC<HomepageProps> = ({
 
             {/* Secondary Actions */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-white mb-4">계정 관리</h3>
+              <h3 className="text-xl font-bold text-text-primary mb-4">계정 관리</h3>
 
               <button
                 onClick={isLoggedIn ? handleLogout : handleLogin}
-                className="w-full py-4 px-6 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="w-full py-4 px-6 bg-orange-500 hover:bg-red-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-2xl">{isLoggedIn ? '🚪' : '🔐'}</span>
@@ -209,7 +211,7 @@ const Homepage: React.FC<HomepageProps> = ({
 
               <button
                 onClick={() => navigate('/settings')}
-                className="w-full py-3 px-6 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="w-full py-3 px-6 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
               >
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-xl">⚙️</span>
@@ -219,7 +221,7 @@ const Homepage: React.FC<HomepageProps> = ({
 
               <button
                 onClick={() => navigate('/game-info')}
-                className="w-full py-3 px-6 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="w-full py-3 px-6 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
               >
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-xl">ℹ️</span>
@@ -230,22 +232,22 @@ const Homepage: React.FC<HomepageProps> = ({
           </div>
 
           {/* Game Features */}
-          <div className="mt-8 border-t border-white/20 pt-6">
-            <h4 className="text-lg font-bold text-white mb-4">게임 특징</h4>
+          <div className="mt-8 border-t border-border pt-6">
+            <h4 className="text-lg font-bold text-text-primary mb-4">게임 특징</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-              <div className="bg-purple-500/20 p-4 rounded-lg">
+              <div className="bg-primary/20 p-4 rounded-lg">
                 <div className="text-2xl mb-2">💕</div>
-                <div className="text-white font-semibold">로맨스</div>
-                <div className="text-purple-200 text-sm">다양한 캐릭터와의 특별한 인연</div>
+                <div className="text-text-primary font-semibold">로맨스</div>
+                <div className="text-text-secondary text-sm">다양한 캐릭터와의 특별한 인연</div>
               </div>
               <div className="bg-blue-500/20 p-4 rounded-lg">
                 <div className="text-2xl mb-2">⚔️</div>
-                <div className="text-white font-semibold">던전 탐험</div>
+                <div className="text-text-primary font-semibold">던전 탐험</div>
                 <div className="text-blue-200 text-sm">신비한 던전에서의 모험</div>
               </div>
               <div className="bg-green-500/20 p-4 rounded-lg">
                 <div className="text-2xl mb-2">📚</div>
-                <div className="text-white font-semibold">학원 생활</div>
+                <div className="text-text-primary font-semibold">학원 생활</div>
                 <div className="text-green-200 text-sm">마법 학원에서의 일상</div>
               </div>
             </div>
@@ -253,7 +255,7 @@ const Homepage: React.FC<HomepageProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-purple-300">
+        <div className="text-center mt-8 text-text-secondary">
           <p>© 2024 Labyrinth Academy Dating Sim. Made with ❤️</p>
         </div>
       </div>

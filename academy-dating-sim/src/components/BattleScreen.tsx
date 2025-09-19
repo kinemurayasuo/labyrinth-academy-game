@@ -148,12 +148,12 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-b from-gray-900 to-black flex flex-col">
+    <div className="fixed inset-0 z-50 bg-background flex flex-col">
       {/* Battle Arena */}
       <div className="flex-1 relative overflow-hidden">
         {/* Background effect */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-red-900/20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzIyMiIgb3BhY2l0eT0iMC4yIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
         </div>
 
@@ -162,12 +162,12 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
           <div className={`transform transition-all duration-300 ${animation === 'playerAttack' ? 'translate-x-10 scale-110' : ''} ${animation === 'enemyAttack' ? 'scale-95' : ''}`}>
             <div className="text-center">
               <div className="text-8xl mb-4 filter drop-shadow-2xl">⚔️</div>
-              <div className="bg-black/50 backdrop-blur-md rounded-lg p-4 border border-blue-500/50">
-                <div className="text-white font-bold mb-2">{player.name}</div>
+              <div className="bg-black/50 backdrop-blur-md rounded-lg p-4 border border-border">
+                <div className="text-text-primary font-bold mb-2">{player.name}</div>
                 <div className="space-y-2">
                   {/* HP Bar */}
                   <div>
-                    <div className="flex justify-between text-xs text-gray-300 mb-1">
+                    <div className="flex justify-between text-xs text-text-secondary mb-1">
                       <span>HP</span>
                       <span>{playerHp}/{player.maxHp}</span>
                     </div>
@@ -180,7 +180,7 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
                   </div>
                   {/* MP Bar */}
                   <div>
-                    <div className="flex justify-between text-xs text-gray-300 mb-1">
+                    <div className="flex justify-between text-xs text-text-secondary mb-1">
                       <span>MP</span>
                       <span>{playerMp}/{player.maxMp}</span>
                     </div>
@@ -197,7 +197,7 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
           </div>
 
           {/* VS Indicator */}
-          <div className="text-6xl text-yellow-400 font-bold animate-pulse">VS</div>
+          <div className="text-6xl text-accent font-bold animate-pulse">VS</div>
 
           {/* Enemy Side */}
           <div className={`transform transition-all duration-300 ${animation === 'enemyAttack' ? '-translate-x-10 scale-110' : ''} ${animation === 'playerAttack' ? 'scale-95' : ''}`}>
@@ -205,10 +205,10 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
               <div className="text-8xl mb-4 filter drop-shadow-2xl animate-bounce">
                 {enemy.sprite || '👾'}
               </div>
-              <div className="bg-black/50 backdrop-blur-md rounded-lg p-4 border border-red-500/50">
-                <div className="text-white font-bold mb-2">{enemy.name}</div>
+              <div className="bg-black/50 backdrop-blur-md rounded-lg p-4 border border-border">
+                <div className="text-text-primary font-bold mb-2">{enemy.name}</div>
                 <div>
-                  <div className="flex justify-between text-xs text-gray-300 mb-1">
+                  <div className="flex justify-between text-xs text-text-secondary mb-1">
                     <span>HP</span>
                     <span>{enemyHp}/{enemy.maxHp}</span>
                   </div>
@@ -226,11 +226,11 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
       </div>
 
       {/* Battle Log */}
-      <div className="bg-black/70 backdrop-blur-md border-t border-white/10 p-4">
+      <div className="bg-black/70 backdrop-blur-md border-t border-border p-4">
         <div className="max-w-4xl mx-auto">
           <div className="bg-black/50 rounded-lg p-3 mb-4 h-24 overflow-y-auto">
             {battleLog.map((log, index) => (
-              <div key={index} className="text-sm text-white/80 mb-1">
+              <div key={index} className="text-sm text-text-secondary mb-1">
                 ▶ {log}
               </div>
             ))}
@@ -255,7 +255,7 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
               disabled={!isPlayerTurn || battleEnded || playerMp < 10}
               className={`px-4 py-3 rounded-lg font-bold transition-all ${
                 isPlayerTurn && !battleEnded && playerMp >= 10
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white transform hover:scale-105'
+                  ? 'bg-primary hover:bg-secondary text-white transform hover:scale-105'
                   : 'bg-gray-700 text-gray-400 cursor-not-allowed'
               }`}
             >
@@ -292,7 +292,7 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
       {/* Victory Rewards Modal */}
       {showRewards && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-60">
-          <div className="bg-gradient-to-br from-yellow-600 to-orange-600 rounded-2xl p-8 text-white text-center animate-bounce">
+          <div className="bg-gradient-to-br from-accent to-yellow-400 rounded-2xl p-8 text-background text-center animate-bounce">
             <h2 className="text-4xl font-bold mb-4">🎉 승리! 🎉</h2>
             <div className="space-y-2 text-xl">
               <div>경험치: +{enemy.experience || 20}</div>

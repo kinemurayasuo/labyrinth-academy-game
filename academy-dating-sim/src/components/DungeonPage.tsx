@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Player, DungeonFloor, Monster } from '../types/game';
+import type { Player, DungeonFloor, Monster, Character } from '../types/game';
 import DungeonMap from './DungeonMap';
 import BattleScreen from './BattleScreen';
+import Inventory from './Inventory';
 
 interface DungeonPageProps {
   player: Player;
   currentFloor: DungeonFloor;
+  characters: Record<string, Character>;
+  unlockedCharacters: string[];
   onMovePlayer: (newX: number, newY: number) => void;
   onInteract: (x: number, y: number) => void;
+  onUpdateHpMp: (hp: number, mp: number) => void;
+  onAdvanceTime: () => void;
+  onUseItem: (itemId: string, targetCharacter?: string) => void;
   onBattle?: (enemy: any) => void;
   onCollectItem?: (item: string) => void;
   onExitDungeon?: () => void;
@@ -17,8 +23,13 @@ interface DungeonPageProps {
 const DungeonPage: React.FC<DungeonPageProps> = ({
   player,
   currentFloor,
+  characters,
+  unlockedCharacters,
   onMovePlayer,
   onInteract,
+  onUpdateHpMp,
+  onAdvanceTime,
+  onUseItem,
   onBattle,
   onCollectItem,
   onExitDungeon,
@@ -27,6 +38,7 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
   const [isInBattle, setIsInBattle] = useState(false);
   const [currentEnemy, setCurrentEnemy] = useState<Monster | null>(null);
   const [gameMessage, setGameMessage] = useState('던전에 입장했습니다!');
+  const [showInventory, setShowInventory] = useState(false);
 
   const handleExitDungeon = () => {
     if (onExitDungeon) {
@@ -118,12 +130,12 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-4">
+    <div className="min-h-screen bg-background p-4 text-text-primary">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-red-500/30">
+        <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-border">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-red-500 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-red-500 to-primary bg-clip-text text-transparent">
               ⚔️ 던전 탐험
             </h1>
             <div className="flex gap-2">
@@ -138,8 +150,8 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
         </div>
 
         {/* Player Status in Dungeon */}
-        <div className="bg-black/40 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-purple-500/30">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-white">
+        <div className="bg-black/40 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-border">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-text-primary">
             <div className="flex items-center gap-2">
               <span className="text-red-400">❤️</span>
               <span>체력: {player.hp}/{player.maxHp}</span>
@@ -160,7 +172,7 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
         </div>
 
         {/* Game Message */}
-        <div className="bg-yellow-900/30 border-l-4 border-yellow-500 text-yellow-200 p-4 mb-4 rounded">
+        <div className="bg-black/20 border-l-4 border-accent text-accent p-4 mb-4 rounded">
           <p className="font-medium">{gameMessage}</p>
         </div>
 
@@ -168,8 +180,8 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Dungeon Map */}
           <div className="lg:col-span-3">
-            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
-              <h3 className="text-lg font-bold text-white mb-4">🗺️ 던전 지도</h3>
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-border">
+              <h3 className="text-lg font-bold text-text-primary mb-4">🗺️ 던전 지도</h3>
               <DungeonMap
                 player={player}
                 currentFloor={currentFloor}
@@ -182,20 +194,20 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
           {/* Dungeon Controls */}
           <div className="space-y-4">
             {/* Movement Controls */}
-            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
-              <h3 className="text-lg font-bold text-white mb-3">🎮 조작</h3>
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-border">
+              <h3 className="text-lg font-bold text-text-primary mb-3">🎮 조작</h3>
               <div className="grid grid-cols-3 gap-2">
                 <div></div>
                 <button
                   onClick={() => handlePlayerMove(player.dungeonProgress.position.x, player.dungeonProgress.position.y - 1)}
-                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                  className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   ↑
                 </button>
                 <div></div>
                 <button
                   onClick={() => handlePlayerMove(player.dungeonProgress.position.x - 1, player.dungeonProgress.position.y)}
-                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                  className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   ←
                 </button>
@@ -207,14 +219,14 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
                 </button>
                 <button
                   onClick={() => handlePlayerMove(player.dungeonProgress.position.x + 1, player.dungeonProgress.position.y)}
-                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                  className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   →
                 </button>
                 <div></div>
                 <button
                   onClick={() => handlePlayerMove(player.dungeonProgress.position.x, player.dungeonProgress.position.y + 1)}
-                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                  className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   ↓
                 </button>
@@ -223,8 +235,8 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
             </div>
 
             {/* Dungeon Actions */}
-            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
-              <h3 className="text-lg font-bold text-white mb-3">⚡ 행동</h3>
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-border">
+              <h3 className="text-lg font-bold text-text-primary mb-3">⚡ 행동</h3>
               <div className="space-y-2">
                 <button
                   onClick={() => setGameMessage('주변을 살펴보았습니다.')}
@@ -233,13 +245,17 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
                   🔍 주변 조사
                 </button>
                 <button
-                  onClick={() => setGameMessage('잠시 휴식을 취했습니다.')}
+                  onClick={() => {
+                    onUpdateHpMp(20, 10);
+                    onAdvanceTime();
+                    setGameMessage('휴식을 취해 체력과 마나를 회복했습니다.');
+                  }}
                   className="w-full p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
                 >
                   💤 휴식
                 </button>
                 <button
-                  onClick={() => setGameMessage('인벤토리를 확인했습니다.')}
+                  onClick={() => setShowInventory(true)}
                   className="w-full p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
                 >
                   🎒 인벤토리
@@ -248,9 +264,9 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
             </div>
 
             {/* Legend */}
-            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
-              <h3 className="text-lg font-bold text-white mb-3">📋 범례</h3>
-              <div className="space-y-1 text-sm text-gray-300">
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-border">
+              <h3 className="text-lg font-bold text-text-primary mb-3">📋 범례</h3>
+              <div className="space-y-1 text-sm text-text-secondary">
                 <div className="flex items-center gap-2">
                   <span className="w-4 h-4 bg-blue-500 rounded"></span>
                   <span>플레이어</span>
@@ -283,16 +299,16 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
         {/* Battle Interface (if in battle) */}
         {isInBattle && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-red-900/90 backdrop-blur-md rounded-lg p-6 max-w-md w-full border border-red-500/50">
-              <h3 className="text-2xl font-bold text-white mb-4">⚔️ 전투</h3>
-              <p className="text-red-200 mb-4">몬스터와 조우했습니다!</p>
+            <div className="bg-background backdrop-blur-md rounded-lg p-6 max-w-md w-full border border-border">
+              <h3 className="text-2xl font-bold text-text-primary mb-4">⚔️ 전투</h3>
+              <p className="text-text-secondary mb-4">몬스터와 조우했습니다!</p>
               <div className="flex gap-3">
                 <button
                   onClick={() => {
                     setIsInBattle(false);
                     setGameMessage('전투에서 승리했습니다!');
                   }}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition"
+                  className="flex-1 bg-primary hover:bg-secondary text-white font-bold py-3 px-4 rounded transition"
                 >
                   공격
                 </button>
@@ -310,6 +326,31 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
           </div>
         )}
       </div>
+
+      {showInventory && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="bg-background rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-border">
+            <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border p-4 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-text-primary">🎒 인벤토리</h2>
+              <button
+                onClick={() => setShowInventory(false)}
+                className="text-text-secondary hover:text-text-primary text-2xl"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-4">
+              <Inventory
+                player={player}
+                characters={characters}
+                unlockedCharacters={unlockedCharacters}
+                onUseItem={onUseItem}
+                onClose={() => setShowInventory(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

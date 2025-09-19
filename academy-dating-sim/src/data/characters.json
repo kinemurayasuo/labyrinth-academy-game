@@ -3,7 +3,7 @@
     "id": "sakura",
     "name": "사쿠라",
     "role": "검술부 에이스",
-    "affectionStart": 5,
+    "affectionStart": 0,
     "affectionMax": 100,
     "likes": ["훈련", "도전", "정직함"],
     "dislikes": ["거짓말", "나태함"],
@@ -16,13 +16,14 @@
       "80": "내가 이런 감정을 느끼게 될 줄은...",
       "100": "너를 지키기 위해서라면 뭐든 할 수 있어."
     },
-    "sprite": "🗡️"
+    "sprite": "🗡️",
+    "image": "https://images.unsplash.com/photo-1673047233994-78df05226bfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYXdhaWklMjBhbmltZSUyMGdpcmwlMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzU3NDA2OTI1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   },
   "yuki": {
     "id": "yuki",
     "name": "유키",
     "role": "도서부 부장",
-    "affectionStart": 10,
+    "affectionStart": 0,
     "affectionMax": 100,
     "likes": ["책", "조용함", "차"],
     "dislikes": ["시끄러움", "무례함"],
@@ -35,7 +36,8 @@
       "80": "이 감정이... 사랑인가요?",
       "100": "영원히 당신 곁에 있고 싶어요."
     },
-    "sprite": "📚"
+    "sprite": "📚",
+    "image": "https://images.unsplash.com/photo-1663035310226-8203dfbe03d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmltZSUyMGdpcmwlMjBibHVlJTIwaGFpciUyMGNoYXJhY3RlcnxlbnwxfHx8fDE3NTc0MTE5Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   },
   "luna": {
     "id": "luna",
@@ -54,13 +56,14 @@
       "80": "매일 밤 네 생각에 잠들어.",
       "100": "가문이 뭐든 상관없어. 널 선택할게."
     },
-    "sprite": "✨"
+    "sprite": "✨",
+    "image": "https://images.unsplash.com/photo-1727466443068-779e1f8fe8e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXRlJTIwYW5pbWUlMjBib3klMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzU3NDExOTQyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   },
   "mystery": {
     "id": "mystery",
     "name": "???",
     "role": "수수께끼의 전학생",
-    "affectionStart": -10,
+    "affectionStart": 0,
     "affectionMax": 100,
     "likes": ["비밀", "밤", "고양이"],
     "dislikes": ["거짓", "배신"],
@@ -74,6 +77,7 @@
       "100": "내 전부를 너에게 바칠게."
     },
     "sprite": "🌙",
+    "image": "https://images.unsplash.com/photo-1673047233994-78df05226bfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYXdhaWklMjBhbmltZSUyMGdpcmwlMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzU3NDA2OTI1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     "unlockCondition": {
       "day": 10,
       "totalAffection": 150

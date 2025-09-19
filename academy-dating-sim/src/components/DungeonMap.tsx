@@ -16,14 +16,22 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
   onInteract,
 }) => {
   const [selectedCell, setSelectedCell] = useState<{ x: number; y: number } | null>(null);
+  const [playerPosition, setPlayerPosition] = useState(player.dungeonProgress.position);
+  const [isMoving, setIsMoving] = useState(false);
+  const [moveAnimation, setMoveAnimation] = useState<{ from: { x: number; y: number }, to: { x: number; y: number } } | null>(null);
 
   const getCellContent = (x: number, y: number, cellType: number) => {
     const isPlayerHere = player.dungeonProgress.position.x === x && player.dungeonProgress.position.y === y;
 
     if (isPlayerHere) {
       return (
-        <div className="w-full h-full bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
-          P
+        <div
+          className={`w-full h-full bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg transition-all duration-300 ${isMoving ? 'scale-110 animate-bounce' : ''}`}
+          style={{
+            animation: isMoving ? 'playerMove 0.3s ease-in-out' : 'none'
+          }}
+        >
+          🚶
         </div>
       );
     }
@@ -94,8 +102,17 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
         // Interact with current cell
         onInteract(x, y);
       } else {
-        // Move to adjacent cell
-        onMovePlayer(x, y);
+        // Move to adjacent cell with animation
+        setIsMoving(true);
+        setMoveAnimation({ from: { x: currentX, y: currentY }, to: { x, y } });
+
+        // Animate the movement
+        setTimeout(() => {
+          onMovePlayer(x, y);
+          setPlayerPosition({ x, y });
+          setIsMoving(false);
+          setMoveAnimation(null);
+        }, 300);
       }
       setSelectedCell({ x, y });
     }
@@ -118,6 +135,20 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
 
   return (
     <div className="bg-gradient-to-br from-purple-900 via-blue-900 to-purple-900 p-6 rounded-lg shadow-2xl">
+      <style>{`
+        @keyframes playerMove {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.5); }
+          100% { transform: scale(1); }
+        }
+        @keyframes cellPulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.7; }
+        }
+        .player-sprite {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+      `}</style>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white">
           {currentFloor.name} (층 {currentFloor.id})
@@ -143,11 +174,16 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
               <div
                 key={`${x}-${y}`}
                 className={`
-                  w-8 h-8 border border-gray-600 relative
-                  ${selectedCell?.x === x && selectedCell?.y === y ? 'ring-2 ring-blue-400' : ''}
+                  w-8 h-8 border border-gray-600 relative overflow-hidden
+                  ${selectedCell?.x === x && selectedCell?.y === y ? 'ring-2 ring-blue-400 animate-pulse' : ''}
+                  ${moveAnimation && moveAnimation.to.x === x && moveAnimation.to.y === y ? 'bg-blue-300/20' : ''}
+                  transition-all duration-200
                 `}
                 onClick={() => handleCellClick(x, y, cellType)}
                 title={getCellDescription(cellType, x, y)}
+                style={{
+                  animation: moveAnimation && moveAnimation.to.x === x && moveAnimation.to.y === y ? 'cellPulse 0.3s' : 'none'
+                }}
               >
                 {getCellContent(x, y, cellType)}
               </div>
