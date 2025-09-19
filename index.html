@@ -35,6 +35,12 @@
         <main>
             <div id="gameScreen">
                 <div id="academyScreen" class="screen active">
+                    <div id="characterButtons" class="character-select-menu">
+                        <button onclick="game.talkToCharacter('heroineA')">검술 천재</button>
+                        <button onclick="game.talkToCharacter('heroineB')">마법 영재</button>
+                        <button onclick="game.talkToCharacter('heroineC')">신비한 사서</button>
+                    </div>
+
                     <div id="locationDisplay">
                         <h2 id="currentLocation">교실</h2>
                     </div>
@@ -56,12 +62,6 @@
                         <button onclick="game.moveToLocation('library')">도서관</button>
                         <button onclick="game.moveToLocation('training')">훈련장</button>
                         <button onclick="game.moveToLocation('dormitory')">기숙사</button>
-                    </div>
-
-                    <div id="characterButtons" class="action-buttons">
-                        <button onclick="game.talkToCharacter('heroineA')">검술 천재와 대화</button>
-                        <button onclick="game.talkToCharacter('heroineB')">마법 영재와 대화</button>
-                        <button onclick="game.talkToCharacter('heroineC')">신비한 사서와 대화</button>
                     </div>
                 </div>
 
