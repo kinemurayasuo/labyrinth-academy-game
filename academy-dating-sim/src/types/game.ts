@@ -120,7 +120,14 @@ export interface Location {
   name: string;
   description: string;
   activities: Activity[];
-  characters: string[];
+  characters?: string[];
+  characterSchedule?: {
+    morning: string[];
+    noon: string[];
+    afternoon: string[];
+    evening: string[];
+    night: string[];
+  };
   sprite: string;
   unlockCondition?: {
     item?: string;

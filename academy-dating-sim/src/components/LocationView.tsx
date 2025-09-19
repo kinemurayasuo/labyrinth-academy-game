@@ -202,32 +202,38 @@ const LocationView: React.FC<LocationViewProps> = ({
       </div>
 
       {/* Present Characters */}
-      {currentLocation.characters && currentLocation.characters.length > 0 && (
-        <div className="mt-6 bg-black/20 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-secondary mb-4 flex items-center gap-2">
-            <span>👥</span>
-            등장인물
-          </h3>
+      {(() => {
+        const presentCharacters = currentLocation.characterSchedule
+          ? currentLocation.characterSchedule[player.timeOfDay] || []
+          : currentLocation.characters || [];
 
-          <div className="flex flex-wrap gap-3">
-            {currentLocation.characters.map((characterId) => {
-                const character = characters[characterId];
-                if (!character) return null;
-                return (
-                    <button
-                        key={characterId}
-                        onClick={() => onInteractCharacter?.(characterId)}
-                        className="bg-primary/20 px-4 py-2 rounded-full text-sm font-medium text-text-primary border border-border flex items-center gap-2 hover:bg-primary/30 hover:scale-105 transition-all duration-200 cursor-pointer"
-                    >
-                        <span className='text-xl'>{character.sprite}</span>
-                        <span>{character.name}</span>
-                        <span className='text-xs text-pink-300'>💕</span>
-                    </button>
-                )
-            })}
+        return presentCharacters.length > 0 && (
+          <div className="mt-6 bg-black/20 rounded-lg p-4">
+            <h3 className="text-lg font-semibold text-secondary mb-4 flex items-center gap-2">
+              <span>👥</span>
+              현재 위치한 캐릭터
+            </h3>
+
+            <div className="flex flex-wrap gap-3">
+              {presentCharacters.map((characterId) => {
+                  const character = characters[characterId];
+                  if (!character) return null;
+                  return (
+                      <button
+                          key={characterId}
+                          onClick={() => onInteractCharacter?.(characterId)}
+                          className="bg-primary/20 px-4 py-2 rounded-full text-sm font-medium text-text-primary border border-border flex items-center gap-2 hover:bg-primary/30 hover:scale-105 transition-all duration-200 cursor-pointer"
+                      >
+                          <span className='text-xl'>{character.sprite}</span>
+                          <span>{character.name}</span>
+                          <span className='text-xs text-pink-300'>💕</span>
+                      </button>
+                  )
+              })}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Time and Stamina Warning */}
       <div className="mt-4 flex justify-between items-center text-xs text-text-secondary">

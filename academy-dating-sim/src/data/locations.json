@@ -16,7 +16,13 @@
           "time": "any"
         }
       ],
-      "characters": ["luna"],
+      "characterSchedule": {
+        "morning": ["luna", "yuki"],
+        "noon": [],
+        "afternoon": ["luna"],
+        "evening": [],
+        "night": []
+      },
       "sprite": "🏫"
     },
     "library": {
@@ -35,7 +41,13 @@
           "time": "any"
         }
       ],
-      "characters": ["yuki"],
+      "characterSchedule": {
+        "morning": [],
+        "noon": ["yuki"],
+        "afternoon": ["yuki", "luna"],
+        "evening": ["yuki"],
+        "night": []
+      },
       "sprite": "📚"
     },
     "training": {
@@ -54,7 +66,13 @@
           "time": "afternoon"
         }
       ],
-      "characters": ["sakura"],
+      "characterSchedule": {
+        "morning": ["sakura"],
+        "noon": [],
+        "afternoon": ["sakura"],
+        "evening": ["sakura"],
+        "night": []
+      },
       "sprite": "⚔️"
     },
     "cafeteria": {
@@ -73,7 +91,13 @@
           "time": "any"
         }
       ],
-      "characters": ["luna", "yuki", "sakura"],
+      "characterSchedule": {
+        "morning": [],
+        "noon": ["luna", "yuki", "sakura"],
+        "afternoon": [],
+        "evening": ["luna"],
+        "night": []
+      },
       "sprite": "🍽️"
     },
     "garden": {
@@ -92,7 +116,13 @@
           "time": "afternoon"
         }
       ],
-      "characters": [],
+      "characterSchedule": {
+        "morning": [],
+        "noon": [],
+        "afternoon": [],
+        "evening": ["yuki"],
+        "night": ["luna", "sakura"]
+      },
       "sprite": "🌸"
     },
     "dormitory": {
@@ -111,7 +141,13 @@
           "time": "night"
         }
       ],
-      "characters": [],
+      "characterSchedule": {
+        "morning": [],
+        "noon": [],
+        "afternoon": [],
+        "evening": [],
+        "night": ["yuki", "sakura"]
+      },
       "sprite": "🏠"
     },
     "shop": {
@@ -126,7 +162,13 @@
           "special": "shop"
         }
       ],
-      "characters": [],
+      "characterSchedule": {
+        "morning": [],
+        "noon": [],
+        "afternoon": [],
+        "evening": [],
+        "night": []
+      },
       "sprite": "🏪"
     },
     "secretGarden": {
@@ -140,7 +182,13 @@
           "time": "any"
         }
       ],
-      "characters": ["mystery"],
+      "characterSchedule": {
+        "morning": [],
+        "noon": [],
+        "afternoon": [],
+        "evening": ["mystery"],
+        "night": ["mystery"]
+      },
       "sprite": "🌙",
       "unlockCondition": {
         "item": "mysteryKey"

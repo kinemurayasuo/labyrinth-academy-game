@@ -16,22 +16,27 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
   onInteract,
 }) => {
   const [selectedCell, setSelectedCell] = useState<{ x: number; y: number } | null>(null);
-  const [, setPlayerPosition] = useState(player.dungeonProgress.position);
+  const [playerDisplayPosition, setPlayerDisplayPosition] = useState(player.dungeonProgress.position);
   const [isMoving, setIsMoving] = useState(false);
   const [moveAnimation, setMoveAnimation] = useState<{ from: { x: number; y: number }, to: { x: number; y: number } } | null>(null);
 
   const getCellContent = (x: number, y: number, cellType: number) => {
-    const isPlayerHere = player.dungeonProgress.position.x === x && player.dungeonProgress.position.y === y;
+    const isPlayerHere = playerDisplayPosition.x === x && playerDisplayPosition.y === y;
+    const isMovingToHere = moveAnimation && moveAnimation.to.x === x && moveAnimation.to.y === y;
+    const isMovingFromHere = moveAnimation && moveAnimation.from.x === x && moveAnimation.from.y === y;
 
-    if (isPlayerHere) {
+    if (isPlayerHere || isMovingToHere) {
       return (
         <div
-          className={`w-full h-full bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg transition-all duration-300 ${isMoving ? 'scale-110 animate-bounce' : ''}`}
+          className={`absolute inset-0 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg transition-all duration-300 ${
+            isMoving ? 'animate-pulse' : ''
+          } ${isMovingToHere ? 'scale-110' : 'scale-100'}`}
           style={{
-            animation: isMoving ? 'playerMove 0.3s ease-in-out' : 'none'
+            animation: isMovingToHere ? 'playerArrive 0.3s ease-out' : isMovingFromHere ? 'playerLeave 0.3s ease-in' : 'none',
+            zIndex: 10
           }}
         >
-          🚶
+          <span className="animate-bounce">🚶</span>
         </div>
       );
     }
@@ -108,8 +113,8 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
 
         // Animate the movement
         setTimeout(() => {
+          setPlayerDisplayPosition({ x, y });
           onMovePlayer(x, y);
-          setPlayerPosition({ x, y });
           setIsMoving(false);
           setMoveAnimation(null);
         }, 300);
@@ -136,10 +141,29 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
   return (
     <div className="bg-gradient-to-br from-purple-900 via-blue-900 to-purple-900 p-6 rounded-lg shadow-2xl">
       <style>{`
-        @keyframes playerMove {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.5); }
-          100% { transform: scale(1); }
+        @keyframes playerArrive {
+          0% {
+            transform: scale(0) rotate(0deg);
+            opacity: 0;
+          }
+          50% {
+            transform: scale(1.2) rotate(180deg);
+            opacity: 0.7;
+          }
+          100% {
+            transform: scale(1) rotate(360deg);
+            opacity: 1;
+          }
+        }
+        @keyframes playerLeave {
+          0% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(0);
+            opacity: 0;
+          }
         }
         @keyframes cellPulse {
           0%, 100% { opacity: 0.3; }
