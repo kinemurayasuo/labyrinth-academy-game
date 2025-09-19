@@ -126,8 +126,8 @@ const GameUI: React.FC<GameUIProps> = ({
                   onClick={() => setSelectedTab('location')}
                   className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
                     selectedTab === 'location'
-                      ? 'bg-primary text-white shadow-lg transform scale-105'
-                      : 'bg-background hover:bg-primary/50 text-text-primary hover:scale-105'
+                      ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
+                      : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
                   }`}
                 >
                   📍 현재 장소
@@ -136,8 +136,8 @@ const GameUI: React.FC<GameUIProps> = ({
                   onClick={() => setSelectedTab('characters')}
                   className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
                     selectedTab === 'characters'
-                      ? 'bg-primary text-white shadow-lg transform scale-105'
-                      : 'bg-background hover:bg-primary/50 text-text-primary hover:scale-105'
+                      ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
+                      : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
                   }`}
                 >
                   👥 캐릭터

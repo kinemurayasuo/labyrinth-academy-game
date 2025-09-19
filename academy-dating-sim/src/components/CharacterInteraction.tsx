@@ -66,7 +66,7 @@ const CharacterInteraction: React.FC<CharacterInteractionProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-purple-900 via-pink-800 to-purple-900 text-white rounded-lg shadow-lg p-6">
+    <div className="bg-black/30 backdrop-blur-md text-text-primary rounded-lg shadow-lg p-6 border border-border">
       <h2 className="text-2xl font-bold text-pink-200 mb-6 flex items-center gap-2">
         <span>👥</span>
         캐릭터 상호작용

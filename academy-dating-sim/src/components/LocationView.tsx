@@ -79,7 +79,7 @@ const LocationView: React.FC<LocationViewProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-purple-900 via-pink-800 to-purple-900 text-white rounded-lg shadow-lg p-6">
+    <div className="bg-black/30 backdrop-blur-md text-text-primary rounded-lg shadow-lg p-6 border border-border">
       {/* Current Location Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-3">
