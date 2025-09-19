@@ -1,15 +1,8 @@
 import React from 'react';
-import type { Player } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
 
-interface StatusBarProps {
-  player: Player;
-}
-
-const StatusBar: React.FC<StatusBarProps> = ({ player }) => {
-  // Debug logging
-  console.log('StatusBar player data:', player);
-  console.log('HP:', player.hp, 'MaxHP:', player.maxHp);
-  console.log('MP:', player.mp, 'MaxMP:', player.maxMp);
+const StatusBar: React.FC = () => {
+  const player = useGameStore((state) => state.player);
   const getStatColor = (value: number, max: number = 20) => {
     const percentage = (value / max) * 100;
     if (percentage >= 75) return 'text-green-500';

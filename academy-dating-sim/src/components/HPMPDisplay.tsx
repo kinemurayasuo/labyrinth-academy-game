@@ -1,18 +1,9 @@
 import React from 'react';
+import { useGameStore } from '../store/useGameStore';
 
-interface HPMPDisplayProps {
-  hp?: number;
-  maxHp?: number;
-  mp?: number;
-  maxMp?: number;
-}
-
-const HPMPDisplay: React.FC<HPMPDisplayProps> = ({
-  hp = 100,
-  maxHp = 100,
-  mp = 50,
-  maxMp = 50
-}) => {
+const HPMPDisplay: React.FC = () => {
+  const { player } = useGameStore();
+  const { hp = 100, maxHp = 100, mp = 50, maxMp = 50 } = player;
   return (
     <div className="fixed top-0 left-0 right-0 z-[100] bg-black/90 backdrop-blur-sm p-4 shadow-2xl">
       <div className="max-w-4xl mx-auto">

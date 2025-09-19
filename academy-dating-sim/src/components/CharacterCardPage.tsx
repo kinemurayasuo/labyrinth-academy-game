@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Character, Player } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
+import charactersData from '../data/characters.json';
 
-interface CharacterCardPageProps {
-  characters: Record<string, Character>;
-  player: Player;
-  unlockedCharacters: string[];
-}
+// Type assertions for JSON data
+const characters = charactersData as Record<string, any>;
 
-const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
-  characters,
-  player,
-  unlockedCharacters,
-}) => {
+const CharacterCardPage: React.FC = () => {
   const navigate = useNavigate();
+  
+  // Use Zustand store
+  const player = useGameStore((state: any) => state.player);
+  const unlockedCharacters = useGameStore((state: any) => state.unlockedCharacters);
   const [selectedCharacter, setSelectedCharacter] = useState<string>(unlockedCharacters[0] || 'sakura');
 
   const getCharacterStats = (characterId: string) => {
@@ -48,7 +46,7 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
     };
 
     if (affection >= 70) return "당신을 기다리는 중";
-    return timeStatus[player.timeOfDay] || "대화 가능";
+    return (timeStatus as any)[player.timeOfDay] || "대화 가능";
   };
 
   const getCharacterOutfit = (characterId: string) => {
@@ -69,7 +67,7 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
     return "낯선 사람";
   };
 
-  const getCurrentDialogue = (character: Character, characterId: string) => {
+  const getCurrentDialogue = (character: any, characterId: string) => {
     const affectionLevel = player.affection[characterId] || 0;
     const thresholds = Object.keys(character.dialogues)
       .map(Number)
@@ -92,7 +90,7 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
       evening: '6:30 PM',
       night: '10:00 PM'
     };
-    return timeMap[player.timeOfDay] || 'Unknown';
+    return (timeMap as any)[player.timeOfDay] || 'Unknown';
   };
 
   const formatDate = () => {
@@ -128,7 +126,7 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
                 <div className="bg-black/30 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-border">
                   <h3 className="text-lg font-bold mb-4 text-text-primary">캐릭터 선택</h3>
                   <div className="flex gap-4 justify-center overflow-x-auto">
-                    {unlockedCharacters.map(characterId => {
+                    {unlockedCharacters.map((characterId: any) => {
                       const character = characters[characterId];
                       if (!character) return null;
         
@@ -277,7 +275,7 @@ const CharacterCardPage: React.FC<CharacterCardPageProps> = ({
                     <div className="mb-8">
                       <h4 className="text-lg font-bold mb-4 text-text-primary">❤️ 좋아하는 것들</h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedCharacterData.likes.slice(0, 8).map((item, index) => (
+                        {selectedCharacterData.likes?.slice(0, 8).map((item: any, index: any) => (
                           <span key={index} className="bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/50">
                             {item}
                           </span>

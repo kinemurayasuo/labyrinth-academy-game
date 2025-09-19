@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Player, Character, Location } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
 import StatusBar from './StatusBar';
 import LocationView from './LocationView';
 import CharacterInteraction from './CharacterInteraction';
@@ -8,43 +8,35 @@ import VisualNovelDialog from './VisualNovelDialog';
 import Inventory from './Inventory';
 import HeroineEvents from './HeroineEvents';
 import dialogueData from '../data/dialogues.json';
+import charactersData from '../data/characters.json';
+import locationsData from '../data/locations.json';
 
-interface GameUIProps {
-  player: Player;
-  characters: Record<string, Character>;
-  locations: Record<string, Location>;
-  unlockedCharacters: string[];
-  currentLocation: Location;
-  gameMessage: string;
-  currentEvent: any;
-  onMoveLocation: (locationId: string) => void;
-  onPerformActivity: (activity: string) => void;
-  onAdvanceTime: () => void;
-  onHandleEventChoice: (event: any, choiceIndex: number) => void;
-  onTalkToCharacter: (characterId: string) => void;
-  onUseItem: (itemId: string, targetCharacter?: string) => void;
-  onSaveGame: () => void;
-  onLoadGame: () => void;
-}
+// Type assertions for JSON data
+const characters = charactersData as Record<string, any>;
+const locations = locationsData as { locations: Record<string, any> };
 
-const GameUI: React.FC<GameUIProps> = ({
-  player,
-  characters,
-  locations,
-  unlockedCharacters,
-  currentLocation,
-  gameMessage,
-  currentEvent,
-  onMoveLocation,
-  onPerformActivity,
-  onAdvanceTime,
-  onHandleEventChoice,
-  onTalkToCharacter: _onTalkToCharacter,
-  onUseItem,
-  onSaveGame,
-  onLoadGame,
-}) => {
+const GameUI: React.FC = () => {
   const navigate = useNavigate();
+  
+  // Use Zustand store
+  const player = useGameStore((state: any) => state.player);
+  const unlockedCharacters = useGameStore((state: any) => state.unlockedCharacters);
+  const currentEvent = useGameStore((state: any) => state.currentEvent);
+  const gameMessage = useGameStore((state: any) => state.gameMessage);
+  const {
+    saveGame,
+    loadGame,
+    performActivity,
+    moveToLocation,
+    advanceTime,
+    handleEventChoice,
+    updateAffection
+  } = useGameStore((state: any) => state.actions);
+  
+  // Get current location
+  const currentLocation = locations.locations[player.location];
+  
+  // Component state
   const [showInventory, setShowInventory] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters'>('location');
   const [showHeroineEvents, setShowHeroineEvents] = React.useState(false);
@@ -104,8 +96,9 @@ const GameUI: React.FC<GameUIProps> = ({
     const choice = currentConversation.choices[choiceIndex];
     if (choice) {
       // Update affection
-      const newAffection = (player.affection[dialogCharacter] || 0) + choice.affectionChange;
-      _onTalkToCharacter(dialogCharacter); // This should update the game state
+    if (choice.affectionChange && dialogCharacter) {
+      updateAffection(dialogCharacter, choice.affectionChange);
+    }
 
       // Show response
       setDialogueText([choice.response]);
@@ -147,13 +140,13 @@ const GameUI: React.FC<GameUIProps> = ({
               </button>
               <div className="border-l border-border mx-2 h-10"></div>
               <button
-                onClick={onSaveGame}
+                onClick={saveGame}
                 className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 💾 저장
               </button>
               <button
-                onClick={onLoadGame}
+                onClick={loadGame}
                 className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 📂 불러오기
@@ -169,7 +162,7 @@ const GameUI: React.FC<GameUIProps> = ({
         </div>
 
         {/* Status Bar */}
-        <StatusBar player={player} />
+        <StatusBar />
 
         {/* Game Message */}
         <div className="bg-black/20 border border-border rounded-2xl p-4 mb-6 shadow-lg">
@@ -215,23 +208,16 @@ const GameUI: React.FC<GameUIProps> = ({
                 <LocationView
                   currentLocation={currentLocation}
                   player={player}
-                  onPerformActivity={onPerformActivity}
-                  onMoveToLocation={onMoveLocation}
-                  availableLocations={locations}
+                  onPerformActivity={(activity: string) => performActivity(activity, navigate)}
+                  onMoveToLocation={moveToLocation}
+                  availableLocations={locations.locations}
                   characters={characters}
                   onInteractCharacter={handleCharacterInteraction}
                 />
               ) : (
                 <CharacterInteraction
                   characters={characters}
-                  unlockedCharacters={unlockedCharacters}
-                  player={player}
                   items={{}}
-                  onUseItem={onUseItem}
-                  onUpdateAffection={(character: string, amount: number) => {
-                    // Handle affection update here
-                    console.log(`Updating affection for ${character} by ${amount}`);
-                  }}
                 />
               )}
             </div>
@@ -257,7 +243,7 @@ const GameUI: React.FC<GameUIProps> = ({
                   </div>
                 </div>
                 <button
-                  onClick={onAdvanceTime}
+                  onClick={advanceTime}
                   className="w-full px-4 py-3 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
                 >
                   ⏭️ 시간 진행
@@ -285,7 +271,7 @@ const GameUI: React.FC<GameUIProps> = ({
                         <div className="flex-1">
                           <div className="flex justify-between items-center mb-1">
                             <span className="font-medium text-text-primary">{character.name}</span>
-                            <span className="text-sm font-bold text-secondary">{affection}/100</span>
+                            <span className="text-sm font-bold text-secondary">{String(affection)}/100</span>
                           </div>
                         </div>
                       </div>
@@ -309,7 +295,7 @@ const GameUI: React.FC<GameUIProps> = ({
             event={currentEvent}
             character={currentEvent.trigger.character ? characters[currentEvent.trigger.character] : undefined}
             player={player}
-            onChoice={onHandleEventChoice}
+            onChoice={handleEventChoice}
             onClose={() => {
               // Handle closing event dialog
               console.log('Closing event dialog');
@@ -332,10 +318,6 @@ const GameUI: React.FC<GameUIProps> = ({
               </div>
               <div className="p-4">
                 <Inventory
-                  player={player}
-                  characters={characters}
-                  unlockedCharacters={unlockedCharacters}
-                  onUseItem={onUseItem}
                   onClose={() => setShowInventory(false)}
                 />
               </div>

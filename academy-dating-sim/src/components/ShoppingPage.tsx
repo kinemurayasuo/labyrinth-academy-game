@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Player, Item } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
+import itemsData from '../data/items.json';
 
-interface ShoppingPageProps {
-  player: Player;
-  items: Record<string, Item>;
-  onPurchaseItem: (itemId: string, price: number) => boolean;
-  onBackToGame?: () => void;
-}
+// Type assertions for JSON data
+const items = itemsData.items as Record<string, any>;
 
-const ShoppingPage: React.FC<ShoppingPageProps> = ({
-  player,
-  items,
-  onPurchaseItem,
-  onBackToGame: _onBackToGame,
-}) => {
+const ShoppingPage: React.FC = () => {
   const navigate = useNavigate();
+  
+  // Use Zustand store
+  const player = useGameStore((state: any) => state.player);
+  const { purchaseItem } = useGameStore((state: any) => state.actions);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -34,13 +30,13 @@ const ShoppingPage: React.FC<ShoppingPageProps> = ({
     return true;
   });
 
-  const handlePurchase = (item: Item) => {
+  const handlePurchase = (item: any) => {
     if (player.money < item.value) {
       alert('골드가 부족합니다!');
       return;
     }
 
-    const success = onPurchaseItem(item.id, item.value);
+    const success = purchaseItem(item.id, item.value);
     if (success) {
       alert(`${item.name}을(를) 구매했습니다!`);
     } else {
@@ -197,9 +193,9 @@ const ShoppingPage: React.FC<ShoppingPageProps> = ({
                   <div>
                     <h5 className="font-medium text-gray-800 mb-1">💫 효과</h5>
                     <div className="space-y-1">
-                      {Object.entries(items[selectedItem].effect).map(([stat, value]) => (
+                      {Object.entries(items[selectedItem].effect || {}).map(([stat, value]) => (
                         <div key={stat} className="flex items-center gap-2 text-sm">
-                          <span className="text-emerald-600">+{value}</span>
+                          <span className="text-emerald-600">+{String(value)}</span>
                           <span className="text-gray-700 capitalize">{stat}</span>
                         </div>
                       ))}
@@ -210,7 +206,7 @@ const ShoppingPage: React.FC<ShoppingPageProps> = ({
                     <div>
                       <h5 className="font-medium text-gray-800 mb-1">💝 선호하는 캐릭터</h5>
                       <div className="flex flex-wrap gap-1">
-                        {items[selectedItem].preferredBy!.map(charId => (
+                        {(items[selectedItem].preferredBy || []).map((charId: any) => (
                           <span key={charId} className="bg-pink-100 text-pink-700 px-2 py-1 text-xs rounded">
                             {charId}
                           </span>

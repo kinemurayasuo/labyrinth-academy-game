@@ -1,53 +1,59 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Player, DungeonFloor, Monster, Character } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
+import type { Monster } from '../types/game';
 import DungeonMap from './DungeonMap';
 import BattleScreen from './BattleScreen';
 import Inventory from './Inventory';
+import dungeonsData from '../data/dungeons.json';
 
-interface DungeonPageProps {
-  player: Player;
-  currentFloor: DungeonFloor;
-  characters: Record<string, Character>;
-  unlockedCharacters: string[];
-  onMovePlayer: (newX: number, newY: number) => void;
-  onInteract: (x: number, y: number) => void;
-  onUpdateHpMp: (hp: number, mp: number) => void;
-  onAdvanceTime: () => void;
-  onUseItem: (itemId: string, targetCharacter?: string) => void;
-  onBattle?: (enemy: any) => void;
-  onCollectItem?: (item: string) => void;
-  onExitDungeon?: () => void;
-}
+// Type assertions for JSON data
+const dungeonFloors = dungeonsData.floors as any[];
 
-const DungeonPage: React.FC<DungeonPageProps> = ({
-  player,
-  currentFloor,
-  characters,
-  unlockedCharacters,
-  onMovePlayer,
-  onInteract,
-  onUpdateHpMp,
-  onAdvanceTime,
-  onUseItem,
-  onBattle,
-  onCollectItem,
-  onExitDungeon,
-}) => {
+const DungeonPage: React.FC = () => {
   const navigate = useNavigate();
+  
+  // Use Zustand store
+  const player = useGameStore((state: any) => state.player);
+  const { updateHpMp, advanceTime, addItem } = useGameStore((state: any) => state.actions);
+  
+  // Get current dungeon floor
+  const getCurrentDungeonFloor = () => {
+    return dungeonFloors.find(floor => floor.id === player.dungeonProgress.currentFloor) || dungeonFloors[0];
+  };
+  
+  const currentFloor = getCurrentDungeonFloor();
   const [isInBattle, setIsInBattle] = useState(false);
   const [currentEnemy, setCurrentEnemy] = useState<Monster | null>(null);
   const [gameMessage, setGameMessage] = useState('던전에 입장했습니다!');
   const [showInventory, setShowInventory] = useState(false);
 
   const handleExitDungeon = () => {
-    if (onExitDungeon) {
-      onExitDungeon();
-    }
     navigate('/game');
   };
 
   const handlePlayerMove = (newX: number, newY: number) => {
+    // Check bounds
+    if (newX < 0 || newY < 0 || newY >= currentFloor.layout.length || newX >= currentFloor.layout[0].length) {
+      return;
+    }
+    
+    // Check if it's a wall
+    if (currentFloor.layout[newY][newX] === 1) {
+      return;
+    }
+    
+    // Update player position in store
+    useGameStore.setState((state: any) => ({
+      player: {
+        ...state.player,
+        dungeonProgress: {
+          ...state.player.dungeonProgress,
+          position: { x: newX, y: newY }
+        }
+      }
+    }));
+
     // Check for random encounters
     if (Math.random() < 0.3) {
       const enemy: Monster = {
@@ -66,13 +72,9 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
       setCurrentEnemy(enemy);
       setGameMessage('몬스터가 나타났습니다!');
       setIsInBattle(true);
-      if (onBattle) {
-        onBattle(enemy);
-      }
     } else {
       setGameMessage('던전을 탐험 중입니다...');
     }
-    onMovePlayer(newX, newY);
   };
 
   const handleCellInteract = (x: number, y: number) => {
@@ -81,20 +83,18 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
     switch (cell) {
       case 3: // treasure
         setGameMessage('보물 상자를 발견했습니다!');
-        if (onCollectItem) {
-          onCollectItem('random_item');
-        }
+        addItem('random_item');
         break;
       case 4: // stairs
         setGameMessage('다음 층으로 가는 계단을 발견했습니다!');
         break;
       case 2: // trap
         setGameMessage('함정에 걸렸습니다! 체력이 감소했습니다.');
+        updateHpMp(-15, 0);
         break;
       default:
         setGameMessage('특별한 것이 없습니다.');
     }
-    onInteract(x, y);
   };
 
   const handleBattleVictory = (rewards: { exp: number; gold: number; items: string[] }) => {
@@ -246,8 +246,8 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
                 </button>
                 <button
                   onClick={() => {
-                    onUpdateHpMp(20, 10);
-                    onAdvanceTime();
+                    updateHpMp(20, 10);
+                    advanceTime();
                     setGameMessage('휴식을 취해 체력과 마나를 회복했습니다.');
                   }}
                   className="w-full p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
@@ -341,10 +341,6 @@ const DungeonPage: React.FC<DungeonPageProps> = ({
             </div>
             <div className="p-4">
               <Inventory
-                player={player}
-                characters={characters}
-                unlockedCharacters={unlockedCharacters}
-                onUseItem={onUseItem}
                 onClose={() => setShowInventory(false)}
               />
             </div>

@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
-import type { Player, Item, Character } from '../types/game';
+import type { Item } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
 import itemsData from '../data/items.json';
+import charactersData from '../data/characters.json';
 
 interface InventoryProps {
-  player: Player;
-  items?: Record<string, Item>;
-  characters: Record<string, Character>;
-  unlockedCharacters: string[];
-  onUseItem: (itemId: string, targetCharacter?: string) => void;
   onClose?: () => void;
 }
 
 const Inventory: React.FC<InventoryProps> = ({
-  player,
-  items = itemsData.items as Record<string, Item>,
-  characters,
-  unlockedCharacters,
-  onUseItem,
   onClose: _onClose,
 }) => {
+  const { player, unlockedCharacters } = useGameStore();
+  const useItemAction = useGameStore((state) => state.actions.useItem);
+  const items = itemsData.items as Record<string, Item>;
+  const characters = charactersData as Record<string, any>;
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [detailedItem, setDetailedItem] = useState<Item | null>(null);
   const [showGiftTarget, setShowGiftTarget] = useState(false);
@@ -89,13 +85,13 @@ const Inventory: React.FC<InventoryProps> = ({
       // Equipment items - check requirements first
       const canEquip = checkRequirements(item);
       if (canEquip) {
-        onUseItem(item.id);
+        useItemAction(item.id);
         setSelectedItem(null);
       } else {
         alert('장비 요구 조건을 만족하지 않습니다.');
       }
     } else {
-      onUseItem(item.id);
+      useItemAction(item.id);
       setSelectedItem(null);
     }
   };
@@ -121,7 +117,7 @@ const Inventory: React.FC<InventoryProps> = ({
 
   const handleGiftToCharacter = (characterId: string) => {
     if (selectedItem) {
-      onUseItem(selectedItem.id, characterId);
+      useItemAction(selectedItem.id, characterId);
       setSelectedItem(null);
       setShowGiftTarget(false);
     }

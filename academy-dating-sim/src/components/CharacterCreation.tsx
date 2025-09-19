@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGameStore } from '../store/useGameStore';
 import CharacterPortrait from './CharacterPortrait';
 
 interface CharacterCreationData {
@@ -15,12 +16,12 @@ interface CharacterCreationData {
 }
 
 interface CharacterCreationProps {
-  onCreateCharacter: (data: CharacterCreationData) => boolean;
   onCancel?: () => void;
 }
 
-const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter, onCancel }) => {
+const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCancel }) => {
   const navigate = useNavigate();
+  const { resetGame } = useGameStore((state: any) => state.actions);
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -92,12 +93,8 @@ const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCreateCharacter
       // Simulate character creation delay
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const success = onCreateCharacter(formData);
-      if (success) {
-        navigate('/game');
-      } else {
-        setError('캐릭터 생성 중 오류가 발생했습니다.');
-      }
+      resetGame(formData);
+      navigate('/game');
     } catch (err) {
       setError('캐릭터 생성 중 오류가 발생했습니다.');
     } finally {

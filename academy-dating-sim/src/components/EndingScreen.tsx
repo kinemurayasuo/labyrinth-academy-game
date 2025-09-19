@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import type { EndingType, Player } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
+import type { EndingType } from '../types/game';
 
 interface EndingScreenProps {
-  endingType: EndingType;
-  player: Player;
-  characters: Record<string, any>;
-  completedEvents: string[];
-  onRestart: () => void;
-  onMainMenu: () => void;
+  onRestart?: () => void;
+  onMainMenu?: () => void;
 }
 
 interface EndingData {
@@ -20,13 +17,16 @@ interface EndingData {
 }
 
 const EndingScreen: React.FC<EndingScreenProps> = ({
-  endingType,
-  player,
-  characters: _characters,
-  completedEvents: _completedEvents,
   onRestart,
   onMainMenu,
 }) => {
+  const { player, gameEnding } = useGameStore();
+  
+  const endingType = gameEnding;
+  
+  if (!endingType) {
+    return <div>엔딩을 로드하는 중...</div>;
+  }
   const [showStats, setShowStats] = useState(false);
   const [animationPhase, setAnimationPhase] = useState(0);
 

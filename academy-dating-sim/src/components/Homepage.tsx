@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGameStore } from '../store/useGameStore';
 import CharacterPortrait from './CharacterPortrait';
 
 interface HomepageProps {
-  onStartGame: () => boolean;
-  onLoadGame: () => void;
-  hasSavedGame: boolean;
   isLoggedIn: boolean;
   user: any;
   onLogout: () => void;
 }
 
 const Homepage: React.FC<HomepageProps> = ({
-  onStartGame,
-  onLoadGame,
-  hasSavedGame,
   isLoggedIn,
   user,
   onLogout,
 }) => {
   const navigate = useNavigate();
+  const { resetGame, loadGame } = useGameStore((state: any) => state.actions);
   const [animationPhase, setAnimationPhase] = useState(0);
+  const [hasSavedGame, setHasSavedGame] = useState(false);
+
+  useEffect(() => {
+    const savedGame = localStorage.getItem('academyDatingSim');
+    setHasSavedGame(!!savedGame);
+  }, []);
 
   const handleLogout = () => {
     onLogout();
@@ -36,14 +38,12 @@ const Homepage: React.FC<HomepageProps> = ({
   }, []);
 
   const handleStartGame = () => {
-    const result = onStartGame();
-    if (result) {
-      navigate('/character-creation');
-    }
+    resetGame();
+    navigate('/character-creation');
   };
 
   const handleLoadGame = () => {
-    onLoadGame();
+    loadGame();
     navigate('/game');
   };
 

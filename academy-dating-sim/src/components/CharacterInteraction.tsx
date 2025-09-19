@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
-import type { Character, Player, Item } from '../types/game';
+import type { Character, Item } from '../types/game';
+import { useGameStore } from '../store/useGameStore';
 
 interface CharacterInteractionProps {
   characters: Record<string, Character>;
-  unlockedCharacters: string[];
-  player: Player;
   items: Record<string, Item>;
-  onUseItem: (itemId: string, targetCharacter: string) => void;
-  onUpdateAffection: (character: string, amount: number) => void;
 }
 
 const CharacterInteraction: React.FC<CharacterInteractionProps> = ({
   characters,
-  unlockedCharacters,
-  player,
   items,
-  onUseItem,
-  onUpdateAffection,
 }) => {
+  const { player, unlockedCharacters } = useGameStore();
+  const useItemAction = useGameStore((state) => state.actions.useItem);
+  const updateAffection = useGameStore((state) => state.actions.updateAffection);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [showGiftMenu, setShowGiftMenu] = useState(false);
 
@@ -43,11 +39,11 @@ const CharacterInteraction: React.FC<CharacterInteractionProps> = ({
     // Simple dialogue system based on affection (dialogue display not implemented yet)
 
     // Small affection gain from talking
-    onUpdateAffection(character.id, 1);
+    updateAffection(character.id, 1);
   };
 
   const handleGift = (character: Character, itemId: string) => {
-    onUseItem(itemId, character.id);
+    useItemAction(itemId, character.id);
     setShowGiftMenu(false);
   };
 

@@ -82,5 +82,105 @@
       "day": 10,
       "totalAffection": 150
     }
+  },
+  "akane": {
+    "id": "akane",
+    "name": "아카네",
+    "role": "학생회장",
+    "affectionStart": 0,
+    "affectionMax": 100,
+    "likes": ["질서", "책임감", "리더십"],
+    "dislikes": ["무책임", "규칙 위반", "게으름"],
+    "baseText": "카리스마 넘치는 학생회장. 완벽주의자지만 내면은 따뜻하다.",
+    "dialogues": {
+      "0": "신입생이군요. 학교 규칙은 숙지하셨나요?",
+      "20": "당신은 꽤 성실한 학생이네요.",
+      "40": "회장직이 힘들 때... 당신이 있어 든든해요.",
+      "60": "당신 앞에서만 진짜 나를 보여줄 수 있어요.",
+      "80": "이런 감정... 회장으로서 가져선 안 되는데...",
+      "100": "규칙보다 중요한 건... 당신이에요."
+    },
+    "sprite": "👑",
+    "image": "https://images.unsplash.com/photo-1673047233994-78df05226bfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYXdhaWklMjBhbmltZSUyMGdpcmwlMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzU3NDA2OTI1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+  },
+  "hana": {
+    "id": "hana",
+    "name": "하나",
+    "role": "요리부 부장",
+    "affectionStart": 0,
+    "affectionMax": 100,
+    "likes": ["요리", "디저트", "가족"],
+    "dislikes": ["음식 낭비", "편식", "인스턴트"],
+    "baseText": "따뜻하고 모성애 넘치는 성격. 모두를 먹이려 한다.",
+    "dialogues": {
+      "0": "배고프지 않아요? 제가 만든 도시락 드실래요?",
+      "20": "당신이 맛있게 먹는 모습이 좋아요.",
+      "40": "특별히 당신을 위한 요리를 준비했어요.",
+      "60": "매일 당신의 도시락을 만들고 싶어요.",
+      "80": "당신과 함께 요리하는 미래를 꿈꿔요.",
+      "100": "평생 당신의 곁에서 요리하고 싶어요."
+    },
+    "sprite": "🍰",
+    "image": "https://images.unsplash.com/photo-1663035310226-8203dfbe03d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmltZSUyMGdpcmwlMjBibHVlJTIwaGFpciUyMGNoYXJhY3RlcnxlbnwxfHx8fDE3NTc0MTE5Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+  },
+  "rin": {
+    "id": "rin",
+    "name": "린",
+    "role": "육상부 스타",
+    "affectionStart": 0,
+    "affectionMax": 100,
+    "likes": ["달리기", "아침 햇살", "스포츠 음료"],
+    "dislikes": ["비 오는 날", "포기", "변명"],
+    "baseText": "활발하고 긍정적인 에너지. 항상 웃는 햇살 같은 소녀.",
+    "dialogues": {
+      "0": "안녕! 같이 아침 조깅할래요?",
+      "20": "당신과 달리면 더 빨라지는 것 같아요!",
+      "40": "당신이 응원해주면 무엇이든 할 수 있어요.",
+      "60": "당신과의 시간이 제일 소중해요.",
+      "80": "달리는 것보다... 당신이 더 좋아요.",
+      "100": "함께 인생을 완주하고 싶어요."
+    },
+    "sprite": "🏃‍♀️",
+    "image": "https://images.unsplash.com/photo-1727466443068-779e1f8fe8e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXRlJTIwYW5pbWUlMjBib3klMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzU3NDExOTQyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+  },
+  "mei": {
+    "id": "mei",
+    "name": "메이",
+    "role": "미술부 천재",
+    "affectionStart": 0,
+    "affectionMax": 100,
+    "likes": ["그림", "고요함", "영감"],
+    "dislikes": ["소음", "방해", "틀에 박힌 것"],
+    "baseText": "예술적 감성이 풍부한 소녀. 자신만의 세계에 빠져있다.",
+    "dialogues": {
+      "0": "...당신의 색깔은 뭘까요?",
+      "20": "당신을 그려도 될까요?",
+      "40": "당신은 제 뮤즈예요.",
+      "60": "당신 없는 세상은 흑백이에요.",
+      "80": "당신이 제 캔버스의 전부예요.",
+      "100": "영원히 당신만을 그리고 싶어요."
+    },
+    "sprite": "🎨",
+    "image": "https://images.unsplash.com/photo-1673047233994-78df05226bfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYXdhaWklMjBhbmltZSUyMGdpcmwlMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzU3NDA2OTI1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+  },
+  "sora": {
+    "id": "sora",
+    "name": "소라",
+    "role": "과학부 천재",
+    "affectionStart": 0,
+    "affectionMax": 100,
+    "likes": ["실험", "발명", "논리"],
+    "dislikes": ["미신", "비과학적 사고", "실패"],
+    "baseText": "논리적이고 분석적. 감정보다 이성을 중시한다.",
+    "dialogues": {
+      "0": "흥미로운 실험 대상이네요.",
+      "20": "당신의 데이터가 궁금해요.",
+      "40": "이상해요... 당신을 보면 심박수가 올라가요.",
+      "60": "이 감정을 과학적으로 설명할 수 없어요.",
+      "80": "당신은 제 가설을 모두 뒤집었어요.",
+      "100": "사랑이 과학을 초월한다는 걸 깨달았어요."
+    },
+    "sprite": "🔬",
+    "image": "https://images.unsplash.com/photo-1663035310226-8203dfbe03d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmltZSUyMGdpcmwlMjBibHVlJTIwaGFpciUyMGNoYXJhY3RlcnxlbnwxfHx8fDE3NTc0MTE5Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080"
   }
 }
