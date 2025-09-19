@@ -51,6 +51,14 @@ const LocationView: React.FC<LocationViewProps> = ({
     if (activity.time !== 'any' && activity.time !== player.timeOfDay) {
       return false;
     }
+    // Rest activities don't require stamina
+    if (activity.name === '휴식하기' || activity.name === '휴식') {
+      return true;
+    }
+    // Non-activity pages like shopping don't require stamina
+    if (activity.name === '쇼핑하기' || activity.name === '구경하기' || activity.name === '벤치에 앉기') {
+      return true;
+    }
     return player.stats.stamina > 0;
   };
 

@@ -79,10 +79,11 @@ const HeroineCharacterCards: React.FC<HeroineCharacterCardsProps> = ({
 
     for (const threshold of thresholds) {
       if (affectionLevel >= threshold) {
-        return character.dialogues[threshold.toString()];
+        const dialogue = character.dialogues[threshold.toString()];
+        return dialogue || "최근 대화가 없습니다";
       }
     }
-    return character.dialogues['0'] || "...";
+    return character.dialogues['0'] || "최근 대화가 없습니다";
   };
 
   const formatTime = () => {

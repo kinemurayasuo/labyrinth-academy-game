@@ -1,11 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Player, Character, Location } from '../types/game';
 import StatusBar from './StatusBar';
 import LocationView from './LocationView';
 import CharacterInteraction from './CharacterInteraction';
 import EventDialog from './EventDialog';
 import Inventory from './Inventory';
-import HeroineCharacterCards from './HeroineCharacterCards';
 import HeroineEvents from './HeroineEvents';
 
 interface GameUIProps {
@@ -43,52 +43,60 @@ const GameUI: React.FC<GameUIProps> = ({
   onSaveGame,
   onLoadGame,
 }) => {
+  const navigate = useNavigate();
   const [showInventory, setShowInventory] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters'>('location');
-  const [showDungeonEntry, setShowDungeonEntry] = React.useState(false);
-  const [showCharacterCards, setShowCharacterCards] = React.useState(false);
   const [showHeroineEvents, setShowHeroineEvents] = React.useState(false);
   const [selectedHeroine, setSelectedHeroine] = React.useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 via-pink-50 to-rose-50 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6 mb-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Academy Dating Simulator
-            </h1>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg">
+                🎓
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+                  Academy Dating Simulator
+                </h1>
+                <p className="text-gray-600 text-sm">라비린스 아카데미에 오신 것을 환영합니다</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => navigate('/characters')}
+                className="px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl hover:from-pink-600 hover:to-rose-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                👥 캐릭터
+              </button>
+              <button
+                onClick={() => navigate('/dungeon')}
+                className="px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl hover:from-red-600 hover:to-orange-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                ⚔️ 던전
+              </button>
+              <div className="border-l border-gray-300 mx-2 h-10"></div>
               <button
                 onClick={onSaveGame}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 💾 저장
               </button>
               <button
                 onClick={onLoadGame}
-                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 📂 불러오기
               </button>
               <button
                 onClick={() => setShowInventory(!showInventory)}
-                className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition"
+                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-xl hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 🎒 인벤토리
-              </button>
-              <button
-                onClick={() => setShowDungeonEntry(!showDungeonEntry)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition animate-pulse"
-              >
-                ⚔️ 던전 입장
-              </button>
-              <button
-                onClick={() => setShowCharacterCards(!showCharacterCards)}
-                className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition"
-              >
-                👥 캐릭터 카드
               </button>
             </div>
           </div>
@@ -98,33 +106,38 @@ const GameUI: React.FC<GameUIProps> = ({
         <StatusBar player={player} />
 
         {/* Game Message */}
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded">
-          <p className="font-medium">{gameMessage}</p>
+        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-4 mb-6 shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full flex items-center justify-center text-white text-sm">
+              💭
+            </div>
+            <p className="font-medium text-amber-800 flex-1">{gameMessage}</p>
+          </div>
         </div>
 
         {/* Main Game Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Panel - Location/Characters */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-lg p-4">
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
               {/* Tab Navigation */}
-              <div className="flex gap-2 mb-4">
+              <div className="flex gap-3 mb-6">
                 <button
                   onClick={() => setSelectedTab('location')}
-                  className={`px-4 py-2 rounded-lg transition ${
+                  className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
                     selectedTab === 'location'
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-200 hover:bg-gray-300'
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-105'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700 hover:scale-105'
                   }`}
                 >
                   📍 현재 장소
                 </button>
                 <button
                   onClick={() => setSelectedTab('characters')}
-                  className={`px-4 py-2 rounded-lg transition ${
+                  className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
                     selectedTab === 'characters'
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-200 hover:bg-gray-300'
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-105'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700 hover:scale-105'
                   }`}
                 >
                   👥 캐릭터
@@ -156,39 +169,28 @@ const GameUI: React.FC<GameUIProps> = ({
             </div>
           </div>
 
-          {/* Right Panel - Navigation & Time */}
-          <div className="space-y-4">
-            {/* Location Navigation */}
-            <div className="bg-white rounded-lg shadow-lg p-4">
-              <h3 className="text-lg font-bold mb-3">🗺️ 이동하기</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {Object.values(locations).map(loc => (
-                  <button
-                    key={loc.id}
-                    onClick={() => onMoveLocation(loc.id)}
-                    disabled={player.location === loc.id}
-                    className={`p-3 rounded-lg transition text-sm ${
-                      player.location === loc.id
-                        ? 'bg-gray-300 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-purple-400 to-pink-400 text-white hover:from-purple-500 hover:to-pink-500'
-                    }`}
-                  >
-                    {loc.sprite} {loc.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
+          {/* Right Panel - Time & Stats */}
+          <div className="space-y-6">
             {/* Time Control */}
-            <div className="bg-white rounded-lg shadow-lg p-4">
-              <h3 className="text-lg font-bold mb-3">⏰ 시간</h3>
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white text-sm">
+                  ⏰
+                </div>
+                <h3 className="text-lg font-bold text-gray-800">시간</h3>
+              </div>
               <div className="text-center">
-                <div className="text-2xl mb-2">
-                  Day {player.day} - {getTimeEmoji(player.timeOfDay)} {getTimeKorean(player.timeOfDay)}
+                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 mb-4">
+                  <div className="text-2xl font-bold text-gray-800 mb-1">
+                    Day {player.day}
+                  </div>
+                  <div className="text-lg text-gray-600">
+                    {getTimeEmoji(player.timeOfDay)} {getTimeKorean(player.timeOfDay)}
+                  </div>
                 </div>
                 <button
                   onClick={onAdvanceTime}
-                  className="w-full px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg hover:from-blue-500 hover:to-blue-700 transition"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
                 >
                   ⏭️ 시간 진행
                 </button>
@@ -196,27 +198,34 @@ const GameUI: React.FC<GameUIProps> = ({
             </div>
 
             {/* Character Affection */}
-            <div className="bg-white rounded-lg shadow-lg p-4">
-              <h3 className="text-lg font-bold mb-3">💕 호감도</h3>
-              <div className="space-y-2">
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full flex items-center justify-center text-white text-sm">
+                  💕
+                </div>
+                <h3 className="text-lg font-bold text-gray-800">호감도</h3>
+              </div>
+              <div className="space-y-4">
                 {Object.entries(player.affection).map(([charId, affection]) => {
                   const character = characters[charId];
                   if (!character || !unlockedCharacters.includes(charId)) return null;
 
                   return (
-                    <div key={charId} className="flex items-center gap-2">
-                      <span className="text-2xl">{character.sprite}</span>
-                      <div className="flex-1">
-                        <div className="flex justify-between text-sm mb-1">
-                          <span className="font-medium">{character.name}</span>
-                          <span>{affection}/100</span>
+                    <div key={charId} className="bg-gradient-to-r from-pink-25 to-rose-25 rounded-xl p-3 border border-pink-100">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl">{character.sprite}</span>
+                        <div className="flex-1">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium text-gray-800">{character.name}</span>
+                            <span className="text-sm font-bold text-pink-600">{affection}/100</span>
+                          </div>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div
-                            className="bg-gradient-to-r from-pink-400 to-red-500 h-2 rounded-full transition-all"
-                            style={{ width: `${affection}%` }}
-                          />
-                        </div>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                        <div
+                          className="bg-gradient-to-r from-pink-400 to-rose-500 h-3 rounded-full transition-all duration-500 ease-out"
+                          style={{ width: `${affection}%` }}
+                        />
                       </div>
                     </div>
                   );
@@ -251,74 +260,7 @@ const GameUI: React.FC<GameUIProps> = ({
           />
         )}
 
-        {/* Dungeon Entry Modal */}
-        {showDungeonEntry && (
-          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-            <div className="bg-gradient-to-br from-gray-900 to-red-900 rounded-lg p-6 max-w-md w-full border border-red-500/30">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                  ⚔️ 던전 입장
-                </h2>
-                <button
-                  onClick={() => setShowDungeonEntry(false)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  ✕
-                </button>
-              </div>
 
-              <div className="space-y-4 text-white">
-                <p className="text-gray-300">
-                  위험한 던전에 입장하시겠습니까? 몬스터와의 전투가 있을 수 있습니다.
-                </p>
-
-                <div className="bg-red-800/30 p-3 rounded border border-red-600/50">
-                  <div className="text-sm text-red-300 mb-2">현재 상태:</div>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>체력: {player.hp}/{player.maxHp}</div>
-                    <div>마나: {player.mp}/{player.maxMp}</div>
-                    <div>레벨: {player.level}</div>
-                    <div>층수: {player.dungeonProgress.currentFloor}</div>
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => {
-                      setShowDungeonEntry(false);
-                      // Navigate to dungeon - this would be handled by parent component
-                      console.log('Entering dungeon...');
-                    }}
-                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition"
-                  >
-                    입장하기
-                  </button>
-                  <button
-                    onClick={() => setShowDungeonEntry(false)}
-                    className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded transition"
-                  >
-                    취소
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Character Cards Modal */}
-        {showCharacterCards && (
-          <HeroineCharacterCards
-            characters={characters}
-            player={player}
-            unlockedCharacters={unlockedCharacters}
-            onClose={() => setShowCharacterCards(false)}
-            onInteract={(characterId) => {
-              setShowCharacterCards(false);
-              setSelectedHeroine(characterId);
-              setShowHeroineEvents(true);
-            }}
-          />
-        )}
 
         {/* Heroine Events Modal */}
         {showHeroineEvents && selectedHeroine && characters[selectedHeroine] && (

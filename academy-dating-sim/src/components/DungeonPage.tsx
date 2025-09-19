@@ -1,0 +1,274 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import type { Player, DungeonFloor } from '../types/game';
+import DungeonMap from './DungeonMap';
+
+interface DungeonPageProps {
+  player: Player;
+  currentFloor: DungeonFloor;
+  onMovePlayer: (newX: number, newY: number) => void;
+  onInteract: (x: number, y: number) => void;
+  onBattle?: (enemy: any) => void;
+  onCollectItem?: (item: string) => void;
+  onExitDungeon?: () => void;
+}
+
+const DungeonPage: React.FC<DungeonPageProps> = ({
+  player,
+  currentFloor,
+  onMovePlayer,
+  onInteract,
+  onBattle,
+  onCollectItem,
+  onExitDungeon,
+}) => {
+  const navigate = useNavigate();
+  const [isInBattle, setIsInBattle] = useState(false);
+  const [gameMessage, setGameMessage] = useState('던전에 입장했습니다!');
+
+  const handleExitDungeon = () => {
+    if (onExitDungeon) {
+      onExitDungeon();
+    }
+    navigate('/game');
+  };
+
+  const handlePlayerMove = (newX: number, newY: number) => {
+    // Check for random encounters
+    if (Math.random() < 0.3) {
+      setGameMessage('몬스터가 나타났습니다!');
+      setIsInBattle(true);
+      if (onBattle) {
+        onBattle({
+          name: '던전 몬스터',
+          hp: 50,
+          attack: 15,
+          defense: 5,
+        });
+      }
+    } else {
+      setGameMessage('던전을 탐험 중입니다...');
+    }
+    onMovePlayer(newX, newY);
+  };
+
+  const handleCellInteract = (x: number, y: number) => {
+    const cell = currentFloor.layout[y][x];
+
+    switch (cell) {
+      case 3: // treasure
+        setGameMessage('보물 상자를 발견했습니다!');
+        if (onCollectItem) {
+          onCollectItem('random_item');
+        }
+        break;
+      case 4: // stairs
+        setGameMessage('다음 층으로 가는 계단을 발견했습니다!');
+        break;
+      case 2: // trap
+        setGameMessage('함정에 걸렸습니다! 체력이 감소했습니다.');
+        break;
+      default:
+        setGameMessage('특별한 것이 없습니다.');
+    }
+    onInteract(x, y);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-red-500/30">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-red-500 to-purple-600 bg-clip-text text-transparent">
+              ⚔️ 던전 탐험
+            </h1>
+            <div className="flex gap-2">
+              <button
+                onClick={handleExitDungeon}
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition"
+              >
+                🚪 던전 나가기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Player Status in Dungeon */}
+        <div className="bg-black/40 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-purple-500/30">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-white">
+            <div className="flex items-center gap-2">
+              <span className="text-red-400">❤️</span>
+              <span>체력: {player.hp}/{player.maxHp}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-blue-400">💧</span>
+              <span>마나: {player.mp}/{player.maxMp}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-yellow-400">⭐</span>
+              <span>레벨: {player.level}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-purple-400">🏢</span>
+              <span>층수: {player.dungeonProgress.currentFloor}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Game Message */}
+        <div className="bg-yellow-900/30 border-l-4 border-yellow-500 text-yellow-200 p-4 mb-4 rounded">
+          <p className="font-medium">{gameMessage}</p>
+        </div>
+
+        {/* Main Dungeon Area */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          {/* Dungeon Map */}
+          <div className="lg:col-span-3">
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
+              <h3 className="text-lg font-bold text-white mb-4">🗺️ 던전 지도</h3>
+              <DungeonMap
+                player={player}
+                currentFloor={currentFloor}
+                onMovePlayer={handlePlayerMove}
+                onInteract={handleCellInteract}
+              />
+            </div>
+          </div>
+
+          {/* Dungeon Controls */}
+          <div className="space-y-4">
+            {/* Movement Controls */}
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
+              <h3 className="text-lg font-bold text-white mb-3">🎮 조작</h3>
+              <div className="grid grid-cols-3 gap-2">
+                <div></div>
+                <button
+                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x, player.dungeonProgress.position.y - 1)}
+                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                >
+                  ↑
+                </button>
+                <div></div>
+                <button
+                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x - 1, player.dungeonProgress.position.y)}
+                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                >
+                  ←
+                </button>
+                <button
+                  onClick={() => handleCellInteract(player.dungeonProgress.position.x, player.dungeonProgress.position.y)}
+                  className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition text-sm"
+                >
+                  조사
+                </button>
+                <button
+                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x + 1, player.dungeonProgress.position.y)}
+                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                >
+                  →
+                </button>
+                <div></div>
+                <button
+                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x, player.dungeonProgress.position.y + 1)}
+                  className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition"
+                >
+                  ↓
+                </button>
+                <div></div>
+              </div>
+            </div>
+
+            {/* Dungeon Actions */}
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
+              <h3 className="text-lg font-bold text-white mb-3">⚡ 행동</h3>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setGameMessage('주변을 살펴보았습니다.')}
+                  className="w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
+                >
+                  🔍 주변 조사
+                </button>
+                <button
+                  onClick={() => setGameMessage('잠시 휴식을 취했습니다.')}
+                  className="w-full p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                >
+                  💤 휴식
+                </button>
+                <button
+                  onClick={() => setGameMessage('인벤토리를 확인했습니다.')}
+                  className="w-full p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
+                >
+                  🎒 인벤토리
+                </button>
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-gray-600/50">
+              <h3 className="text-lg font-bold text-white mb-3">📋 범례</h3>
+              <div className="space-y-1 text-sm text-gray-300">
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 bg-blue-500 rounded"></span>
+                  <span>플레이어</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 bg-gray-800 rounded"></span>
+                  <span>벽</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 bg-gray-200 rounded"></span>
+                  <span>통로</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 bg-yellow-500 rounded"></span>
+                  <span>보물</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 bg-green-500 rounded"></span>
+                  <span>계단</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 bg-red-500 rounded"></span>
+                  <span>몬스터</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Battle Interface (if in battle) */}
+        {isInBattle && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+            <div className="bg-red-900/90 backdrop-blur-md rounded-lg p-6 max-w-md w-full border border-red-500/50">
+              <h3 className="text-2xl font-bold text-white mb-4">⚔️ 전투</h3>
+              <p className="text-red-200 mb-4">몬스터와 조우했습니다!</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setIsInBattle(false);
+                    setGameMessage('전투에서 승리했습니다!');
+                  }}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition"
+                >
+                  공격
+                </button>
+                <button
+                  onClick={() => {
+                    setIsInBattle(false);
+                    setGameMessage('전투에서 도망쳤습니다.');
+                  }}
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded transition"
+                >
+                  도망
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default DungeonPage;

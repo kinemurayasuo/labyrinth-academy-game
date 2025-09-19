@@ -8,6 +8,9 @@ import Login from './components/Login';
 import CharacterCreation from './components/CharacterCreation';
 import CharacterManagement from './components/CharacterManagement';
 import DungeonMap from './components/DungeonMap';
+import DungeonPage from './components/DungeonPage';
+import ShoppingPage from './components/ShoppingPage';
+import CharacterCardPage from './components/CharacterCardPage';
 import AccountCreation from './components/AccountCreation';
 import GameInfo from './components/GameInfo';
 import Settings from './components/Settings';
@@ -47,11 +50,9 @@ function App() {
     return true;
   };
 
-  const handleCreateCharacter = (_data: any) => {
+  const handleCreateCharacter = (data: any) => {
     // Apply character data to game state
-    gameState.actions.resetGame();
-    // Set player name and starting stats in the game state
-    // This would require extending the resetGame function to accept initial data
+    gameState.actions.resetGame(data);
     return true;
   };
 
@@ -112,6 +113,10 @@ function App() {
     console.log(`Interacting with cell at ${x}, ${y}`);
   };
 
+  const handlePurchaseItem = (itemId: string, price: number) => {
+    return gameState.actions.purchaseItem(itemId, price);
+  };
+
   // Get current dungeon floor
   const getCurrentDungeonFloor = () => {
     return dungeonFloors.find(floor => floor.id === gameState.player.dungeonProgress.currentFloor) || dungeonFloors[0];
@@ -160,6 +165,48 @@ function App() {
           />
 
           <Route
+            path="/dungeon"
+            element={
+              <DungeonPage
+                player={gameState.player}
+                currentFloor={getCurrentDungeonFloor()}
+                onMovePlayer={handleMovePlayer}
+                onInteract={handleInteract}
+                onExitDungeon={() => {
+                  // Handle exiting dungeon
+                  console.log('Exiting dungeon...');
+                }}
+              />
+            }
+          />
+
+          <Route
+            path="/shopping"
+            element={
+              <ShoppingPage
+                player={gameState.player}
+                items={items}
+                onPurchaseItem={handlePurchaseItem}
+                onBackToGame={() => {
+                  // Handle returning to game
+                  console.log('Returning to game...');
+                }}
+              />
+            }
+          />
+
+          <Route
+            path="/characters"
+            element={
+              <CharacterCardPage
+                characters={gameState.characters}
+                player={gameState.player}
+                unlockedCharacters={gameState.unlockedCharacters}
+              />
+            }
+          />
+
+          <Route
             path="/game"
             element={
               gameState.gameEnding ? (
@@ -185,7 +232,7 @@ function App() {
                     gameMessage={gameState.gameMessage}
                     currentEvent={gameState.currentEvent}
                     onMoveLocation={gameState.actions.moveToLocation}
-                    onPerformActivity={gameState.actions.performActivity}
+                    onPerformActivity={(activityName: string) => gameState.actions.performActivity(activityName)}
                     onAdvanceTime={gameState.actions.advanceTime}
                     onHandleEventChoice={gameState.actions.handleEventChoice}
                     onTalkToCharacter={handleTalkToCharacter}
@@ -194,21 +241,6 @@ function App() {
                     onLoadGame={gameState.actions.loadGame}
                   />
 
-                  {/* Additional UI Elements */}
-                  <div className="fixed top-4 right-4 z-50 space-y-2">
-                    <button
-                      onClick={() => setShowCharacterManagement(!showCharacterManagement)}
-                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-lg transition-colors"
-                    >
-                      👤 캐릭터
-                    </button>
-                    <button
-                      onClick={() => setShowDungeonMap(!showDungeonMap)}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg transition-colors"
-                    >
-                      🗺️ 던전
-                    </button>
-                  </div>
 
                   {/* Character Management Modal */}
                   {showCharacterManagement && (

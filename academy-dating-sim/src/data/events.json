@@ -158,6 +158,168 @@
           }
         }
       ]
+    },
+    {
+      "id": "sakura_secret_garden",
+      "name": "비밀 정원에서의 검술 연습",
+      "trigger": {
+        "location": "secretGarden",
+        "character": "sakura",
+        "minAffection": 50,
+        "chance": 0.6
+      },
+      "description": "비밀 정원에서 사쿠라가 달빛 아래 검술을 연습하고 있다. 아름다운 자세에 감탄하게 된다.",
+      "choices": [
+        {
+          "text": "같이 연습해도 될까?",
+          "effects": {
+            "affection": { "sakura": 20 },
+            "stats": { "stamina": 3, "charm": 2 },
+            "text": "사쿠라와 달빛 아래에서 특별한 검술 연습을 했다. 둘 사이의 거리가 더욱 가까워졌다."
+          }
+        },
+        {
+          "text": "조용히 감상하기",
+          "effects": {
+            "affection": { "sakura": 15 },
+            "stats": { "charm": 1 },
+            "text": "사쿠라의 우아한 검술을 감상했다. 그녀의 진지한 모습이 인상깊었다."
+          }
+        },
+        {
+          "text": "다른 곳으로 가기",
+          "effects": {
+            "text": "조용히 자리를 떠났다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yuki_secret_garden",
+      "name": "비밀 정원의 독서 시간",
+      "trigger": {
+        "location": "secretGarden",
+        "character": "yuki",
+        "minAffection": 50,
+        "chance": 0.6
+      },
+      "description": "유키가 비밀 정원의 벤치에서 책을 읽고 있다. 달빛이 그녀의 은색 머리를 비추어 환상적인 모습이다.",
+      "choices": [
+        {
+          "text": "옆에 앉아서 함께 읽기",
+          "effects": {
+            "affection": { "yuki": 20 },
+            "stats": { "intelligence": 3, "charm": 2 },
+            "text": "유키와 함께 달빛 아래에서 책을 읽었다. 조용하고 로맨틱한 시간이었다."
+          }
+        },
+        {
+          "text": "책에 대해 이야기하기",
+          "effects": {
+            "affection": { "yuki": 15 },
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "유키와 책에 대한 깊은 대화를 나누었다. 그녀의 지적인 매력에 빠져들었다."
+          }
+        },
+        {
+          "text": "방해하지 않고 떠나기",
+          "effects": {
+            "affection": { "yuki": 5 },
+            "text": "유키의 독서를 방해하지 않기 위해 조용히 떠났다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "luna_secret_garden",
+      "name": "비밀 정원의 마법 의식",
+      "trigger": {
+        "location": "secretGarden",
+        "character": "luna",
+        "minAffection": 50,
+        "chance": 0.6
+      },
+      "description": "루나가 비밀 정원 중앙에서 신비한 마법 의식을 행하고 있다. 주변에 반짝이는 마법의 빛들이 춤추고 있다.",
+      "choices": [
+        {
+          "text": "의식에 참여하기",
+          "condition": {
+            "minIntelligence": 15
+          },
+          "effects": {
+            "affection": { "luna": 25 },
+            "stats": { "intelligence": 2, "charm": 3, "luck": 1 },
+            "text": "루나와 함께 신비한 마법 의식에 참여했다. 마법의 힘이 몸 안으로 흘러들어오는 것을 느꼈다."
+          }
+        },
+        {
+          "text": "경외심으로 지켜보기",
+          "effects": {
+            "affection": { "luna": 15 },
+            "stats": { "charm": 2 },
+            "text": "루나의 아름다운 마법 의식을 감상했다. 그녀의 신비한 매력에 마음이 설렜다."
+          }
+        },
+        {
+          "text": "조용히 물러나기",
+          "effects": {
+            "text": "신성한 의식을 방해하지 않기 위해 조용히 물러났다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "secret_garden_stargazing",
+      "name": "비밀 정원에서의 별보기",
+      "trigger": {
+        "location": "secretGarden",
+        "time": "night",
+        "minAffection": 30,
+        "chance": 0.4
+      },
+      "description": "비밀 정원에서 혼자 별을 보고 있는데, 누군가가 조용히 다가온다.",
+      "choices": [
+        {
+          "text": "함께 별을 보자고 제안하기",
+          "effects": {
+            "stats": { "charm": 2, "luck": 1 },
+            "text": "아름다운 별빛 아래에서 로맨틱한 시간을 보냈다."
+          }
+        },
+        {
+          "text": "별자리에 대해 이야기하기",
+          "effects": {
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "별자리와 신화에 대한 흥미로운 대화를 나누었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "secret_garden_confession",
+      "name": "비밀 정원에서의 고백",
+      "trigger": {
+        "location": "secretGarden",
+        "minAffection": 80,
+        "chance": 0.3,
+        "once": true
+      },
+      "description": "비밀 정원의 아름다운 분위기 속에서 특별한 누군가와 마주한다. 이제 마음을 전할 때인 것 같다.",
+      "choices": [
+        {
+          "text": "솔직한 마음을 고백하기",
+          "effects": {
+            "flag": "secret_garden_confession",
+            "text": "비밀 정원에서 진심어린 고백을 했다. 특별한 추억이 만들어졌다."
+          }
+        },
+        {
+          "text": "아직은 때가 아닌 것 같다",
+          "effects": {
+            "text": "마음을 전하지 못했지만, 이 순간만으로도 충분히 아름다웠다."
+          }
+        }
+      ]
     }
   ],
   "randomEvents": [

@@ -96,14 +96,19 @@ export const useGameState = () => {
   }, []);
 
   // Reset game
-  const resetGame = useCallback(() => {
+  const resetGame = useCallback((characterData?: any) => {
     // Create a fresh copy of INITIAL_PLAYER to ensure complete reset
     const freshPlayer: Player = {
       ...INITIAL_PLAYER,
-      stats: { ...INITIAL_PLAYER.stats },
+      name: characterData?.playerName || INITIAL_PLAYER.name,
+      stats: characterData?.startingStats || { ...INITIAL_PLAYER.stats },
       inventory: [],
       equipment: {},
-      affection: {},
+      affection: {
+        sakura: 5,
+        yuki: 10,
+        luna: 0,
+      },
       flags: {},
       dungeonProgress: {
         currentFloor: 1,
@@ -117,7 +122,7 @@ export const useGameState = () => {
     setCompletedEvents([]);
     setCurrentEvent(null);
     setGameEnding(null);
-    setGameMessage('새로운 게임을 시작합니다!');
+    setGameMessage(characterData ? `${freshPlayer.name}의 학원 생활이 시작됩니다!` : '새로운 게임을 시작합니다!');
     localStorage.removeItem('academyDatingSim');
   }, []);
 
@@ -312,6 +317,19 @@ export const useGameState = () => {
     }));
   }, []);
 
+  // Purchase item
+  const purchaseItem = useCallback((itemId: string, price: number) => {
+    if (player.money >= price) {
+      setPlayer(prev => ({
+        ...prev,
+        inventory: [...prev.inventory, itemId],
+        money: prev.money - price,
+      }));
+      return true;
+    }
+    return false;
+  }, [player.money]);
+
   // Use item
   const useItem = useCallback((itemId: string, targetCharacter?: string) => {
     const item = items.items[itemId];
@@ -370,11 +388,18 @@ export const useGameState = () => {
   }, [player]);
 
   // Perform activity
-  const performActivity = useCallback((activityName: string) => {
+  const performActivity = useCallback((activityName: string, navigate?: (path: string) => void) => {
     const location = locations.locations[player.location];
     const activity = location?.activities.find(a => a.name === activityName);
 
     if (!activity) return;
+
+    // Special handling for shopping - redirect to shopping page
+    if (activityName === '쇼핑하기' && navigate) {
+      setGameMessage('매점으로 이동합니다...');
+      navigate('/shopping');
+      return;
+    }
 
     // Check time restriction
     if (activity.time !== 'any' && activity.time !== player.timeOfDay) {
@@ -382,13 +407,59 @@ export const useGameState = () => {
       return;
     }
 
-    // Apply effects
-    updateStats(activity.effect);
+    // Special handling for rest activity - restore stamina instead of consuming
+    if (activityName === '휴식하기' || activityName === '휴식') {
+      const newStats = {
+        ...player.stats,
+        stamina: Math.min(player.stats.stamina + 10, 20) // Restore 10 stamina up to max of 20
+      };
+      updateStats(newStats);
+      setGameMessage('휴식을 취해 체력이 회복되었습니다.');
+      advanceTime();
+      return;
+    }
+
+    // Check stamina for non-rest activities
+    if (player.stats.stamina <= 0) {
+      setGameMessage('체력이 부족합니다. 시간이 자동으로 진행되어 체력이 회복됩니다.');
+      // Auto advance time and restore stamina
+      setPlayer(prev => ({
+        ...prev,
+        stats: {
+          ...prev.stats,
+          stamina: Math.min(prev.stats.stamina + 5, 20)
+        }
+      }));
+      advanceTime();
+      return;
+    }
+
+    // Apply activity effects and consume stamina
+    const newStats = {
+      ...activity.effect,
+      stamina: Math.max(player.stats.stamina - 2, 0) // Consume 2 stamina per activity
+    };
+    updateStats(newStats);
     setGameMessage(`${activityName}을(를) 했습니다.`);
 
-    // Advance time after activity
-    advanceTime();
-  }, [player.location, player.timeOfDay]);
+    // Check if stamina is depleted after activity
+    if (newStats.stamina <= 0) {
+      setTimeout(() => {
+        setGameMessage('체력이 고갈되어 자동으로 시간이 진행됩니다.');
+        setPlayer(prev => ({
+          ...prev,
+          stats: {
+            ...prev.stats,
+            stamina: Math.min(prev.stats.stamina + 5, 20)
+          }
+        }));
+        advanceTime();
+      }, 1500);
+    } else {
+      // Advance time after activity
+      advanceTime();
+    }
+  }, [player.location, player.timeOfDay, player.stats.stamina]);
 
   return {
     player,
@@ -411,6 +482,8 @@ export const useGameState = () => {
       handleEventChoice,
       useItem,
       performActivity,
+      addItem,
+      purchaseItem,
     },
   };
 };
