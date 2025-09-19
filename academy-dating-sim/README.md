@@ -2,6 +2,11 @@
 
 A romantic visual novel game set in a magical academy where players navigate relationships, explore dungeons, and uncover mysteries.
 
+## 📊 개발 현황 (2025-09-19)
+- **완료율**: 90% (14개 중 12개 기능 완료)
+- **최신 업데이트**: Update09194 구현
+- [상세 진행 상황 보기](./PROGRESS.md)
+
 ## 🎯 Features
 
 ### Core Gameplay
