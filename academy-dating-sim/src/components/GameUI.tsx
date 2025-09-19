@@ -7,6 +7,7 @@ import CharacterInteraction from './CharacterInteraction';
 import VisualNovelDialog from './VisualNovelDialog';
 import Inventory from './Inventory';
 import HeroineEvents from './HeroineEvents';
+import dialogueData from '../data/dialogues.json';
 
 interface GameUIProps {
   player: Player;
@@ -50,21 +51,68 @@ const GameUI: React.FC<GameUIProps> = ({
   const [selectedHeroine, setSelectedHeroine] = React.useState<string | null>(null);
   const [showCharacterDialog, setShowCharacterDialog] = React.useState(false);
   const [dialogCharacter, setDialogCharacter] = React.useState<string | null>(null);
+  const [currentDialogueIndex, setCurrentDialogueIndex] = React.useState(0);
+  const [currentConversation, setCurrentConversation] = React.useState<any>(null);
+  const [showChoices, setShowChoices] = React.useState(false);
+  const [dialogueText, setDialogueText] = React.useState<string[]>([]);
 
   const handleCharacterInteraction = (characterId: string) => {
     const character = characters[characterId];
     if (!character) return;
 
-    // Update affection
-    const affectionIncrease = Math.floor(Math.random() * 5) + 3; // 3-7 random affection
-    console.log(`Interacting with ${character.name}, +${affectionIncrease} affection`);
+    // Get appropriate conversation based on affection
+    const affection = player.affection[characterId] || 0;
+    const conversations = (dialogueData as any)[characterId]?.conversations || [];
 
-    // Show dialog
+    // Find the best matching conversation
+    let bestConversation = conversations[0];
+    for (const conv of conversations) {
+      if (conv.requiredAffection <= affection) {
+        bestConversation = conv;
+      } else {
+        break;
+      }
+    }
+
+    if (bestConversation) {
+      setCurrentConversation(bestConversation);
+      setDialogueText(bestConversation.dialogue);
+      setCurrentDialogueIndex(0);
+      setShowChoices(false);
+    }
+
     setDialogCharacter(characterId);
     setShowCharacterDialog(true);
+  };
 
-    // Call the original talk handler to update game state
-    _onTalkToCharacter(characterId);
+  const handleDialogueNext = () => {
+    if (currentDialogueIndex < dialogueText.length - 1) {
+      setCurrentDialogueIndex(currentDialogueIndex + 1);
+    } else if (currentConversation?.choices) {
+      setShowChoices(true);
+    } else {
+      // Close dialogue
+      setShowCharacterDialog(false);
+      setDialogCharacter(null);
+      setCurrentConversation(null);
+    }
+  };
+
+  const handleChoice = (choiceIndex: number) => {
+    if (!currentConversation || !dialogCharacter) return;
+
+    const choice = currentConversation.choices[choiceIndex];
+    if (choice) {
+      // Update affection
+      const newAffection = (player.affection[dialogCharacter] || 0) + choice.affectionChange;
+      _onTalkToCharacter(dialogCharacter); // This should update the game state
+
+      // Show response
+      setDialogueText([choice.response]);
+      setCurrentDialogueIndex(0);
+      setShowChoices(false);
+      setCurrentConversation(null); // End conversation after choice
+    }
   };
 
   return (
@@ -336,54 +384,86 @@ const GameUI: React.FC<GameUIProps> = ({
         {/* Character Dialog Modal */}
         {showCharacterDialog && dialogCharacter && characters[dialogCharacter] && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-black/80 backdrop-blur-md rounded-2xl p-6 max-w-2xl w-full border border-primary/30">
+            <div className="bg-black/90 backdrop-blur-md rounded-2xl p-6 max-w-3xl w-full border border-primary/30">
+              {/* Character Header */}
               <div className="flex items-start gap-4 mb-4">
                 <span className="text-6xl">{characters[dialogCharacter].sprite}</span>
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold text-primary mb-2">{characters[dialogCharacter].name}</h3>
                   <p className="text-text-secondary">{characters[dialogCharacter].role}</p>
                 </div>
-              </div>
-
-              <div className="bg-black/50 rounded-lg p-4 mb-4">
-                <p className="text-text-primary leading-relaxed">
-                  {(() => {
-                    const character = characters[dialogCharacter];
-                    const affection = player.affection[dialogCharacter] || 0;
-                    const dialogues = character.dialogues;
-                    const thresholds = Object.keys(dialogues).map(Number).sort((a, b) => b - a);
-
-                    for (const threshold of thresholds) {
-                      if (affection >= threshold) {
-                        return dialogues[threshold.toString()];
-                      }
-                    }
-                    return character.baseText;
-                  })()}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-pink-400">💕 호감도:</span>
-                  <div className="w-32 bg-black/50 rounded-full h-3">
+                  <span className="text-pink-400 text-sm">💕</span>
+                  <div className="w-24 bg-black/50 rounded-full h-2">
                     <div
-                      className="bg-gradient-to-r from-pink-500 to-red-500 h-3 rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-pink-500 to-red-500 h-2 rounded-full transition-all duration-500"
                       style={{ width: `${Math.min((player.affection[dialogCharacter] || 0), 100)}%` }}
                     />
                   </div>
-                  <span className="text-pink-300 text-sm">{player.affection[dialogCharacter] || 0}/100</span>
+                  <span className="text-pink-300 text-xs">{player.affection[dialogCharacter] || 0}</span>
                 </div>
+              </div>
 
-                <button
-                  onClick={() => {
-                    setShowCharacterDialog(false);
-                    setDialogCharacter(null);
-                  }}
-                  className="bg-primary hover:bg-secondary px-6 py-2 rounded-full text-white font-medium transition-all duration-200"
-                >
-                  확인
-                </button>
+              {/* Dialogue Content */}
+              <div className="bg-black/50 rounded-lg p-6 mb-4 min-h-[200px]">
+                {!showChoices ? (
+                  <div>
+                    <p className="text-text-primary leading-relaxed text-lg whitespace-pre-line">
+                      {dialogueText[currentDialogueIndex] || "..."}
+                    </p>
+                    <div className="mt-4 text-right">
+                      <span className="text-text-secondary text-sm">
+                        {currentDialogueIndex + 1} / {dialogueText.length}
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-text-secondary mb-4">무엇을 말할까요?</p>
+                    {currentConversation?.choices?.map((choice: any, index: number) => (
+                      <button
+                        key={index}
+                        onClick={() => handleChoice(index)}
+                        className="w-full text-left p-4 bg-black/30 hover:bg-primary/20 rounded-lg transition-all duration-200 border border-border hover:border-primary/50"
+                      >
+                        <p className="text-text-primary">{choice.text}</p>
+                        {choice.affectionChange !== 0 && (
+                          <span className={`text-xs mt-1 inline-block ${
+                            choice.affectionChange > 0 ? 'text-green-400' : 'text-red-400'
+                          }`}>
+                            {choice.affectionChange > 0 ? '+' : ''}{choice.affectionChange} 호감도
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-3">
+                {!showChoices && dialogueText.length > 0 && (
+                  <button
+                    onClick={handleDialogueNext}
+                    className="bg-primary hover:bg-secondary px-6 py-2 rounded-full text-white font-medium transition-all duration-200"
+                  >
+                    {currentDialogueIndex < dialogueText.length - 1 ? '다음' :
+                     currentConversation?.choices ? '선택지 보기' : '대화 종료'}
+                  </button>
+                )}
+                {!currentConversation && (
+                  <button
+                    onClick={() => {
+                      setShowCharacterDialog(false);
+                      setDialogCharacter(null);
+                      setCurrentDialogueIndex(0);
+                      setDialogueText([]);
+                    }}
+                    className="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full text-white font-medium transition-all duration-200"
+                  >
+                    닫기
+                  </button>
+                )}
               </div>
             </div>
           </div>
