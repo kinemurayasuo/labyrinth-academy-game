@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useGameStore } from './store/useGameStore';
-import GameUI from './components/GameUI';
-import EndingScreen from './components/EndingScreen';
-import Homepage from './components/Homepage';
-import Login from './components/Login';
-import CharacterCreation from './components/CharacterCreation';
-import DungeonPage from './components/DungeonPage';
-import ShoppingPage from './components/ShoppingPage';
-import CharacterCardPage from './components/CharacterCardPage';
-import AccountCreation from './components/AccountCreation';
-import GameInfo from './components/GameInfo';
-import Settings from './components/Settings';
+import GameUI from './components/game/GameUI';
+import EndingScreen from './components/pages/EndingScreen';
+import Homepage from './components/pages/Homepage';
+import Login from './components/pages/Login';
+import CharacterCreation from './components/character/CharacterCreation';
+import DungeonPage from './components/game/DungeonPage';
+import ShoppingPage from './components/game/ShoppingPage';
+import CharacterCardPage from './components/character/CharacterCardPage';
+import AccountCreation from './components/pages/AccountCreation';
+import GameInfo from './components/pages/GameInfo';
+import Settings from './components/pages/Settings';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

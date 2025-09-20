@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../store/useGameStore';
-import StatusBar from './StatusBar';
+import { useGameStore } from '../../store/useGameStore';
+import StatusBar from '../ui/StatusBar';
 import LocationView from './LocationView';
-import CharacterInteraction from './CharacterInteraction';
-import VisualNovelDialog from './VisualNovelDialog';
+import CharacterInteraction from '../character/CharacterInteraction';
+import VisualNovelDialog from '../ui/VisualNovelDialog';
 import Inventory from './Inventory';
-import HeroineEvents from './HeroineEvents';
-import dialogueData from '../data/dialogues.json';
-import charactersData from '../data/characters.json';
-import locationsData from '../data/locations.json';
+import HeroineEvents from '../character/HeroineEvents';
+import dialogueData from '../../data/dialogues.json';
+import charactersData from '../../data/characters.json';
+import locationsData from '../../data/locations.json';
 
 // Type assertions for JSON data
 const characters = charactersData as Record<string, any>;
@@ -33,9 +33,9 @@ const GameUI: React.FC = () => {
     updateAffection
   } = useGameStore((state: any) => state.actions);
   
-  // Get current location
-  const currentLocation = locations.locations[player.location];
-  
+  // Memoize current location to prevent unnecessary recalculations
+  const currentLocation = useMemo(() => locations.locations[player.location], [player.location]);
+
   // Component state
   const [showInventory, setShowInventory] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters'>('location');
@@ -48,7 +48,7 @@ const GameUI: React.FC = () => {
   const [showChoices, setShowChoices] = React.useState(false);
   const [dialogueText, setDialogueText] = React.useState<string[]>([]);
 
-  const handleCharacterInteraction = (characterId: string) => {
+  const handleCharacterInteraction = useCallback((characterId: string) => {
     const character = characters[characterId];
     if (!character) return;
 
@@ -75,9 +75,9 @@ const GameUI: React.FC = () => {
 
     setDialogCharacter(characterId);
     setShowCharacterDialog(true);
-  };
+  }, [player.affection]);
 
-  const handleDialogueNext = () => {
+  const handleDialogueNext = useCallback(() => {
     if (currentDialogueIndex < dialogueText.length - 1) {
       setCurrentDialogueIndex(currentDialogueIndex + 1);
     } else if (currentConversation?.choices) {
@@ -88,17 +88,17 @@ const GameUI: React.FC = () => {
       setDialogCharacter(null);
       setCurrentConversation(null);
     }
-  };
+  }, [currentDialogueIndex, dialogueText.length, currentConversation]);
 
-  const handleChoice = (choiceIndex: number) => {
+  const handleChoice = useCallback((choiceIndex: number) => {
     if (!currentConversation || !dialogCharacter) return;
 
     const choice = currentConversation.choices[choiceIndex];
     if (choice) {
       // Update affection
-    if (choice.affectionChange && dialogCharacter) {
-      updateAffection(dialogCharacter, choice.affectionChange);
-    }
+      if (choice.affectionChange && dialogCharacter) {
+        updateAffection(dialogCharacter, choice.affectionChange);
+      }
 
       // Show response
       setDialogueText([choice.response]);
@@ -106,7 +106,7 @@ const GameUI: React.FC = () => {
       setShowChoices(false);
       setCurrentConversation(null); // End conversation after choice
     }
-  };
+  }, [currentConversation, dialogCharacter, updateAffection]);
 
   return (
     <div className="min-h-screen bg-background p-4 text-text-primary">
@@ -129,31 +129,42 @@ const GameUI: React.FC = () => {
               <button
                 onClick={() => navigate('/characters')}
                 className="px-4 py-2 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="캐릭터 목록 페이지로 이동"
+                role="button"
               >
                 👥 캐릭터
               </button>
               <button
                 onClick={() => navigate('/dungeon')}
                 className="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="던전 탐험 페이지로 이동"
+                role="button"
               >
                 ⚔️ 던전
               </button>
-              <div className="border-l border-border mx-2 h-10"></div>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
               <button
                 onClick={saveGame}
                 className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="현재 게임 진행상황 저장"
+                role="button"
               >
                 💾 저장
               </button>
               <button
                 onClick={loadGame}
                 className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="저장된 게임 불러오기"
+                role="button"
               >
                 📂 불러오기
               </button>
               <button
                 onClick={() => setShowInventory(!showInventory)}
                 className="px-4 py-2 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label={showInventory ? "인벤토리 닫기" : "인벤토리 열기"}
+                aria-expanded={showInventory}
+                role="button"
               >
                 🎒 인벤토리
               </button>
@@ -180,7 +191,7 @@ const GameUI: React.FC = () => {
           <div className="lg:col-span-2">
             <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
               {/* Tab Navigation */}
-              <div className="flex gap-3 mb-6">
+              <div className="flex gap-3 mb-6" role="tablist" aria-label="게임 콘텐츠 탭">
                 <button
                   onClick={() => setSelectedTab('location')}
                   className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
@@ -188,6 +199,10 @@ const GameUI: React.FC = () => {
                       ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
                       : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
                   }`}
+                  role="tab"
+                  aria-selected={selectedTab === 'location'}
+                  aria-controls="location-panel"
+                  tabIndex={selectedTab === 'location' ? 0 : -1}
                 >
                   📍 현재 장소
                 </button>
@@ -198,28 +213,38 @@ const GameUI: React.FC = () => {
                       ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
                       : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
                   }`}
+                  role="tab"
+                  aria-selected={selectedTab === 'characters'}
+                  aria-controls="characters-panel"
+                  tabIndex={selectedTab === 'characters' ? 0 : -1}
                 >
                   👥 캐릭터
                 </button>
               </div>
 
               {/* Tab Content */}
-              {selectedTab === 'location' ? (
-                <LocationView
-                  currentLocation={currentLocation}
-                  player={player}
-                  onPerformActivity={(activity: string) => performActivity(activity, navigate)}
-                  onMoveToLocation={moveToLocation}
-                  availableLocations={locations.locations}
-                  characters={characters}
-                  onInteractCharacter={handleCharacterInteraction}
-                />
-              ) : (
-                <CharacterInteraction
-                  characters={characters}
-                  items={{}}
-                />
-              )}
+              <div
+                id={selectedTab === 'location' ? 'location-panel' : 'characters-panel'}
+                role="tabpanel"
+                aria-labelledby={selectedTab === 'location' ? 'location-tab' : 'characters-tab'}
+              >
+                {selectedTab === 'location' ? (
+                  <LocationView
+                    currentLocation={currentLocation}
+                    player={player}
+                    onPerformActivity={(activity: string) => performActivity(activity, navigate)}
+                    onMoveToLocation={moveToLocation}
+                    availableLocations={locations.locations}
+                    characters={characters}
+                    onInteractCharacter={handleCharacterInteraction}
+                  />
+                ) : (
+                  <CharacterInteraction
+                    characters={characters}
+                    items={{}}
+                  />
+                )}
+              </div>
             </div>
           </div>
 
@@ -245,6 +270,8 @@ const GameUI: React.FC = () => {
                 <button
                   onClick={advanceTime}
                   className="w-full px-4 py-3 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
+                  aria-label="게임 시간을 다음 시간대로 진행"
+                  role="button"
                 >
                   ⏭️ 시간 진행
                 </button>
@@ -305,13 +332,20 @@ const GameUI: React.FC = () => {
 
         {/* Inventory Modal */}
         {showInventory && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div
+            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="inventory-title"
+          >
             <div className="bg-background rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-border">
               <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border p-4 flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-text-primary">🎒 인벤토리</h2>
+                <h2 id="inventory-title" className="text-2xl font-bold text-text-primary">🎒 인벤토리</h2>
                 <button
                   onClick={() => setShowInventory(false)}
                   className="text-text-secondary hover:text-text-primary text-2xl"
+                  aria-label="인벤토리 창 닫기"
+                  role="button"
                 >
                   ✕
                 </button>

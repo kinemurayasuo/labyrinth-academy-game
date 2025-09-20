@@ -187,6 +187,7 @@ export interface Monster {
   defense: number;
   agility: number;
   experience: number;
+  gold: number;
   drops: Drop[];
   sprite: string;
   description: string;

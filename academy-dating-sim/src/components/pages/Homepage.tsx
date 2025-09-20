@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../store/useGameStore';
-import CharacterPortrait from './CharacterPortrait';
+import { useGameStore } from '../../store/useGameStore';
+import CharacterPortrait from '../character/CharacterPortrait';
 
 interface HomepageProps {
   isLoggedIn: boolean;
@@ -9,7 +9,7 @@ interface HomepageProps {
   onLogout: () => void;
 }
 
-const Homepage: React.FC<HomepageProps> = ({
+const Homepage: React.FC<HomepageProps> = React.memo(({
   isLoggedIn,
   user,
   onLogout,
@@ -24,10 +24,11 @@ const Homepage: React.FC<HomepageProps> = ({
     setHasSavedGame(!!savedGame);
   }, []);
 
-  const handleLogout = () => {
+  // Memoize event handlers to prevent unnecessary re-renders
+  const handleLogout = useCallback(() => {
     onLogout();
     window.location.reload();
-  };
+  }, [onLogout]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,42 +38,56 @@ const Homepage: React.FC<HomepageProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const handleStartGame = () => {
+  const handleStartGame = useCallback(() => {
     resetGame();
     navigate('/character-creation');
-  };
+  }, [resetGame, navigate]);
 
-  const handleLoadGame = () => {
+  const handleLoadGame = useCallback(() => {
     loadGame();
     navigate('/game');
-  };
+  }, [loadGame, navigate]);
 
-  const handleAccountCreation = () => {
+  const handleAccountCreation = useCallback(() => {
     navigate('/account-creation');
-  };
+  }, [navigate]);
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     navigate('/login');
-  };
+  }, [navigate]);
+
+  const handleSettings = useCallback(() => {
+    navigate('/settings');
+  }, [navigate]);
+
+  const handleGameInfo = useCallback(() => {
+    navigate('/game-info');
+  }, [navigate]);
+
+  // Memoize background animation elements to prevent recalculation on every render
+  const backgroundElements = useMemo(() =>
+    Array.from({ length: 20 }, (_, i) => (
+      <div
+        key={i}
+        className="absolute animate-pulse"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 3}s`,
+          animationDuration: `${3 + Math.random() * 2}s`,
+        }}
+        aria-hidden="true"
+      >
+        <div className="w-2 h-2 bg-white/20 rounded-full"></div>
+      </div>
+    )), []
+  );
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 text-text-primary">
       {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
-            }}
-          >
-            <div className="w-2 h-2 bg-white/20 rounded-full"></div>
-          </div>
-        ))}
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        {backgroundElements}
       </div>
 
       <div className="relative z-10 max-w-6xl w-full">
@@ -165,9 +180,11 @@ const Homepage: React.FC<HomepageProps> = ({
                     ? "bg-primary hover:bg-secondary hover:scale-105"
                     : "bg-gray-500 cursor-not-allowed opacity-50"
                 }`}
+                aria-label={isLoggedIn ? "새로운 게임 시작하기" : "로그인 후 게임 시작 가능"}
+                role="button"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">🎮</span>
+                  <span className="text-2xl" aria-hidden="true">🎮</span>
                   <span>{isLoggedIn ? "새 게임 시작" : "로그인 후 이용 가능"}</span>
                 </div>
               </button>
@@ -176,9 +193,11 @@ const Homepage: React.FC<HomepageProps> = ({
                 <button
                   onClick={handleLoadGame}
                   className="w-full py-4 px-6 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  aria-label="저장된 게임 불러오기"
+                  role="button"
                 >
                   <div className="flex items-center justify-center gap-3">
-                    <span className="text-2xl">📂</span>
+                    <span className="text-2xl" aria-hidden="true">📂</span>
                     <span>게임 불러오기</span>
                   </div>
                 </button>
@@ -187,9 +206,11 @@ const Homepage: React.FC<HomepageProps> = ({
               <button
                 onClick={handleAccountCreation}
                 className="w-full py-4 px-6 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                aria-label="새 계정 생성하기"
+                role="button"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">👤</span>
+                  <span className="text-2xl" aria-hidden="true">👤</span>
                   <span>계정 생성</span>
                 </div>
               </button>
@@ -202,29 +223,35 @@ const Homepage: React.FC<HomepageProps> = ({
               <button
                 onClick={isLoggedIn ? handleLogout : handleLogin}
                 className="w-full py-4 px-6 bg-orange-500 hover:bg-red-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                aria-label={isLoggedIn ? '계정에서 로그아웃하기' : '계정에 로그인하기'}
+                role="button"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">{isLoggedIn ? '🚪' : '🔐'}</span>
+                  <span className="text-2xl" aria-hidden="true">{isLoggedIn ? '🚪' : '🔐'}</span>
                   <span>{isLoggedIn ? '로그아웃' : '로그인'}</span>
                 </div>
               </button>
 
               <button
-                onClick={() => navigate('/settings')}
+                onClick={handleSettings}
                 className="w-full py-3 px-6 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+                aria-label="게임 설정 페이지로 이동"
+                role="button"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-xl">⚙️</span>
+                  <span className="text-xl" aria-hidden="true">⚙️</span>
                   <span>설정</span>
                 </div>
               </button>
 
               <button
-                onClick={() => navigate('/game-info')}
+                onClick={handleGameInfo}
                 className="w-full py-3 px-6 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+                aria-label="게임 정보 페이지로 이동"
+                role="button"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-xl">ℹ️</span>
+                  <span className="text-xl" aria-hidden="true">ℹ️</span>
                   <span>게임 정보</span>
                 </div>
               </button>
@@ -261,6 +288,8 @@ const Homepage: React.FC<HomepageProps> = ({
       </div>
     </div>
   );
-};
+});
+
+Homepage.displayName = 'Homepage';
 
 export default Homepage;

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import type { Player, DungeonFloor } from '../types/game';
+import React, { useState, useEffect } from 'react';
+import type { Player, DungeonFloor } from '../../types/game';
 import MonsterPortrait from './MonsterPortrait';
 
 interface DungeonMapProps {
@@ -19,6 +19,11 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
   const [playerDisplayPosition, setPlayerDisplayPosition] = useState(player.dungeonProgress.position);
   const [isMoving, setIsMoving] = useState(false);
   const [moveAnimation, setMoveAnimation] = useState<{ from: { x: number; y: number }, to: { x: number; y: number } } | null>(null);
+
+  // Sync player position when it changes
+  useEffect(() => {
+    setPlayerDisplayPosition(player.dungeonProgress.position);
+  }, [player.dungeonProgress.position]);
 
   const getCellContent = (x: number, y: number, cellType: number) => {
     const isPlayerHere = playerDisplayPosition.x === x && playerDisplayPosition.y === y;
@@ -95,8 +100,8 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
   const handleCellClick = (x: number, y: number, cellType: number) => {
     if (cellType === 1) return; // Can't move to walls
 
-    const currentX = player.dungeonProgress.position.x;
-    const currentY = player.dungeonProgress.position.y;
+    const currentX = playerDisplayPosition.x;
+    const currentY = playerDisplayPosition.y;
 
     // Check if the clicked cell is adjacent to current position
     const isAdjacent = Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1 &&
@@ -113,7 +118,6 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
 
         // Animate the movement
         setTimeout(() => {
-          setPlayerDisplayPosition({ x, y });
           onMovePlayer(x, y);
           setIsMoving(false);
           setMoveAnimation(null);
@@ -178,7 +182,7 @@ const DungeonMap: React.FC<DungeonMapProps> = ({
           {currentFloor.name} (층 {currentFloor.id})
         </h3>
         <div className="text-sm text-purple-200">
-          위치: ({player.dungeonProgress.position.x}, {player.dungeonProgress.position.y})
+          위치: ({playerDisplayPosition.x}, {playerDisplayPosition.y})
         </div>
       </div>
 

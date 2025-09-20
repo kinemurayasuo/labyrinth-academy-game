@@ -27,7 +27,7 @@
           "drops": [
             { "itemId": "energyDrink", "chance": 0.3, "quantity": 1 }
           ],
-          "sprite": "slime",
+          "sprite": "🐰",
           "description": "오래된 책에서 나온 작은 먼지 덩어리. 해롭지는 않다."
         }
       ],
@@ -84,7 +84,7 @@
             { "itemId": "manaPotion", "chance": 0.4, "quantity": 1 },
             { "itemId": "mirror", "chance": 0.2, "quantity": 1 }
           ],
-          "sprite": "goblin",
+          "sprite": "📚",
           "description": "스스로 날아다니는 마법서. 위험한 주문을 시전한다."
         }
       ],
@@ -129,7 +129,7 @@
           { "itemId": "wisdomPendant", "chance": 0.3, "quantity": 1 },
           { "itemId": "experienceScroll", "chance": 1.0, "quantity": 3 }
         ],
-        "sprite": "skeleton",
+        "sprite": "🧿",
         "description": "어둠의 힘에 타락한 옛 마법사. 강력한 어둠 마법을 구사한다."
       },
       "nextFloorRequirement": {
@@ -168,7 +168,7 @@
             { "itemId": "strengthAmulet", "chance": 0.2, "quantity": 1 },
             { "itemId": "plateArmor", "chance": 0.1, "quantity": 1 }
           ],
-          "sprite": "orc",
+          "sprite": "🗿",
           "description": "고대 유적을 지키는 돌 수호자. 느리지만 강력하다."
         }
       ],
@@ -214,7 +214,7 @@
           { "itemId": "jewelryBox", "chance": 0.8, "quantity": 1 },
           { "itemId": "experienceScroll", "chance": 1.0, "quantity": 5 }
         ],
-        "sprite": "dragon",
+        "sprite": "🐉",
         "description": "고대 유적의 최고 수호자. 전설적인 힘을 지녔다."
       },
       "nextFloorRequirement": {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../store/useGameStore';
-import type { Monster } from '../types/game';
+import { useGameStore } from '../../store/useGameStore';
+import type { Monster } from '../../types/game';
 import DungeonMap from './DungeonMap';
-import BattleScreen from './BattleScreen';
+import Battle from './Battle';
 import Inventory from './Inventory';
-import dungeonsData from '../data/dungeons.json';
+import dungeonsData from '../../data/dungeons.json';
 
 // Type assertions for JSON data
 const dungeonFloors = dungeonsData.floors as any[];
@@ -27,6 +27,7 @@ const DungeonPage: React.FC = () => {
   const [currentEnemy, setCurrentEnemy] = useState<Monster | null>(null);
   const [gameMessage, setGameMessage] = useState('던전에 입장했습니다!');
   const [showInventory, setShowInventory] = useState(false);
+  const [playerPosition, setPlayerPosition] = useState(player.dungeonProgress.position);
 
   const handleExitDungeon = () => {
     navigate('/game');
@@ -37,12 +38,15 @@ const DungeonPage: React.FC = () => {
     if (newX < 0 || newY < 0 || newY >= currentFloor.layout.length || newX >= currentFloor.layout[0].length) {
       return;
     }
-    
+
     // Check if it's a wall
     if (currentFloor.layout[newY][newX] === 1) {
       return;
     }
-    
+
+    // Update local position state
+    setPlayerPosition({ x: newX, y: newY });
+
     // Update player position in store
     useGameStore.setState((state: any) => ({
       player: {
@@ -54,23 +58,43 @@ const DungeonPage: React.FC = () => {
       }
     }));
 
-    // Check for random encounters
-    if (Math.random() < 0.3) {
-      const enemy: Monster = {
-        id: 'dungeon_monster',
-        name: '던전 몬스터',
-        hp: 50 + Math.floor(Math.random() * 30),
-        maxHp: 80,
-        attack: 15 + Math.floor(Math.random() * 10),
-        defense: 5 + Math.floor(Math.random() * 5),
-        agility: 10,
-        experience: 20,
-        drops: [],
-        sprite: '👾',
-        description: '던전의 어둠 속에서 나타난 몬스터'
+    // Check cell type for special encounters
+    const cellType = currentFloor.layout[newY][newX];
+
+    // Monster encounter on specific cells or random chance
+    if (cellType === 5 || (cellType === 0 && Math.random() < 0.2)) {
+      const enemyList = currentFloor.enemies || [];
+      const randomEnemy = enemyList[Math.floor(Math.random() * enemyList.length)] || {
+        id: 'slime',
+        name: '슬라임',
+        hp: 30,
+        maxHp: 30,
+        attack: 10,
+        defense: 5,
+        agility: 8,
+        experience: 15,
+        gold: 10,
+        sprite: '🟢'
       };
+
+      const enemy: Monster = {
+        ...randomEnemy,
+        hp: randomEnemy.hp || randomEnemy.maxHp,
+        gold: randomEnemy.gold || Math.floor(Math.random() * 50) + 20
+      };
+
       setCurrentEnemy(enemy);
-      setGameMessage('몬스터가 나타났습니다!');
+      setGameMessage(`${enemy.name}이(가) 나타났습니다!`);
+      setIsInBattle(true);
+    } else if (cellType === 6 && currentFloor.boss) {
+      // Boss encounter
+      const boss: Monster = {
+        ...currentFloor.boss,
+        hp: currentFloor.boss.hp || currentFloor.boss.maxHp,
+        gold: currentFloor.boss.gold || 200
+      };
+      setCurrentEnemy(boss);
+      setGameMessage(`보스 ${boss.name}이(가) 나타났습니다!`);
       setIsInBattle(true);
     } else {
       setGameMessage('던전을 탐험 중입니다...');
@@ -101,13 +125,31 @@ const DungeonPage: React.FC = () => {
     setIsInBattle(false);
     setCurrentEnemy(null);
     setGameMessage(`승리! 경험치 +${rewards.exp}, 골드 +${rewards.gold}를 획득했습니다!`);
+
+    // Mark cell as cleared if it was a monster spawn point
+    const cellType = currentFloor.layout[playerPosition.y][playerPosition.x];
+    if (cellType === 5 || cellType === 6) {
+      currentFloor.layout[playerPosition.y][playerPosition.x] = 0;
+    }
   };
 
   const handleBattleDefeat = () => {
     setIsInBattle(false);
     setCurrentEnemy(null);
     setGameMessage('패배했습니다... 던전 입구로 돌아갑니다.');
-    // Reset player position
+
+    // Reset player position to start
+    const startPos = { x: 1, y: 1 };
+    setPlayerPosition(startPos);
+    useGameStore.setState((state: any) => ({
+      player: {
+        ...state.player,
+        dungeonProgress: {
+          ...state.player.dungeonProgress,
+          position: startPos
+        }
+      }
+    }));
   };
 
   const handleFlee = () => {
@@ -119,8 +161,7 @@ const DungeonPage: React.FC = () => {
   // Show battle screen if in battle
   if (isInBattle && currentEnemy) {
     return (
-      <BattleScreen
-        player={player}
+      <Battle
         enemy={currentEnemy}
         onVictory={handleBattleVictory}
         onDefeat={handleBattleDefeat}
@@ -183,7 +224,13 @@ const DungeonPage: React.FC = () => {
             <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-border">
               <h3 className="text-lg font-bold text-text-primary mb-4">🗺️ 던전 지도</h3>
               <DungeonMap
-                player={player}
+                player={{
+                  ...player,
+                  dungeonProgress: {
+                    ...player.dungeonProgress,
+                    position: playerPosition
+                  }
+                }}
                 currentFloor={currentFloor}
                 onMovePlayer={handlePlayerMove}
                 onInteract={handleCellInteract}
@@ -199,33 +246,33 @@ const DungeonPage: React.FC = () => {
               <div className="grid grid-cols-3 gap-2">
                 <div></div>
                 <button
-                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x, player.dungeonProgress.position.y - 1)}
+                  onClick={() => handlePlayerMove(playerPosition.x, playerPosition.y - 1)}
                   className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   ↑
                 </button>
                 <div></div>
                 <button
-                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x - 1, player.dungeonProgress.position.y)}
+                  onClick={() => handlePlayerMove(playerPosition.x - 1, playerPosition.y)}
                   className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   ←
                 </button>
                 <button
-                  onClick={() => handleCellInteract(player.dungeonProgress.position.x, player.dungeonProgress.position.y)}
+                  onClick={() => handleCellInteract(playerPosition.x, playerPosition.y)}
                   className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition text-sm"
                 >
                   조사
                 </button>
                 <button
-                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x + 1, player.dungeonProgress.position.y)}
+                  onClick={() => handlePlayerMove(playerPosition.x + 1, playerPosition.y)}
                   className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   →
                 </button>
                 <div></div>
                 <button
-                  onClick={() => handlePlayerMove(player.dungeonProgress.position.x, player.dungeonProgress.position.y + 1)}
+                  onClick={() => handlePlayerMove(playerPosition.x, playerPosition.y + 1)}
                   className="p-2 bg-primary hover:bg-secondary text-white rounded transition"
                 >
                   ↓
@@ -296,35 +343,6 @@ const DungeonPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Battle Interface (if in battle) */}
-        {isInBattle && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-background backdrop-blur-md rounded-lg p-6 max-w-md w-full border border-border">
-              <h3 className="text-2xl font-bold text-text-primary mb-4">⚔️ 전투</h3>
-              <p className="text-text-secondary mb-4">몬스터와 조우했습니다!</p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setIsInBattle(false);
-                    setGameMessage('전투에서 승리했습니다!');
-                  }}
-                  className="flex-1 bg-primary hover:bg-secondary text-white font-bold py-3 px-4 rounded transition"
-                >
-                  공격
-                </button>
-                <button
-                  onClick={() => {
-                    setIsInBattle(false);
-                    setGameMessage('전투에서 도망쳤습니다.');
-                  }}
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded transition"
-                >
-                  도망
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       {showInventory && (

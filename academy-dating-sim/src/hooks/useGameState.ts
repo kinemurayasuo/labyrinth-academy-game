@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { Player, Character, GameEvent, Item, Location, SaveData, EndingType } from '../types/game';
 import charactersData from '../data/characters.json';
 import eventsData from '../data/events.json';
@@ -11,6 +11,7 @@ const events = eventsData as { events: GameEvent[] };
 const items = itemsData as { items: Record<string, Item> };
 const locations = locationsData as { locations: Record<string, Location> };
 
+// Pre-calculate initial affection to avoid recalculation on each hook call
 const initialAffection = Object.keys(characters).reduce((acc, charId) => {
   acc[charId] = characters[charId].affectionStart || 0;
   return acc;
@@ -57,6 +58,14 @@ export const useGameState = () => {
   const [currentEvent, setCurrentEvent] = useState<GameEvent | null>(null);
   const [gameMessage, setGameMessage] = useState<string>('학원 생활이 시작됩니다!');
   const [gameEnding, setGameEnding] = useState<EndingType | null>(null);
+
+  // Memoize complex calculations
+  const memoizedInitialAffection = useMemo(() => {
+    return Object.keys(characters).reduce((acc, charId) => {
+      acc[charId] = characters[charId].affectionStart || 0;
+      return acc;
+    }, {} as Record<string, number>);
+  }, []);
 
   // Load saved game on mount
   useEffect(() => {
@@ -105,10 +114,7 @@ export const useGameState = () => {
       stats: characterData?.startingStats || { ...INITIAL_PLAYER.stats },
       inventory: [],
       equipment: {},
-      affection: Object.keys(characters).reduce((acc, charId) => {
-        acc[charId] = characters[charId].affectionStart || 0;
-        return acc;
-      }, {} as Record<string, number>),
+      affection: { ...memoizedInitialAffection },
       flags: {},
       dungeonProgress: {
         currentFloor: 1,
@@ -124,7 +130,7 @@ export const useGameState = () => {
     setGameEnding(null);
     setGameMessage(characterData ? `${freshPlayer.name}의 학원 생활이 시작됩니다!` : '새로운 게임을 시작합니다!');
     localStorage.removeItem('academyDatingSim');
-  }, []);
+  }, [memoizedInitialAffection]);
 
   // Update player stats
   const updateStats = useCallback((stats: Partial<Player['stats']>) => {
@@ -180,7 +186,7 @@ export const useGameState = () => {
 
     // Check for random events
     checkForEvents(locationId);
-  }, [player.inventory]);
+  }, [player.inventory, checkForEvents]);
 
   // Advance time
   const advanceTime = useCallback(() => {
@@ -253,7 +259,7 @@ export const useGameState = () => {
       // Check random events
       // Random events implementation would go here if needed
     }
-  }, [player, completedEvents]);
+  }, [player.location, player.day, player.affection, completedEvents]);
 
 
   // Handle event choice
@@ -315,7 +321,7 @@ export const useGameState = () => {
     }
 
     setCurrentEvent(null);
-  }, [player]);
+  }, [player.stats, updateAffection, updateStats, addItem]);
 
   // Add item to inventory
   const addItem = useCallback((itemId: string) => {
@@ -478,7 +484,7 @@ export const useGameState = () => {
       // Advance time after activity
       advanceTime();
     }
-  }, [player.location, player.timeOfDay, player.stats.stamina]);
+  }, [player.location, player.timeOfDay, player.stats.stamina, player.stats, updateStats, advanceTime]);
 
   return {
     player,

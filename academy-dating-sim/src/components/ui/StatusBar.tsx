@@ -1,36 +1,51 @@
-import React from 'react';
-import { useGameStore } from '../store/useGameStore';
+import React, { useMemo, useCallback } from 'react';
+import { useGameStore } from '../../store/useGameStore';
 
-const StatusBar: React.FC = () => {
+const StatusBar: React.FC = React.memo(() => {
   const player = useGameStore((state) => state.player);
-  const getStatColor = (value: number, max: number = 20) => {
+
+  // Memoize function calculations to prevent recreating on every render
+  const getStatColor = useCallback((value: number, max: number = 20) => {
     const percentage = (value / max) * 100;
     if (percentage >= 75) return 'text-green-500';
     if (percentage >= 50) return 'text-yellow-500';
     if (percentage >= 25) return 'text-orange-500';
     return 'text-red-500';
-  };
+  }, []);
 
-  const getStatBarWidth = (value: number, max: number = 20) => {
+  const getStatBarWidth = useCallback((value: number, max: number = 20) => {
     return Math.min((value / max) * 100, 100);
-  };
+  }, []);
 
-  const formatTimeOfDay = (timeOfDay: string) => {
-    const timeMap: Record<string, string> = {
-      morning: '아침',
-      noon: '점심',
-      afternoon: '오후',
-      evening: '저녁',
-      night: '밤'
+  // Memoize time formatting map
+  const timeMap = useMemo(() => ({
+    morning: '아침',
+    noon: '점심',
+    afternoon: '오후',
+    evening: '저녁',
+    night: '밤'
+  }), []);
+
+  const formatTimeOfDay = useCallback((timeOfDay: string) => {
+    return timeMap[timeOfDay as keyof typeof timeMap] || timeOfDay;
+  }, [timeMap]);
+
+  // Memoize HP/MP calculations to prevent unnecessary recalculations
+  const { currentHP, maxHP, currentMP, maxMP, hpPercentage, mpPercentage } = useMemo(() => {
+    const hp = player.hp ?? 100;
+    const maxHp = player.maxHp ?? 100;
+    const mp = player.mp ?? 50;
+    const maxMp = player.maxMp ?? 50;
+
+    return {
+      currentHP: hp,
+      maxHP: maxHp,
+      currentMP: mp,
+      maxMP: maxMp,
+      hpPercentage: (hp / maxHp) * 100,
+      mpPercentage: (mp / maxMp) * 100
     };
-    return timeMap[timeOfDay] || timeOfDay;
-  };
-
-  // Ensure HP/MP have default values
-  const currentHP = player.hp ?? 100;
-  const maxHP = player.maxHp ?? 100;
-  const currentMP = player.mp ?? 50;
-  const maxMP = player.maxMp ?? 50;
+  }, [player.hp, player.maxHp, player.mp, player.maxMp]);
 
   return (
     <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border text-text-primary p-6 mb-6">
@@ -55,14 +70,14 @@ const StatusBar: React.FC = () => {
                 </span>
                 <span className="text-red-300 text-xl">/{maxHP}</span>
                 <div className="text-xs text-red-300">
-                  {Math.round((currentHP / maxHP) * 100)}%
+                  {Math.round(hpPercentage)}%
                 </div>
               </div>
             </div>
-            <div className="w-full bg-red-950/50 rounded-full h-4 shadow-inner">
+            <div className="w-full bg-red-950/50 rounded-full h-4 shadow-inner" role="progressbar" aria-valuenow={currentHP} aria-valuemin={0} aria-valuemax={maxHP} aria-label="체력">
               <div
                 className="bg-gradient-to-r from-red-500 via-red-400 to-red-300 h-4 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${(currentHP / maxHP) * 100}%` }}
+                style={{ width: `${hpPercentage}%` }}
               />
             </div>
           </div>
@@ -85,14 +100,14 @@ const StatusBar: React.FC = () => {
                 </span>
                 <span className="text-blue-300 text-xl">/{maxMP}</span>
                 <div className="text-xs text-blue-300">
-                  {Math.round((currentMP / maxMP) * 100)}%
+                  {Math.round(mpPercentage)}%
                 </div>
               </div>
             </div>
-            <div className="w-full bg-blue-950/50 rounded-full h-4 shadow-inner">
+            <div className="w-full bg-blue-950/50 rounded-full h-4 shadow-inner" role="progressbar" aria-valuenow={currentMP} aria-valuemin={0} aria-valuemax={maxMP} aria-label="마나">
               <div
                 className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 h-4 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${(currentMP / maxMP) * 100}%` }}
+                style={{ width: `${mpPercentage}%` }}
               />
             </div>
           </div>
@@ -130,7 +145,7 @@ const StatusBar: React.FC = () => {
               {player.experience}/100
             </span>
           </div>
-          <div className="w-full bg-purple-950/50 rounded-full h-2">
+          <div className="w-full bg-purple-950/50 rounded-full h-2" role="progressbar" aria-valuenow={player.experience % 100} aria-valuemin={0} aria-valuemax={100} aria-label="경험치">
             <div
               className="bg-gradient-to-r from-purple-500 to-purple-400 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(player.experience % 100)}%` }}
@@ -152,7 +167,7 @@ const StatusBar: React.FC = () => {
               {player.stats.intelligence}
             </span>
           </div>
-          <div className="w-full bg-blue-950/50 rounded-full h-1.5">
+          <div className="w-full bg-blue-950/50 rounded-full h-1.5" role="progressbar" aria-valuenow={player.stats.intelligence} aria-valuemin={0} aria-valuemax={50} aria-label="지력 스탯">
             <div
               className="bg-gradient-to-r from-blue-500 to-cyan-400 h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${getStatBarWidth(player.stats.intelligence, 50)}%` }}
@@ -171,7 +186,7 @@ const StatusBar: React.FC = () => {
               {player.stats.charm}
             </span>
           </div>
-          <div className="w-full bg-pink-950/50 rounded-full h-1.5">
+          <div className="w-full bg-pink-950/50 rounded-full h-1.5" role="progressbar" aria-valuenow={player.stats.charm} aria-valuemin={0} aria-valuemax={50} aria-label="매력 스탯">
             <div
               className="bg-gradient-to-r from-pink-500 to-rose-400 h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${getStatBarWidth(player.stats.charm, 50)}%` }}
@@ -190,7 +205,7 @@ const StatusBar: React.FC = () => {
               {player.stats.stamina}
             </span>
           </div>
-          <div className="w-full bg-green-950/50 rounded-full h-1.5">
+          <div className="w-full bg-green-950/50 rounded-full h-1.5" role="progressbar" aria-valuenow={player.stats.stamina} aria-valuemin={0} aria-valuemax={50} aria-label="체력 스탯">
             <div
               className="bg-gradient-to-r from-green-500 to-emerald-400 h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${getStatBarWidth(player.stats.stamina, 50)}%` }}
@@ -209,7 +224,7 @@ const StatusBar: React.FC = () => {
               {player.stats.strength}
             </span>
           </div>
-          <div className="w-full bg-orange-950/50 rounded-full h-1.5">
+          <div className="w-full bg-orange-950/50 rounded-full h-1.5" role="progressbar" aria-valuenow={player.stats.strength} aria-valuemin={0} aria-valuemax={50} aria-label="힘 스탯">
             <div
               className="bg-gradient-to-r from-orange-500 to-red-400 h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${getStatBarWidth(player.stats.strength, 50)}%` }}
@@ -228,7 +243,7 @@ const StatusBar: React.FC = () => {
               {player.stats.agility}
             </span>
           </div>
-          <div className="w-full bg-cyan-950/50 rounded-full h-1.5">
+          <div className="w-full bg-cyan-950/50 rounded-full h-1.5" role="progressbar" aria-valuenow={player.stats.agility} aria-valuemin={0} aria-valuemax={50} aria-label="민첩 스탯">
             <div
               className="bg-gradient-to-r from-cyan-500 to-teal-400 h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${getStatBarWidth(player.stats.agility, 50)}%` }}
@@ -247,7 +262,7 @@ const StatusBar: React.FC = () => {
               {player.stats.luck}
             </span>
           </div>
-          <div className="w-full bg-yellow-950/50 rounded-full h-1.5">
+          <div className="w-full bg-yellow-950/50 rounded-full h-1.5" role="progressbar" aria-valuenow={player.stats.luck} aria-valuemin={0} aria-valuemax={50} aria-label="행운 스탯">
             <div
               className="bg-gradient-to-r from-yellow-500 to-amber-400 h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${getStatBarWidth(player.stats.luck, 50)}%` }}
@@ -255,8 +270,28 @@ const StatusBar: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Affection Summary */}
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
+        {Object.entries(player.affection).map(([character, affection]) => (
+          <div key={character} className="flex items-center justify-between bg-purple-900/20 px-3 py-2 rounded-lg">
+            <span className="text-sm text-purple-200 capitalize">{character}</span>
+            <div className="flex items-center gap-2">
+              <div className="w-12 bg-purple-950/50 rounded-full h-1" role="progressbar" aria-valuenow={affection} aria-valuemin={0} aria-valuemax={100} aria-label={`${character} 호감도`}>
+                <div
+                  className="bg-gradient-to-r from-purple-400 to-pink-400 h-1 rounded-full transition-all duration-300"
+                  style={{ width: `${affection}%` }}
+                />
+              </div>
+              <span className="text-xs text-purple-300 font-medium">{affection}</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
+});
+
+StatusBar.displayName = 'StatusBar';
 
 export default StatusBar;

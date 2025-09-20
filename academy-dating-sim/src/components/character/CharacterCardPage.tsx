@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../store/useGameStore';
-import charactersData from '../data/characters.json';
+import { useGameStore } from '../../store/useGameStore';
+import charactersData from '../../data/characters.json';
+import characterLoreData from '../../data/character-lore.json';
+import CharacterRelationshipMap from './CharacterRelationshipMap';
 
 // Type assertions for JSON data
 const characters = charactersData as Record<string, any>;
+const characterLore = characterLoreData as Record<string, any>;
 
-const CharacterCardPage: React.FC = () => {
+const CharacterCardPage: React.FC = React.memo(() => {
   const navigate = useNavigate();
-  
+
   // Use Zustand store
   const player = useGameStore((state: any) => state.player);
   const unlockedCharacters = useGameStore((state: any) => state.unlockedCharacters);
   const [selectedCharacter, setSelectedCharacter] = useState<string>(unlockedCharacters[0] || 'sakura');
 
-  const getCharacterStats = (characterId: string) => {
+  // Memoize location map to prevent recreation on every render
+  const locationMap = useMemo(() => ({
+    sakura: "검도장",
+    yuki: "도서관",
+    luna: "마법학부",
+    mystery: "???"
+  }), []);
+
+  // Memoize time status map to prevent recreation on every render
+  const timeStatus = useMemo(() => ({
+    morning: "수업 준비 중",
+    noon: "점심시간",
+    afternoon: "동아리 활동",
+    evening: "자유시간",
+    night: "휴식 중"
+  }), []);
+
+  // Memoize character stats calculation
+  const getCharacterStats = useCallback((characterId: string) => {
     const affectionLevel = player.affection[characterId] || 0;
 
     return {
@@ -23,41 +44,28 @@ const CharacterCardPage: React.FC = () => {
       arousal: Math.min(20 + Math.floor(affectionLevel / 8), 100),
       affection: affectionLevel
     };
-  };
+  }, [player.affection]);
 
-  const getCharacterLocation = (characterId: string) => {
-    const locationMap: Record<string, string> = {
-      sakura: "검도장",
-      yuki: "도서관",
-      luna: "마법학부",
-      mystery: "???"
-    };
-    return locationMap[characterId] || "학교 본관";
-  };
+  const getCharacterLocation = useCallback((characterId: string) => {
+    return (locationMap as Record<string, string>)[characterId] || "학교 본관";
+  }, [locationMap]);
 
-  const getCharacterStatus = (characterId: string) => {
+  const getCharacterStatus = useCallback((characterId: string) => {
     const affection = player.affection[characterId] || 0;
-    const timeStatus = {
-      morning: "수업 준비 중",
-      noon: "점심시간",
-      afternoon: "동아리 활동",
-      evening: "자유시간",
-      night: "휴식 중"
-    };
 
     if (affection >= 70) return "당신을 기다리는 중";
-    return (timeStatus as any)[player.timeOfDay] || "대화 가능";
-  };
+    return timeStatus[player.timeOfDay as keyof typeof timeStatus] || "대화 가능";
+  }, [player.affection, player.timeOfDay, timeStatus]);
 
-  const getCharacterOutfit = (characterId: string) => {
+  const getCharacterOutfit = useCallback((characterId: string) => {
     const affection = player.affection[characterId] || 0;
     if (affection >= 80) return "특별한 의상";
     if (affection >= 60) return "캐주얼 복장";
     if (affection >= 40) return "학교 복장 (편안)";
     return "학교 복장";
-  };
+  }, [player.affection]);
 
-  const getRelationStatus = (characterId: string) => {
+  const getRelationStatus = useCallback((characterId: string) => {
     const affection = player.affection[characterId] || 0;
     if (affection >= 90) return "연인";
     if (affection >= 75) return "매우 친밀";
@@ -65,9 +73,9 @@ const CharacterCardPage: React.FC = () => {
     if (affection >= 40) return "친구";
     if (affection >= 20) return "지인";
     return "낯선 사람";
-  };
+  }, [player.affection]);
 
-  const getCurrentDialogue = (character: any, characterId: string) => {
+  const getCurrentDialogue = useCallback((character: any, characterId: string) => {
     const affectionLevel = player.affection[characterId] || 0;
     const thresholds = Object.keys(character.dialogues)
       .map(Number)
@@ -80,20 +88,23 @@ const CharacterCardPage: React.FC = () => {
       }
     }
     return character.dialogues['0'] || "최근 대화가 없습니다. 만남을 가지세요.";
-  };
+  }, [player.affection]);
 
-  const formatTime = () => {
-    const timeMap = {
-      morning: '8:30 AM',
-      noon: '12:00 PM',
-      afternoon: '3:00 PM',
-      evening: '6:30 PM',
-      night: '10:00 PM'
-    };
-    return (timeMap as any)[player.timeOfDay] || 'Unknown';
-  };
+  // Memoize time formatting map
+  const timeMap = useMemo(() => ({
+    morning: '8:30 AM',
+    noon: '12:00 PM',
+    afternoon: '3:00 PM',
+    evening: '6:30 PM',
+    night: '10:00 PM'
+  }), []);
 
-  const formatDate = () => {
+  const formatTime = useCallback(() => {
+    return timeMap[player.timeOfDay as keyof typeof timeMap] || 'Unknown';
+  }, [player.timeOfDay, timeMap]);
+
+  // Memoize formatted date to prevent unnecessary recalculations
+  const formattedDate = useMemo(() => {
     const today = new Date();
     const month = today.getMonth() + 1;
     const day = today.getDate();
@@ -101,9 +112,15 @@ const CharacterCardPage: React.FC = () => {
     const dayName = dayNames[today.getDay()];
 
     return `${today.getFullYear()}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${dayName}`;
-  };
+  }, []);
 
-  const selectedCharacterData = characters[selectedCharacter];
+  // Memoize selected character data to prevent unnecessary recalculations
+  const selectedCharacterData = useMemo(() => characters[selectedCharacter], [selectedCharacter]);
+
+  // Memoize navigation handler
+  const handleBackToGame = useCallback(() => {
+    navigate('/game');
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-background p-4 text-text-primary">
@@ -115,8 +132,10 @@ const CharacterCardPage: React.FC = () => {
               👥 캐릭터 카드
             </h1>
             <button
-              onClick={() => navigate('/game')}
+              onClick={handleBackToGame}
               className="px-4 py-2 bg-primary hover:bg-secondary text-white rounded-lg transition"
+              aria-label="메인 게임 화면으로 돌아가기"
+              role="button"
             >
               🏠 게임으로 돌아가기
             </button>
@@ -139,8 +158,11 @@ const CharacterCardPage: React.FC = () => {
                               ? 'border-primary bg-primary/20 scale-105 shadow-lg'
                               : 'border-border hover:border-primary hover:bg-primary/10 hover:shadow-md'
                           }`}
+                          aria-label={`${character.name} 캐릭터 선택하기`}
+                          aria-pressed={selectedCharacter === characterId}
+                          role="button"
                         >
-                          <span className="text-3xl">{character.sprite}</span>
+                          <span className="text-3xl" aria-hidden="true">{character.sprite}</span>
                           <div className="font-bold text-text-primary text-sm whitespace-nowrap">{character.name}</div>
                         </button>
                       );
@@ -255,6 +277,132 @@ const CharacterCardPage: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Character Lore Information */}
+                    {characterLore[selectedCharacter] && (
+                      <div className="mb-8">
+                        <h4 className="text-lg font-bold mb-4 text-text-primary">📖 캐릭터 정보</h4>
+                        <div className="space-y-4">
+                          {/* Basic Info */}
+                          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                            <h5 className="text-md font-semibold mb-2 text-secondary">기본 정보</h5>
+                            <div className="grid grid-cols-2 gap-2 text-sm">
+                              <div><span className="text-text-secondary">이름:</span> <span className="text-text-primary">{characterLore[selectedCharacter].fullName}</span></div>
+                              <div><span className="text-text-secondary">나이:</span> <span className="text-text-primary">{characterLore[selectedCharacter].age}</span></div>
+                              <div><span className="text-text-secondary">생일:</span> <span className="text-text-primary">{characterLore[selectedCharacter].birthday}</span></div>
+                              <div><span className="text-text-secondary">혈액형:</span> <span className="text-text-primary">{characterLore[selectedCharacter].bloodType}</span></div>
+                            </div>
+                          </div>
+
+                          {/* Background Story */}
+                          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                            <h5 className="text-md font-semibold mb-2 text-secondary">배경</h5>
+                            <p className="text-sm text-text-primary leading-relaxed">{characterLore[selectedCharacter].background}</p>
+                          </div>
+
+                          {/* Personality */}
+                          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                            <h5 className="text-md font-semibold mb-2 text-secondary">성격</h5>
+                            <p className="text-sm text-text-primary leading-relaxed">{characterLore[selectedCharacter].personality}</p>
+                          </div>
+
+                          {/* Hobbies and Preferences */}
+                          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                            <h5 className="text-md font-semibold mb-2 text-secondary">취미 & 선호도</h5>
+                            <div className="space-y-2">
+                              <div>
+                                <span className="text-text-secondary text-sm">취미:</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {characterLore[selectedCharacter].hobby?.map((hobby: string, index: number) => (
+                                    <span key={index} className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">
+                                      {hobby}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                              <div>
+                                <span className="text-text-secondary text-sm">좋아하는 것:</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {characterLore[selectedCharacter].favorite?.map((item: string, index: number) => (
+                                    <span key={index} className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">
+                                      💙 {item}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                              <div>
+                                <span className="text-text-secondary text-sm">싫어하는 것:</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {characterLore[selectedCharacter].dislike?.map((item: string, index: number) => (
+                                    <span key={index} className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs">
+                                      💔 {item}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Special Skills */}
+                          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                            <h5 className="text-md font-semibold mb-2 text-secondary">특별한 능력</h5>
+                            <div className="flex flex-wrap gap-2">
+                              {characterLore[selectedCharacter].specialSkills?.map((skill: string, index: number) => (
+                                <span key={index} className="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm font-medium border border-purple-500/30">
+                                  ⚡ {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Weakness */}
+                          {characterLore[selectedCharacter].weakness && (
+                            <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                              <h5 className="text-md font-semibold mb-2 text-secondary">약점</h5>
+                              <p className="text-sm text-text-primary leading-relaxed">😅 {characterLore[selectedCharacter].weakness}</p>
+                            </div>
+                          )}
+
+                          {/* Dream */}
+                          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+                            <h5 className="text-md font-semibold mb-2 text-secondary">꿈과 목표</h5>
+                            <p className="text-sm text-text-primary leading-relaxed">🌟 {characterLore[selectedCharacter].dream}</p>
+                          </div>
+
+                          {/* Secret Story - Only shown if affection is high enough */}
+                          {characterLore[selectedCharacter].secretStory && player.affection[selectedCharacter] >= 50 && (
+                            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-lg p-4 border border-purple-500/30">
+                              <h5 className="text-md font-semibold mb-2 text-purple-300 flex items-center gap-2">
+                                🔐 비밀 이야기 
+                                <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">호감도 50+ 잠금해제</span>
+                              </h5>
+                              <p className="text-sm text-purple-100 leading-relaxed">{characterLore[selectedCharacter].secretStory}</p>
+                            </div>
+                          )}
+
+                          {/* Secret Story - Locked */}
+                          {characterLore[selectedCharacter].secretStory && player.affection[selectedCharacter] < 50 && (
+                            <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-gray-600/30">
+                              <h5 className="text-md font-semibold mb-2 text-gray-400 flex items-center gap-2">
+                                🔒 비밀 이야기
+                                <span className="text-xs bg-gray-600/20 text-gray-400 px-2 py-1 rounded">호감도 50 필요</span>
+                              </h5>
+                              <p className="text-sm text-gray-500 leading-relaxed">더 깊은 관계가 되면 알 수 있을 것 같다...</p>
+                            </div>
+                          )}
+
+                          {/* Relationships - Enhanced with Interactive Map */}
+                          <CharacterRelationshipMap 
+                            currentCharacter={selectedCharacter}
+                            onCharacterSelect={(charId) => {
+                              if (unlockedCharacters.includes(charId)) {
+                                setSelectedCharacter(charId);
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
+
                     {/* Recent Dialogue */}
                     <div className="mb-8">
                       <h4 className="text-lg font-bold mb-4 text-text-primary">💬 최근 대화</h4>
@@ -288,7 +436,7 @@ const CharacterCardPage: React.FC = () => {
                       <div className="flex items-center gap-6 text-sm text-text-secondary">
                         <div className="flex items-center gap-2">
                           <span>📅</span>
-                          <span>{formatDate()}</span>
+                          <span>{formattedDate}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <span>🕐</span>
@@ -310,6 +458,8 @@ const CharacterCardPage: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+CharacterCardPage.displayName = 'CharacterCardPage';
 
 export default CharacterCardPage;
