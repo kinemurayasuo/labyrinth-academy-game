@@ -1,0 +1,383 @@
+{
+  "romanceEvents": [
+    {
+      "id": "sakura_confession",
+      "name": "사쿠라의 고백",
+      "type": "confession",
+      "trigger": {
+        "character": "sakura",
+        "minAffection": 80,
+        "location": "rooftop",
+        "once": true
+      },
+      "description": "석양이 지는 옥상, 사쿠라가 진지한 표정으로 당신을 바라본다.",
+      "dialogue": "저기... 내가 이런 말을 하게 될 줄은 몰랐는데... 너와 함께 있으면 검술보다 더 중요한 게 생긴 것 같아.",
+      "choices": [
+        {
+          "text": "나도 네가 좋아, 사쿠라.",
+          "effects": {
+            "affection": { "sakura": 20 },
+            "route": "sakura_true",
+            "text": "사쿠라의 얼굴이 붉게 물들며 행복한 미소를 짓는다.",
+            "cg": "sakura_confession_accept"
+          }
+        },
+        {
+          "text": "좋은 친구로 지내자.",
+          "effects": {
+            "affection": { "sakura": -10 },
+            "route": "sakura_friend",
+            "text": "사쿠라가 씁쓸하게 웃으며 고개를 끄덕인다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yuki_first_date",
+      "name": "유키와의 첫 데이트",
+      "type": "date",
+      "trigger": {
+        "character": "yuki",
+        "minAffection": 50,
+        "location": "town",
+        "day": "weekend"
+      },
+      "description": "유키가 수줍게 주말에 마을 축제에 가자고 제안한다.",
+      "dialogue": "저... 이번 주말에 마을에서 축제가 있대요. 혹시... 같이 가실래요?",
+      "choices": [
+        {
+          "text": "기대되네! 같이 가자.",
+          "effects": {
+            "affection": { "yuki": 15 },
+            "memory": "first_date_yuki",
+            "text": "유키의 얼굴이 환하게 밝아진다."
+          }
+        },
+        {
+          "text": "미안, 다른 약속이 있어.",
+          "effects": {
+            "affection": { "yuki": -5 },
+            "text": "유키가 실망을 감추려 애쓴다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "luna_magic_lesson",
+      "name": "루나의 특별한 마법 수업",
+      "type": "special",
+      "trigger": {
+        "character": "luna",
+        "minAffection": 60,
+        "location": "magic_classroom",
+        "evening": true
+      },
+      "description": "루나가 당신에게만 특별한 마법을 가르쳐주겠다고 한다.",
+      "dialogue": "넌 특별해. 내가 아는 비밀 마법을 가르쳐줄게. 이건 우리만의 비밀이야.",
+      "choices": [
+        {
+          "text": "영광이야, 루나 선생님!",
+          "condition": { "minIntelligence": 15 },
+          "effects": {
+            "affection": { "luna": 12 },
+            "stats": { "intelligence": 5 },
+            "text": "루나와 함께 신비로운 마법을 배웠다.",
+            "unlock": "secret_magic"
+          }
+        },
+        {
+          "text": "손을 잡고 마법을 배운다.",
+          "effects": {
+            "affection": { "luna": 18 },
+            "emotion": "love",
+            "text": "손이 닿자 루나의 볼이 붉게 물든다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "akane_vulnerable_moment",
+      "name": "아카네의 약한 모습",
+      "type": "emotional",
+      "trigger": {
+        "character": "akane",
+        "minAffection": 65,
+        "location": "student_council",
+        "night": true
+      },
+      "description": "늦은 밤, 학생회실에서 혼자 울고 있는 아카네를 발견한다.",
+      "dialogue": "아... 왜 여기에? 아무것도 아니야... 회장은 항상 강해야 하는데...",
+      "choices": [
+        {
+          "text": "안아주며 위로한다.",
+          "effects": {
+            "affection": { "akane": 25 },
+            "trust": 20,
+            "text": "아카네가 당신의 품에서 진정한 안식을 찾는다.",
+            "cg": "akane_comfort"
+          }
+        },
+        {
+          "text": "회장님도 인간이에요. 약해도 괜찮아요.",
+          "effects": {
+            "affection": { "akane": 15 },
+            "text": "아카네가 감사한 미소를 짓는다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "hana_cooking_together",
+      "name": "하나와 함께 요리하기",
+      "type": "activity",
+      "trigger": {
+        "character": "hana",
+        "minAffection": 40,
+        "location": "cooking_club"
+      },
+      "description": "하나가 특별한 요리를 함께 만들자고 제안한다.",
+      "dialogue": "오늘은 특별한 요리를 만들 거예요. 두 사람이 함께 만들면 더 맛있대요!",
+      "choices": [
+        {
+          "text": "앞치마를 매고 열심히 돕는다.",
+          "effects": {
+            "affection": { "hana": 12 },
+            "item": "special_bento",
+            "text": "하나와 즐겁게 요리하며 특별한 도시락을 완성했다."
+          }
+        },
+        {
+          "text": "실수로 밀가루를 쏟는다.",
+          "effects": {
+            "affection": { "hana": 8 },
+            "emotion": "happy",
+            "text": "하나가 웃으며 함께 청소를 도와준다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rin_morning_run",
+      "name": "린과의 새벽 러닝",
+      "type": "training",
+      "trigger": {
+        "character": "rin",
+        "minAffection": 35,
+        "timeOfDay": "morning",
+        "weather": "sunny"
+      },
+      "description": "린이 상쾌한 아침 공기를 마시며 함께 달리자고 한다.",
+      "dialogue": "일출을 보며 달리면 정말 기분 좋아요! 제가 페이스 맞춰드릴게요!",
+      "choices": [
+        {
+          "text": "전력으로 달린다.",
+          "condition": { "minStamina": 20 },
+          "effects": {
+            "affection": { "rin": 15 },
+            "stats": { "stamina": 3, "agility": 2 },
+            "text": "린이 감탄하며 당신의 실력을 칭찬한다."
+          }
+        },
+        {
+          "text": "린의 속도에 맞춰 달린다.",
+          "effects": {
+            "affection": { "rin": 10 },
+            "stats": { "stamina": 2 },
+            "text": "린과 나란히 달리며 즐거운 시간을 보낸다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mei_portrait_model",
+      "name": "메이의 모델이 되다",
+      "type": "special",
+      "trigger": {
+        "character": "mei",
+        "minAffection": 55,
+        "location": "art_room"
+      },
+      "description": "메이가 진지한 표정으로 당신을 그리고 싶다고 한다.",
+      "dialogue": "당신의 영혼이... 캔버스에 담고 싶어요. 제 뮤즈가 되어주세요.",
+      "choices": [
+        {
+          "text": "영광이야. 최선을 다할게.",
+          "effects": {
+            "affection": { "mei": 20 },
+            "memory": "mei_portrait",
+            "text": "메이가 열정적으로 당신을 그리기 시작한다.",
+            "cg": "mei_drawing"
+          }
+        },
+        {
+          "text": "부끄럽지만... 해볼게.",
+          "effects": {
+            "affection": { "mei": 15 },
+            "emotion": "shy",
+            "text": "메이가 부드럽게 미소 지으며 긴장을 풀어준다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "sora_experiment_confession",
+      "name": "소라의 과학적 고백",
+      "type": "confession",
+      "trigger": {
+        "character": "sora",
+        "minAffection": 75,
+        "location": "science_lab"
+      },
+      "description": "소라가 떨리는 손으로 연구 노트를 보여준다.",
+      "dialogue": "제 연구 결과... 당신과 있을 때 도파민 수치가 387% 상승해요. 이건... 사랑이라는 가설이 맞는 것 같아요.",
+      "choices": [
+        {
+          "text": "나도 너를 변수가 아닌 상수로 원해.",
+          "effects": {
+            "affection": { "sora": 25 },
+            "route": "sora_true",
+            "text": "소라가 처음으로 이성을 잃고 당신을 껴안는다.",
+            "cg": "sora_confession"
+          }
+        },
+        {
+          "text": "더 많은 실험이 필요할 것 같아.",
+          "effects": {
+            "affection": { "sora": 10 },
+            "text": "소라가 미소 지으며 고개를 끄덕인다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mystery_identity_reveal",
+      "name": "???의 정체 공개",
+      "type": "revelation",
+      "trigger": {
+        "character": "mystery",
+        "minAffection": 70,
+        "flags": ["mystery_route_unlocked"],
+        "location": "rooftop",
+        "night": true
+      },
+      "description": "달빛 아래, 수수께끼의 전학생이 드디어 진실을 밝히려 한다.",
+      "dialogue": "더 이상 숨길 수 없어... 내 진짜 정체는... 실은 나는 이 세계의 관찰자야. 하지만 너를 만나고... 관찰자가 아닌 참여자가 되고 싶어졌어.",
+      "choices": [
+        {
+          "text": "네가 누구든 상관없어. 난 널 사랑해.",
+          "effects": {
+            "affection": { "mystery": 30 },
+            "route": "mystery_true",
+            "unlock": "true_ending",
+            "text": "???가 눈물을 흘리며 당신을 껴안는다.",
+            "cg": "mystery_reveal"
+          }
+        },
+        {
+          "text": "좀 더 시간이 필요해.",
+          "effects": {
+            "affection": { "mystery": 5 },
+            "text": "???가 이해한다는 듯 고개를 끄덕인다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "beach_episode",
+      "name": "여름 해변 이벤트",
+      "type": "group",
+      "trigger": {
+        "minDay": 60,
+        "season": "summer",
+        "totalAffection": 200
+      },
+      "description": "모든 히로인들과 함께 해변으로 놀러가는 특별한 이벤트!",
+      "dialogue": "다 같이 해변으로 놀러가자!",
+      "choices": [
+        {
+          "text": "사쿠라와 비치 발리볼",
+          "effects": {
+            "affection": { "sakura": 10 },
+            "stats": { "stamina": 2 },
+            "text": "사쿠라와 호흡을 맞춰 승리했다!"
+          }
+        },
+        {
+          "text": "유키와 파라솔 아래서 독서",
+          "effects": {
+            "affection": { "yuki": 10 },
+            "stats": { "intelligence": 2 },
+            "text": "유키와 조용한 시간을 보냈다."
+          }
+        },
+        {
+          "text": "루나와 불꽃놀이 마법",
+          "effects": {
+            "affection": { "luna": 10 },
+            "emotion": "happy",
+            "text": "루나가 아름다운 마법 불꽃놀이를 보여준다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "festival_fireworks",
+      "name": "축제 불꽃놀이",
+      "type": "romantic",
+      "trigger": {
+        "event": "summer_festival",
+        "minAffection": 60
+      },
+      "description": "여름 축제의 클라이막스, 불꽃놀이를 함께 볼 사람을 선택한다.",
+      "choices": [
+        {
+          "text": "가장 호감도가 높은 히로인과",
+          "dynamic": true,
+          "effects": {
+            "affection": 15,
+            "memory": "fireworks_date",
+            "text": "불꽃놀이 아래서 특별한 순간을 공유했다.",
+            "cg": "fireworks_romance"
+          }
+        },
+        {
+          "text": "모두와 함께",
+          "effects": {
+            "affection": { "all": 5 },
+            "text": "모두와 즐거운 추억을 만들었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "jealousy_confrontation",
+      "name": "질투의 대결",
+      "type": "conflict",
+      "trigger": {
+        "multipleHighAffection": true,
+        "threshold": 70
+      },
+      "description": "두 명의 히로인이 당신을 두고 대립한다.",
+      "dialogue": "우리 둘 다 당신을 좋아하는 것 같네요. 선택해주세요.",
+      "choices": [
+        {
+          "text": "선택할 수 없어. 시간이 필요해.",
+          "effects": {
+            "affection": { "both": -5 },
+            "flag": "love_triangle",
+            "text": "두 히로인이 복잡한 표정을 짓는다."
+          }
+        },
+        {
+          "text": "솔직하게 한 명을 선택한다.",
+          "dynamic": true,
+          "effects": {
+            "affection": { "chosen": 20, "other": -15 },
+            "route": "committed",
+            "text": "선택받은 히로인은 기뻐하지만, 다른 히로인은 슬퍼한다."
+          }
+        }
+      ]
+    }
+  ]
+}

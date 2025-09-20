@@ -1,0 +1,271 @@
+{
+  "endings": [
+    {
+      "id": "sakura_true",
+      "character": "sakura",
+      "type": "true",
+      "title": "영원한 검의 맹세",
+      "requirements": {
+        "affinity": 100,
+        "events": ["sakura_confession", "sakura_training_complete", "sakura_final_duel"],
+        "flags": ["sakura_route", "never_betrayed_sakura"],
+        "stats": { "strength": 50, "stamina": 40 }
+      },
+      "description": "사쿠라와 함께 최강의 검사 부부가 되어 전설을 써내려간다.",
+      "epilogue": "10년 후, 당신과 사쿠라는 세계 최고의 검술 도장을 운영하며 후진을 양성하고 있다. 두 사람의 딸은 이미 천재 검사로 이름을 날리고 있다.",
+      "cg": "ending_sakura_true",
+      "rewards": {
+        "achievement": "true_love_sakura",
+        "unlocks": ["sakura_extra_story", "sakura_wedding_cg"]
+      }
+    },
+    {
+      "id": "sakura_good",
+      "character": "sakura",
+      "type": "good",
+      "title": "나란히 걷는 길",
+      "requirements": {
+        "affinity": 80,
+        "events": ["sakura_confession"],
+        "stats": { "strength": 30 }
+      },
+      "description": "사쿠라와 연인이 되어 함께 성장해나간다.",
+      "epilogue": "졸업 후 사쿠라와 함께 모험을 떠나 세계를 여행하며 수련을 계속한다.",
+      "cg": "ending_sakura_good"
+    },
+    {
+      "id": "yuki_true",
+      "character": "yuki",
+      "type": "true",
+      "title": "책 속의 영원",
+      "requirements": {
+        "affinity": 100,
+        "events": ["yuki_confession", "yuki_library_complete", "yuki_novel_collaboration"],
+        "flags": ["yuki_route", "read_all_books"],
+        "stats": { "intelligence": 60 }
+      },
+      "description": "유키와 함께 세계 최대의 도서관을 만들고 지식의 수호자가 된다.",
+      "epilogue": "당신과 유키가 쓴 판타지 소설 시리즈는 베스트셀러가 되었고, 두 사람은 조용한 도서관에서 영원히 함께한다.",
+      "cg": "ending_yuki_true",
+      "rewards": {
+        "achievement": "bookworm_love",
+        "unlocks": ["yuki_extra_story", "library_date_cg"]
+      }
+    },
+    {
+      "id": "luna_true",
+      "character": "luna",
+      "type": "true",
+      "title": "마법을 초월한 사랑",
+      "requirements": {
+        "affinity": 100,
+        "events": ["luna_confession", "luna_family_approval", "luna_magic_mastery"],
+        "flags": ["luna_route", "defeated_family_curse"],
+        "stats": { "intelligence": 50, "luck": 30 }
+      },
+      "description": "루나의 가문을 설득하고 진정한 자유와 사랑을 얻는다.",
+      "epilogue": "가문의 인정을 받은 당신은 루나와 결혼하여 새로운 마법 학파를 창시한다. 두 사람의 마법은 세계를 바꾸는 힘이 된다.",
+      "cg": "ending_luna_true",
+      "rewards": {
+        "achievement": "magic_love",
+        "unlocks": ["luna_wedding", "luna_family_story"]
+      }
+    },
+    {
+      "id": "rin_true",
+      "character": "rin",
+      "type": "true",
+      "title": "함께 달리는 미래",
+      "requirements": {
+        "affinity": 100,
+        "events": ["rin_confession", "rin_marathon_victory", "rin_olympics"],
+        "flags": ["rin_route", "morning_run_365days"],
+        "stats": { "stamina": 60, "agility": 50 }
+      },
+      "description": "린과 함께 올림픽 금메달의 꿈을 이룬다.",
+      "epilogue": "올림픽에서 금메달을 딴 린과 당신은 함께 스포츠 센터를 운영하며 젊은 선수들의 꿈을 응원한다.",
+      "cg": "ending_rin_true"
+    },
+    {
+      "id": "mei_true",
+      "character": "mei",
+      "type": "true",
+      "title": "영원한 뮤즈",
+      "requirements": {
+        "affinity": 100,
+        "events": ["mei_confession", "mei_exhibition", "mei_masterpiece"],
+        "flags": ["mei_route", "became_muse"],
+        "stats": { "charm": 40 }
+      },
+      "description": "메이의 영원한 뮤즈가 되어 예술의 역사를 함께 써내려간다.",
+      "epilogue": "메이의 작품은 세계적으로 유명해졌고, 모든 작품 속에는 당신의 모습이 담겨있다.",
+      "cg": "ending_mei_true"
+    },
+    {
+      "id": "hana_true",
+      "character": "hana",
+      "type": "true",
+      "title": "맛있는 인생",
+      "requirements": {
+        "affinity": 100,
+        "events": ["hana_confession", "hana_restaurant_opening", "hana_michelin_star"],
+        "flags": ["hana_route", "cooking_mastery"],
+        "stats": { "stamina": 30 }
+      },
+      "description": "하나와 함께 꿈의 레스토랑을 운영한다.",
+      "epilogue": "미슐랭 3스타 레스토랑의 오너가 된 당신과 하나는 매일 행복한 요리와 사랑을 나눈다.",
+      "cg": "ending_hana_true"
+    },
+    {
+      "id": "sora_true",
+      "character": "sora",
+      "type": "true",
+      "title": "사랑의 공식",
+      "requirements": {
+        "affinity": 100,
+        "events": ["sora_confession", "sora_nobel_prize", "sora_love_equation"],
+        "flags": ["sora_route", "solved_love_formula"],
+        "stats": { "intelligence": 70 }
+      },
+      "description": "소라와 함께 사랑을 과학적으로 증명한다.",
+      "epilogue": "노벨상을 수상한 소라와 당신은 함께 연구소를 운영하며 과학의 발전과 사랑을 동시에 이룬다.",
+      "cg": "ending_sora_true"
+    },
+    {
+      "id": "akane_true",
+      "character": "akane",
+      "type": "true",
+      "title": "완벽한 파트너",
+      "requirements": {
+        "affinity": 100,
+        "events": ["akane_confession", "akane_presidency", "akane_proposal"],
+        "flags": ["akane_route", "perfect_student"],
+        "stats": { "intelligence": 50, "charm": 50 }
+      },
+      "description": "아카네와 함께 완벽한 미래를 설계한다.",
+      "epilogue": "정치가가 된 아카네와 당신은 서로를 지지하며 더 나은 세상을 만들어간다.",
+      "cg": "ending_akane_true"
+    },
+    {
+      "id": "mystery_true",
+      "character": "mystery",
+      "type": "true",
+      "title": "차원을 넘은 사랑",
+      "requirements": {
+        "affinity": 100,
+        "events": ["mystery_identity_reveal", "mystery_final_choice", "mystery_transcendence"],
+        "flags": ["mystery_route", "accepted_truth", "saved_both_worlds"],
+        "stats": { "intelligence": 60, "luck": 50 }
+      },
+      "description": "???와 함께 모든 차원의 경계를 초월한다.",
+      "epilogue": "당신과 ???는 여러 세계를 여행하며 각 차원의 이야기를 써내려간다. 당신들의 사랑은 모든 현실을 연결하는 다리가 된다.",
+      "cg": "ending_mystery_true",
+      "rewards": {
+        "achievement": "transcendent_love",
+        "unlocks": ["true_ending", "all_cg_unlock", "developer_commentary"]
+      }
+    },
+    {
+      "id": "harem_ending",
+      "character": "all",
+      "type": "special",
+      "title": "모두의 히어로",
+      "requirements": {
+        "affinity_all": 80,
+        "events": ["all_heroines_date", "beach_episode", "festival_all"],
+        "flags": ["never_chose_one", "helped_everyone"],
+        "stats": { "charm": 60, "luck": 60 }
+      },
+      "description": "모든 히로인과 특별한 관계를 유지한다.",
+      "epilogue": "졸업 후에도 모두와 친한 친구로 남아 각자의 꿈을 응원하며 평생 우정을 이어간다.",
+      "cg": "ending_harem"
+    },
+    {
+      "id": "normal_ending",
+      "character": "none",
+      "type": "normal",
+      "title": "평범한 졸업",
+      "requirements": {
+        "minDay": 100,
+        "maxAffinity": 60
+      },
+      "description": "특별한 인연 없이 학교를 졸업한다.",
+      "epilogue": "아카데미에서의 추억을 간직한 채 각자의 길을 걷는다.",
+      "cg": "ending_normal"
+    },
+    {
+      "id": "bad_ending",
+      "character": "none",
+      "type": "bad",
+      "title": "외로운 끝",
+      "requirements": {
+        "maxAffinity": 30,
+        "flags": ["too_many_rejections"]
+      },
+      "description": "누구와도 깊은 관계를 맺지 못하고 끝난다.",
+      "epilogue": "아무도 당신을 기억하지 못한다...",
+      "cg": "ending_bad"
+    },
+    {
+      "id": "secret_ending",
+      "character": "hidden",
+      "type": "secret",
+      "title": "개발자의 방",
+      "requirements": {
+        "flags": ["found_all_secrets", "completed_all_achievements", "max_stats"],
+        "perfectCompletion": true
+      },
+      "description": "게임의 모든 비밀을 발견했다!",
+      "epilogue": "축하합니다! 당신은 이 게임의 진정한 마스터입니다. 개발자의 특별한 메시지를 확인하세요.",
+      "cg": "ending_secret",
+      "rewards": {
+        "achievement": "true_master",
+        "unlocks": ["developer_mode", "cheat_menu", "all_routes_unlock"]
+      }
+    },
+    {
+      "id": "rival_ending",
+      "character": "rival",
+      "type": "special",
+      "title": "라이벌의 승리",
+      "requirements": {
+        "flags": ["lost_to_rival", "rival_took_heroine"],
+        "rivalWins": true
+      },
+      "description": "라이벌에게 사랑을 빼앗긴다.",
+      "epilogue": "당신이 좋아하던 그녀는 다른 사람을 선택했다...",
+      "cg": "ending_rival"
+    },
+    {
+      "id": "time_loop_ending",
+      "character": "mystery",
+      "type": "secret",
+      "title": "영원한 루프",
+      "requirements": {
+        "flags": ["discovered_time_loop", "chose_to_loop"],
+        "saves": 100
+      },
+      "description": "시간의 루프에 갇혀 영원히 학원 생활을 반복한다.",
+      "epilogue": "당신은 완벽한 결말을 찾기 위해 영원히 이 시간을 반복한다. 하지만 그것도 나름의 행복일지도...",
+      "cg": "ending_loop"
+    }
+  ],
+  "endingConditions": {
+    "priority": [
+      "mystery_true",
+      "secret_ending",
+      "character_true",
+      "character_good",
+      "harem_ending",
+      "rival_ending",
+      "time_loop_ending",
+      "normal_ending",
+      "bad_ending"
+    ],
+    "mutuallyExclusive": [
+      ["sakura_true", "yuki_true", "luna_true", "rin_true", "mei_true", "hana_true", "sora_true", "akane_true"],
+      ["harem_ending", "character_endings"],
+      ["rival_ending", "any_true_ending"]
+    ]
+  }
+}

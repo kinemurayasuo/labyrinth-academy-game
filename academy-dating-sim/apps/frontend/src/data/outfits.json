@@ -1,0 +1,502 @@
+{
+  "outfits": {
+    "school": {
+      "id": "school",
+      "name": "교복",
+      "description": "아카데미 정규 교복",
+      "category": "default",
+      "available": true,
+      "price": 0,
+      "stats": {
+        "charm": 0,
+        "intelligence": 5
+      },
+      "variants": {
+        "spring": {
+          "name": "봄 교복",
+          "image": "outfit_school_spring",
+          "colors": ["navy", "white", "black"]
+        },
+        "summer": {
+          "name": "여름 교복",
+          "image": "outfit_school_summer",
+          "colors": ["white", "light_blue", "gray"]
+        },
+        "autumn": {
+          "name": "가을 교복",
+          "image": "outfit_school_autumn",
+          "colors": ["brown", "beige", "dark_green"]
+        },
+        "winter": {
+          "name": "겨울 교복",
+          "image": "outfit_school_winter",
+          "colors": ["black", "gray", "dark_blue"]
+        }
+      }
+    },
+    "casual": {
+      "id": "casual",
+      "name": "캐주얼",
+      "description": "편안한 일상복",
+      "category": "basic",
+      "available": true,
+      "price": 500,
+      "stats": {
+        "charm": 5,
+        "stamina": 5
+      },
+      "variants": {
+        "jeans": {
+          "name": "청바지 스타일",
+          "image": "outfit_casual_jeans",
+          "colors": ["blue", "black", "white"]
+        },
+        "dress": {
+          "name": "원피스",
+          "image": "outfit_casual_dress",
+          "colors": ["pink", "yellow", "light_blue"]
+        },
+        "sporty": {
+          "name": "스포티",
+          "image": "outfit_casual_sporty",
+          "colors": ["red", "black", "white"]
+        }
+      }
+    },
+    "formal": {
+      "id": "formal",
+      "name": "정장",
+      "description": "격식 있는 자리를 위한 의상",
+      "category": "special",
+      "available": false,
+      "unlockCondition": {
+        "event": "student_council_joined"
+      },
+      "price": 3000,
+      "stats": {
+        "charm": 15,
+        "intelligence": 10
+      },
+      "variants": {
+        "suit": {
+          "name": "비즈니스 수트",
+          "image": "outfit_formal_suit",
+          "colors": ["black", "navy", "gray"]
+        },
+        "dress": {
+          "name": "이브닝 드레스",
+          "image": "outfit_formal_dress",
+          "colors": ["red", "black", "purple"]
+        },
+        "tuxedo": {
+          "name": "턱시도",
+          "image": "outfit_formal_tuxedo",
+          "colors": ["black", "white"]
+        }
+      }
+    },
+    "training": {
+      "id": "training",
+      "name": "훈련복",
+      "description": "운동과 훈련을 위한 의상",
+      "category": "activity",
+      "available": true,
+      "price": 800,
+      "stats": {
+        "stamina": 10,
+        "agility": 5,
+        "strength": 5
+      },
+      "variants": {
+        "gym": {
+          "name": "체육복",
+          "image": "outfit_training_gym",
+          "colors": ["blue", "red", "green"]
+        },
+        "dojo": {
+          "name": "도복",
+          "image": "outfit_training_dojo",
+          "colors": ["white", "black"]
+        },
+        "track": {
+          "name": "육상복",
+          "image": "outfit_training_track",
+          "colors": ["red", "blue", "yellow"]
+        }
+      }
+    },
+    "swimsuit": {
+      "id": "swimsuit",
+      "name": "수영복",
+      "description": "해변과 수영장을 위한 의상",
+      "category": "seasonal",
+      "available": false,
+      "unlockCondition": {
+        "season": "summer",
+        "event": "beach_episode"
+      },
+      "price": 1500,
+      "stats": {
+        "charm": 20,
+        "stamina": 5
+      },
+      "variants": {
+        "onepiece": {
+          "name": "원피스 수영복",
+          "image": "outfit_swimsuit_onepiece",
+          "colors": ["navy", "black", "red"]
+        },
+        "bikini": {
+          "name": "비키니",
+          "image": "outfit_swimsuit_bikini",
+          "colors": ["white", "pink", "aqua"]
+        },
+        "sporty": {
+          "name": "스포츠 수영복",
+          "image": "outfit_swimsuit_sporty",
+          "colors": ["black", "blue", "purple"]
+        }
+      }
+    },
+    "yukata": {
+      "id": "yukata",
+      "name": "유카타",
+      "description": "축제를 위한 전통 의상",
+      "category": "special",
+      "available": false,
+      "unlockCondition": {
+        "event": "summer_festival"
+      },
+      "price": 2500,
+      "stats": {
+        "charm": 25,
+        "luck": 10
+      },
+      "variants": {
+        "floral": {
+          "name": "꽃무늬 유카타",
+          "image": "outfit_yukata_floral",
+          "patterns": ["sakura", "chrysanthemum", "maple"]
+        },
+        "traditional": {
+          "name": "전통 유카타",
+          "image": "outfit_yukata_traditional",
+          "patterns": ["waves", "clouds", "mountains"]
+        },
+        "modern": {
+          "name": "모던 유카타",
+          "image": "outfit_yukata_modern",
+          "patterns": ["geometric", "stars", "abstract"]
+        }
+      }
+    },
+    "costume": {
+      "id": "costume",
+      "name": "코스튬",
+      "description": "특별한 이벤트용 의상",
+      "category": "event",
+      "available": false,
+      "variants": {
+        "maid": {
+          "name": "메이드복",
+          "image": "outfit_costume_maid",
+          "unlockCondition": { "event": "cafe_event" },
+          "price": 2000,
+          "stats": { "charm": 15, "stamina": 5 }
+        },
+        "nurse": {
+          "name": "간호사복",
+          "image": "outfit_costume_nurse",
+          "unlockCondition": { "event": "infirmary_event" },
+          "price": 1800,
+          "stats": { "charm": 10, "intelligence": 10 }
+        },
+        "magical_girl": {
+          "name": "마법소녀",
+          "image": "outfit_costume_magical",
+          "unlockCondition": { "character": "luna", "affinity": 80 },
+          "price": 5000,
+          "stats": { "charm": 30, "luck": 20 }
+        },
+        "knight": {
+          "name": "기사복",
+          "image": "outfit_costume_knight",
+          "unlockCondition": { "character": "sakura", "affinity": 80 },
+          "price": 4000,
+          "stats": { "strength": 20, "charm": 10 }
+        },
+        "scientist": {
+          "name": "연구복",
+          "image": "outfit_costume_scientist",
+          "unlockCondition": { "character": "sora", "affinity": 80 },
+          "price": 2500,
+          "stats": { "intelligence": 25 }
+        },
+        "chef": {
+          "name": "셰프복",
+          "image": "outfit_costume_chef",
+          "unlockCondition": { "character": "hana", "affinity": 80 },
+          "price": 2000,
+          "stats": { "stamina": 10, "charm": 5 }
+        }
+      }
+    },
+    "winter": {
+      "id": "winter",
+      "name": "겨울 의상",
+      "description": "따뜻한 겨울 옷",
+      "category": "seasonal",
+      "available": false,
+      "unlockCondition": {
+        "season": "winter"
+      },
+      "price": 2000,
+      "stats": {
+        "charm": 10,
+        "stamina": 10
+      },
+      "variants": {
+        "coat": {
+          "name": "롱코트",
+          "image": "outfit_winter_coat",
+          "colors": ["black", "beige", "gray"]
+        },
+        "sweater": {
+          "name": "스웨터",
+          "image": "outfit_winter_sweater",
+          "colors": ["red", "green", "white"]
+        },
+        "parka": {
+          "name": "파카",
+          "image": "outfit_winter_parka",
+          "colors": ["navy", "khaki", "black"]
+        }
+      }
+    },
+    "date": {
+      "id": "date",
+      "name": "데이트 의상",
+      "description": "특별한 날을 위한 의상",
+      "category": "special",
+      "available": false,
+      "unlockCondition": {
+        "event": "first_date"
+      },
+      "price": 3500,
+      "stats": {
+        "charm": 30,
+        "luck": 5
+      },
+      "variants": {
+        "elegant": {
+          "name": "엘레강트",
+          "image": "outfit_date_elegant",
+          "colors": ["wine", "navy", "emerald"]
+        },
+        "cute": {
+          "name": "큐트",
+          "image": "outfit_date_cute",
+          "colors": ["pink", "lavender", "mint"]
+        },
+        "chic": {
+          "name": "시크",
+          "image": "outfit_date_chic",
+          "colors": ["black", "white", "gray"]
+        }
+      }
+    },
+    "legendary": {
+      "id": "legendary",
+      "name": "전설 의상",
+      "description": "특별한 조건으로만 얻을 수 있는 희귀 의상",
+      "category": "legendary",
+      "available": false,
+      "variants": {
+        "hero": {
+          "name": "영웅의 갑옷",
+          "image": "outfit_legendary_hero",
+          "unlockCondition": {
+            "achievement": "all_dungeons_cleared"
+          },
+          "stats": {
+            "strength": 50,
+            "stamina": 30,
+            "charm": 20
+          }
+        },
+        "goddess": {
+          "name": "여신의 드레스",
+          "image": "outfit_legendary_goddess",
+          "unlockCondition": {
+            "achievement": "all_heroines_max_affinity"
+          },
+          "stats": {
+            "charm": 50,
+            "luck": 30,
+            "intelligence": 20
+          }
+        },
+        "time_traveler": {
+          "name": "시간여행자",
+          "image": "outfit_legendary_time",
+          "unlockCondition": {
+            "character": "mystery",
+            "route": "mystery_true"
+          },
+          "stats": {
+            "all": 25
+          }
+        }
+      }
+    }
+  },
+  "characterOutfits": {
+    "sakura": {
+      "default": "school",
+      "special": ["training_dojo", "formal_suit", "yukata_traditional", "costume_knight"],
+      "preferences": {
+        "favorite": ["training", "formal"],
+        "dislike": ["costume_maid", "swimsuit_bikini"]
+      },
+      "reactions": {
+        "training_dojo": "이 도복... 훈련하기 정말 편해 보이네.",
+        "costume_knight": "이 갑옷을 입은 네 모습... 멋있어.",
+        "costume_maid": "이... 이런 옷은 나한테 어울리지 않아!"
+      }
+    },
+    "yuki": {
+      "default": "school",
+      "special": ["casual_dress", "winter_sweater", "yukata_floral"],
+      "preferences": {
+        "favorite": ["casual_dress", "winter_sweater"],
+        "dislike": ["training_gym", "swimsuit_bikini"]
+      },
+      "reactions": {
+        "casual_dress": "이 원피스... 동화책에서 본 것 같아요.",
+        "winter_sweater": "따뜻해 보여요. 같이 책 읽기 좋겠네요.",
+        "swimsuit_bikini": "너... 너무 부끄러워요..."
+      }
+    },
+    "luna": {
+      "default": "school",
+      "special": ["costume_magical", "date_elegant", "yukata_modern"],
+      "preferences": {
+        "favorite": ["costume_magical", "date_elegant"],
+        "dislike": ["training_gym", "formal_suit"]
+      },
+      "reactions": {
+        "costume_magical": "마법소녀 변신! 어때, 어울려?",
+        "date_elegant": "가문 행사보다 너와의 데이트가 더 특별해.",
+        "formal_suit": "으... 가문에서 강요하던 옷 같아서 싫어."
+      }
+    },
+    "rin": {
+      "default": "school",
+      "special": ["training_track", "casual_sporty", "swimsuit_sporty"],
+      "preferences": {
+        "favorite": ["training", "casual_sporty"],
+        "dislike": ["formal_dress", "costume_maid"]
+      },
+      "reactions": {
+        "training_track": "이거야! 이런 옷이 제일 편해!",
+        "swimsuit_sporty": "수영도 좋은 운동이지!",
+        "formal_dress": "움직이기 너무 불편해..."
+      }
+    },
+    "mei": {
+      "default": "school",
+      "special": ["date_chic", "yukata_floral", "casual_dress"],
+      "preferences": {
+        "favorite": ["date_chic", "yukata_floral"],
+        "dislike": ["training_gym", "swimsuit_sporty"]
+      },
+      "reactions": {
+        "date_chic": "이 의상의 색 조합... 완벽해요.",
+        "yukata_floral": "이 문양... 그림으로 그리고 싶어요.",
+        "training_gym": "운동복은... 예술적이지 않아요."
+      }
+    },
+    "hana": {
+      "default": "school",
+      "special": ["costume_chef", "casual_dress", "winter_sweater"],
+      "preferences": {
+        "favorite": ["costume_chef", "casual"],
+        "dislike": ["formal_tuxedo", "training_dojo"]
+      },
+      "reactions": {
+        "costume_chef": "이 앞치마 정말 실용적이에요!",
+        "casual_dress": "요리할 때도 편한 옷이 최고예요.",
+        "formal_tuxedo": "너무 딱딱해서 요리하기 불편해요..."
+      }
+    },
+    "sora": {
+      "default": "school",
+      "special": ["costume_scientist", "formal_suit", "casual"],
+      "preferences": {
+        "favorite": ["costume_scientist", "formal_suit"],
+        "dislike": ["swimsuit_bikini", "yukata"]
+      },
+      "reactions": {
+        "costume_scientist": "실험복은 매우 기능적이고 효율적입니다.",
+        "formal_suit": "이 의상의 구조가 논리적이네요.",
+        "swimsuit_bikini": "이건... 비과학적으로 노출이 많네요."
+      }
+    },
+    "akane": {
+      "default": "school",
+      "special": ["formal_suit", "date_elegant", "winter_coat"],
+      "preferences": {
+        "favorite": ["formal", "date_elegant"],
+        "dislike": ["costume_maid", "casual_sporty"]
+      },
+      "reactions": {
+        "formal_suit": "학생회장으로서 품위를 지켜야죠.",
+        "date_elegant": "당신과의 데이트니까... 특별하게 입었어요.",
+        "costume_maid": "회장이 이런 옷을 입다니..."
+      }
+    },
+    "mystery": {
+      "default": "school",
+      "special": ["legendary_time", "date_chic", "winter_parka"],
+      "preferences": {
+        "favorite": ["legendary_time", "winter_parka"],
+        "dislike": []
+      },
+      "reactions": {
+        "legendary_time": "이 옷은... 여러 차원을 넘나들 수 있게 해줘.",
+        "date_chic": "처음으로... '평범한' 옷을 입어보네.",
+        "school": "이 세계의 의상도... 나쁘지 않아."
+      }
+    }
+  },
+  "outfitBonuses": {
+    "setBonus": {
+      "complete_school": {
+        "requirement": "all_school_variants",
+        "bonus": { "intelligence": 10, "charm": 5 }
+      },
+      "complete_seasonal": {
+        "requirement": "all_seasonal_outfits",
+        "bonus": { "luck": 15, "charm": 10 }
+      },
+      "complete_legendary": {
+        "requirement": "all_legendary_outfits",
+        "bonus": { "all_stats": 20 }
+      }
+    },
+    "eventBonus": {
+      "summer_festival": {
+        "outfit": "yukata",
+        "bonus": { "affection_gain": 1.5 }
+      },
+      "beach_episode": {
+        "outfit": "swimsuit",
+        "bonus": { "affection_gain": 1.3 }
+      },
+      "formal_event": {
+        "outfit": "formal",
+        "bonus": { "affection_gain": 1.4 }
+      }
+    }
+  }
+}

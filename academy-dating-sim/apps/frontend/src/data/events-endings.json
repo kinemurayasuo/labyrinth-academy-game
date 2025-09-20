@@ -1,0 +1,689 @@
+{
+  "specialEvents": {
+    "sakura": [
+      {
+        "id": "sakura_dojo_training",
+        "name": "도장의 비밀 수련",
+        "requiredAffection": 20,
+        "requiredDay": 5,
+        "description": "새벽, 사쿠라가 혼자 수련하는 모습을 발견",
+        "choices": [
+          {
+            "text": "조용히 지켜본다",
+            "outcome": "affection +5",
+            "response": "...언제부터 보고 있었나? 방해하지 않은 건 칭찬하지."
+          },
+          {
+            "text": "함께 수련하자고 제안한다",
+            "outcome": "affection +10",
+            "response": "흥... 각오는 되어있나? 쉽게 봐주지 않을 거다."
+          },
+          {
+            "text": "실력을 보여달라고 한다",
+            "outcome": "affection +3",
+            "response": "말보다 행동을 보여줘야겠군."
+          }
+        ]
+      },
+      {
+        "id": "sakura_rival_confrontation",
+        "name": "라이벌 가문과의 대결",
+        "requiredAffection": 50,
+        "requiredDay": 15,
+        "description": "라이벌 가문의 후계자가 사쿠라에게 도전장을 내민다",
+        "choices": [
+          {
+            "text": "사쿠라를 대신해 싸우겠다고 나선다",
+            "outcome": "affection +15, unlock special dialogue",
+            "response": "바보... 하지만 그 용기는 인정하지. 함께 싸우자."
+          },
+          {
+            "text": "사쿠라를 응원한다",
+            "outcome": "affection +8",
+            "response": "너의 응원이 힘이 된다. 지켜봐줘."
+          },
+          {
+            "text": "도망치자고 제안한다",
+            "outcome": "affection -5",
+            "response": "도망은 없다. 이것은 내 싸움이야."
+          }
+        ]
+      },
+      {
+        "id": "sakura_cherry_blossom",
+        "name": "벚꽃 아래의 약속",
+        "requiredAffection": 80,
+        "requiredDay": 25,
+        "description": "만개한 벚꽃 아래, 사쿠라가 진심을 고백한다",
+        "choices": [
+          {
+            "text": "영원히 함께하자고 약속한다",
+            "outcome": "affection +20, route lock",
+            "response": "너와 함께라면... 어떤 미래도 두렵지 않아. 사랑해."
+          },
+          {
+            "text": "더 강해져서 돌아오겠다고 한다",
+            "outcome": "affection +10",
+            "response": "기다리겠다. 하지만 너무 오래 걸리면 쫓아갈 거야."
+          }
+        ]
+      }
+    ],
+    "yuki": [
+      {
+        "id": "yuki_secret_diary",
+        "name": "비밀 일기장의 발견",
+        "requiredAffection": 25,
+        "requiredDay": 7,
+        "description": "유키가 실수로 떨어뜨린 일기장을 발견한다",
+        "choices": [
+          {
+            "text": "읽지 않고 돌려준다",
+            "outcome": "affection +15",
+            "response": "아... 읽지 않으셨군요. 정말 고마워요. 믿을 수 있는 사람이에요."
+          },
+          {
+            "text": "함께 읽자고 제안한다",
+            "outcome": "affection +10",
+            "response": "부, 부끄럽지만... 당신이라면 괜찮아요."
+          },
+          {
+            "text": "몰래 읽는다",
+            "outcome": "affection -10",
+            "response": "읽으셨죠? 표정에 다 나와요... 실망이에요."
+          }
+        ]
+      },
+      {
+        "id": "yuki_literature_festival",
+        "name": "문학제 발표회",
+        "requiredAffection": 45,
+        "requiredDay": 12,
+        "description": "유키가 문학제에서 자작 소설을 발표하게 된다",
+        "choices": [
+          {
+            "text": "무대 옆에서 응원한다",
+            "outcome": "affection +12",
+            "response": "당신이 있어서 용기를 낼 수 있었어요!"
+          },
+          {
+            "text": "객석에서 가장 크게 박수친다",
+            "outcome": "affection +8",
+            "response": "당신의 박수 소리가 들렸어요. 힘이 났어요."
+          },
+          {
+            "text": "긴장한 유키를 위해 대신 발표한다",
+            "outcome": "affection +5",
+            "response": "고마워요... 하지만 제가 해야 하는 일이었어요."
+          }
+        ]
+      },
+      {
+        "id": "yuki_library_confession",
+        "name": "도서관의 고백",
+        "requiredAffection": 75,
+        "requiredDay": 20,
+        "description": "유키가 특별한 장소로 안내한다",
+        "choices": [
+          {
+            "text": "손을 잡고 마음을 전한다",
+            "outcome": "affection +20, route lock",
+            "response": "제 이야기의 주인공이 되어주세요. 영원히요."
+          },
+          {
+            "text": "편지로 마음을 전한다",
+            "outcome": "affection +15",
+            "response": "아름다운 편지예요... 평생 간직할게요."
+          }
+        ]
+      }
+    ],
+    "luna": [
+      {
+        "id": "luna_magic_accident",
+        "name": "마법 실험 사고",
+        "requiredAffection": 15,
+        "requiredDay": 4,
+        "description": "루나의 실험이 폭주하여 위험에 빠진다",
+        "choices": [
+          {
+            "text": "몸을 던져 루나를 보호한다",
+            "outcome": "affection +15",
+            "response": "바보! 위험했잖아! ...하지만 고마워. 정말로."
+          },
+          {
+            "text": "마법으로 대응한다",
+            "outcome": "affection +10",
+            "response": "오~ 마법 실력이 있네? 함께 연구하자!"
+          },
+          {
+            "text": "선생님을 부른다",
+            "outcome": "affection -5",
+            "response": "에이, 재미없어! 선생님한테 혼났잖아!"
+          }
+        ]
+      },
+      {
+        "id": "luna_family_escape",
+        "name": "가문의 추적",
+        "requiredAffection": 40,
+        "requiredDay": 10,
+        "description": "가문에서 보낸 사람들이 루나를 데려가려 한다",
+        "choices": [
+          {
+            "text": "루나와 함께 도망친다",
+            "outcome": "affection +18",
+            "response": "너와 함께라면 어디든 갈 수 있어!"
+          },
+          {
+            "text": "가문 사람들과 대화로 해결한다",
+            "outcome": "affection +10",
+            "response": "말이 통했네? 역시 너는 특별해!"
+          },
+          {
+            "text": "루나에게 가족과 화해하라고 권한다",
+            "outcome": "affection +5",
+            "response": "그게 쉬웠으면... 하지만 노력해볼게."
+          }
+        ]
+      },
+      {
+        "id": "luna_starry_magic",
+        "name": "별빛 마법의 약속",
+        "requiredAffection": 70,
+        "requiredDay": 18,
+        "description": "루나가 금지된 고대 마법으로 특별한 것을 보여준다",
+        "choices": [
+          {
+            "text": "영원의 계약을 맺는다",
+            "outcome": "affection +20, route lock",
+            "response": "이제 우린 마법으로도 끊을 수 없는 인연이야. 사랑해!"
+          },
+          {
+            "text": "위험하다고 말린다",
+            "outcome": "affection +8",
+            "response": "걱정해주는 거야? 귀여워! 하지만 너를 위해서라면..."
+          }
+        ]
+      }
+    ],
+    "mystery": [
+      {
+        "id": "mystery_first_encounter",
+        "name": "시공의 균열",
+        "requiredAffection": 0,
+        "requiredDay": 10,
+        "requiredTotalAffection": 150,
+        "description": "이상한 빛과 함께 나타난 수수께끼의 소녀",
+        "choices": [
+          {
+            "text": "도와준다",
+            "outcome": "affection +10, unlock character",
+            "response": "...예상 밖의 변수. 관찰 대상으로 지정한다."
+          },
+          {
+            "text": "경계한다",
+            "outcome": "affection +5, unlock character",
+            "response": "현명한 판단. 하지만 적은 아니다."
+          }
+        ]
+      },
+      {
+        "id": "mystery_time_revelation",
+        "name": "시간 여행자의 진실",
+        "requiredAffection": 50,
+        "requiredDay": 20,
+        "description": "그녀가 미래에서 온 진실을 고백한다",
+        "choices": [
+          {
+            "text": "믿고 받아들인다",
+            "outcome": "affection +20",
+            "response": "너를 제거하러 왔었어. 하지만 이제는... 지키고 싶어."
+          },
+          {
+            "text": "증거를 요구한다",
+            "outcome": "affection +10",
+            "response": "논리적이군. 좋아. 미래를 보여주지."
+          },
+          {
+            "text": "거짓말이라고 생각한다",
+            "outcome": "affection -10",
+            "response": "믿지 않아도 돼. 하지만 시간이 증명할 거야."
+          }
+        ]
+      },
+      {
+        "id": "mystery_temporal_crisis",
+        "name": "존재의 소멸",
+        "requiredAffection": 80,
+        "requiredDay": 28,
+        "description": "시간선이 수정되며 그녀가 사라지기 시작한다",
+        "choices": [
+          {
+            "text": "운명을 거스르고 그녀를 붙잡는다",
+            "outcome": "affection +25, route lock",
+            "response": "불가능을 가능하게 만드는 것... 그게 사랑인가. 영원히 함께해."
+          },
+          {
+            "text": "그녀를 보내준다",
+            "outcome": "affection +15, bad end",
+            "response": "잊지 마. 모든 시간선에서... 널 사랑했어."
+          }
+        ]
+      }
+    ],
+    "akane": [
+      {
+        "id": "akane_overwork",
+        "name": "과로로 쓰러진 회장",
+        "requiredAffection": 20,
+        "requiredDay": 6,
+        "description": "밤늦게까지 일하던 아카네가 쓰러진다",
+        "choices": [
+          {
+            "text": "보건실로 데려가고 곁을 지킨다",
+            "outcome": "affection +15",
+            "response": "깨어나니 당신이... 고마워요. 정말로."
+          },
+          {
+            "text": "일을 대신 처리한다",
+            "outcome": "affection +12",
+            "response": "제 일을... 완벽하게 처리하셨네요. 믿을 수 있는 사람이에요."
+          },
+          {
+            "text": "선생님께 알린다",
+            "outcome": "affection +5",
+            "response": "걱정 끼쳐서 죄송해요... 조심할게요."
+          }
+        ]
+      },
+      {
+        "id": "akane_election_crisis",
+        "name": "학생회장 재선 위기",
+        "requiredAffection": 45,
+        "requiredDay": 14,
+        "description": "반대파의 모함으로 아카네가 위기에 빠진다",
+        "choices": [
+          {
+            "text": "증거를 찾아 아카네를 변호한다",
+            "outcome": "affection +18",
+            "response": "당신이 절 믿어주다니... 평생 은혜를 잊지 않을게요."
+          },
+          {
+            "text": "함께 맞서 싸운다",
+            "outcome": "affection +14",
+            "response": "든든한 동료가 있어 행복해요."
+          },
+          {
+            "text": "아카네에게 포기하라고 권한다",
+            "outcome": "affection -8",
+            "response": "포기는... 제 사전에 없어요."
+          }
+        ]
+      },
+      {
+        "id": "akane_true_self",
+        "name": "진짜 아카네",
+        "requiredAffection": 75,
+        "requiredDay": 22,
+        "description": "아카네가 회장이 아닌 진짜 자신을 보여준다",
+        "choices": [
+          {
+            "text": "있는 그대로를 사랑한다고 말한다",
+            "outcome": "affection +20, route lock",
+            "response": "완벽하지 않아도... 당신이 사랑해준다니. 저도 사랑해요."
+          },
+          {
+            "text": "함께 짐을 나누자고 한다",
+            "outcome": "affection +15",
+            "response": "평생 의지할 수 있는 사람을 찾았어요."
+          }
+        ]
+      }
+    ],
+    "hana": [
+      {
+        "id": "hana_cooking_class",
+        "name": "특별 요리 수업",
+        "requiredAffection": 18,
+        "requiredDay": 5,
+        "description": "하나가 방과후 요리를 가르쳐준다",
+        "choices": [
+          {
+            "text": "열심히 배운다",
+            "outcome": "affection +12",
+            "response": "정말 재능이 있어요! 더 가르쳐드릴게요!"
+          },
+          {
+            "text": "하나의 요리를 칭찬한다",
+            "outcome": "affection +10",
+            "response": "당신이 맛있다고 해주니 더 요리하고 싶어요!"
+          },
+          {
+            "text": "실수로 재료를 망친다",
+            "outcome": "affection +5",
+            "response": "괜찮아요! 실수도 요리의 일부예요. 다시 해봐요!"
+          }
+        ]
+      },
+      {
+        "id": "hana_mothers_recipe",
+        "name": "어머니의 레시피",
+        "requiredAffection": 40,
+        "requiredDay": 11,
+        "description": "하나가 어머니의 특별한 레시피를 재현하려 한다",
+        "choices": [
+          {
+            "text": "함께 레시피를 완성한다",
+            "outcome": "affection +18",
+            "response": "어머니의 맛이에요! 당신과 함께여서 가능했어요!"
+          },
+          {
+            "text": "하나를 위로하며 격려한다",
+            "outcome": "affection +14",
+            "response": "당신의 응원 덕분에 포기하지 않을 수 있었어요."
+          },
+          {
+            "text": "포기하라고 조언한다",
+            "outcome": "affection -5",
+            "response": "포기할 수 없어요. 이건 어머니와의 약속이에요."
+          }
+        ]
+      },
+      {
+        "id": "hana_restaurant_future",
+        "name": "미래의 레스토랑",
+        "requiredAffection": 70,
+        "requiredDay": 19,
+        "description": "하나가 함께 레스토랑을 운영하자고 제안한다",
+        "choices": [
+          {
+            "text": "평생 함께하겠다고 약속한다",
+            "outcome": "affection +20, route lock",
+            "response": "당신과 함께 만드는 요리가 제일 맛있어요. 영원히 함께해요."
+          },
+          {
+            "text": "먼저 더 배우겠다고 한다",
+            "outcome": "affection +12",
+            "response": "기다릴게요. 함께 성장해요."
+          }
+        ]
+      }
+    ],
+    "rin": [
+      {
+        "id": "rin_injury_trauma",
+        "name": "부상의 기억",
+        "requiredAffection": 25,
+        "requiredDay": 8,
+        "description": "훈련 중 린이 갑자기 무릎을 잡고 주저앉는다",
+        "choices": [
+          {
+            "text": "천천히 다가가 손을 내민다",
+            "outcome": "affection +15",
+            "response": "당신이 있어서... 다시 일어설 수 있어요."
+          },
+          {
+            "text": "의무실로 데려간다",
+            "outcome": "affection +10",
+            "response": "걱정해줘서 고마워요. 금방 나을 거예요."
+          },
+          {
+            "text": "혼자 두고 지켜본다",
+            "outcome": "affection +5",
+            "response": "지켜봐 주셨군요. 혼자서도 이겨낼 수 있어요."
+          }
+        ]
+      },
+      {
+        "id": "rin_marathon_challenge",
+        "name": "마라톤 대회 도전",
+        "requiredAffection": 50,
+        "requiredDay": 16,
+        "description": "린이 큰 대회에 출전하기로 결정한다",
+        "choices": [
+          {
+            "text": "페이스메이커가 되어준다",
+            "outcome": "affection +18",
+            "response": "당신과 함께 달리니 두렵지 않아요!"
+          },
+          {
+            "text": "응원 현수막을 만든다",
+            "outcome": "affection +14",
+            "response": "당신의 응원이 보였어요! 힘이 났어요!"
+          },
+          {
+            "text": "무리하지 말라고 만류한다",
+            "outcome": "affection +8",
+            "response": "걱정해줘서 고마워요. 하지만 도전하고 싶어요."
+          }
+        ]
+      },
+      {
+        "id": "rin_sunrise_run",
+        "name": "일출의 약속",
+        "requiredAffection": 75,
+        "requiredDay": 23,
+        "description": "린이 특별한 장소로 아침 러닝을 제안한다",
+        "choices": [
+          {
+            "text": "평생 함께 달리자고 고백한다",
+            "outcome": "affection +20, route lock",
+            "response": "당신이 제 영원한 러닝메이트예요. 사랑해요!"
+          },
+          {
+            "text": "매일 함께 훈련하자고 약속한다",
+            "outcome": "affection +15",
+            "response": "네! 매일 아침이 기대돼요!"
+          }
+        ]
+      }
+    ],
+    "mei": [
+      {
+        "id": "mei_color_awakening",
+        "name": "색의 각성",
+        "requiredAffection": 30,
+        "requiredDay": 9,
+        "description": "메이가 당신을 그리다가 갑자기 멈춘다",
+        "choices": [
+          {
+            "text": "무슨 일인지 물어본다",
+            "outcome": "affection +15",
+            "response": "당신을 그릴 때... 처음으로 색이 보여요!"
+          },
+          {
+            "text": "계속 그려달라고 부탁한다",
+            "outcome": "affection +10",
+            "response": "네... 당신의 색을 담아볼게요."
+          },
+          {
+            "text": "쉬었다 하자고 제안한다",
+            "outcome": "affection +5",
+            "response": "아니에요. 지금 이 순간을 그려야 해요."
+          }
+        ]
+      },
+      {
+        "id": "mei_mothers_truth",
+        "name": "어머니의 진실",
+        "requiredAffection": 55,
+        "requiredDay": 17,
+        "description": "숨겨진 어머니의 작품을 발견한다",
+        "choices": [
+          {
+            "text": "함께 어머니를 찾아 나선다",
+            "outcome": "affection +18",
+            "response": "당신과 함께라면 어머니를 찾을 용기가 생겨요."
+          },
+          {
+            "text": "메이만의 길을 가라고 조언한다",
+            "outcome": "affection +14",
+            "response": "맞아요. 전 저만의 색을 찾을 거예요. 당신과 함께."
+          },
+          {
+            "text": "어머니를 잊으라고 한다",
+            "outcome": "affection -5",
+            "response": "잊을 수 없어요. 어머니는 제 시작이에요."
+          }
+        ]
+      },
+      {
+        "id": "mei_masterpiece",
+        "name": "인생의 걸작",
+        "requiredAffection": 80,
+        "requiredDay": 26,
+        "description": "메이가 당신을 주제로 한 대작을 완성한다",
+        "choices": [
+          {
+            "text": "평생 모델이 되겠다고 약속한다",
+            "outcome": "affection +20, route lock",
+            "response": "당신이 제 모든 작품의 주인공이에요. 영원히 그릴게요."
+          },
+          {
+            "text": "함께 전시회를 열자고 제안한다",
+            "outcome": "affection +15",
+            "response": "네! 우리의 이야기를 세상에 보여줘요!"
+          }
+        ]
+      }
+    ],
+    "sora": [
+      {
+        "id": "sora_emotion_discovery",
+        "name": "감정의 발견",
+        "requiredAffection": 22,
+        "requiredDay": 7,
+        "description": "소라가 이상한 실험을 하고 있다",
+        "choices": [
+          {
+            "text": "실험을 도와준다",
+            "outcome": "affection +14",
+            "response": "당신이 변수가 되니 데이터가 흥미로워요."
+          },
+          {
+            "text": "감정을 설명해준다",
+            "outcome": "affection +12",
+            "response": "비논리적이지만... 이해하고 싶어요."
+          },
+          {
+            "text": "실험을 중단시킨다",
+            "outcome": "affection +5",
+            "response": "왜 방해하는가? 아, 걱정인가. 흥미로운 감정."
+          }
+        ]
+      },
+      {
+        "id": "sora_love_equation",
+        "name": "사랑의 방정식",
+        "requiredAffection": 48,
+        "requiredDay": 13,
+        "description": "소라가 '사랑의 공식'을 발견했다고 주장한다",
+        "choices": [
+          {
+            "text": "공식을 함께 검증한다",
+            "outcome": "affection +16",
+            "response": "당신과의 데이터가 가장 아름다운 그래프를 그려요."
+          },
+          {
+            "text": "사랑은 계산할 수 없다고 말한다",
+            "outcome": "affection +14",
+            "response": "맞아요... 당신이 그 증명이에요."
+          },
+          {
+            "text": "실험체가 되어준다",
+            "outcome": "affection +12",
+            "response": "심박수 상승, 체온 상승... 이게 사랑인가요?"
+          }
+        ]
+      },
+      {
+        "id": "sora_human_choice",
+        "name": "인간이 되는 선택",
+        "requiredAffection": 85,
+        "requiredDay": 27,
+        "description": "소라가 감정을 완전히 받아들일지 고민한다",
+        "choices": [
+          {
+            "text": "함께 불완전해도 괜찮다고 말한다",
+            "outcome": "affection +20, route lock",
+            "response": "당신과 함께하는 비논리적 선택. 그게 사랑이군요. 선택할게요."
+          },
+          {
+            "text": "천천히 결정하라고 조언한다",
+            "outcome": "affection +15",
+            "response": "기다려줄 건가요? 그럼 천천히 인간이 되어볼게요."
+          }
+        ]
+      }
+    ]
+  },
+  "endings": {
+    "true_endings": {
+      "sakura": {
+        "title": "검과 벚꽃의 맹세",
+        "description": "사쿠라와 함께 가문을 재건하고, 새로운 검술 유파 '벚꽃류'를 창시한다. 두 사람의 도장은 명성을 얻어 많은 제자들이 모여든다. 매년 봄, 벚꽃이 피는 날에는 첫 만남을 기념하는 특별한 의식을 치른다.",
+        "epilogue": "10년 후, 당신과 사쿠라는 세계 검술 대회에서 나란히 우승을 차지한다. 두 아이가 도장에서 뛰어노는 모습을 보며, 사쿠라가 말한다. '당신이 있어 완벽한 인생이야.'"
+      },
+      "yuki": {
+        "title": "영원한 이야기",
+        "description": "유키는 당신과의 사랑을 담은 소설로 베스트셀러 작가가 된다. 두 사람은 작은 서점 겸 카페를 운영하며, 사람들에게 이야기의 마법을 전한다.",
+        "epilogue": "매일 저녁, 벽난로 앞에서 함께 책을 읽는 두 사람. 유키가 새로 쓴 원고를 보여주며 속삭인다. '우리 이야기는 영원히 계속될 거예요.'"
+      },
+      "luna": {
+        "title": "자유로운 마법사들",
+        "description": "가문의 인정을 받은 루나와 함께 새로운 마법 학파를 창시한다. 자유롭고 창의적인 마법으로 마법계에 혁명을 일으킨다.",
+        "epilogue": "별이 쏟아지는 밤, 하늘을 나는 두 사람. 루나가 반지를 만들며 말한다. '이건 영원의 마법이야. 우리를 묶어주는.'"
+      },
+      "mystery": {
+        "title": "시공을 초월한 사랑",
+        "description": "운명을 거스르고 새로운 시간선을 창조한다. 과거와 미래가 공존하는 특별한 공간에서 영원히 함께한다.",
+        "epilogue": "시간이 멈춘 정원에서, 그녀가 미소 짓는다. '모든 미래를 봤지만, 당신과 함께하는 이 순간이 가장 아름다워.'"
+      },
+      "akane": {
+        "title": "완벽한 파트너십",
+        "description": "아카네와 함께 학생회를 넘어 정치계에 진출한다. 두 사람의 개혁은 사회를 변화시킨다.",
+        "epilogue": "취임식 날, 아카네가 당신의 손을 잡는다. '규칙보다 중요한 건 사랑이라는 걸 당신이 가르쳐줬어요.'"
+      },
+      "hana": {
+        "title": "미슐랭의 별",
+        "description": "하나와 함께 미슐랭 3스타 레스토랑을 운영한다. 사랑을 담은 요리로 전 세계 사람들을 감동시킨다.",
+        "epilogue": "주방에서 함께 요리하는 두 사람. 하나가 앞치마를 묶어주며 말한다. '당신과 만드는 요리가 세상에서 가장 맛있어요.'"
+      },
+      "rin": {
+        "title": "금메달의 영광",
+        "description": "린과 함께 올림픽에서 금메달을 획득한다. 두 사람은 최고의 러닝 커플로 역사에 남는다.",
+        "epilogue": "시상대 위에서 린이 속삭인다. '이 메달보다 소중한 건 당신과 함께 달린 모든 순간이에요.'"
+      },
+      "mei": {
+        "title": "색채의 혁명",
+        "description": "메이와 함께 예술계에 새로운 바람을 일으킨다. '사랑의 색' 연작은 역사상 가장 아름다운 작품으로 평가받는다.",
+        "epilogue": "아틀리에에서 메이가 당신을 그린다. '영원히 당신만 그려도 질리지 않을 것 같아요.'"
+      },
+      "sora": {
+        "title": "사랑의 노벨상",
+        "description": "소라와 함께 '감정의 과학'이라는 새로운 분야를 개척하여 노벨상을 수상한다.",
+        "epilogue": "수상 소감에서 소라가 말한다. '가장 위대한 발견은 공식이 아니라 사랑이었습니다.'"
+      }
+    },
+    "normal_endings": {
+      "general": {
+        "title": "좋은 친구들",
+        "description": "모두와 좋은 친구로 남아 각자의 길을 응원한다. 가끔 모여 추억을 나누는 따뜻한 관계를 유지한다.",
+        "epilogue": "동창회에서 다시 만난 모두가 웃으며 건배한다. '우리의 우정은 영원해!'"
+      }
+    },
+    "bad_endings": {
+      "loneliness": {
+        "title": "홀로 남은 길",
+        "description": "누구와도 깊은 관계를 맺지 못하고 졸업한다. 각자의 길로 흩어진 후 연락이 끊긴다.",
+        "epilogue": "텅 빈 교실에서 혼자 남은 당신. 창밖의 벚꽃잎이 쓸쓸히 흩날린다."
+      },
+      "expelled": {
+        "title": "강제 전학",
+        "description": "학업을 소홀히 하여 강제 전학을 당한다. 모든 인연이 끊어진다.",
+        "epilogue": "기차역에서 마지막으로 학교를 바라본다. 다시는 만날 수 없는 사람들."
+      }
+    }
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "dateSpots": [
+    {
+      "id": "cafe",
+      "name": "카페 라떼",
+      "description": "아늑한 분위기의 작은 카페",
+      "cost": 500,
+      "availableCharacters": ["all"],
+      "atmosphere": "cozy"
+    },
+    {
+      "id": "park",
+      "name": "벚꽃 공원",
+      "description": "벚꽃이 만개한 아름다운 공원",
+      "cost": 0,
+      "availableCharacters": ["all"],
+      "atmosphere": "romantic",
+      "seasonal": "spring"
+    },
+    {
+      "id": "beach",
+      "name": "해변",
+      "description": "파도 소리가 들리는 해변",
+      "cost": 1000,
+      "availableCharacters": ["all"],
+      "atmosphere": "exciting",
+      "seasonal": "summer"
+    },
+    {
+      "id": "aquarium",
+      "name": "아쿠아리움",
+      "description": "신비로운 해양 생물들이 있는 곳",
+      "cost": 1500,
+      "availableCharacters": ["yuki", "mei", "sora"],
+      "atmosphere": "mysterious"
+    },
+    {
+      "id": "training_ground",
+      "name": "특별 훈련장",
+      "description": "함께 훈련할 수 있는 곳",
+      "cost": 300,
+      "availableCharacters": ["sakura", "rin"],
+      "atmosphere": "energetic"
+    },
+    {
+      "id": "library",
+      "name": "대형 도서관",
+      "description": "수많은 책들이 있는 조용한 공간",
+      "cost": 0,
+      "availableCharacters": ["yuki", "akane", "sora"],
+      "atmosphere": "quiet"
+    },
+    {
+      "id": "arcade",
+      "name": "게임 센터",
+      "description": "다양한 게임을 즐길 수 있는 곳",
+      "cost": 800,
+      "availableCharacters": ["luna", "rin", "hana"],
+      "atmosphere": "fun"
+    },
+    {
+      "id": "restaurant",
+      "name": "고급 레스토랑",
+      "description": "특별한 날을 위한 레스토랑",
+      "cost": 3000,
+      "availableCharacters": ["all"],
+      "atmosphere": "elegant",
+      "minAffinity": 60
+    },
+    {
+      "id": "festival",
+      "name": "여름 축제",
+      "description": "불꽃놀이와 축제 음식",
+      "cost": 1200,
+      "availableCharacters": ["all"],
+      "atmosphere": "festive",
+      "seasonal": "summer",
+      "special": true
+    },
+    {
+      "id": "art_gallery",
+      "name": "미술관",
+      "description": "다양한 예술 작품 전시",
+      "cost": 1000,
+      "availableCharacters": ["mei", "luna", "yuki"],
+      "atmosphere": "cultural"
+    }
+  ],
+  "dateActivities": [
+    {
+      "id": "cafe_talk",
+      "location": "cafe",
+      "name": "카페에서 대화",
+      "activities": [
+        {
+          "name": "좋아하는 음료 추천하기",
+          "affectionGain": 5,
+          "dialogue": "이 카페의 시그니처 메뉴를 추천해줘!"
+        },
+        {
+          "name": "미래에 대해 이야기하기",
+          "affectionGain": 10,
+          "dialogue": "앞으로의 꿈에 대해 이야기해보자.",
+          "minAffinity": 40
+        },
+        {
+          "name": "손을 잡기",
+          "affectionGain": 15,
+          "dialogue": "자연스럽게 손을 잡는다.",
+          "minAffinity": 60
+        }
+      ]
+    },
+    {
+      "id": "park_walk",
+      "location": "park",
+      "name": "공원 산책",
+      "activities": [
+        {
+          "name": "벚꽃 구경하기",
+          "affectionGain": 7,
+          "dialogue": "벚꽃이 정말 아름답네!",
+          "seasonal": "spring"
+        },
+        {
+          "name": "보트 타기",
+          "affectionGain": 12,
+          "dialogue": "호수에서 보트를 타자!",
+          "cost": 500
+        },
+        {
+          "name": "벤치에서 휴식",
+          "affectionGain": 8,
+          "dialogue": "잠시 벤치에 앉아 쉬자."
+        }
+      ]
+    },
+    {
+      "id": "beach_fun",
+      "location": "beach",
+      "name": "해변 데이트",
+      "activities": [
+        {
+          "name": "모래성 만들기",
+          "affectionGain": 10,
+          "dialogue": "함께 모래성을 만들어보자!"
+        },
+        {
+          "name": "바다 수영",
+          "affectionGain": 12,
+          "dialogue": "시원한 바다에서 수영하자!",
+          "seasonal": "summer"
+        },
+        {
+          "name": "일몰 감상",
+          "affectionGain": 15,
+          "dialogue": "해가 지는 걸 함께 보자.",
+          "minAffinity": 50
+        }
+      ]
+    },
+    {
+      "id": "training_session",
+      "location": "training_ground",
+      "name": "함께 훈련",
+      "activities": [
+        {
+          "name": "기초 체력 훈련",
+          "affectionGain": 8,
+          "dialogue": "기초부터 차근차근 해보자!",
+          "statGain": { "stamina": 2 }
+        },
+        {
+          "name": "대련하기",
+          "affectionGain": 12,
+          "dialogue": "진지하게 대련해보자!",
+          "minStats": { "strength": 20 },
+          "statGain": { "strength": 3 }
+        },
+        {
+          "name": "훈련 후 간식",
+          "affectionGain": 10,
+          "dialogue": "열심히 훈련했으니 맛있는 걸 먹자!",
+          "cost": 300
+        }
+      ]
+    },
+    {
+      "id": "arcade_games",
+      "location": "arcade",
+      "name": "게임 센터 데이트",
+      "activities": [
+        {
+          "name": "리듬 게임 대결",
+          "affectionGain": 8,
+          "dialogue": "누가 더 잘하나 해보자!",
+          "cost": 200
+        },
+        {
+          "name": "인형 뽑기",
+          "affectionGain": 15,
+          "dialogue": "저 인형을 꼭 뽑아줄게!",
+          "cost": 500,
+          "reward": "stuffed_animal"
+        },
+        {
+          "name": "포토 부스",
+          "affectionGain": 12,
+          "dialogue": "추억을 사진으로 남기자!",
+          "cost": 300,
+          "minAffinity": 40,
+          "reward": "photo_memory"
+        }
+      ]
+    },
+    {
+      "id": "festival_date",
+      "location": "festival",
+      "name": "축제 데이트",
+      "activities": [
+        {
+          "name": "축제 음식 먹기",
+          "affectionGain": 8,
+          "dialogue": "타코야키랑 솜사탕을 먹자!",
+          "cost": 500
+        },
+        {
+          "name": "유카타 입고 다니기",
+          "affectionGain": 15,
+          "dialogue": "유카타가 정말 잘 어울려!",
+          "minAffinity": 50,
+          "special": true
+        },
+        {
+          "name": "불꽃놀이 보기",
+          "affectionGain": 20,
+          "dialogue": "불꽃놀이를 함께 보며 소원을 빌자.",
+          "minAffinity": 60,
+          "special": true,
+          "cg": "fireworks_date"
+        },
+        {
+          "name": "금붕어 잡기",
+          "affectionGain": 10,
+          "dialogue": "금붕어를 잡아보자!",
+          "cost": 300,
+          "reward": "goldfish"
+        }
+      ]
+    },
+    {
+      "id": "restaurant_dinner",
+      "location": "restaurant",
+      "name": "고급 디너",
+      "activities": [
+        {
+          "name": "와인 마시기",
+          "affectionGain": 12,
+          "dialogue": "특별한 날을 위해 건배!",
+          "minAffinity": 60
+        },
+        {
+          "name": "디저트 나누어 먹기",
+          "affectionGain": 15,
+          "dialogue": "이 디저트 한 입 먹어봐!",
+          "minAffinity": 50
+        },
+        {
+          "name": "고백하기",
+          "affectionGain": 25,
+          "dialogue": "오늘 할 말이 있어...",
+          "minAffinity": 80,
+          "special": true,
+          "route": "romance"
+        }
+      ]
+    }
+  ],
+  "dateDialogues": {
+    "sakura": {
+      "cafe": "이런 조용한 곳도 가끔은 좋네. 훈련만 하는 것보다.",
+      "park": "벚꽃이 내 이름과 같아서 더 특별해 보여.",
+      "beach": "바다에서 수영하면 좋은 훈련이 될 것 같아!",
+      "training_ground": "네가 강해지는 모습을 보니 기쁘다.",
+      "festival": "축제... 어렸을 때 이후로 처음이야.",
+      "restaurant": "이런 고급스러운 곳은 어색하지만... 너와 함께라면 괜찮아."
+    },
+    "yuki": {
+      "cafe": "여기 분위기가 책 읽기 좋아 보여요.",
+      "park": "자연 속에서 책을 읽는 것도 좋을 것 같아요.",
+      "library": "이렇게 많은 책들... 천국 같아요!",
+      "aquarium": "물고기들이 책 속 이야기처럼 신비로워요.",
+      "festival": "시끄럽지만... 당신과 함께라서 즐거워요.",
+      "restaurant": "로맨스 소설에서 본 것 같은 분위기예요..."
+    },
+    "luna": {
+      "cafe": "이 카페, 마법 같은 분위기가 있어!",
+      "park": "자연의 마나가 느껴져! 기분 좋아!",
+      "beach": "바다는 거대한 마법의 원천이야!",
+      "arcade": "게임도 일종의 마법이라고 생각해!",
+      "festival": "축제의 불꽃놀이를 마법으로 더 화려하게 만들어줄까?",
+      "restaurant": "이런 격식 있는 곳... 가문에서 강요하던 것과 달라서 좋아."
+    },
+    "rin": {
+      "cafe": "운동 후 마시는 커피가 최고야!",
+      "park": "여기서 조깅하면 기분 좋을 것 같아!",
+      "beach": "해변 달리기는 최고의 훈련이야!",
+      "training_ground": "함께 훈련하니까 더 힘이 나!",
+      "arcade": "게임도 반사신경 훈련이 된대!",
+      "festival": "축제 구경도 좋지만, 내일 아침 조깅도 잊지 마!"
+    },
+    "mei": {
+      "cafe": "이 공간의 색감이 정말 아름다워요.",
+      "park": "자연은 최고의 예술 작품이에요.",
+      "beach": "파도의 움직임이 살아있는 그림 같아요.",
+      "art_gallery": "다른 작가들의 작품을 보면 영감이 떠올라요.",
+      "festival": "축제의 색채가 정말 화려해요. 그림으로 담고 싶어요.",
+      "restaurant": "이 요리도 하나의 예술 작품이네요."
+    },
+    "hana": {
+      "cafe": "여기 디저트가 맛있대요! 같이 먹어요!",
+      "park": "피크닉 도시락을 준비해왔어요!",
+      "beach": "해변에서 먹는 도시락은 더 맛있어요!",
+      "arcade": "게임하고 나면 배고플 텐데, 간식 준비했어요!",
+      "festival": "축제 음식도 좋지만, 제가 만든 것도 먹어보세요!",
+      "restaurant": "이 요리의 레시피를 배우고 싶어요!"
+    },
+    "sora": {
+      "cafe": "카페인이 집중력을 향상시킨다는 연구가 있어요.",
+      "park": "광합성하는 식물들을 관찰하는 것도 흥미로워요.",
+      "beach": "해수의 염도가 인체에 미치는 영향이 궁금해요.",
+      "aquarium": "해양 생물의 생태계는 정말 신비로워요.",
+      "library": "이곳의 과학 서적 컬렉션이 인상적이에요.",
+      "restaurant": "요리는 화학 반응의 연속이에요. 흥미롭죠?"
+    },
+    "akane": {
+      "cafe": "학생회 일을 잠시 잊고 쉴 수 있어서 좋아요.",
+      "park": "공원 관리도 학생회가 신경 써야 할 부분이에요.",
+      "library": "도서관 운영 개선안을 생각해봤어요.",
+      "restaurant": "이런 격식 있는 자리는 익숙해요. 하지만 당신과 함께여서 특별해요.",
+      "festival": "축제 운영도 학생회의 중요한 일이지만... 오늘은 즐기고 싶어요.",
+      "art_gallery": "예술도 학생들에게 중요한 교육이에요."
+    },
+    "mystery": {
+      "cafe": "이런 평범한 일상도... 너와 함께라면 특별해.",
+      "park": "이 세계의 아름다움을 너와 함께 느끼고 싶어.",
+      "beach": "끝없는 바다처럼, 내 마음도 너에게로...",
+      "aquarium": "갇혀있는 물고기들... 예전의 나 같아.",
+      "festival": "축제... 관찰만 했던 것을 이제는 체험하네.",
+      "restaurant": "처음으로... 진짜 '살아있다'는 느낌이 들어."
+    }
+  }
+}

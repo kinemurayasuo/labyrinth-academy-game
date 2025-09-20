@@ -1,0 +1,422 @@
+{
+  "houses": [
+    {
+      "id": "dorm_room",
+      "name": "기숙사 방",
+      "description": "학교에서 제공하는 기본 기숙사",
+      "type": "starter",
+      "size": "small",
+      "rooms": 1,
+      "maxFurniture": 10,
+      "rent": 0,
+      "available": true,
+      "features": ["bed", "desk", "closet"],
+      "upgrades": {
+        "storage": { "current": 50, "max": 100 },
+        "comfort": { "current": 20, "max": 50 }
+      }
+    },
+    {
+      "id": "studio_apartment",
+      "name": "원룸 아파트",
+      "description": "작지만 아늑한 개인 공간",
+      "type": "apartment",
+      "size": "small",
+      "rooms": 1,
+      "maxFurniture": 20,
+      "rent": 1000,
+      "price": 50000,
+      "requirements": { "level": 10 },
+      "features": ["kitchen", "bathroom", "living_area"],
+      "upgrades": {
+        "storage": { "current": 100, "max": 200 },
+        "comfort": { "current": 40, "max": 80 }
+      }
+    },
+    {
+      "id": "modern_apartment",
+      "name": "모던 아파트",
+      "description": "현대적인 디자인의 넓은 아파트",
+      "type": "apartment",
+      "size": "medium",
+      "rooms": 3,
+      "maxFurniture": 50,
+      "rent": 3000,
+      "price": 150000,
+      "requirements": { "level": 20, "reputation": 500 },
+      "features": ["master_bedroom", "guest_room", "kitchen", "living_room", "bathroom", "balcony"],
+      "upgrades": {
+        "storage": { "current": 300, "max": 500 },
+        "comfort": { "current": 60, "max": 100 },
+        "luxury": { "current": 30, "max": 80 }
+      }
+    },
+    {
+      "id": "traditional_house",
+      "name": "전통 가옥",
+      "description": "일본식 전통 가옥",
+      "type": "house",
+      "size": "large",
+      "rooms": 5,
+      "maxFurniture": 80,
+      "price": 300000,
+      "requirements": { "level": 30, "affinity": { "any": 80 } },
+      "features": ["tatami_room", "tea_room", "garden", "onsen", "dojo"],
+      "specialBonus": {
+        "meditation": { "intelligence": 2, "stamina": 1 },
+        "tea_ceremony": { "charm": 3, "affinity_gain": 1.2 }
+      }
+    },
+    {
+      "id": "luxury_mansion",
+      "name": "럭셔리 맨션",
+      "description": "최고급 대저택",
+      "type": "mansion",
+      "size": "huge",
+      "rooms": 10,
+      "maxFurniture": 200,
+      "price": 1000000,
+      "requirements": { "level": 50, "money": 2000000, "achievement": "millionaire" },
+      "features": [
+        "master_suite", "guest_rooms", "library", "game_room",
+        "home_theater", "gym", "pool", "garage", "wine_cellar", "garden"
+      ],
+      "specialBonus": {
+        "party_hosting": { "affinity_all": 5, "reputation": 10 },
+        "luxury_living": { "all_stats": 5, "happiness": 20 }
+      },
+      "staffSlots": 3
+    },
+    {
+      "id": "magic_tower",
+      "name": "마법의 탑",
+      "description": "신비한 힘이 깃든 마법사의 탑",
+      "type": "special",
+      "size": "vertical",
+      "rooms": 7,
+      "floors": 7,
+      "maxFurniture": 100,
+      "price": 500000,
+      "requirements": {
+        "level": 35,
+        "affinity": { "luna": 80 },
+        "item": "arcane_crystal",
+        "skill": "magic_mastery"
+      },
+      "features": [
+        "alchemy_lab", "enchanting_room", "observatory",
+        "summoning_circle", "library", "meditation_chamber", "portal_room"
+      ],
+      "magicalEffects": {
+        "mana_regen": 2,
+        "spell_power": 20,
+        "research_speed": 1.5
+      }
+    }
+  ],
+  "furniture": {
+    "bedroom": [
+      {
+        "id": "basic_bed",
+        "name": "기본 침대",
+        "category": "bed",
+        "price": 500,
+        "comfort": 10,
+        "energy_recovery": 1.1
+      },
+      {
+        "id": "luxury_bed",
+        "name": "고급 침대",
+        "category": "bed",
+        "price": 5000,
+        "comfort": 30,
+        "energy_recovery": 1.5,
+        "romance_bonus": 10
+      },
+      {
+        "id": "wardrobe",
+        "name": "옷장",
+        "category": "storage",
+        "price": 2000,
+        "storage": 50,
+        "outfit_slots": 20
+      },
+      {
+        "id": "vanity_table",
+        "name": "화장대",
+        "category": "decoration",
+        "price": 3000,
+        "charm": 5,
+        "grooming_speed": 1.3
+      }
+    ],
+    "living_room": [
+      {
+        "id": "sofa",
+        "name": "소파",
+        "category": "seating",
+        "price": 3000,
+        "comfort": 20,
+        "guest_capacity": 3
+      },
+      {
+        "id": "tv",
+        "name": "TV",
+        "category": "entertainment",
+        "price": 4000,
+        "happiness": 10,
+        "activities": ["watch_movie", "play_games"]
+      },
+      {
+        "id": "bookshelf",
+        "name": "책장",
+        "category": "storage",
+        "price": 1500,
+        "intelligence": 3,
+        "book_capacity": 100
+      },
+      {
+        "id": "coffee_table",
+        "name": "커피 테이블",
+        "category": "table",
+        "price": 1000,
+        "social_bonus": 5
+      }
+    ],
+    "kitchen": [
+      {
+        "id": "basic_stove",
+        "name": "기본 가스레인지",
+        "category": "cooking",
+        "price": 2000,
+        "cooking_speed": 1.2,
+        "recipes": 10
+      },
+      {
+        "id": "professional_kitchen",
+        "name": "프로페셔널 주방",
+        "category": "cooking",
+        "price": 20000,
+        "cooking_speed": 2.0,
+        "cooking_quality": 1.5,
+        "recipes": 50
+      },
+      {
+        "id": "refrigerator",
+        "name": "냉장고",
+        "category": "storage",
+        "price": 3000,
+        "food_storage": 100,
+        "freshness": 1.5
+      }
+    ],
+    "decoration": [
+      {
+        "id": "painting",
+        "name": "그림",
+        "category": "wall_decor",
+        "price": 1000,
+        "beauty": 10,
+        "mood": 5
+      },
+      {
+        "id": "plant",
+        "name": "화분",
+        "category": "plant",
+        "price": 200,
+        "beauty": 5,
+        "air_quality": 10
+      },
+      {
+        "id": "trophy_case",
+        "name": "트로피 진열장",
+        "category": "display",
+        "price": 5000,
+        "reputation": 10,
+        "achievement_display": 20
+      },
+      {
+        "id": "photo_wall",
+        "name": "사진 벽",
+        "category": "memory",
+        "price": 500,
+        "memory_slots": 50,
+        "relationship_bonus": 5
+      }
+    ],
+    "special": [
+      {
+        "id": "hot_tub",
+        "name": "온수 욕조",
+        "category": "luxury",
+        "price": 15000,
+        "comfort": 50,
+        "romance": 20,
+        "stress_relief": 30
+      },
+      {
+        "id": "home_gym",
+        "name": "홈짐",
+        "category": "fitness",
+        "price": 10000,
+        "training_efficiency": 1.5,
+        "stamina_gain": 2
+      },
+      {
+        "id": "gaming_setup",
+        "name": "게이밍 셋업",
+        "category": "entertainment",
+        "price": 8000,
+        "happiness": 15,
+        "activities": ["stream", "online_gaming"]
+      },
+      {
+        "id": "meditation_space",
+        "name": "명상 공간",
+        "category": "wellness",
+        "price": 5000,
+        "stress_relief": 20,
+        "intelligence": 5
+      }
+    ]
+  },
+  "roommates": {
+    "system": true,
+    "maxRoommates": 3,
+    "benefits": {
+      "shared_rent": 0.5,
+      "social_interaction": 10,
+      "shared_chores": true
+    },
+    "conflicts": {
+      "messy": { "trigger": "cleanliness < 30", "effect": "happiness -10" },
+      "noise": { "trigger": "party_frequency > 3", "effect": "sleep_quality -20" },
+      "romantic": { "trigger": "same_love_interest", "effect": "relationship -30" }
+    },
+    "compatibility": {
+      "sakura_yuki": { "compatibility": 60, "reason": "대조적인 성격" },
+      "luna_mei": { "compatibility": 85, "reason": "예술적 감성" },
+      "hana_rin": { "compatibility": 90, "reason": "활발한 성격" }
+    }
+  },
+  "houseActivities": {
+    "cleaning": {
+      "name": "청소",
+      "duration": 30,
+      "effects": { "cleanliness": 30, "stamina": -10 }
+    },
+    "decorating": {
+      "name": "꾸미기",
+      "duration": 60,
+      "effects": { "beauty": 20, "happiness": 15 }
+    },
+    "party": {
+      "name": "파티",
+      "duration": 180,
+      "cost": 2000,
+      "effects": {
+        "affinity_all": 10,
+        "reputation": 15,
+        "cleanliness": -40
+      },
+      "requirements": { "space": "medium", "furniture": ["sofa", "tv", "sound_system"] }
+    },
+    "study_group": {
+      "name": "스터디 그룹",
+      "duration": 120,
+      "effects": {
+        "intelligence": 5,
+        "affinity_selected": 5,
+        "exp": 100
+      },
+      "requirements": { "furniture": ["desk", "bookshelf"] }
+    },
+    "movie_night": {
+      "name": "영화의 밤",
+      "duration": 120,
+      "effects": {
+        "happiness": 20,
+        "affinity_selected": 15,
+        "romance": 10
+      },
+      "requirements": { "furniture": ["tv", "sofa"] }
+    },
+    "cooking_together": {
+      "name": "함께 요리하기",
+      "duration": 90,
+      "effects": {
+        "affinity_selected": 20,
+        "cooking_skill": 5,
+        "item": "homemade_meal"
+      },
+      "requirements": { "room": "kitchen", "participant": "hana" }
+    }
+  },
+  "homeUpgrades": {
+    "security": {
+      "levels": [
+        { "level": 1, "name": "기본 잠금", "cost": 1000, "safety": 20 },
+        { "level": 2, "name": "보안 시스템", "cost": 5000, "safety": 50 },
+        { "level": 3, "name": "AI 보안", "cost": 20000, "safety": 90 }
+      ]
+    },
+    "smart_home": {
+      "features": {
+        "automation": { "cost": 10000, "convenience": 30 },
+        "voice_control": { "cost": 5000, "convenience": 20 },
+        "energy_saving": { "cost": 8000, "monthly_savings": 500 }
+      }
+    },
+    "garden": {
+      "types": {
+        "flower": { "cost": 3000, "beauty": 30, "monthly_income": 500 },
+        "vegetable": { "cost": 2000, "food_production": 20 },
+        "zen": { "cost": 5000, "meditation_bonus": 20 }
+      }
+    }
+  },
+  "neighborhoods": {
+    "downtown": {
+      "rent_modifier": 1.5,
+      "convenience": 90,
+      "noise": 70,
+      "safety": 60
+    },
+    "suburbs": {
+      "rent_modifier": 1.0,
+      "convenience": 60,
+      "noise": 30,
+      "safety": 80
+    },
+    "university_district": {
+      "rent_modifier": 1.2,
+      "convenience": 80,
+      "noise": 60,
+      "safety": 70,
+      "student_discount": 0.2
+    },
+    "luxury_hills": {
+      "rent_modifier": 2.0,
+      "convenience": 70,
+      "noise": 20,
+      "safety": 95,
+      "reputation_bonus": 20
+    }
+  },
+  "events": {
+    "housewarming": {
+      "trigger": "new_house",
+      "rewards": { "affinity_all": 20, "gifts": ["furniture_voucher", "plants"] }
+    },
+    "burglar": {
+      "chance": 0.05,
+      "prevented_by": "security > 50",
+      "loss": { "money": 5000, "items": "random" }
+    },
+    "surprise_visit": {
+      "chance": 0.1,
+      "visitor": "random_heroine",
+      "effects": { "affinity": "cleanliness > 70 ? 10 : -10" }
+    }
+  }
+}

@@ -6,7 +6,7 @@ import EndingScreen from './components/pages/EndingScreen';
 import Homepage from './components/pages/Homepage';
 import Login from './components/pages/Login';
 import CharacterCreation from './components/character/CharacterCreation';
-import DungeonPage from './components/game/DungeonPage';
+import SimpleDungeonPage from './components/game/SimpleDungeonPage';
 import ShoppingPage from './components/game/ShoppingPage';
 import CharacterCardPage from './components/character/CharacterCardPage';
 import AccountCreation from './components/pages/AccountCreation';
@@ -24,13 +24,15 @@ import FarmingSystem from './components/game/FarmingSystem';
 import HousingSystem from './components/game/HousingSystem';
 import GameMenu from './components/pages/GameMenu';
 import Tutorial from './components/Tutorial';
-import VisualNovelDialog from './components/ui/VisualNovelDialog';
-import CardMatchingGame from './components/game/MiniGames';
+import CardMatchingGame from './components/game/MiniGames/CardMatchingGame';
 import QuizGame from './components/game/MiniGames/QuizGame';
 import PvPBattleSystem from './components/game/PvPBattleSystem';
 import SocialSystem from './components/game/SocialSystem';
 import ItemEnhancement from './components/game/ItemEnhancement';
 import ApiTestPage from './components/pages/ApiTestPage';
+import ClubSystem from './components/game/ClubSystem';
+import HeroineGallery from './components/pages/HeroineGallery';
+import GameIntro from './components/pages/GameIntro';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -75,7 +77,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+      <div className="min-h-screen">
         <Routes>
           <Route
             path="/"
@@ -91,9 +93,10 @@ function App() {
           <Route path="/account-creation" element={<AccountCreation onCreateAccount={handleCreateAccount} />} />
           <Route path="/character-creation" element={<CharacterCreation />} />
           <Route path="/game-info" element={<GameInfo />} />
+          <Route path="/game-intro" element={<GameIntro />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/api-test" element={<ApiTestPage />} />
-          <Route path="/dungeon" element={<DungeonPage />} />
+          <Route path="/dungeon" element={<SimpleDungeonPage />} />
           <Route path="/shopping" element={<ShoppingPage />} />
           <Route path="/characters" element={<CharacterCardPage />} />
           <Route path="/achievements" element={<Achievements />} />
@@ -106,6 +109,15 @@ function App() {
           <Route path="/fishing" element={<FishingGame />} />
           <Route path="/farming" element={<FarmingSystem />} />
           <Route path="/housing" element={<HousingSystem />} />
+          <Route path="/game-menu" element={<GameMenu />} />
+          <Route path="/tutorial" element={<Tutorial onComplete={() => {}} onSkip={() => {}} />} />
+          <Route path="/card-matching" element={<CardMatchingGame />} />
+          <Route path="/quiz" element={<QuizGame onComplete={(score: number) => console.log('Quiz completed with score:', score)} />} />
+          <Route path="/pvp" element={<PvPBattleSystem />} />
+          <Route path="/social" element={<SocialSystem />} />
+          <Route path="/enhancement" element={<ItemEnhancement />} />
+          <Route path="/clubs" element={<ClubSystem />} />
+          <Route path="/heroines" element={<HeroineGallery />} />
           <Route
             path="/game"
             element={gameEnding ? <EndingScreen /> : <GameUI />}

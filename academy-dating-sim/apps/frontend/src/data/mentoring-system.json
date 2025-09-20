@@ -1,0 +1,496 @@
+{
+  "mentors": [
+    {
+      "id": "master_warrior",
+      "name": "검성 야마토",
+      "title": "전설의 검사",
+      "specialization": "combat",
+      "level": 80,
+      "description": "한때 제국 최강의 검사로 불렸던 은퇴한 전사",
+      "personality": ["strict", "wise", "honorable"],
+      "requirements": {
+        "level": 25,
+        "combat": 50,
+        "reputation": 300
+      },
+      "location": "mountain_dojo",
+      "availability": {
+        "days": ["monday", "wednesday", "friday"],
+        "hours": { "start": 6, "end": 10 }
+      },
+      "lessons": [
+        {
+          "id": "sword_mastery",
+          "name": "검술 극의",
+          "cost": 5000,
+          "duration": 120,
+          "requirements": { "combat": 40 },
+          "rewards": {
+            "combat": 10,
+            "skill": "master_swordplay",
+            "technique": "ultimate_slash"
+          }
+        },
+        {
+          "id": "warrior_spirit",
+          "name": "전사의 정신",
+          "cost": 3000,
+          "duration": 90,
+          "requirements": { "level": 20 },
+          "rewards": {
+            "willpower": 15,
+            "mental_resistance": 20,
+            "passive": "unbreakable_will"
+          }
+        }
+      ],
+      "special_training": {
+        "id": "legendary_technique",
+        "name": "전설의 기술 전수",
+        "unlock_condition": { "relationship": 100, "quest": "prove_worthy" },
+        "reward": "legendary_sword_art"
+      },
+      "dialogue": {
+        "first_meeting": "젊은이여, 검의 길은 험난하다. 각오는 되어 있는가?",
+        "lesson_complete": "좋은 진전이다. 하지만 아직 갈 길이 멀다.",
+        "max_relationship": "너는 이제 나의 진정한 제자다. 내 모든 것을 전수하겠다."
+      }
+    },
+    {
+      "id": "archmage_luna_senior",
+      "name": "대마법사 셀레스티아",
+      "title": "차원의 마녀",
+      "specialization": "magic",
+      "level": 90,
+      "description": "수백 년을 살아온 불로불사의 마법사",
+      "personality": ["mysterious", "playful", "ancient"],
+      "requirements": {
+        "level": 30,
+        "intelligence": 60,
+        "magic": 50
+      },
+      "location": "astral_tower",
+      "availability": {
+        "days": ["tuesday", "thursday", "saturday"],
+        "hours": { "start": 20, "end": 24 }
+      },
+      "lessons": [
+        {
+          "id": "void_magic",
+          "name": "공허 마법",
+          "cost": 8000,
+          "duration": 180,
+          "requirements": { "intelligence": 70 },
+          "rewards": {
+            "magic": 15,
+            "mana": 100,
+            "spell": "void_manipulation"
+          }
+        },
+        {
+          "id": "time_magic_basics",
+          "name": "시간 마법 기초",
+          "cost": 10000,
+          "duration": 240,
+          "requirements": { "magic": 60 },
+          "rewards": {
+            "intelligence": 10,
+            "spell": "minor_time_stop",
+            "ability": "temporal_perception"
+          }
+        }
+      ],
+      "special_training": {
+        "id": "immortality_secret",
+        "name": "불멸의 비밀",
+        "unlock_condition": { "relationship": 100, "sacrifice": "life_force" },
+        "reward": "ageless_body"
+      }
+    },
+    {
+      "id": "scholar_supreme",
+      "name": "현자 알렉산더",
+      "title": "지식의 수호자",
+      "specialization": "academics",
+      "level": 75,
+      "description": "모든 지식을 아는 전설적인 학자",
+      "personality": ["intellectual", "patient", "philosophical"],
+      "requirements": {
+        "level": 20,
+        "intelligence": 50,
+        "academics": 60
+      },
+      "location": "grand_library",
+      "availability": {
+        "days": ["all"],
+        "hours": { "start": 10, "end": 18 }
+      },
+      "lessons": [
+        {
+          "id": "ancient_languages",
+          "name": "고대 언어",
+          "cost": 2000,
+          "duration": 60,
+          "requirements": { "intelligence": 40 },
+          "rewards": {
+            "intelligence": 8,
+            "skill": "decipher_ancient_texts",
+            "knowledge": "lost_history"
+          }
+        },
+        {
+          "id": "philosophy_mastery",
+          "name": "철학의 극의",
+          "cost": 3000,
+          "duration": 90,
+          "requirements": { "academics": 50 },
+          "rewards": {
+            "wisdom": 20,
+            "charisma": 10,
+            "ability": "profound_insight"
+          }
+        }
+      ]
+    },
+    {
+      "id": "master_chef_giovanni",
+      "name": "요리왕 지오반니",
+      "title": "미식의 제왕",
+      "specialization": "cooking",
+      "level": 70,
+      "description": "세계 최고의 요리사",
+      "personality": ["passionate", "perfectionist", "warm"],
+      "requirements": {
+        "level": 15,
+        "cooking": 30
+      },
+      "location": "golden_kitchen",
+      "availability": {
+        "days": ["monday", "wednesday", "friday", "sunday"],
+        "hours": { "start": 14, "end": 20 }
+      },
+      "lessons": [
+        {
+          "id": "molecular_gastronomy",
+          "name": "분자 요리",
+          "cost": 4000,
+          "duration": 120,
+          "requirements": { "cooking": 40, "intelligence": 30 },
+          "rewards": {
+            "cooking": 20,
+            "creativity": 15,
+            "recipe": "legendary_dishes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "romance_master",
+      "name": "카사노바 로즈",
+      "title": "사랑의 달인",
+      "specialization": "romance",
+      "level": 65,
+      "description": "수많은 하트를 정복한 전설의 플레이보이",
+      "personality": ["charming", "flirtatious", "wise"],
+      "requirements": {
+        "level": 18,
+        "charm": 40,
+        "relationships": 3
+      },
+      "location": "rose_garden",
+      "availability": {
+        "days": ["everyday"],
+        "hours": { "start": 18, "end": 22 }
+      },
+      "lessons": [
+        {
+          "id": "art_of_seduction",
+          "name": "유혹의 기술",
+          "cost": 3500,
+          "duration": 90,
+          "requirements": { "charm": 50 },
+          "rewards": {
+            "charm": 15,
+            "confidence": 20,
+            "skill": "irresistible_charm"
+          }
+        },
+        {
+          "id": "understanding_hearts",
+          "name": "마음 읽기",
+          "cost": 2500,
+          "duration": 60,
+          "requirements": { "intelligence": 30 },
+          "rewards": {
+            "empathy": 25,
+            "ability": "read_emotions",
+            "romance_success_rate": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "shadow_assassin",
+      "name": "그림자 닌자 카게",
+      "title": "어둠의 마스터",
+      "specialization": "stealth",
+      "level": 72,
+      "description": "존재를 감추는 기술의 달인",
+      "personality": ["silent", "mysterious", "deadly"],
+      "requirements": {
+        "level": 28,
+        "agility": 50,
+        "stealth": 40
+      },
+      "location": "hidden_dojo",
+      "availability": {
+        "days": ["night_only"],
+        "hours": { "start": 22, "end": 4 }
+      },
+      "lessons": [
+        {
+          "id": "shadow_techniques",
+          "name": "그림자 기술",
+          "cost": 6000,
+          "duration": 150,
+          "requirements": { "stealth": 50 },
+          "rewards": {
+            "stealth": 20,
+            "agility": 15,
+            "skill": "shadow_clone",
+            "ability": "invisibility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "beast_tamer",
+      "name": "야수왕 타잔",
+      "title": "만수의 제왕",
+      "specialization": "pet_mastery",
+      "level": 68,
+      "description": "모든 동물과 소통하는 전설의 조련사",
+      "personality": ["wild", "instinctive", "kind"],
+      "requirements": {
+        "level": 22,
+        "pet_affinity": 60
+      },
+      "location": "beast_sanctuary",
+      "availability": {
+        "days": ["tuesday", "thursday", "saturday"],
+        "hours": { "start": 8, "end": 16 }
+      },
+      "lessons": [
+        {
+          "id": "beast_communication",
+          "name": "야수와의 대화",
+          "cost": 4500,
+          "duration": 100,
+          "requirements": { "pet_affinity": 70 },
+          "rewards": {
+            "pet_affinity": 30,
+            "ability": "speak_with_animals",
+            "pet_slot": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "merchant_king",
+      "name": "상왕 골드만",
+      "title": "황금의 손",
+      "specialization": "business",
+      "level": 60,
+      "description": "무일푼에서 억만장자가 된 전설의 상인",
+      "personality": ["shrewd", "ambitious", "generous"],
+      "requirements": {
+        "level": 20,
+        "money": 50000,
+        "business_skill": 30
+      },
+      "location": "merchant_guild",
+      "availability": {
+        "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+        "hours": { "start": 9, "end": 17 }
+      },
+      "lessons": [
+        {
+          "id": "investment_mastery",
+          "name": "투자의 극의",
+          "cost": 10000,
+          "duration": 180,
+          "requirements": { "money": 100000 },
+          "rewards": {
+            "business_skill": 30,
+            "passive_income": 1000,
+            "ability": "market_prediction"
+          }
+        }
+      ]
+    }
+  ],
+  "mentorshipSystem": {
+    "relationship": {
+      "maxLevel": 100,
+      "stages": [
+        { "level": 0, "name": "낯선 사람", "benefits": {} },
+        { "level": 20, "name": "제자", "benefits": { "lesson_discount": 10 } },
+        { "level": 40, "name": "수제자", "benefits": { "lesson_discount": 20, "extra_rewards": true } },
+        { "level": 60, "name": "신뢰하는 제자", "benefits": { "lesson_discount": 30, "special_quests": true } },
+        { "level": 80, "name": "후계자", "benefits": { "lesson_discount": 50, "secret_techniques": true } },
+        { "level": 100, "name": "진정한 계승자", "benefits": { "free_lessons": true, "legendary_skills": true } }
+      ]
+    },
+    "activities": {
+      "gift_giving": {
+        "effect": "relationship +5-20",
+        "cooldown": "daily"
+      },
+      "assistance_quest": {
+        "effect": "relationship +10-30",
+        "cooldown": "weekly"
+      },
+      "tea_time": {
+        "effect": "relationship +3-8",
+        "cooldown": "daily"
+      },
+      "sparring": {
+        "effect": "relationship +5-15, skill +5",
+        "cooldown": "every_3_days"
+      }
+    },
+    "betrayal": {
+      "conditions": ["fail_important_quest", "attack_mentor", "steal_from_mentor"],
+      "consequences": {
+        "relationship": -100,
+        "banned": true,
+        "reputation": -500
+      }
+    }
+  },
+  "lessons": {
+    "mechanics": {
+      "success_rate": {
+        "base": 70,
+        "factors": {
+          "intelligence": 0.3,
+          "relationship": 0.2,
+          "fatigue": -0.5,
+          "preparation": 0.2
+        }
+      },
+      "critical_success": {
+        "chance": 10,
+        "bonus": "double_rewards"
+      },
+      "failure": {
+        "consequences": {
+          "partial_rewards": true,
+          "relationship": -5
+        }
+      }
+    },
+    "group_lessons": {
+      "enabled": true,
+      "max_students": 5,
+      "benefits": {
+        "cost_reduction": 20,
+        "social_bonus": true,
+        "competition_bonus": "winner_gets_extra"
+      }
+    }
+  },
+  "mentorQuests": [
+    {
+      "id": "prove_worthy",
+      "mentor": "master_warrior",
+      "name": "가치를 증명하라",
+      "description": "야마토의 시험을 통과하라",
+      "objectives": [
+        "100명의 적을 쓰러뜨려라",
+        "토너먼트에서 우승하라",
+        "전설의 검을 찾아라"
+      ],
+      "rewards": {
+        "relationship": 50,
+        "special_training": true,
+        "legendary_weapon": "yamato_blade"
+      }
+    },
+    {
+      "id": "forbidden_knowledge",
+      "mentor": "archmage_luna_senior",
+      "name": "금지된 지식",
+      "description": "셀레스티아가 요구하는 고대 마법서를 찾아라",
+      "objectives": [
+        "고대 도서관 탐험",
+        "봉인된 서적 해제",
+        "금지된 주문 습득"
+      ],
+      "rewards": {
+        "relationship": 40,
+        "forbidden_magic": true,
+        "corruption": 10
+      }
+    }
+  ],
+  "rivalMentors": {
+    "conflicts": [
+      {
+        "mentor1": "master_warrior",
+        "mentor2": "shadow_assassin",
+        "reason": "명예로운 전투 vs 암살",
+        "consequence": "둘 중 하나만 선택 가능"
+      },
+      {
+        "mentor1": "archmage_luna_senior",
+        "mentor2": "scholar_supreme",
+        "reason": "실용 마법 vs 이론",
+        "consequence": "관계 진행 속도 -50%"
+      }
+    ]
+  },
+  "graduation": {
+    "conditions": {
+      "relationship": 100,
+      "all_lessons_complete": true,
+      "final_test": "passed"
+    },
+    "ceremony": {
+      "type": "special_event",
+      "participants": ["mentor", "player", "witnesses"],
+      "rewards": {
+        "title": "{mentor_specialization}_master",
+        "skill": "mentor_ultimate_technique",
+        "item": "graduation_certificate",
+        "ending_flag": "mentor_graduation_{mentor_id}"
+      }
+    }
+  },
+  "specialEvents": {
+    "mentor_tournament": {
+      "description": "멘토들이 제자들을 대표로 겨루는 대회",
+      "frequency": "monthly",
+      "rewards": {
+        "winner": {
+          "relationship": 30,
+          "reputation": 200,
+          "special_training": true
+        }
+      }
+    },
+    "mentor_crisis": {
+      "description": "멘토가 위기에 처함",
+      "trigger": "random",
+      "choices": {
+        "help": {
+          "relationship": 50,
+          "risk": "high"
+        },
+        "ignore": {
+          "relationship": -30
+        }
+      }
+    }
+  }
+}

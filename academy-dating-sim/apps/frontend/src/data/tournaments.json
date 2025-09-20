@@ -1,0 +1,544 @@
+{
+  "tournamentTypes": {
+    "combat": {
+      "id": "combat",
+      "name": "전투 토너먼트",
+      "description": "최강의 전사를 가리는 대회",
+      "format": "elimination",
+      "participants": 16,
+      "rounds": 4,
+      "rules": {
+        "allowItems": false,
+        "allowMagic": true,
+        "timeLimit": 300,
+        "victoryConditions": ["knockout", "submission", "points"]
+      },
+      "prizes": {
+        "champion": {
+          "money": 50000,
+          "items": ["legendary_sword", "champion_belt"],
+          "title": "Grand Champion",
+          "reputation": 500
+        },
+        "runnerUp": {
+          "money": 20000,
+          "items": ["rare_armor"],
+          "reputation": 200
+        },
+        "semifinals": {
+          "money": 10000,
+          "reputation": 100
+        }
+      }
+    },
+    "magic": {
+      "id": "magic",
+      "name": "마법 대결",
+      "description": "최고의 마법사를 결정하는 대회",
+      "format": "swiss",
+      "participants": 32,
+      "rounds": 5,
+      "rules": {
+        "manaLimit": 1000,
+        "forbiddenSpells": ["time_stop", "resurrection"],
+        "arena": "elemental_nexus"
+      },
+      "prizes": {
+        "champion": {
+          "money": 40000,
+          "items": ["archmage_staff", "spell_tome"],
+          "title": "Archmage",
+          "spellUnlock": "ultimate_magic"
+        }
+      }
+    },
+    "academic": {
+      "id": "academic",
+      "name": "학술 대회",
+      "description": "지식과 지혜를 겨루는 대회",
+      "format": "quiz",
+      "participants": 64,
+      "rounds": 6,
+      "categories": ["history", "science", "literature", "magic_theory"],
+      "prizes": {
+        "champion": {
+          "money": 30000,
+          "items": ["ancient_tome", "scholarship"],
+          "title": "Scholar Supreme",
+          "intelligence": 10
+        }
+      }
+    },
+    "athletics": {
+      "id": "athletics",
+      "name": "체육 대회",
+      "description": "운동 능력을 겨루는 대회",
+      "format": "olympic",
+      "events": ["sprint", "marathon", "swimming", "archery", "wrestling"],
+      "scoring": "points",
+      "prizes": {
+        "gold": {
+          "money": 20000,
+          "items": ["gold_medal"],
+          "title": "Athletic Champion",
+          "stamina": 20
+        },
+        "silver": {
+          "money": 10000,
+          "items": ["silver_medal"],
+          "stamina": 10
+        },
+        "bronze": {
+          "money": 5000,
+          "items": ["bronze_medal"],
+          "stamina": 5
+        }
+      }
+    },
+    "romance": {
+      "id": "romance",
+      "name": "미인 대회",
+      "description": "매력과 인기를 겨루는 대회",
+      "format": "pageant",
+      "participants": 20,
+      "rounds": 3,
+      "categories": ["beauty", "talent", "personality", "popularity"],
+      "prizes": {
+        "champion": {
+          "money": 25000,
+          "items": ["crown", "sash"],
+          "title": "Academy Idol",
+          "charm": 30,
+          "affinity_all": 10
+        }
+      }
+    },
+    "cooking": {
+      "id": "cooking",
+      "name": "요리 대회",
+      "description": "최고의 요리사를 가리는 대회",
+      "format": "elimination",
+      "participants": 24,
+      "rounds": 4,
+      "themes": ["traditional", "fusion", "dessert", "mystery_ingredient"],
+      "judges": ["hana", "npc_chef", "principal"],
+      "prizes": {
+        "champion": {
+          "money": 30000,
+          "items": ["golden_spatula", "recipe_book"],
+          "title": "Master Chef",
+          "cookingSkill": 50
+        }
+      }
+    },
+    "art": {
+      "id": "art",
+      "name": "예술 대회",
+      "description": "창의성과 예술성을 겨루는 대회",
+      "format": "exhibition",
+      "categories": ["painting", "sculpture", "music", "dance", "literature"],
+      "judgingCriteria": ["creativity", "technique", "emotion", "originality"],
+      "prizes": {
+        "champion": {
+          "money": 35000,
+          "items": ["golden_brush", "art_supplies"],
+          "title": "Artistic Genius",
+          "creativity": 30
+        }
+      }
+    },
+    "strategy": {
+      "id": "strategy",
+      "name": "전략 게임 대회",
+      "description": "전략적 사고를 겨루는 대회",
+      "format": "round_robin",
+      "games": ["chess", "shogi", "go", "tactical_simulation"],
+      "timeControl": "blitz",
+      "prizes": {
+        "champion": {
+          "money": 20000,
+          "items": ["strategy_guide", "golden_piece"],
+          "title": "Grand Strategist",
+          "intelligence": 15
+        }
+      }
+    },
+    "team": {
+      "id": "team",
+      "name": "팀 배틀 토너먼트",
+      "description": "3대3 팀 대결",
+      "format": "double_elimination",
+      "teamSize": 3,
+      "teams": 8,
+      "rules": {
+        "substitutions": 1,
+        "synergy_bonus": true
+      },
+      "prizes": {
+        "champion": {
+          "money": 60000,
+          "items": ["team_trophy"],
+          "title": "Team Champions",
+          "teamwork": 50
+        }
+      }
+    },
+    "grand": {
+      "id": "grand",
+      "name": "그랜드 토너먼트",
+      "description": "모든 능력을 시험하는 최종 대회",
+      "format": "mixed",
+      "phases": ["combat", "magic", "academics", "athletics", "social"],
+      "participants": 8,
+      "qualification": "previous_champions",
+      "prizes": {
+        "champion": {
+          "money": 100000,
+          "items": ["legendary_artifact", "grand_crown"],
+          "title": "Grand Master",
+          "all_stats": 20,
+          "ending_unlock": "champion_ending"
+        }
+      }
+    }
+  },
+  "brackets": {
+    "single_elimination": {
+      "rounds": [
+        { "name": "Round of 16", "matches": 8 },
+        { "name": "Quarterfinals", "matches": 4 },
+        { "name": "Semifinals", "matches": 2 },
+        { "name": "Finals", "matches": 1 }
+      ]
+    },
+    "double_elimination": {
+      "upperBracket": true,
+      "lowerBracket": true,
+      "grandFinals": {
+        "resetPossible": true
+      }
+    },
+    "round_robin": {
+      "everyone_plays_everyone": true,
+      "points": {
+        "win": 3,
+        "draw": 1,
+        "loss": 0
+      }
+    },
+    "swiss": {
+      "pairByScore": true,
+      "no_repeat_matches": true
+    }
+  },
+  "participants": {
+    "regulars": [
+      {
+        "id": "sakura",
+        "name": "사쿠라",
+        "specialties": ["combat", "athletics"],
+        "stats": {
+          "combat": 90,
+          "magic": 40,
+          "academics": 60,
+          "athletics": 85,
+          "charm": 70
+        },
+        "signature_moves": ["blazing_strike", "warrior_spirit"]
+      },
+      {
+        "id": "yuki",
+        "name": "유키",
+        "specialties": ["academics", "magic"],
+        "stats": {
+          "combat": 30,
+          "magic": 70,
+          "academics": 95,
+          "athletics": 40,
+          "charm": 60
+        },
+        "signature_moves": ["frost_barrier", "knowledge_burst"]
+      },
+      {
+        "id": "luna",
+        "name": "루나",
+        "specialties": ["magic", "strategy"],
+        "stats": {
+          "combat": 50,
+          "magic": 95,
+          "academics": 80,
+          "athletics": 30,
+          "charm": 85
+        },
+        "signature_moves": ["reality_warp", "void_step"]
+      },
+      {
+        "id": "hana",
+        "name": "하나",
+        "specialties": ["cooking", "social"],
+        "stats": {
+          "combat": 40,
+          "magic": 30,
+          "academics": 70,
+          "athletics": 60,
+          "charm": 90
+        },
+        "signature_moves": ["healing_cuisine", "charm_offensive"]
+      },
+      {
+        "id": "rin",
+        "name": "린",
+        "specialties": ["athletics", "combat"],
+        "stats": {
+          "combat": 75,
+          "magic": 45,
+          "academics": 55,
+          "athletics": 95,
+          "charm": 65
+        },
+        "signature_moves": ["sonic_dash", "lightning_reflexes"]
+      },
+      {
+        "id": "mei",
+        "name": "메이",
+        "specialties": ["art", "romance"],
+        "stats": {
+          "combat": 35,
+          "magic": 60,
+          "academics": 75,
+          "athletics": 45,
+          "charm": 95
+        },
+        "signature_moves": ["artistic_illusion", "captivating_presence"]
+      },
+      {
+        "id": "sora",
+        "name": "소라",
+        "specialties": ["academics", "strategy"],
+        "stats": {
+          "combat": 45,
+          "magic": 75,
+          "academics": 100,
+          "athletics": 35,
+          "charm": 55
+        },
+        "signature_moves": ["calculated_strike", "perfect_analysis"]
+      }
+    ],
+    "rivals": [
+      {
+        "id": "rival_1",
+        "name": "카이",
+        "title": "전년도 챔피언",
+        "stats": {
+          "combat": 95,
+          "magic": 80,
+          "academics": 70,
+          "athletics": 85,
+          "charm": 75
+        },
+        "personality": "arrogant",
+        "weakness": "overconfidence"
+      },
+      {
+        "id": "rival_2",
+        "name": "레이",
+        "title": "천재 마법사",
+        "stats": {
+          "combat": 60,
+          "magic": 100,
+          "academics": 90,
+          "athletics": 50,
+          "charm": 80
+        },
+        "personality": "mysterious",
+        "weakness": "physical_combat"
+      },
+      {
+        "id": "rival_3",
+        "name": "미카",
+        "title": "완벽한 학생",
+        "stats": {
+          "combat": 80,
+          "magic": 85,
+          "academics": 95,
+          "athletics": 80,
+          "charm": 90
+        },
+        "personality": "perfectionist",
+        "weakness": "pressure"
+      }
+    ]
+  },
+  "tournamentPhases": {
+    "registration": {
+      "duration": 7,
+      "requirements": {
+        "level": 20,
+        "fee": 1000
+      },
+      "training": true
+    },
+    "qualifiers": {
+      "duration": 3,
+      "format": "preliminary_rounds",
+      "cutoff": 0.5
+    },
+    "main_event": {
+      "duration": 5,
+      "spectators": true,
+      "betting": true
+    },
+    "finals": {
+      "duration": 1,
+      "special_arena": true,
+      "broadcast": true
+    }
+  },
+  "specialRules": {
+    "underdog_bonus": {
+      "description": "낮은 시드가 높은 시드를 이기면 보너스",
+      "bonus": 1.5
+    },
+    "comeback_mechanic": {
+      "description": "패배 직전 특별 능력 발동 가능",
+      "trigger": "hp < 20%",
+      "effect": "damage +50%, defense +30%"
+    },
+    "crowd_favor": {
+      "description": "관중 응원으로 능력치 상승",
+      "factors": ["popularity", "performance", "style"],
+      "max_bonus": 20
+    },
+    "weather_effects": {
+      "rain": { "fire_magic": -30, "water_magic": 30 },
+      "sunny": { "fire_magic": 20, "ice_magic": -20 },
+      "storm": { "lightning_magic": 50, "accuracy": -20 }
+    }
+  },
+  "betting": {
+    "enabled": true,
+    "odds_calculation": "dynamic",
+    "max_bet": 10000,
+    "payout": {
+      "exact_winner": 3.0,
+      "finalist": 1.5,
+      "semifinalist": 1.2
+    }
+  },
+  "training": {
+    "facilities": {
+      "combat_arena": {
+        "stat": "combat",
+        "gain": 5,
+        "cost": 500
+      },
+      "magic_chamber": {
+        "stat": "magic",
+        "gain": 5,
+        "cost": 600
+      },
+      "library": {
+        "stat": "academics",
+        "gain": 5,
+        "cost": 300
+      },
+      "gym": {
+        "stat": "athletics",
+        "gain": 5,
+        "cost": 400
+      }
+    },
+    "special_training": {
+      "mentor": {
+        "cost": 5000,
+        "duration": 7,
+        "bonus": 20
+      },
+      "intensive": {
+        "cost": 2000,
+        "duration": 3,
+        "bonus": 10
+      }
+    }
+  },
+  "spectator_events": {
+    "cheer": {
+      "effect": "participant_bonus",
+      "cost": 100
+    },
+    "throw_item": {
+      "effect": "random",
+      "cost": 500
+    },
+    "challenge": {
+      "effect": "extra_match",
+      "cost": 10000,
+      "requirements": { "reputation": 500 }
+    }
+  },
+  "legendary_tournaments": {
+    "millennium_tournament": {
+      "frequency": "once_per_game",
+      "description": "1000년에 한 번 열리는 전설의 대회",
+      "participants": "world_champions",
+      "prize": {
+        "wish": true,
+        "legendary_status": true,
+        "ending": "legend_ending"
+      }
+    },
+    "dark_tournament": {
+      "unlock": "evil_route",
+      "description": "금지된 힘을 사용하는 지하 토너먼트",
+      "rules": "no_rules",
+      "prize": {
+        "dark_power": true,
+        "corruption": 50
+      }
+    }
+  },
+  "tournament_events": {
+    "upset_victory": {
+      "description": "예상외의 승리",
+      "reputation": 100,
+      "fame": 50
+    },
+    "perfect_victory": {
+      "description": "완벽한 승리",
+      "reputation": 200,
+      "intimidation": 30
+    },
+    "controversial_win": {
+      "description": "논란의 승리",
+      "reputation": -50,
+      "notoriety": 100
+    },
+    "injury": {
+      "description": "부상",
+      "effect": "stats -20%, recovery_time 7 days"
+    },
+    "disqualification": {
+      "description": "실격",
+      "causes": ["cheating", "rule_violation", "no_show"],
+      "penalty": "banned_next_tournament"
+    }
+  },
+  "rewards": {
+    "participation": {
+      "exp": 500,
+      "money": 1000
+    },
+    "per_win": {
+      "exp": 1000,
+      "money": 2000,
+      "reputation": 50
+    },
+    "achievements": {
+      "first_tournament": "Tournament Debut",
+      "win_all_types": "Grand Slam",
+      "undefeated": "Perfect Record",
+      "underdog_champion": "David vs Goliath"
+    }
+  }
+}

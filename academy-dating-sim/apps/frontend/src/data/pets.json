@@ -1,0 +1,491 @@
+{
+  "petTypes": [
+    {
+      "id": "cat",
+      "name": "고양이",
+      "description": "독립적이지만 애정이 깊은 반려동물",
+      "baseStats": {
+        "loyalty": 30,
+        "energy": 50,
+        "happiness": 40,
+        "intelligence": 70,
+        "cuteness": 80
+      },
+      "abilities": [
+        {
+          "id": "night_vision",
+          "name": "야간 시야",
+          "description": "밤에 활동할 때 보너스",
+          "effect": { "night_bonus": 20 }
+        },
+        {
+          "id": "independent",
+          "name": "독립적",
+          "description": "혼자서도 행복도 유지",
+          "effect": { "happiness_decay": -50 }
+        }
+      ],
+      "evolutions": [
+        { "level": 10, "form": "adult_cat", "name": "성체 고양이" },
+        { "level": 20, "form": "magic_cat", "name": "마법 고양이", "requirement": "magic_stone" }
+      ],
+      "favoriteFood": ["fish", "milk", "catnip"],
+      "favoriteActivities": ["play_with_yarn", "nap", "hunt"],
+      "personalities": ["lazy", "playful", "mysterious", "affectionate"]
+    },
+    {
+      "id": "dog",
+      "name": "개",
+      "description": "충성스럽고 활발한 최고의 친구",
+      "baseStats": {
+        "loyalty": 90,
+        "energy": 80,
+        "happiness": 70,
+        "intelligence": 60,
+        "cuteness": 70
+      },
+      "abilities": [
+        {
+          "id": "loyal_companion",
+          "name": "충성스러운 동반자",
+          "description": "주인과 함께할 때 능력치 상승",
+          "effect": { "owner_bonus": 30 }
+        },
+        {
+          "id": "guard",
+          "name": "경비",
+          "description": "위험을 감지하고 경고",
+          "effect": { "danger_detection": 80 }
+        }
+      ],
+      "evolutions": [
+        { "level": 10, "form": "adult_dog", "name": "성체 개" },
+        { "level": 25, "form": "war_dog", "name": "전투견", "requirement": "training_complete" }
+      ],
+      "favoriteFood": ["meat", "bones", "treats"],
+      "favoriteActivities": ["walk", "fetch", "training"],
+      "personalities": ["energetic", "loyal", "friendly", "protective"]
+    },
+    {
+      "id": "rabbit",
+      "name": "토끼",
+      "description": "귀엽고 부드러운 작은 친구",
+      "baseStats": {
+        "loyalty": 40,
+        "energy": 60,
+        "happiness": 60,
+        "intelligence": 50,
+        "cuteness": 90
+      },
+      "abilities": [
+        {
+          "id": "lucky_charm",
+          "name": "행운의 부적",
+          "description": "행운 스탯 증가",
+          "effect": { "luck": 15 }
+        },
+        {
+          "id": "hop",
+          "name": "도약",
+          "description": "이동 속도 증가",
+          "effect": { "speed": 20 }
+        }
+      ],
+      "evolutions": [
+        { "level": 15, "form": "moon_rabbit", "name": "달토끼", "requirement": "full_moon" }
+      ],
+      "favoriteFood": ["carrot", "lettuce", "clover"],
+      "favoriteActivities": ["hop_around", "dig", "cuddle"],
+      "personalities": ["timid", "curious", "gentle", "playful"]
+    },
+    {
+      "id": "bird",
+      "name": "새",
+      "description": "아름다운 노래를 부르는 날개 달린 친구",
+      "baseStats": {
+        "loyalty": 35,
+        "energy": 70,
+        "happiness": 50,
+        "intelligence": 65,
+        "cuteness": 60
+      },
+      "abilities": [
+        {
+          "id": "song",
+          "name": "노래",
+          "description": "주변 사람들의 기분을 좋게 함",
+          "effect": { "area_happiness": 10 }
+        },
+        {
+          "id": "flight",
+          "name": "비행",
+          "description": "빠른 정찰과 메시지 전달",
+          "effect": { "scout": true, "messenger": true }
+        }
+      ],
+      "evolutions": [
+        { "level": 12, "form": "phoenix", "name": "불사조", "requirement": "fire_feather" }
+      ],
+      "favoriteFood": ["seeds", "fruit", "nectar"],
+      "favoriteActivities": ["sing", "fly", "preen"],
+      "personalities": ["cheerful", "melodious", "free-spirited", "social"]
+    },
+    {
+      "id": "dragon",
+      "name": "드래곤",
+      "description": "전설적인 힘을 가진 신비한 존재",
+      "baseStats": {
+        "loyalty": 60,
+        "energy": 100,
+        "happiness": 40,
+        "intelligence": 90,
+        "cuteness": 30
+      },
+      "rarity": "legendary",
+      "unlockCondition": {
+        "quest": "dragon_egg_quest",
+        "level": 30
+      },
+      "abilities": [
+        {
+          "id": "dragon_breath",
+          "name": "드래곤 브레스",
+          "description": "전투에서 화염 공격",
+          "effect": { "fire_damage": 100 }
+        },
+        {
+          "id": "ancient_wisdom",
+          "name": "고대의 지혜",
+          "description": "경험치 획득 증가",
+          "effect": { "exp_bonus": 50 }
+        },
+        {
+          "id": "treasure_sense",
+          "name": "보물 감지",
+          "description": "희귀 아이템 발견률 증가",
+          "effect": { "rare_item_chance": 30 }
+        }
+      ],
+      "evolutions": [
+        { "level": 50, "form": "ancient_dragon", "name": "고대 드래곤" }
+      ],
+      "favoriteFood": ["rare_meat", "gems", "magic_crystals"],
+      "favoriteActivities": ["hoard_treasure", "sleep", "fly"],
+      "personalities": ["proud", "wise", "territorial", "majestic"]
+    },
+    {
+      "id": "fairy",
+      "name": "요정",
+      "description": "마법의 힘을 가진 작은 동반자",
+      "baseStats": {
+        "loyalty": 50,
+        "energy": 40,
+        "happiness": 80,
+        "intelligence": 85,
+        "cuteness": 95
+      },
+      "rarity": "rare",
+      "unlockCondition": {
+        "affinity": { "luna": 60 },
+        "item": "fairy_dust"
+      },
+      "abilities": [
+        {
+          "id": "magic_boost",
+          "name": "마법 증폭",
+          "description": "마법 능력 강화",
+          "effect": { "magic_power": 30 }
+        },
+        {
+          "id": "heal",
+          "name": "치유",
+          "description": "체력 회복 능력",
+          "effect": { "heal": 20 }
+        },
+        {
+          "id": "illusion",
+          "name": "환상",
+          "description": "적을 혼란시킴",
+          "effect": { "confuse_chance": 40 }
+        }
+      ],
+      "favoriteFood": ["honey", "flower_nectar", "moonwater"],
+      "favoriteActivities": ["dance", "magic_practice", "garden"],
+      "personalities": ["mischievous", "kind", "magical", "delicate"]
+    },
+    {
+      "id": "slime",
+      "name": "슬라임",
+      "description": "말랑말랑한 젤리 같은 친구",
+      "baseStats": {
+        "loyalty": 70,
+        "energy": 30,
+        "happiness": 90,
+        "intelligence": 20,
+        "cuteness": 100
+      },
+      "abilities": [
+        {
+          "id": "absorb",
+          "name": "흡수",
+          "description": "아이템을 흡수하여 보관",
+          "effect": { "storage": 10 }
+        },
+        {
+          "id": "bounce",
+          "name": "통통",
+          "description": "낙하 피해 무효",
+          "effect": { "fall_immune": true }
+        }
+      ],
+      "evolutions": [
+        { "level": 20, "form": "king_slime", "name": "킹 슬라임", "requirement": "slime_crown" }
+      ],
+      "favoriteFood": ["jelly", "sugar", "anything"],
+      "favoriteActivities": ["bounce", "absorb", "split"],
+      "personalities": ["happy", "simple", "bouncy", "friendly"]
+    }
+  ],
+  "petActivities": {
+    "play": {
+      "name": "놀아주기",
+      "duration": 30,
+      "effects": {
+        "happiness": 20,
+        "energy": -10,
+        "loyalty": 5
+      },
+      "minigame": true
+    },
+    "feed": {
+      "name": "먹이 주기",
+      "duration": 10,
+      "effects": {
+        "happiness": 10,
+        "energy": 20,
+        "loyalty": 3
+      },
+      "requiresItem": true
+    },
+    "train": {
+      "name": "훈련",
+      "duration": 45,
+      "effects": {
+        "intelligence": 5,
+        "energy": -20,
+        "exp": 30
+      },
+      "skillIncrease": true
+    },
+    "walk": {
+      "name": "산책",
+      "duration": 60,
+      "effects": {
+        "happiness": 15,
+        "energy": -15,
+        "loyalty": 10
+      },
+      "encounters": true
+    },
+    "groom": {
+      "name": "그루밍",
+      "duration": 20,
+      "effects": {
+        "happiness": 10,
+        "cuteness": 5,
+        "loyalty": 5
+      }
+    },
+    "rest": {
+      "name": "휴식",
+      "duration": 120,
+      "effects": {
+        "energy": 50,
+        "happiness": 5
+      }
+    }
+  },
+  "petSkills": {
+    "combat": [
+      {
+        "id": "bite",
+        "name": "물기",
+        "level": 1,
+        "damage": 10,
+        "cost": 5
+      },
+      {
+        "id": "scratch",
+        "name": "할퀴기",
+        "level": 1,
+        "damage": 8,
+        "cost": 3
+      },
+      {
+        "id": "tackle",
+        "name": "태클",
+        "level": 5,
+        "damage": 15,
+        "cost": 8
+      }
+    ],
+    "support": [
+      {
+        "id": "find_item",
+        "name": "아이템 찾기",
+        "level": 3,
+        "effect": "random_item",
+        "cooldown": 86400
+      },
+      {
+        "id": "alert",
+        "name": "경고",
+        "level": 5,
+        "effect": "danger_warning"
+      },
+      {
+        "id": "comfort",
+        "name": "위로",
+        "level": 10,
+        "effect": "stress_relief"
+      }
+    ]
+  },
+  "petEquipment": {
+    "collar": [
+      {
+        "id": "basic_collar",
+        "name": "기본 목줄",
+        "stats": { "loyalty": 5 },
+        "price": 100
+      },
+      {
+        "id": "luxury_collar",
+        "name": "고급 목줄",
+        "stats": { "loyalty": 10, "cuteness": 5 },
+        "price": 1000
+      },
+      {
+        "id": "magic_collar",
+        "name": "마법 목줄",
+        "stats": { "loyalty": 15, "intelligence": 10 },
+        "price": 5000
+      }
+    ],
+    "accessory": [
+      {
+        "id": "ribbon",
+        "name": "리본",
+        "stats": { "cuteness": 10 },
+        "price": 200
+      },
+      {
+        "id": "bell",
+        "name": "방울",
+        "stats": { "cuteness": 5, "happiness": 5 },
+        "price": 300
+      }
+    ],
+    "costume": [
+      {
+        "id": "hero_costume",
+        "name": "영웅 코스튬",
+        "stats": { "all": 5 },
+        "price": 2000
+      },
+      {
+        "id": "princess_dress",
+        "name": "공주 드레스",
+        "stats": { "cuteness": 20, "charm": 10 },
+        "price": 3000
+      }
+    ]
+  },
+  "petInteractions": {
+    "withHeroines": {
+      "sakura": {
+        "likes": ["dog", "dragon"],
+        "dialogue": "강한 펫이네. 함께 훈련하면 좋겠어.",
+        "bonus": { "training_efficiency": 20 }
+      },
+      "yuki": {
+        "likes": ["cat", "rabbit"],
+        "dialogue": "정말 귀여워요... 책 읽을 때 옆에 있으면 좋겠어요.",
+        "bonus": { "happiness": 10 }
+      },
+      "luna": {
+        "likes": ["fairy", "dragon"],
+        "dialogue": "마법의 기운이 느껴져! 함께 마법을 연습해보자!",
+        "bonus": { "magic_power": 15 }
+      },
+      "hana": {
+        "likes": ["rabbit", "bird"],
+        "dialogue": "귀여운 친구네요! 맛있는 간식을 만들어줄게요.",
+        "bonus": { "feeding_bonus": 25 }
+      },
+      "rin": {
+        "likes": ["dog", "bird"],
+        "dialogue": "함께 달리기하면 재미있겠다!",
+        "bonus": { "energy": 20 }
+      },
+      "mei": {
+        "likes": ["cat", "fairy"],
+        "dialogue": "아름다운 모델이 되어줄래?",
+        "bonus": { "cuteness": 15 }
+      },
+      "sora": {
+        "likes": ["slime", "dragon"],
+        "dialogue": "흥미로운 생물이네요. 연구해도 될까요?",
+        "bonus": { "intelligence": 20 }
+      },
+      "akane": {
+        "likes": ["cat", "dog"],
+        "dialogue": "책임감 있게 키우고 있네요. 훌륭해요.",
+        "bonus": { "loyalty": 15 }
+      },
+      "mystery": {
+        "likes": ["all"],
+        "dialogue": "이 생명체도... 이 세계의 일부인가.",
+        "bonus": { "mystery": 10 }
+      }
+    }
+  },
+  "petBreeding": {
+    "enabled": true,
+    "requirements": {
+      "level": 20,
+      "loyalty": 80,
+      "happiness": 70
+    },
+    "combinations": {
+      "cat_dog": { "result": "hybrid_catdog", "chance": 0.1 },
+      "dragon_fairy": { "result": "fairy_dragon", "chance": 0.05 },
+      "slime_slime": { "result": "mega_slime", "chance": 0.3 }
+    }
+  },
+  "petCompetitions": {
+    "beauty_contest": {
+      "name": "미모 대회",
+      "judgedBy": ["cuteness", "grooming", "costume"],
+      "prizes": {
+        "first": { "money": 5000, "item": "golden_ribbon" },
+        "second": { "money": 2500, "item": "silver_ribbon" },
+        "third": { "money": 1000, "item": "bronze_ribbon" }
+      }
+    },
+    "obedience_trial": {
+      "name": "복종 훈련 대회",
+      "judgedBy": ["intelligence", "loyalty", "training"],
+      "prizes": {
+        "first": { "money": 4000, "item": "champion_collar" }
+      }
+    },
+    "battle_tournament": {
+      "name": "펫 배틀 토너먼트",
+      "judgedBy": ["combat_skills", "stats", "strategy"],
+      "prizes": {
+        "first": { "money": 10000, "item": "battle_crown" }
+      }
+    }
+  }
+}

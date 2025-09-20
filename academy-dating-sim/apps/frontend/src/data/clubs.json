@@ -1,0 +1,509 @@
+{
+  "clubs": [
+    {
+      "id": "kendo",
+      "name": "검도부",
+      "description": "검술을 연마하는 전통 무술 동아리",
+      "leader": "sakura",
+      "members": ["sakura", "npc_kendo_1", "npc_kendo_2"],
+      "maxMembers": 20,
+      "requirements": {
+        "stats": { "strength": 15, "stamina": 10 },
+        "level": 5
+      },
+      "schedule": {
+        "monday": { "time": "afternoon", "activity": "training" },
+        "wednesday": { "time": "afternoon", "activity": "training" },
+        "friday": { "time": "afternoon", "activity": "sparring" },
+        "saturday": { "time": "morning", "activity": "tournament" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "strength": 1, "stamina": 1 },
+          "exp": 50
+        },
+        "weekly": {
+          "items": ["training_sword"],
+          "money": 500
+        },
+        "rank": {
+          "beginner": { "title": "초심자", "bonus": { "strength": 5 } },
+          "intermediate": { "title": "수련생", "bonus": { "strength": 10, "stamina": 5 } },
+          "advanced": { "title": "달인", "bonus": { "strength": 15, "stamina": 10, "agility": 5 } },
+          "master": { "title": "검성", "bonus": { "strength": 25, "stamina": 15, "agility": 10 } }
+        }
+      },
+      "activities": [
+        {
+          "id": "daily_training",
+          "name": "일일 수련",
+          "description": "기본 검술 훈련",
+          "rewards": { "exp": 30, "stats": { "strength": 1 } }
+        },
+        {
+          "id": "sparring_match",
+          "name": "대련",
+          "description": "부원들과 실전 대련",
+          "rewards": { "exp": 50, "stats": { "strength": 2, "agility": 1 } }
+        },
+        {
+          "id": "tournament",
+          "name": "토너먼트",
+          "description": "동아리 내부 토너먼트",
+          "rewards": { "exp": 100, "money": 1000, "item": "trophy" }
+        }
+      ],
+      "events": [
+        {
+          "id": "kendo_festival",
+          "name": "검도 축제",
+          "description": "연례 검도 시연회",
+          "date": { "month": 6, "day": 15 },
+          "rewards": { "affinity": { "sakura": 20 }, "item": "special_sword" }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "library",
+      "name": "도서부",
+      "description": "책을 사랑하는 문학 동아리",
+      "leader": "yuki",
+      "members": ["yuki", "npc_library_1", "npc_library_2"],
+      "maxMembers": 15,
+      "requirements": {
+        "stats": { "intelligence": 20 },
+        "level": 3
+      },
+      "schedule": {
+        "tuesday": { "time": "afternoon", "activity": "reading" },
+        "thursday": { "time": "afternoon", "activity": "discussion" },
+        "saturday": { "time": "noon", "activity": "book_club" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "intelligence": 2 },
+          "exp": 40
+        },
+        "weekly": {
+          "items": ["rare_book"],
+          "money": 300
+        },
+        "rank": {
+          "member": { "title": "독서가", "bonus": { "intelligence": 5 } },
+          "librarian": { "title": "사서", "bonus": { "intelligence": 10, "exp_gain": 10 } },
+          "scholar": { "title": "학자", "bonus": { "intelligence": 20, "exp_gain": 20 } },
+          "sage": { "title": "현자", "bonus": { "intelligence": 30, "all_stats": 5 } }
+        }
+      },
+      "activities": [
+        {
+          "id": "quiet_reading",
+          "name": "조용한 독서",
+          "description": "혼자 책 읽기",
+          "rewards": { "exp": 25, "stats": { "intelligence": 1 } }
+        },
+        {
+          "id": "book_discussion",
+          "name": "독서 토론",
+          "description": "책에 대해 토론하기",
+          "rewards": { "exp": 40, "stats": { "intelligence": 2, "charm": 1 } }
+        },
+        {
+          "id": "write_review",
+          "name": "서평 작성",
+          "description": "읽은 책의 서평 쓰기",
+          "rewards": { "exp": 60, "money": 200 }
+        }
+      ],
+      "events": [
+        {
+          "id": "book_fair",
+          "name": "도서 박람회",
+          "description": "희귀 도서 전시회",
+          "date": { "month": 9, "day": 20 },
+          "rewards": { "affinity": { "yuki": 15 }, "item": "ancient_tome" }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "magic",
+      "name": "마법 연구회",
+      "description": "신비한 마법을 연구하는 동아리",
+      "leader": "luna",
+      "members": ["luna", "npc_magic_1", "npc_magic_2", "npc_magic_3"],
+      "maxMembers": 12,
+      "requirements": {
+        "stats": { "intelligence": 25, "luck": 10 },
+        "level": 10
+      },
+      "schedule": {
+        "monday": { "time": "evening", "activity": "theory" },
+        "wednesday": { "time": "evening", "activity": "practice" },
+        "friday": { "time": "night", "activity": "ritual" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "intelligence": 1, "luck": 1 },
+          "mp": 5,
+          "exp": 60
+        },
+        "weekly": {
+          "items": ["mana_potion", "spell_scroll"],
+          "money": 800
+        },
+        "rank": {
+          "apprentice": { "title": "견습 마법사", "bonus": { "mp": 10, "intelligence": 5 } },
+          "adept": { "title": "숙련 마법사", "bonus": { "mp": 20, "intelligence": 10, "luck": 5 } },
+          "wizard": { "title": "대마법사", "bonus": { "mp": 40, "intelligence": 20, "luck": 10 } },
+          "archmage": { "title": "대마도사", "bonus": { "mp": 60, "all_stats": 10 } }
+        }
+      },
+      "activities": [
+        {
+          "id": "spell_practice",
+          "name": "주문 연습",
+          "description": "기초 마법 연습",
+          "rewards": { "exp": 40, "mp": 5 }
+        },
+        {
+          "id": "enchantment",
+          "name": "마법 부여",
+          "description": "아이템에 마법 부여",
+          "rewards": { "exp": 70, "item": "enchanted_item" }
+        },
+        {
+          "id": "summoning",
+          "name": "소환술",
+          "description": "정령 소환 의식",
+          "rewards": { "exp": 100, "stats": { "luck": 2 } }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "track",
+      "name": "육상부",
+      "description": "달리기와 체력을 기르는 운동 동아리",
+      "leader": "rin",
+      "members": ["rin", "npc_track_1", "npc_track_2"],
+      "maxMembers": 25,
+      "requirements": {
+        "stats": { "stamina": 20, "agility": 15 },
+        "level": 5
+      },
+      "schedule": {
+        "daily": { "time": "morning", "activity": "morning_run" },
+        "weekend": { "time": "afternoon", "activity": "competition" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "stamina": 2, "agility": 1 },
+          "exp": 45
+        },
+        "weekly": {
+          "items": ["energy_drink", "running_shoes"],
+          "money": 400
+        }
+      },
+      "activities": [
+        {
+          "id": "morning_jog",
+          "name": "아침 조깅",
+          "description": "상쾌한 아침 러닝",
+          "rewards": { "exp": 30, "stats": { "stamina": 2 } }
+        },
+        {
+          "id": "sprint_training",
+          "name": "스프린트 훈련",
+          "description": "단거리 전력 질주",
+          "rewards": { "exp": 50, "stats": { "agility": 2, "stamina": 1 } }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "art",
+      "name": "미술부",
+      "description": "예술과 창작을 추구하는 동아리",
+      "leader": "mei",
+      "members": ["mei", "npc_art_1", "npc_art_2"],
+      "maxMembers": 18,
+      "requirements": {
+        "stats": { "charm": 15 },
+        "level": 4
+      },
+      "schedule": {
+        "tuesday": { "time": "afternoon", "activity": "sketching" },
+        "thursday": { "time": "afternoon", "activity": "painting" },
+        "sunday": { "time": "noon", "activity": "exhibition" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "charm": 2 },
+          "exp": 35
+        },
+        "weekly": {
+          "items": ["art_supplies", "canvas"],
+          "money": 600
+        }
+      },
+      "activities": [
+        {
+          "id": "sketching",
+          "name": "스케치",
+          "description": "기초 드로잉 연습",
+          "rewards": { "exp": 30, "stats": { "charm": 1 } }
+        },
+        {
+          "id": "painting",
+          "name": "그림 그리기",
+          "description": "캔버스에 작품 제작",
+          "rewards": { "exp": 50, "item": "painting", "money": 300 }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "cooking",
+      "name": "요리부",
+      "description": "맛있는 요리를 만드는 동아리",
+      "leader": "hana",
+      "members": ["hana", "npc_cooking_1", "npc_cooking_2"],
+      "maxMembers": 20,
+      "requirements": {
+        "stats": { "stamina": 10 },
+        "level": 2
+      },
+      "schedule": {
+        "monday": { "time": "noon", "activity": "basic_cooking" },
+        "wednesday": { "time": "noon", "activity": "baking" },
+        "friday": { "time": "noon", "activity": "special_menu" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "stamina": 1, "charm": 1 },
+          "exp": 30,
+          "items": ["lunch_box"]
+        },
+        "weekly": {
+          "items": ["special_recipe", "ingredients"],
+          "money": 350
+        }
+      },
+      "activities": [
+        {
+          "id": "cooking_practice",
+          "name": "요리 연습",
+          "description": "기본 요리 실습",
+          "rewards": { "exp": 25, "item": "homemade_meal" }
+        },
+        {
+          "id": "bake_dessert",
+          "name": "디저트 만들기",
+          "description": "달콤한 디저트 제작",
+          "rewards": { "exp": 40, "item": "dessert", "affinity_all": 2 }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "science",
+      "name": "과학부",
+      "description": "과학 실험과 연구를 하는 동아리",
+      "leader": "sora",
+      "members": ["sora", "npc_science_1", "npc_science_2"],
+      "maxMembers": 16,
+      "requirements": {
+        "stats": { "intelligence": 30 },
+        "level": 8
+      },
+      "schedule": {
+        "tuesday": { "time": "evening", "activity": "experiment" },
+        "thursday": { "time": "evening", "activity": "research" },
+        "saturday": { "time": "afternoon", "activity": "invention" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "intelligence": 3 },
+          "exp": 55
+        },
+        "weekly": {
+          "items": ["research_notes", "invention"],
+          "money": 1000
+        }
+      },
+      "activities": [
+        {
+          "id": "experiment",
+          "name": "실험",
+          "description": "과학 실험 수행",
+          "rewards": { "exp": 45, "stats": { "intelligence": 2 } }
+        },
+        {
+          "id": "invention",
+          "name": "발명",
+          "description": "새로운 장치 개발",
+          "rewards": { "exp": 80, "item": "invention", "money": 500 }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "student_council",
+      "name": "학생회",
+      "description": "학교를 이끄는 리더십 조직",
+      "leader": "akane",
+      "members": ["akane", "npc_council_1", "npc_council_2", "npc_council_3"],
+      "maxMembers": 10,
+      "requirements": {
+        "stats": { "intelligence": 25, "charm": 20 },
+        "level": 15,
+        "reputation": 500
+      },
+      "schedule": {
+        "daily": { "time": "afternoon", "activity": "meeting" },
+        "friday": { "time": "evening", "activity": "event_planning" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "charm": 2, "intelligence": 1 },
+          "exp": 70,
+          "reputation": 5
+        },
+        "weekly": {
+          "money": 1500,
+          "items": ["council_badge"]
+        },
+        "rank": {
+          "member": { "title": "일반 위원", "bonus": { "charm": 5, "reputation_gain": 10 } },
+          "secretary": { "title": "서기", "bonus": { "charm": 10, "intelligence": 5, "reputation_gain": 20 } },
+          "vice_president": { "title": "부회장", "bonus": { "all_stats": 10, "reputation_gain": 30 } },
+          "president": { "title": "회장", "bonus": { "all_stats": 20, "reputation_gain": 50 } }
+        }
+      },
+      "activities": [
+        {
+          "id": "council_meeting",
+          "name": "회의",
+          "description": "학생회 정기 회의",
+          "rewards": { "exp": 50, "reputation": 10 }
+        },
+        {
+          "id": "event_organization",
+          "name": "행사 기획",
+          "description": "학교 행사 준비",
+          "rewards": { "exp": 100, "reputation": 20, "money": 500 }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    },
+    {
+      "id": "occult",
+      "name": "오컬트 연구회",
+      "description": "신비하고 초자연적인 것을 연구하는 비밀 동아리",
+      "leader": "mystery",
+      "members": ["mystery", "npc_occult_1"],
+      "maxMembers": 7,
+      "requirements": {
+        "stats": { "intelligence": 20, "luck": 20 },
+        "level": 20,
+        "flags": ["discovered_secret"],
+        "affinity": { "mystery": 50 }
+      },
+      "secret": true,
+      "schedule": {
+        "midnight": { "time": "night", "activity": "ritual" }
+      },
+      "benefits": {
+        "daily": {
+          "stats": { "luck": 3, "intelligence": 2 },
+          "exp": 100
+        },
+        "weekly": {
+          "items": ["mysterious_artifact", "forbidden_knowledge"],
+          "money": 2000
+        }
+      },
+      "activities": [
+        {
+          "id": "séance",
+          "name": "강령술",
+          "description": "영혼과의 교감",
+          "rewards": { "exp": 100, "stats": { "luck": 5 } }
+        },
+        {
+          "id": "dimension_research",
+          "name": "차원 연구",
+          "description": "평행 세계 탐구",
+          "rewards": { "exp": 200, "unlock": "special_ending" }
+        }
+      ],
+      "reputation": 0,
+      "level": 1,
+      "exp": 0
+    }
+  ],
+  "clubEvents": {
+    "inter_club_tournament": {
+      "name": "동아리 대항전",
+      "description": "모든 동아리가 참여하는 대규모 경쟁",
+      "date": { "month": 10, "day": 15 },
+      "participants": "all",
+      "rewards": {
+        "winner": { "reputation": 100, "money": 5000, "trophy": "golden_trophy" },
+        "second": { "reputation": 50, "money": 2500, "trophy": "silver_trophy" },
+        "third": { "reputation": 25, "money": 1000, "trophy": "bronze_trophy" }
+      }
+    },
+    "culture_festival": {
+      "name": "문화제",
+      "description": "각 동아리가 부스를 운영하는 축제",
+      "date": { "month": 11, "day": 3 },
+      "activities": {
+        "booth_management": {
+          "description": "동아리 부스 운영",
+          "rewards": { "reputation": 20, "money": "booth_earnings" }
+        },
+        "performance": {
+          "description": "공연 및 시연",
+          "rewards": { "reputation": 30, "affinity_all": 5 }
+        }
+      }
+    }
+  },
+  "clubBenefits": {
+    "membershipLimit": 2,
+    "leaderBonus": {
+      "stats": { "all": 5 },
+      "reputation_gain": 2,
+      "exp_gain": 1.5
+    },
+    "multiClubPenalty": {
+      "time_cost": 1.5,
+      "stamina_drain": 2
+    },
+    "rankUpRequirements": {
+      "intermediate": { "club_exp": 500, "participation": 20 },
+      "advanced": { "club_exp": 1500, "participation": 50, "contribution": 100 },
+      "master": { "club_exp": 3000, "participation": 100, "contribution": 500 }
+    }
+  }
+}

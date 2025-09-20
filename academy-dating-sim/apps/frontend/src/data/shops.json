@@ -1,0 +1,466 @@
+{
+  "shops": [
+    {
+      "id": "general_store",
+      "name": "일반 상점",
+      "owner": "npc_shopkeeper_1",
+      "location": "town_square",
+      "type": "general",
+      "openHours": { "start": 8, "end": 20 },
+      "reputation": 0,
+      "level": 1,
+      "inventory": [
+        {
+          "itemId": "potion",
+          "name": "체력 포션",
+          "category": "consumable",
+          "price": 100,
+          "stock": 50,
+          "restockRate": 10,
+          "description": "HP를 50 회복한다",
+          "effect": { "hp": 50 }
+        },
+        {
+          "itemId": "mana_potion",
+          "name": "마나 포션",
+          "category": "consumable",
+          "price": 150,
+          "stock": 30,
+          "restockRate": 5,
+          "description": "MP를 30 회복한다",
+          "effect": { "mp": 30 }
+        },
+        {
+          "itemId": "bread",
+          "name": "빵",
+          "category": "food",
+          "price": 50,
+          "stock": 100,
+          "restockRate": 20,
+          "description": "간단한 식사",
+          "effect": { "stamina": 10 }
+        },
+        {
+          "itemId": "gift_box",
+          "name": "선물 상자",
+          "category": "gift",
+          "price": 500,
+          "stock": 10,
+          "restockRate": 2,
+          "description": "누구나 좋아하는 선물",
+          "giftValue": { "universal": 10 }
+        }
+      ],
+      "discounts": {
+        "regular_customer": { "visits": 10, "discount": 0.05 },
+        "vip_customer": { "visits": 50, "discount": 0.1 },
+        "bulk_purchase": { "items": 10, "discount": 0.15 }
+      }
+    },
+    {
+      "id": "weapon_shop",
+      "name": "무기점",
+      "owner": "npc_blacksmith",
+      "location": "market_district",
+      "type": "weapon",
+      "openHours": { "start": 9, "end": 18 },
+      "reputation": 100,
+      "level": 1,
+      "inventory": [
+        {
+          "itemId": "wooden_sword",
+          "name": "나무 검",
+          "category": "weapon",
+          "price": 500,
+          "stock": 5,
+          "restockRate": 1,
+          "requirements": { "level": 1 },
+          "stats": { "attack": 5 }
+        },
+        {
+          "itemId": "iron_sword",
+          "name": "철 검",
+          "category": "weapon",
+          "price": 2000,
+          "stock": 3,
+          "restockRate": 1,
+          "requirements": { "level": 10 },
+          "stats": { "attack": 15 }
+        },
+        {
+          "itemId": "steel_sword",
+          "name": "강철 검",
+          "category": "weapon",
+          "price": 5000,
+          "stock": 1,
+          "restockRate": 0.2,
+          "requirements": { "level": 20 },
+          "stats": { "attack": 30 }
+        },
+        {
+          "itemId": "leather_armor",
+          "name": "가죽 갑옷",
+          "category": "armor",
+          "price": 800,
+          "stock": 3,
+          "restockRate": 1,
+          "requirements": { "level": 5 },
+          "stats": { "defense": 10 }
+        }
+      ],
+      "services": {
+        "weapon_upgrade": {
+          "name": "무기 강화",
+          "cost": 1000,
+          "success_rate": 0.8,
+          "effect": { "attack": "+20%" }
+        },
+        "weapon_repair": {
+          "name": "무기 수리",
+          "cost": 200,
+          "duration": 1
+        }
+      }
+    },
+    {
+      "id": "magic_shop",
+      "name": "마법 상점",
+      "owner": "npc_wizard",
+      "location": "magic_district",
+      "type": "magic",
+      "openHours": { "start": 10, "end": 22 },
+      "reputation": 200,
+      "level": 2,
+      "inventory": [
+        {
+          "itemId": "spell_scroll_fire",
+          "name": "화염 주문서",
+          "category": "spell",
+          "price": 1500,
+          "stock": 5,
+          "restockRate": 1,
+          "requirements": { "intelligence": 20 },
+          "effect": { "damage": 50, "element": "fire" }
+        },
+        {
+          "itemId": "magic_crystal",
+          "name": "마법 수정",
+          "category": "material",
+          "price": 3000,
+          "stock": 2,
+          "restockRate": 0.5,
+          "description": "마법 아이템 제작에 사용"
+        },
+        {
+          "itemId": "mana_ring",
+          "name": "마나 반지",
+          "category": "accessory",
+          "price": 5000,
+          "stock": 1,
+          "restockRate": 0.2,
+          "requirements": { "level": 15 },
+          "stats": { "mp": 50, "intelligence": 10 }
+        },
+        {
+          "itemId": "enchantment_stone",
+          "name": "인챈트 스톤",
+          "category": "enhancement",
+          "price": 2500,
+          "stock": 3,
+          "restockRate": 1,
+          "description": "장비에 마법 부여"
+        }
+      ],
+      "specialItems": {
+        "rotating_stock": true,
+        "refresh_day": "weekly",
+        "items": [
+          {
+            "itemId": "legendary_staff",
+            "name": "전설의 지팡이",
+            "price": 50000,
+            "stock": 1,
+            "requirements": { "intelligence": 50, "level": 30 },
+            "stats": { "magic": 100, "mp": 200 }
+          }
+        ]
+      }
+    },
+    {
+      "id": "flower_shop",
+      "name": "꽃집",
+      "owner": "npc_florist",
+      "location": "town_square",
+      "type": "gift",
+      "openHours": { "start": 9, "end": 19 },
+      "reputation": 0,
+      "level": 1,
+      "inventory": [
+        {
+          "itemId": "rose",
+          "name": "장미",
+          "category": "flower",
+          "price": 300,
+          "stock": 20,
+          "restockRate": 5,
+          "giftValue": { "romantic": 15, "charm": 5 }
+        },
+        {
+          "itemId": "sunflower",
+          "name": "해바라기",
+          "category": "flower",
+          "price": 200,
+          "stock": 15,
+          "restockRate": 5,
+          "giftValue": { "cheerful": 10, "friendship": 10 }
+        },
+        {
+          "itemId": "lily",
+          "name": "백합",
+          "category": "flower",
+          "price": 400,
+          "stock": 10,
+          "restockRate": 3,
+          "giftValue": { "elegant": 15, "romantic": 10 }
+        },
+        {
+          "itemId": "bouquet",
+          "name": "꽃다발",
+          "category": "gift",
+          "price": 1000,
+          "stock": 5,
+          "restockRate": 1,
+          "giftValue": { "romantic": 25, "special": true }
+        }
+      ],
+      "seasonal": {
+        "spring": [
+          { "itemId": "cherry_blossom", "name": "벚꽃", "price": 500, "stock": 10 }
+        ],
+        "summer": [
+          { "itemId": "hibiscus", "name": "히비스커스", "price": 300, "stock": 15 }
+        ],
+        "autumn": [
+          { "itemId": "cosmos", "name": "코스모스", "price": 250, "stock": 20 }
+        ],
+        "winter": [
+          { "itemId": "poinsettia", "name": "포인세티아", "price": 600, "stock": 8 }
+        ]
+      }
+    },
+    {
+      "id": "book_store",
+      "name": "서점",
+      "owner": "npc_librarian",
+      "location": "library_district",
+      "type": "book",
+      "openHours": { "start": 10, "end": 20 },
+      "reputation": 0,
+      "level": 1,
+      "inventory": [
+        {
+          "itemId": "study_guide",
+          "name": "학습 가이드",
+          "category": "book",
+          "price": 1000,
+          "stock": 10,
+          "restockRate": 2,
+          "effect": { "intelligence": 5, "exp_gain": 1.1 }
+        },
+        {
+          "itemId": "romance_novel",
+          "name": "로맨스 소설",
+          "category": "book",
+          "price": 500,
+          "stock": 15,
+          "restockRate": 3,
+          "effect": { "charm": 3 },
+          "giftValue": { "yuki": 20 }
+        },
+        {
+          "itemId": "skill_book_cooking",
+          "name": "요리 기술서",
+          "category": "skill_book",
+          "price": 3000,
+          "stock": 2,
+          "restockRate": 0.5,
+          "effect": { "unlock_skill": "cooking_basics" }
+        },
+        {
+          "itemId": "ancient_tome",
+          "name": "고대 서적",
+          "category": "rare_book",
+          "price": 10000,
+          "stock": 1,
+          "restockRate": 0.1,
+          "requirements": { "intelligence": 40 },
+          "effect": { "unlock_knowledge": "ancient_magic" }
+        }
+      ]
+    },
+    {
+      "id": "clothing_shop",
+      "name": "의류점",
+      "owner": "npc_tailor",
+      "location": "fashion_street",
+      "type": "clothing",
+      "openHours": { "start": 10, "end": 21 },
+      "reputation": 50,
+      "level": 1,
+      "inventory": [
+        {
+          "itemId": "casual_outfit",
+          "name": "캐주얼 의상",
+          "category": "clothing",
+          "price": 2000,
+          "stock": 5,
+          "restockRate": 1,
+          "effect": { "charm": 10 }
+        },
+        {
+          "itemId": "formal_suit",
+          "name": "정장",
+          "category": "clothing",
+          "price": 5000,
+          "stock": 2,
+          "restockRate": 0.5,
+          "effect": { "charm": 20, "intelligence": 5 }
+        },
+        {
+          "itemId": "yukata",
+          "name": "유카타",
+          "category": "special_clothing",
+          "price": 8000,
+          "stock": 1,
+          "restockRate": 0.2,
+          "seasonal": "summer",
+          "effect": { "charm": 30, "romance": 10 }
+        }
+      ],
+      "customization": {
+        "color_change": { "cost": 500 },
+        "pattern_add": { "cost": 1000 },
+        "size_adjustment": { "cost": 200 }
+      }
+    },
+    {
+      "id": "secret_shop",
+      "name": "비밀 상점",
+      "owner": "mystery_merchant",
+      "location": "hidden_alley",
+      "type": "special",
+      "openHours": { "start": 22, "end": 4 },
+      "reputation": 500,
+      "level": 3,
+      "unlockCondition": {
+        "flags": ["discovered_secret_shop"],
+        "affinity": { "mystery": 50 }
+      },
+      "inventory": [
+        {
+          "itemId": "time_crystal",
+          "name": "시간 수정",
+          "category": "special",
+          "price": 100000,
+          "stock": 1,
+          "restockRate": 0,
+          "effect": { "time_rewind": 1 },
+          "description": "하루를 되돌린다"
+        },
+        {
+          "itemId": "dimension_key",
+          "name": "차원 열쇠",
+          "category": "special",
+          "price": 50000,
+          "stock": 1,
+          "restockRate": 0,
+          "effect": { "unlock_route": "mystery_true" }
+        },
+        {
+          "itemId": "love_potion",
+          "name": "사랑의 묘약",
+          "category": "consumable",
+          "price": 20000,
+          "stock": 3,
+          "restockRate": 0.1,
+          "effect": { "affinity_all": 20 },
+          "warning": "부작용 있음"
+        }
+      ],
+      "currency": "special_coins"
+    }
+  ],
+  "currencyTypes": {
+    "gold": { "name": "골드", "symbol": "G", "default": true },
+    "special_coins": { "name": "특별 코인", "symbol": "SC", "exchange_rate": 100 },
+    "club_points": { "name": "동아리 포인트", "symbol": "CP", "earned_from": "club_activities" },
+    "romance_tokens": { "name": "로맨스 토큰", "symbol": "RT", "earned_from": "dates" }
+  },
+  "shopMechanics": {
+    "haggling": {
+      "enabled": true,
+      "success_factors": ["charm", "relationship_with_owner", "bulk_purchase"],
+      "max_discount": 0.3
+    },
+    "restocking": {
+      "interval": "daily",
+      "time": "6:00",
+      "special_restock": "weekly"
+    },
+    "membership": {
+      "tiers": [
+        { "name": "Bronze", "requirement": 5000, "discount": 0.05 },
+        { "name": "Silver", "requirement": 20000, "discount": 0.1 },
+        { "name": "Gold", "requirement": 50000, "discount": 0.15 },
+        { "name": "Platinum", "requirement": 100000, "discount": 0.2 }
+      ]
+    },
+    "limited_items": {
+      "description": "한정판 아이템은 구매 후 다시 입고되지 않음",
+      "notification": true
+    },
+    "pre_order": {
+      "enabled": true,
+      "deposit": 0.5,
+      "wait_time": 3
+    }
+  },
+  "specialEvents": {
+    "black_friday": {
+      "date": { "month": 11, "day": 25 },
+      "discount": 0.5,
+      "duration": 1
+    },
+    "anniversary_sale": {
+      "date": { "month": 4, "day": 1 },
+      "discount": 0.3,
+      "duration": 3
+    },
+    "midnight_sale": {
+      "time": { "start": 0, "end": 3 },
+      "discount": 0.2,
+      "frequency": "weekly"
+    }
+  },
+  "blackMarket": {
+    "id": "black_market",
+    "name": "암시장",
+    "access": "random_encounter",
+    "items": [
+      {
+        "itemId": "forbidden_scroll",
+        "name": "금지된 주문서",
+        "price": 25000,
+        "effect": { "unlock_dark_magic": true },
+        "consequence": "reputation-50"
+      },
+      {
+        "itemId": "stolen_treasure",
+        "name": "도난당한 보물",
+        "price": 15000,
+        "effect": { "money": 30000 },
+        "consequence": "wanted_level+1"
+      }
+    ]
+  }
+}

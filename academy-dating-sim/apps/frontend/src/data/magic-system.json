@@ -1,0 +1,835 @@
+{
+  "elements": {
+    "fire": {
+      "id": "fire",
+      "name": "화염",
+      "color": "#FF4500",
+      "description": "파괴적인 힘의 원소",
+      "strongAgainst": ["nature", "ice"],
+      "weakAgainst": ["water", "earth"],
+      "affinityBonus": {
+        "attack": 20,
+        "defense": -10,
+        "critRate": 15
+      }
+    },
+    "water": {
+      "id": "water",
+      "name": "물",
+      "color": "#4169E1",
+      "description": "유연하고 적응력 있는 원소",
+      "strongAgainst": ["fire", "earth"],
+      "weakAgainst": ["lightning", "nature"],
+      "affinityBonus": {
+        "defense": 15,
+        "healing": 25,
+        "manaRegen": 20
+      }
+    },
+    "earth": {
+      "id": "earth",
+      "name": "대지",
+      "color": "#8B4513",
+      "description": "견고하고 안정적인 원소",
+      "strongAgainst": ["lightning", "wind"],
+      "weakAgainst": ["water", "nature"],
+      "affinityBonus": {
+        "defense": 30,
+        "hp": 50,
+        "stability": 25
+      }
+    },
+    "wind": {
+      "id": "wind",
+      "name": "바람",
+      "color": "#87CEEB",
+      "description": "빠르고 자유로운 원소",
+      "strongAgainst": ["nature", "lightning"],
+      "weakAgainst": ["earth", "fire"],
+      "affinityBonus": {
+        "speed": 30,
+        "evasion": 20,
+        "accuracy": 15
+      }
+    },
+    "lightning": {
+      "id": "lightning",
+      "name": "번개",
+      "color": "#FFD700",
+      "description": "순간적이고 강력한 원소",
+      "strongAgainst": ["water", "metal"],
+      "weakAgainst": ["earth", "wind"],
+      "affinityBonus": {
+        "critDamage": 50,
+        "speed": 15,
+        "paralysisChance": 10
+      }
+    },
+    "nature": {
+      "id": "nature",
+      "name": "자연",
+      "color": "#228B22",
+      "description": "생명과 성장의 원소",
+      "strongAgainst": ["earth", "water"],
+      "weakAgainst": ["fire", "wind"],
+      "affinityBonus": {
+        "healing": 30,
+        "hpRegen": 5,
+        "statusResist": 20
+      }
+    },
+    "ice": {
+      "id": "ice",
+      "name": "얼음",
+      "color": "#B0E0E6",
+      "description": "차갑고 정밀한 원소",
+      "strongAgainst": ["wind", "nature"],
+      "weakAgainst": ["fire", "lightning"],
+      "affinityBonus": {
+        "critRate": 20,
+        "slowChance": 15,
+        "defense": 10
+      }
+    },
+    "light": {
+      "id": "light",
+      "name": "빛",
+      "color": "#FFFACD",
+      "description": "신성하고 정화하는 원소",
+      "strongAgainst": ["dark", "undead"],
+      "weakAgainst": ["void"],
+      "affinityBonus": {
+        "healing": 40,
+        "purify": true,
+        "holyDamage": 25
+      }
+    },
+    "dark": {
+      "id": "dark",
+      "name": "어둠",
+      "color": "#2F004F",
+      "description": "신비롭고 금지된 원소",
+      "strongAgainst": ["light", "psychic"],
+      "weakAgainst": ["light"],
+      "affinityBonus": {
+        "lifesteal": 20,
+        "curseChance": 15,
+        "manaSteal": 10
+      }
+    },
+    "void": {
+      "id": "void",
+      "name": "공허",
+      "color": "#000000",
+      "description": "모든 것을 무로 돌리는 원소",
+      "strongAgainst": ["all"],
+      "weakAgainst": ["creation"],
+      "affinityBonus": {
+        "penetration": 50,
+        "nullify": 20,
+        "voidDamage": 30
+      },
+      "unlockRequirement": {
+        "level": 50,
+        "quest": "void_awakening"
+      }
+    }
+  },
+  "spellCategories": {
+    "offensive": {
+      "name": "공격 마법",
+      "description": "적에게 직접적인 피해를 입히는 마법",
+      "icon": "⚔️"
+    },
+    "defensive": {
+      "name": "방어 마법",
+      "description": "보호와 방어를 위한 마법",
+      "icon": "🛡️"
+    },
+    "support": {
+      "name": "지원 마법",
+      "description": "아군을 돕는 마법",
+      "icon": "💚"
+    },
+    "summoning": {
+      "name": "소환 마법",
+      "description": "생명체나 물체를 소환하는 마법",
+      "icon": "🌟"
+    },
+    "transformation": {
+      "name": "변환 마법",
+      "description": "형태나 속성을 바꾸는 마법",
+      "icon": "🔄"
+    },
+    "ritual": {
+      "name": "의식 마법",
+      "description": "준비 시간이 필요한 강력한 마법",
+      "icon": "📿"
+    },
+    "forbidden": {
+      "name": "금지된 마법",
+      "description": "위험하고 금지된 마법",
+      "icon": "💀"
+    }
+  },
+  "spells": [
+    {
+      "id": "fireball",
+      "name": "파이어볼",
+      "category": "offensive",
+      "element": "fire",
+      "tier": 1,
+      "manaCost": 10,
+      "damage": 30,
+      "castTime": 1,
+      "cooldown": 2,
+      "range": 5,
+      "aoe": false,
+      "description": "화염구를 발사한다",
+      "requirements": {
+        "level": 1,
+        "intelligence": 10
+      }
+    },
+    {
+      "id": "meteor_strike",
+      "name": "메테오 스트라이크",
+      "category": "offensive",
+      "element": "fire",
+      "tier": 5,
+      "manaCost": 100,
+      "damage": 500,
+      "castTime": 3,
+      "cooldown": 60,
+      "range": 10,
+      "aoe": true,
+      "aoeRadius": 3,
+      "description": "하늘에서 거대한 운석을 떨어뜨린다",
+      "requirements": {
+        "level": 40,
+        "intelligence": 60,
+        "spell": "fireball_mastery"
+      }
+    },
+    {
+      "id": "heal",
+      "name": "치유",
+      "category": "support",
+      "element": "light",
+      "tier": 1,
+      "manaCost": 15,
+      "healing": 50,
+      "castTime": 1.5,
+      "cooldown": 3,
+      "range": 3,
+      "description": "대상의 체력을 회복시킨다",
+      "requirements": {
+        "level": 1,
+        "intelligence": 15
+      }
+    },
+    {
+      "id": "barrier",
+      "name": "배리어",
+      "category": "defensive",
+      "element": "light",
+      "tier": 2,
+      "manaCost": 25,
+      "shield": 100,
+      "duration": 10,
+      "castTime": 1,
+      "cooldown": 15,
+      "description": "마법 방어막을 생성한다",
+      "requirements": {
+        "level": 10,
+        "intelligence": 20
+      }
+    },
+    {
+      "id": "teleport",
+      "name": "텔레포트",
+      "category": "support",
+      "element": "void",
+      "tier": 3,
+      "manaCost": 50,
+      "castTime": 0,
+      "cooldown": 30,
+      "range": "map",
+      "description": "순간이동한다",
+      "requirements": {
+        "level": 25,
+        "intelligence": 40,
+        "item": "teleport_crystal"
+      }
+    },
+    {
+      "id": "summon_familiar",
+      "name": "패밀리어 소환",
+      "category": "summoning",
+      "element": "nature",
+      "tier": 2,
+      "manaCost": 40,
+      "summonDuration": 300,
+      "castTime": 3,
+      "cooldown": 60,
+      "description": "마법 생물을 소환한다",
+      "summon": {
+        "type": "familiar",
+        "stats": {
+          "hp": 100,
+          "attack": 20,
+          "defense": 10
+        }
+      },
+      "requirements": {
+        "level": 15,
+        "intelligence": 25
+      }
+    },
+    {
+      "id": "polymorph",
+      "name": "변신술",
+      "category": "transformation",
+      "element": "nature",
+      "tier": 3,
+      "manaCost": 60,
+      "duration": 120,
+      "castTime": 2,
+      "cooldown": 180,
+      "description": "다른 형태로 변신한다",
+      "forms": ["cat", "bird", "wolf"],
+      "requirements": {
+        "level": 20,
+        "intelligence": 35
+      }
+    },
+    {
+      "id": "time_stop",
+      "name": "시간 정지",
+      "category": "forbidden",
+      "element": "void",
+      "tier": 6,
+      "manaCost": 200,
+      "duration": 5,
+      "castTime": 5,
+      "cooldown": 86400,
+      "description": "주변의 시간을 정지시킨다",
+      "sideEffects": {
+        "exhaustion": 50,
+        "manaburn": 20
+      },
+      "requirements": {
+        "level": 50,
+        "intelligence": 80,
+        "quest": "master_of_time"
+      }
+    },
+    {
+      "id": "resurrection",
+      "name": "부활",
+      "category": "forbidden",
+      "element": "light",
+      "tier": 6,
+      "manaCost": 300,
+      "castTime": 10,
+      "cooldown": 604800,
+      "description": "죽은 자를 되살린다",
+      "cost": {
+        "lifeforce": 50,
+        "item": "phoenix_feather"
+      },
+      "requirements": {
+        "level": 45,
+        "intelligence": 70,
+        "affinity": { "luna": 80 }
+      }
+    },
+    {
+      "id": "chain_lightning",
+      "name": "체인 라이트닝",
+      "category": "offensive",
+      "element": "lightning",
+      "tier": 3,
+      "manaCost": 45,
+      "damage": 60,
+      "chainTargets": 5,
+      "chainDamageReduction": 0.8,
+      "castTime": 1.5,
+      "cooldown": 8,
+      "range": 7,
+      "description": "번개가 여러 적을 관통한다",
+      "requirements": {
+        "level": 20,
+        "intelligence": 30
+      }
+    },
+    {
+      "id": "blizzard",
+      "name": "블리자드",
+      "category": "offensive",
+      "element": "ice",
+      "tier": 4,
+      "manaCost": 80,
+      "damage": 40,
+      "duration": 10,
+      "tickRate": 1,
+      "castTime": 2,
+      "cooldown": 30,
+      "aoe": true,
+      "aoeRadius": 5,
+      "description": "얼음 폭풍을 일으킨다",
+      "statusEffect": {
+        "slow": 50,
+        "freezeChance": 10
+      },
+      "requirements": {
+        "level": 30,
+        "intelligence": 45
+      }
+    },
+    {
+      "id": "earthquake",
+      "name": "지진",
+      "category": "offensive",
+      "element": "earth",
+      "tier": 4,
+      "manaCost": 90,
+      "damage": 100,
+      "castTime": 3,
+      "cooldown": 45,
+      "aoe": true,
+      "aoeRadius": 8,
+      "description": "대지를 흔들어 광역 피해를 입힌다",
+      "statusEffect": {
+        "stun": 2,
+        "knockdown": true
+      },
+      "requirements": {
+        "level": 35,
+        "intelligence": 50
+      }
+    },
+    {
+      "id": "wind_walk",
+      "name": "바람 걷기",
+      "category": "support",
+      "element": "wind",
+      "tier": 2,
+      "manaCost": 30,
+      "duration": 30,
+      "castTime": 0.5,
+      "cooldown": 20,
+      "description": "이동 속도와 회피율을 증가시킨다",
+      "buff": {
+        "moveSpeed": 50,
+        "evasion": 30
+      },
+      "requirements": {
+        "level": 15,
+        "intelligence": 25
+      }
+    },
+    {
+      "id": "shadow_clone",
+      "name": "그림자 분신",
+      "category": "summoning",
+      "element": "dark",
+      "tier": 4,
+      "manaCost": 100,
+      "cloneCount": 3,
+      "duration": 60,
+      "castTime": 2,
+      "cooldown": 120,
+      "description": "자신의 그림자 분신을 만든다",
+      "cloneStats": {
+        "hpPercent": 50,
+        "damagePercent": 30
+      },
+      "requirements": {
+        "level": 30,
+        "intelligence": 40,
+        "element_affinity": "dark"
+      }
+    },
+    {
+      "id": "divine_shield",
+      "name": "신성한 보호막",
+      "category": "defensive",
+      "element": "light",
+      "tier": 5,
+      "manaCost": 150,
+      "duration": 10,
+      "castTime": 1,
+      "cooldown": 300,
+      "description": "모든 피해를 무효화한다",
+      "effect": {
+        "invulnerable": true,
+        "purify": true
+      },
+      "requirements": {
+        "level": 40,
+        "intelligence": 55,
+        "reputation": 1000
+      }
+    }
+  ],
+  "spellCombos": [
+    {
+      "id": "steam_explosion",
+      "name": "증기 폭발",
+      "spells": ["fireball", "water_bolt"],
+      "timing": "simultaneous",
+      "damage": 150,
+      "aoe": true,
+      "description": "화염과 물이 만나 강력한 증기 폭발을 일으킨다"
+    },
+    {
+      "id": "frozen_lightning",
+      "name": "얼어붙은 번개",
+      "spells": ["chain_lightning", "ice_spear"],
+      "timing": "sequential",
+      "effect": {
+        "damage": 200,
+        "paralysis": 3,
+        "freeze": 2
+      },
+      "description": "얼음에 갇힌 번개가 적을 마비시킨다"
+    },
+    {
+      "id": "nature_wrath",
+      "name": "자연의 분노",
+      "spells": ["earthquake", "tornado", "lightning_storm"],
+      "timing": "channeled",
+      "damage": 500,
+      "castTime": 5,
+      "description": "자연의 모든 힘을 불러낸다"
+    }
+  ],
+  "magicSchools": {
+    "academy": {
+      "name": "아카데미 정통파",
+      "description": "학원에서 가르치는 정통 마법",
+      "bonuses": {
+        "manaCost": -10,
+        "castSpeed": 1.2
+      },
+      "restrictedSpells": ["forbidden"]
+    },
+    "ancient": {
+      "name": "고대 마법",
+      "description": "잊혀진 고대의 마법",
+      "bonuses": {
+        "spellPower": 1.5,
+        "manaCost": 20
+      },
+      "unlockRequirement": {
+        "quest": "ancient_library"
+      }
+    },
+    "chaos": {
+      "name": "혼돈 마법",
+      "description": "예측할 수 없는 혼돈의 힘",
+      "bonuses": {
+        "randomEffect": true,
+        "critChance": 30
+      },
+      "sideEffects": {
+        "backfire": 10,
+        "wild_magic": 20
+      }
+    },
+    "divine": {
+      "name": "신성 마법",
+      "description": "신의 축복을 받은 마법",
+      "bonuses": {
+        "healing": 1.5,
+        "purify": true
+      },
+      "requirements": {
+        "faith": 50
+      }
+    },
+    "demonic": {
+      "name": "악마 마법",
+      "description": "어둠의 계약으로 얻은 힘",
+      "bonuses": {
+        "damage": 2.0,
+        "lifesteal": 30
+      },
+      "cost": {
+        "soul": 1,
+        "corruption": 10
+      }
+    }
+  },
+  "manaTypes": {
+    "pure": {
+      "name": "순수 마나",
+      "color": "#FFFFFF",
+      "efficiency": 1.0,
+      "regeneration": "normal"
+    },
+    "corrupted": {
+      "name": "타락한 마나",
+      "color": "#8B008B",
+      "efficiency": 1.5,
+      "regeneration": "slow",
+      "sideEffect": "corruption"
+    },
+    "natural": {
+      "name": "자연 마나",
+      "color": "#90EE90",
+      "efficiency": 0.8,
+      "regeneration": "fast",
+      "source": "environment"
+    },
+    "crystallized": {
+      "name": "결정화된 마나",
+      "color": "#E0FFFF",
+      "efficiency": 2.0,
+      "regeneration": "none",
+      "consumable": true
+    }
+  },
+  "magicItems": {
+    "wands": [
+      {
+        "id": "apprentice_wand",
+        "name": "견습생의 지팡이",
+        "tier": 1,
+        "stats": {
+          "spellPower": 10,
+          "manaCost": -5
+        },
+        "price": 1000
+      },
+      {
+        "id": "archmage_staff",
+        "name": "대마법사의 지팡이",
+        "tier": 5,
+        "stats": {
+          "spellPower": 100,
+          "manaCost": -30,
+          "castSpeed": 1.5
+        },
+        "special": "all_elements",
+        "price": 100000
+      }
+    ],
+    "orbs": [
+      {
+        "id": "mana_orb",
+        "name": "마나 오브",
+        "effect": {
+          "maxMana": 100,
+          "manaRegen": 5
+        },
+        "price": 5000
+      }
+    ],
+    "tomes": [
+      {
+        "id": "forbidden_tome",
+        "name": "금지된 서적",
+        "unlock": ["forbidden_spells"],
+        "corruption": 20,
+        "price": 50000
+      }
+    ],
+    "crystals": [
+      {
+        "id": "element_crystal_fire",
+        "name": "화염 원소 수정",
+        "element": "fire",
+        "boost": 30,
+        "price": 3000
+      }
+    ]
+  },
+  "magicTraining": {
+    "meditation": {
+      "name": "명상",
+      "description": "마나를 회복하고 집중력을 높인다",
+      "duration": 30,
+      "effects": {
+        "manaRegen": 10,
+        "intelligence": 1
+      }
+    },
+    "practice": {
+      "name": "마법 연습",
+      "description": "특정 주문을 연습한다",
+      "duration": 60,
+      "effects": {
+        "spellMastery": 5,
+        "exp": 50
+      }
+    },
+    "research": {
+      "name": "마법 연구",
+      "description": "새로운 주문을 배운다",
+      "duration": 120,
+      "requirements": {
+        "intelligence": 30,
+        "books": true
+      },
+      "unlock": "random_spell"
+    },
+    "ritual": {
+      "name": "의식 수행",
+      "description": "강력한 의식 마법을 시전한다",
+      "duration": 180,
+      "requirements": {
+        "participants": 3,
+        "materials": ["candles", "circle", "catalyst"]
+      },
+      "effects": {
+        "permanent_boost": true
+      }
+    }
+  },
+  "magicDuels": {
+    "rules": {
+      "turnBased": true,
+      "manaLimit": 500,
+      "timeLimit": 300,
+      "winConditions": ["hp_zero", "mana_zero", "surrender"]
+    },
+    "arenas": [
+      {
+        "id": "academy_arena",
+        "name": "학원 결투장",
+        "elementBonus": "neutral",
+        "spectators": true
+      },
+      {
+        "id": "elemental_nexus",
+        "name": "원소의 교차점",
+        "elementBonus": "random",
+        "hazards": true
+      }
+    ],
+    "rewards": {
+      "winner": {
+        "exp": 500,
+        "reputation": 50,
+        "items": ["random_crystal"]
+      },
+      "loser": {
+        "exp": 100
+      }
+    }
+  },
+  "magicEvents": {
+    "mana_surge": {
+      "name": "마나 서지",
+      "description": "갑작스런 마나 폭증",
+      "duration": 60,
+      "effects": {
+        "manaCost": -50,
+        "spellPower": 2.0,
+        "unstable": true
+      }
+    },
+    "eclipse": {
+      "name": "일식",
+      "description": "어둠과 빛의 균형이 깨진다",
+      "effects": {
+        "dark_magic": 2.0,
+        "light_magic": 0.5
+      }
+    },
+    "ley_line_activation": {
+      "name": "레이라인 활성화",
+      "description": "고대 마법 회로가 깨어난다",
+      "locations": ["ancient_ruins", "magic_tower"],
+      "effects": {
+        "infinite_mana": true,
+        "spell_evolution": true
+      }
+    }
+  },
+  "characterMagicAffinity": {
+    "sakura": {
+      "elements": ["fire", "lightning"],
+      "specialty": "combat_magic",
+      "uniqueSpell": {
+        "id": "blazing_strike",
+        "name": "화염 일격",
+        "description": "검과 마법을 결합한 공격"
+      }
+    },
+    "yuki": {
+      "elements": ["ice", "water"],
+      "specialty": "defensive_magic",
+      "uniqueSpell": {
+        "id": "frost_barrier",
+        "name": "서리 방벽",
+        "description": "얼음으로 된 보호막"
+      }
+    },
+    "luna": {
+      "elements": ["void", "dark", "light"],
+      "specialty": "forbidden_magic",
+      "uniqueSpell": {
+        "id": "reality_warp",
+        "name": "현실 왜곡",
+        "description": "현실의 법칙을 비튼다"
+      }
+    },
+    "hana": {
+      "elements": ["nature", "earth"],
+      "specialty": "support_magic",
+      "uniqueSpell": {
+        "id": "natures_blessing",
+        "name": "자연의 축복",
+        "description": "모든 아군을 치유하고 강화"
+      }
+    },
+    "rin": {
+      "elements": ["wind", "lightning"],
+      "specialty": "speed_magic",
+      "uniqueSpell": {
+        "id": "sonic_boom",
+        "name": "음속 폭발",
+        "description": "초고속 이동과 공격"
+      }
+    },
+    "mei": {
+      "elements": ["light", "nature"],
+      "specialty": "illusion_magic",
+      "uniqueSpell": {
+        "id": "artistic_reality",
+        "name": "예술적 현실",
+        "description": "상상을 현실로 만든다"
+      }
+    },
+    "sora": {
+      "elements": ["void", "lightning"],
+      "specialty": "analytical_magic",
+      "uniqueSpell": {
+        "id": "formula_cast",
+        "name": "공식 시전",
+        "description": "수학적 정밀도로 마법 시전"
+      }
+    },
+    "akane": {
+      "elements": ["fire", "earth"],
+      "specialty": "leadership_magic",
+      "uniqueSpell": {
+        "id": "rally",
+        "name": "집결",
+        "description": "모든 아군의 능력치 상승"
+      }
+    },
+    "mystery": {
+      "elements": ["all"],
+      "specialty": "unknown",
+      "uniqueSpell": {
+        "id": "???",
+        "name": "???",
+        "description": "알 수 없는 힘"
+      }
+    }
+  }
+}
