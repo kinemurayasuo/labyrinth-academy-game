@@ -180,6 +180,33 @@ const GameUI: React.FC = () => {
               </button>
               <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
               <button
+                onClick={() => navigate('/crafting')}
+                className="px-4 py-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="크래프팅"
+                role="button"
+              >
+                🔨 제작
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
+                onClick={() => navigate('/guild')}
+                className="px-4 py-2 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="길드"
+                role="button"
+              >
+                ⚔️ 길드
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
+                onClick={() => navigate('/pets')}
+                className="px-4 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="펫 시스템"
+                role="button"
+              >
+                🐾 펫
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
                 onClick={saveGame}
                 className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 aria-label="현재 게임 진행상황 저장"
@@ -222,134 +249,159 @@ const GameUI: React.FC = () => {
         </div>
 
         {/* Main Game Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Panel - Location/Characters */}
-          <div className="lg:col-span-2">
-            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
-              {/* Tab Navigation */}
-              <div className="flex gap-3 mb-6" role="tablist" aria-label="게임 콘텐츠 탭">
-                <button
-                  onClick={() => setSelectedTab('location')}
-                  className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
-                    selectedTab === 'location'
-                      ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
-                      : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
-                  }`}
-                  role="tab"
-                  aria-selected={selectedTab === 'location'}
-                  aria-controls="location-panel"
-                  tabIndex={selectedTab === 'location' ? 0 : -1}
-                >
-                  📍 현재 장소
-                </button>
-                <button
-                  onClick={() => setSelectedTab('characters')}
-                  className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
-                    selectedTab === 'characters'
-                      ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
-                      : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
-                  }`}
-                  role="tab"
-                  aria-selected={selectedTab === 'characters'}
-                  aria-controls="characters-panel"
-                  tabIndex={selectedTab === 'characters' ? 0 : -1}
-                >
-                  👥 캐릭터
-                </button>
-              </div>
-
-              {/* Tab Content */}
-              <div
-                id={selectedTab === 'location' ? 'location-panel' : 'characters-panel'}
-                role="tabpanel"
-                aria-labelledby={selectedTab === 'location' ? 'location-tab' : 'characters-tab'}
-              >
-                {selectedTab === 'location' ? (
-                  <LocationView
-                    currentLocation={currentLocation}
-                    player={player}
-                    onPerformActivity={(activity: string) => performActivity(activity, navigate)}
-                    onMoveToLocation={moveToLocation}
-                    availableLocations={locations.locations}
-                    characters={characters}
-                    onInteractCharacter={handleCharacterInteraction}
-                  />
-                ) : (
-                  <CharacterInteraction
-                    characters={characters}
-                    items={{}}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Right Panel - Time & Stats */}
-          <div className="space-y-6">
-            {/* Time Control */}
-            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">
-                  ⏰
+        <div className={`grid grid-cols-1 ${showInventory ? 'lg:grid-cols-5' : 'lg:grid-cols-3'} gap-6`}>
+          {/* Left & Middle Panel Wrapper */}
+          <div className={`${showInventory ? 'lg:col-span-3' : 'lg:col-span-3'} grid grid-cols-1 lg:grid-cols-3 gap-6`}>
+            {/* Left Panel - Location/Characters */}
+            <div className="lg:col-span-2">
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
+                {/* Tab Navigation */}
+                <div className="flex gap-3 mb-6" role="tablist" aria-label="게임 콘텐츠 탭">
+                  <button
+                    onClick={() => setSelectedTab('location')}
+                    className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
+                      selectedTab === 'location'
+                        ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
+                        : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
+                    }`}
+                    role="tab"
+                    aria-selected={selectedTab === 'location'}
+                    aria-controls="location-panel"
+                    tabIndex={selectedTab === 'location' ? 0 : -1}
+                  >
+                    📍 현재 장소
+                  </button>
+                  <button
+                    onClick={() => setSelectedTab('characters')}
+                    className={`px-6 py-3 rounded-xl transition-all duration-200 font-medium ${
+                      selectedTab === 'characters'
+                        ? 'bg-black/50 backdrop-blur-md text-text-primary shadow-lg transform scale-105 border border-primary/50'
+                        : 'bg-black/30 backdrop-blur-md hover:bg-black/40 text-text-secondary hover:scale-105 border border-border'
+                    }`}
+                    role="tab"
+                    aria-selected={selectedTab === 'characters'}
+                    aria-controls="characters-panel"
+                    tabIndex={selectedTab === 'characters' ? 0 : -1}
+                  >
+                    👥 캐릭터
+                  </button>
                 </div>
-                <h3 className="text-lg font-bold text-text-primary">시간</h3>
-              </div>
-              <div className="text-center">
-                <div className="bg-black/20 rounded-xl p-4 mb-4">
-                  <div className="text-2xl font-bold text-text-primary mb-1">
-                    Day {player.day}
-                  </div>
-                  <div className="text-lg text-text-secondary">
-                    {getTimeEmoji(player.timeOfDay)} {getTimeKorean(player.timeOfDay)}
-                  </div>
-                </div>
-                <button
-                  onClick={advanceTime}
-                  className="w-full px-4 py-3 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
-                  aria-label="게임 시간을 다음 시간대로 진행"
-                  role="button"
+
+                {/* Tab Content */}
+                <div
+                  id={selectedTab === 'location' ? 'location-panel' : 'characters-panel'}
+                  role="tabpanel"
+                  aria-labelledby={selectedTab === 'location' ? 'location-tab' : 'characters-tab'}
                 >
-                  ⏭️ 시간 진행
-                </button>
+                  {selectedTab === 'location' ? (
+                    <LocationView
+                      currentLocation={currentLocation}
+                      player={player}
+                      onPerformActivity={(activity: string) => performActivity(activity, navigate)}
+                      onMoveToLocation={moveToLocation}
+                      availableLocations={locations.locations}
+                      characters={characters}
+                      onInteractCharacter={handleCharacterInteraction}
+                    />
+                  ) : (
+                    <CharacterInteraction
+                      characters={characters}
+                      items={{}}
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Character Affection */}
-            <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white text-sm">
-                  💕
+            {/* Right Panel - Time & Stats */}
+            <div className="space-y-6">
+              {/* Time Control */}
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">
+                    ⏰
+                  </div>
+                  <h3 className="text-lg font-bold text-text-primary">시간</h3>
                 </div>
-                <h3 className="text-lg font-bold text-text-primary">호감도</h3>
+                <div className="text-center">
+                  <div className="bg-black/20 rounded-xl p-4 mb-4">
+                    <div className="text-2xl font-bold text-text-primary mb-1">
+                      Day {player.day}
+                    </div>
+                    <div className="text-lg text-text-secondary">
+                      {getTimeEmoji(player.timeOfDay)} {getTimeKorean(player.timeOfDay)}
+                    </div>
+                  </div>
+                  <button
+                    onClick={advanceTime}
+                    className="w-full px-4 py-3 bg-primary text-white rounded-xl hover:bg-secondary transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium"
+                    aria-label="게임 시간을 다음 시간대로 진행"
+                    role="button"
+                  >
+                    ⏭️ 시간 진행
+                  </button>
+                </div>
               </div>
-              <div className="space-y-4">
-                {Object.entries(player.affection).map(([charId, affection]) => {
-                  const character = characters[charId];
-                  if (!character || !unlockedCharacters.includes(charId)) return null;
 
-                  return (
-                    <div key={charId} className="bg-black/20 rounded-xl p-3 border border-border">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">{character.sprite}</span>
-                        <div className="flex-1">
-                          <div className="flex justify-between items-center mb-1">
-                            <span className="font-medium text-text-primary">{character.name}</span>
-                            <span className="text-sm font-bold text-secondary">{String(affection)}/100</span>
+              {/* Character Affection */}
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white text-sm">
+                    💕
+                  </div>
+                  <h3 className="text-lg font-bold text-text-primary">호감도</h3>
+                </div>
+                <div className="space-y-4">
+                  {Object.entries(player.affection).map(([charId, affection]) => {
+                    const character = characters[charId];
+                    if (!character || !unlockedCharacters.includes(charId)) return null;
+
+                    return (
+                      <div key={charId} className="bg-black/20 rounded-xl p-3 border border-border">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="text-2xl">{character.sprite}</span>
+                          <div className="flex-1">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="font-medium text-text-primary">{character.name}</span>
+                              <span className="text-sm font-bold text-secondary">{String(affection)}/100</span>
+                            </div>
                           </div>
                         </div>
+                        <div className="w-full bg-black/50 rounded-full h-3 overflow-hidden">
+                          <div
+                            className="bg-secondary h-3 rounded-full transition-all duration-500 ease-out"
+                            style={{ width: `${affection}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="w-full bg-black/50 rounded-full h-3 overflow-hidden">
-                        <div
-                          className="bg-secondary h-3 rounded-full transition-all duration-500 ease-out"
-                          style={{ width: `${affection}%` }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Inventory Panel */}
+          {showInventory && (
+            <div className="lg:col-span-2">
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border h-full">
+                <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border p-4 flex justify-between items-center">
+                  <h2 id="inventory-title" className="text-2xl font-bold text-text-primary">🎒 인벤토리</h2>
+                  <button
+                    onClick={() => setShowInventory(false)}
+                    className="text-text-secondary hover:text-text-primary text-2xl"
+                    aria-label="인벤토리 창 닫기"
+                    role="button"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="p-4 max-h-[calc(100vh-120px)] overflow-y-auto">
+                  <Inventory onClose={() => setShowInventory(false)} />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Visual Novel Style Event Dialog */}
@@ -365,37 +417,6 @@ const GameUI: React.FC = () => {
             }}
           />
         )}
-
-        {/* Inventory Modal */}
-        {showInventory && (
-          <div
-            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="inventory-title"
-          >
-            <div className="bg-background rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-border">
-              <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border p-4 flex justify-between items-center">
-                <h2 id="inventory-title" className="text-2xl font-bold text-text-primary">🎒 인벤토리</h2>
-                <button
-                  onClick={() => setShowInventory(false)}
-                  className="text-text-secondary hover:text-text-primary text-2xl"
-                  aria-label="인벤토리 창 닫기"
-                  role="button"
-                >
-                  ✕
-                </button>
-              </div>
-              <div className="p-4">
-                <Inventory
-                  onClose={() => setShowInventory(false)}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-
 
         {/* Heroine Events Modal */}
         {showHeroineEvents && selectedHeroine && characters[selectedHeroine] && (

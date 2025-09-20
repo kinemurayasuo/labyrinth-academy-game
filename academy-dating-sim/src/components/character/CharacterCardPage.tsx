@@ -77,6 +77,11 @@ const CharacterCardPage: React.FC = React.memo(() => {
 
   const getCurrentDialogue = useCallback((character: any, characterId: string) => {
     const affectionLevel = player.affection[characterId] || 0;
+
+    if (affectionLevel === 0) {
+      return "최근 대화가 없습니다. 만남을 가지세요.";
+    }
+
     const thresholds = Object.keys(character.dialogues)
       .map(Number)
       .sort((a, b) => b - a);
@@ -142,43 +147,44 @@ const CharacterCardPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-                <div className="bg-black/30 backdrop-blur-md rounded-lg shadow-lg p-4 mb-4 border border-border">
-                  <h3 className="text-lg font-bold mb-4 text-text-primary">캐릭터 선택</h3>
-                  <div className="flex gap-4 justify-center overflow-x-auto">
-                    {unlockedCharacters.map((characterId: any) => {
-                      const character = characters[characterId];
-                      if (!character) return null;
-        
-                      return (
-                        <button
-                          key={characterId}
-                          onClick={() => setSelectedCharacter(characterId)}
-                          className={`px-6 py-3 rounded-lg transition-all border-2 flex flex-col items-center gap-2 min-w-[120px] ${
-                            selectedCharacter === characterId
-                              ? 'border-primary bg-primary/20 scale-105 shadow-lg'
-                              : 'border-border hover:border-primary hover:bg-primary/10 hover:shadow-md'
-                          }`}
-                          aria-label={`${character.name} 캐릭터 선택하기`}
-                          aria-pressed={selectedCharacter === characterId}
-                          role="button"
-                        >
-                          <span className="text-3xl" aria-hidden="true">{character.sprite}</span>
-                          <div className="font-bold text-text-primary text-sm whitespace-nowrap">{character.name}</div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-        
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                  {/* Main Character Card */}
-                  <div className="lg:col-span-4">            {selectedCharacterData && (
-              <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-border">
-                <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[700px]">
-                  {/* Character Portrait Section */}
-                  <div className="bg-black/20 p-8 flex flex-col items-center justify-center relative">
-                    {/* Background decoration */}
-                    <div className="absolute top-4 right-4 text-6xl opacity-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                          {/* Main Character Card */}
+                          <div className="lg:col-span-4">
+                            {/* Character Selection */}
+                            <div className="bg-black/30 backdrop-blur-md rounded-t-lg shadow-lg p-4 border-b border-border">
+                              <h3 className="text-lg font-bold mb-4 text-text-primary text-center">캐릭터 선택</h3>
+                              <div className="flex gap-4 justify-center overflow-x-auto pb-2">
+                                {unlockedCharacters.map((characterId: any) => {
+                                  const character = characters[characterId];
+                                  if (!character) return null;
+                
+                                  return (
+                                    <button
+                                      key={characterId}
+                                      onClick={() => setSelectedCharacter(characterId)}
+                                      className={`px-6 py-3 rounded-lg transition-all border-2 flex flex-col items-center gap-2 min-w-[120px] ${
+                                        selectedCharacter === characterId
+                                          ? 'border-primary bg-primary/20 scale-105 shadow-lg'
+                                          : 'border-border hover:border-primary hover:bg-primary/10 hover:shadow-md'
+                                      }`}
+                                      aria-label={`${character.name} 캐릭터 선택하기`}
+                                      aria-pressed={selectedCharacter === characterId}
+                                      role="button"
+                                    >
+                                      <span className="text-3xl" aria-hidden="true">{character.sprite}</span>
+                                      <div className="font-bold text-text-primary text-sm whitespace-nowrap">{character.name}</div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                
+                            {selectedCharacterData && (
+                              <div className="bg-black/30 backdrop-blur-md rounded-b-2xl shadow-2xl overflow-hidden border border-border border-t-0">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[700px]">
+                                  {/* Character Portrait Section */}
+                                  <div className="bg-black/20 p-8 flex flex-col items-center justify-center relative">
+                                    {/* Background decoration */}                    <div className="absolute top-4 right-4 text-6xl opacity-10">
                       {selectedCharacterData.sprite}
                     </div>
 

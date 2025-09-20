@@ -69,6 +69,7 @@ interface GameState {
   gameMessage: string;
   gameEnding: EndingType | null;
   gameDate: { year: number; month: number; day: number };
+  lastActivity: string | null;
   actions: {
     loadInitialGame: () => void;
     saveGame: () => void;
@@ -81,6 +82,9 @@ interface GameState {
     advanceTime: () => void;
     handleEventChoice: (event: GameEvent, choiceIndex: number) => void;
     addItem: (itemId: string) => void;
+    buyItem: (itemId: string) => void;
+    sellItem: (itemId: string, sellPrice: number) => boolean;
+    updateMoney: (amount: number) => void;
     purchaseItem: (itemId: string, price: number) => boolean;
     useItem: (itemId: string, targetCharacter?: string) => void;
     performActivity: (activityName: string, navigate?: (path: string) => void) => void;
@@ -88,6 +92,10 @@ interface GameState {
     checkForEvents: (locationId?: string) => void;
     checkEnding: () => void;
     updatePlayer: (updates: Partial<Player>) => void;
+    goToNextFloor: () => void;
+    gainExperience: (amount: number) => void;
+    addGold: (amount: number) => void;
+    clearLastActivity: () => void;
   };
 }
 
@@ -99,6 +107,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   gameMessage: '학원 생활이 시작됩니다!',
   gameEnding: null,
   gameDate: { year: 2024, month: 4, day: 1 },
+  lastActivity: null,
   actions: {
     loadInitialGame: () => {
         const savedGame = localStorage.getItem('academyDatingSim');
@@ -154,6 +163,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         currentEvent: null,
         gameEnding: null,
         gameMessage: characterData ? `${freshPlayer.name}의 학원 생활이 시작됩니다!` : '새로운 게임을 시작합니다!',
+        lastActivity: null,
       });
       localStorage.removeItem('academyDatingSim');
     },
@@ -258,6 +268,37 @@ export const useGameStore = create<GameState>((set, get) => ({
         set({ currentEvent: null });
     },
     addItem: (itemId) => set(state => ({ player: { ...state.player, inventory: [...state.player.inventory, itemId] } })),
+    buyItem: (itemId: string) => {
+        get().actions.addItem(itemId);
+    },
+    updateMoney: (amount: number) => {
+        set(state => ({
+            player: {
+                ...state.player,
+                money: state.player.money + amount
+            }
+        }));
+    },
+    sellItem: (itemId: string, sellPrice: number) => {
+        const { player } = get();
+        const itemIndex = player.inventory.indexOf(itemId);
+        
+        if (itemIndex > -1) {
+            const newInventory = [...player.inventory];
+            newInventory.splice(itemIndex, 1);
+            set(state => ({
+                player: {
+                    ...state.player,
+                    inventory: newInventory,
+                    money: state.player.money + sellPrice
+                }
+            }));
+            set({ gameMessage: `${itemId}을(를) 판매했습니다.` });
+            return true;
+        }
+        set({ gameMessage: '판매할 아이템이 없습니다.' });
+        return false;
+    },
     purchaseItem: (itemId, price) => {
         const { player } = get();
         if (player.money >= price) {
@@ -376,7 +417,7 @@ export const useGameStore = create<GameState>((set, get) => ({
                 break;
         }
 
-        set({ player: newPlayer, gameMessage: message });
+        set({ player: newPlayer, gameMessage: message, lastActivity: activityName });
         
         if (shouldAdvanceTime) {
             actions.advanceTime();
@@ -405,5 +446,20 @@ export const useGameStore = create<GameState>((set, get) => ({
     updatePlayer: (updates) => set((state) => ({
       player: { ...state.player, ...updates }
     })),
+    goToNextFloor: () => set((state) => {
+      const nextFloor = state.player.dungeonProgress.currentFloor + 1;
+      return {
+        player: {
+          ...state.player,
+          dungeonProgress: {
+            ...state.player.dungeonProgress,
+            currentFloor: nextFloor,
+            maxFloorReached: Math.max(state.player.dungeonProgress.maxFloorReached, nextFloor),
+            position: { x: 1, y: 1 }, // Reset position for the new floor
+          },
+        },
+      };
+    }),
+    clearLastActivity: () => set({ lastActivity: null }),
   },
 }));

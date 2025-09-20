@@ -15,7 +15,7 @@ const DungeonPage: React.FC = () => {
   
   // Use Zustand store
   const player = useGameStore((state: any) => state.player);
-  const { updateHpMp, advanceTime, addItem } = useGameStore((state: any) => state.actions);
+  const { updateHpMp, advanceTime, addItem, goToNextFloor } = useGameStore((state: any) => state.actions);
   
   // Get current dungeon floor
   const getCurrentDungeonFloor = () => {
@@ -106,11 +106,36 @@ const DungeonPage: React.FC = () => {
 
     switch (cell) {
       case 3: // treasure
-        setGameMessage('보물 상자를 발견했습니다!');
-        addItem('random_item');
+        const treasure = currentFloor.treasures?.find((t: any) => t.position.x === x && t.position.y === y);
+        if (treasure) {
+          let foundItems = [];
+          treasure.contents.forEach((content: any) => {
+            if (Math.random() < content.chance) {
+              for (let i = 0; i < content.quantity; i++) {
+                addItem(content.itemId);
+              }
+              foundItems.push(`${content.itemId} x${content.quantity}`);
+            }
+          });
+
+          if (foundItems.length > 0) {
+            setGameMessage(`보물 상자를 열어 ${foundItems.join(', ')}을(를) 획득했습니다!`);
+          } else {
+            setGameMessage('보물 상자가 비어있었습니다.');
+          }
+          // Note: In a real game, we'd mark this chest as opened.
+        } else {
+          setGameMessage('보물 상자를 발견했지만, 지금은 열 수 없는 것 같습니다.');
+        }
         break;
       case 4: // stairs
-        setGameMessage('다음 층으로 가는 계단을 발견했습니다!');
+        const nextFloorExists = dungeonFloors.some(floor => floor.id === currentFloor.id + 1);
+        if (nextFloorExists) {
+          setGameMessage('다음 층으로 이동합니다.');
+          goToNextFloor();
+        } else {
+          setGameMessage('더 이상 내려갈 곳이 없습니다. 여기가 마지막 층입니다.');
+        }
         break;
       case 2: // trap
         setGameMessage('함정에 걸렸습니다! 체력이 감소했습니다.');
