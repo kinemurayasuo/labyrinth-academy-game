@@ -1,0 +1,29 @@
+{
+  "name": "@academy-dating-sim/mobile",
+  "private": true,
+  "version": "1.0.0",
+  "description": "모바일 앱 패키지 (Capacitor)",
+  "type": "module",
+  "scripts": {
+    "ios": "cap run ios",
+    "android": "cap run android",
+    "build": "cap build",
+    "sync": "cap sync",
+    "copy": "cap copy",
+    "open:ios": "cap open ios",
+    "open:android": "cap open android",
+    "add:ios": "cap add ios",
+    "add:android": "cap add android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/haptics": "^6.0.0",
+    "@capacitor/keyboard": "^6.0.0",
+    "@capacitor/status-bar": "^6.0.0"
+  },
+  "workspaces": {}
+}

@@ -1,0 +1,16 @@
+{
+  "appId": "com.academy.datingsim",
+  "appName": "Academy Dating Sim",
+  "webDir": "../frontend/dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#000000",
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false,
+    "path": "android"
+  },
+  "plugins": {}
+}
