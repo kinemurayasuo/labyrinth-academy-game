@@ -144,6 +144,42 @@ const GameUI: React.FC = () => {
               </button>
               <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
               <button
+                onClick={() => navigate('/achievements')}
+                className="px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="업적 확인"
+                role="button"
+              >
+                🏆 업적
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
+                onClick={() => navigate('/collection')}
+                className="px-4 py-2 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="도감 열기"
+                role="button"
+              >
+                📚 도감
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
+                onClick={() => navigate('/quests')}
+                className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="일일 퀘스트"
+                role="button"
+              >
+                📋 퀘스트
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
+                onClick={() => navigate('/calendar')}
+                className="px-4 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="이벤트 캘린더"
+                role="button"
+              >
+                📅 이벤트
+              </button>
+              <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
+              <button
                 onClick={saveGame}
                 className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 aria-label="현재 게임 진행상황 저장"

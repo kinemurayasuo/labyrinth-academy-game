@@ -31,6 +31,21 @@ export interface Player {
     maxFloorReached: number;
     position: { x: number; y: number };
   };
+  achievements?: string[];
+  achievementPoints?: number;
+  statistics?: {
+    monstersDefeated?: number;
+    treasuresFound?: number;
+    quizStreak?: number;
+    bestCardTime?: number;
+    loginStreak?: number;
+  };
+  metHeroines?: string[];
+  defeatedMonsterTypes?: string[];
+  defeatedBosses?: string[];
+  collectedItems?: string[];
+  unlockedEndings?: string[];
+  participatedEvents?: string[];
 }
 
 export interface Character {

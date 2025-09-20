@@ -41,6 +41,21 @@ const INITIAL_PLAYER: Player = {
     maxFloorReached: 1,
     position: { x: 0, y: 0 },
   },
+  achievements: [],
+  achievementPoints: 0,
+  statistics: {
+    monstersDefeated: 0,
+    treasuresFound: 0,
+    quizStreak: 0,
+    bestCardTime: Infinity,
+    loginStreak: 1
+  },
+  metHeroines: [],
+  defeatedMonsterTypes: [],
+  defeatedBosses: [],
+  collectedItems: [],
+  unlockedEndings: [],
+  participatedEvents: []
 };
 
 const TIME_PHASES = ['morning', 'noon', 'afternoon', 'evening', 'night'] as const;
@@ -53,6 +68,7 @@ interface GameState {
   currentEvent: GameEvent | null;
   gameMessage: string;
   gameEnding: EndingType | null;
+  gameDate: { year: number; month: number; day: number };
   actions: {
     loadInitialGame: () => void;
     saveGame: () => void;
@@ -71,6 +87,7 @@ interface GameState {
     setCurrentEvent: (event: GameEvent | null) => void;
     checkForEvents: (locationId?: string) => void;
     checkEnding: () => void;
+    updatePlayer: (updates: Partial<Player>) => void;
   };
 }
 
@@ -81,6 +98,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentEvent: null,
   gameMessage: '학원 생활이 시작됩니다!',
   gameEnding: null,
+  gameDate: { year: 2024, month: 4, day: 1 },
   actions: {
     loadInitialGame: () => {
         const savedGame = localStorage.getItem('academyDatingSim');
@@ -384,5 +402,8 @@ export const useGameStore = create<GameState>((set, get) => ({
         }
     },
     setCurrentEvent: (event) => set({ currentEvent: event }),
+    updatePlayer: (updates) => set((state) => ({
+      player: { ...state.player, ...updates }
+    })),
   },
 }));

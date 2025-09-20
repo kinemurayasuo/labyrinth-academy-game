@@ -15,36 +15,28 @@ academy-dating-sim-project/
 │   │   ├── components/             # React 컴포넌트
 │   │   ├── data/                   # 게임 데이터 (JSON)
 │   │   └── styles/                 # 스타일 파일
+│   ├── config/                     # 설정 파일들
+│   │   ├── vite.config.ts          # Vite 빌드 설정
+│   │   ├── tailwind.config.js      # Tailwind CSS 설정
+│   │   ├── postcss.config.js       # PostCSS 설정
+│   │   ├── eslint.config.js        # ESLint 설정
+│   │   ├── tsconfig*.json          # TypeScript 설정
+│   │   └── vercel.json             # Vercel 배포 설정
 │   ├── public/                     # 정적 자산
 │   ├── android/                    # Capacitor Android 빌드
-│   └── 설정 파일들...
-│
-├── 🌐 web-app/                     # 웹 버전 (레거시/대안)
-│   ├── index.html
-│   ├── game.js
-│   ├── styles.css
-│   ├── manifest.json
-│   ├── service-worker.js
-│   ├── icon-generator.html
-│   └── package.json
-│
-├── 📱 mobile/                      # 모바일 버전
-│   └── android/                    # Android 프로젝트
-│       ├── app/
-│       ├── gradle/
-│       └── 설정 파일들...
-│
-├── 🐍 games/                       # 대안 게임 버전들
-│   └── python-game/                # Python 게임 버전
-│       ├── data/
-│       ├── saves/
-│       └── 게임 파일들...
+│   ├── capacitor.config.json       # Capacitor 설정
+│   ├── package.json                # 프로젝트 의존성
+│   └── index.html                  # 메인 HTML
 │
 ├── 🖼️ assets/                      # 공용 정적 자산
 │   └── images/
 │       └── charactercard.webp
 │
 ├── 📚 docs/                        # 프로젝트 문서
+│   ├── academy-dating-sim-README.md # 메인 앱 리드미
+│   ├── ANDROID_BUILD.md            # Android 빌드 가이드
+│   ├── CLEAN_ARCHITECTURE_MIGRATION.md # Clean Architecture 가이드
+│   ├── PROGRESS.md                 # 개발 진행 상황
 │   ├── README.md                   # 원본 리드미
 │   ├── CLAUDE.md                   # Claude 개발 문서
 │   ├── gemini.md                   # Gemini 개발 문서
@@ -64,22 +56,9 @@ academy-dating-sim-project/
 
 ### 📱 academy-dating-sim (메인 앱)
 - **Clean Architecture** 패턴을 적용한 React + TypeScript 앱
-- **Capacitor**를 사용한 크로스 플랫폼 지원
-- **Vite** 빌드 시스템
-- **Tailwind CSS** 스타일링
-
-### 🌐 web-app (웹 버전)
-- 순수 HTML/JavaScript로 구현된 간단한 웹 버전
-- PWA 지원 (manifest.json, service-worker.js)
-- 아이콘 생성기 포함
-
-### 📱 mobile (모바일 버전)
-- Android 네이티브 빌드 파일들
-- Capacitor를 통해 메인 앱과 연동
-
-### 🐍 games (대안 게임들)
-- Python으로 구현된 게임 버전
-- 다른 기술 스택으로 구현된 실험적 버전들
+- **Capacitor**를 사용한 크로스 플랫폼 지원 (웹 + 모바일)
+- **Vite** 빌드 시스템 + **Tailwind CSS** 스타일링
+- **config/** 폴더에 모든 설정 파일 정리
 
 ### 🖼️ assets (공용 자산)
 - 모든 버전에서 공통으로 사용할 수 있는 이미지, 아이콘 등
@@ -96,23 +75,31 @@ academy-dating-sim-project/
 ```bash
 cd academy-dating-sim
 npm install
-npm run dev
-```
-
-### 웹 앱 개발
-```bash
-cd web-app
-npm install
-npm start
+npm run dev          # 개발 서버 시작
+npm run build        # 프로덕션 빌드
+npm run lint         # 코드 검사
 ```
 
 ### 모바일 빌드
 ```bash
 cd academy-dating-sim
-npm run build
-npx cap sync android
-npx cap open android
+npm run android:build   # Android 빌드 준비
+npm run android:open    # Android Studio 열기
+npm run android:run     # 디바이스에서 실행
 ```
+
+## 🎯 설정 파일 관리
+
+모든 설정 파일들이 `config/` 폴더로 정리되었습니다:
+
+- **vite.config.ts**: Vite 빌드 도구 설정
+- **tailwind.config.js**: Tailwind CSS 스타일 설정
+- **postcss.config.js**: PostCSS 전처리기 설정
+- **eslint.config.js**: ESLint 코드 품질 설정
+- **tsconfig*.json**: TypeScript 컴파일러 설정
+- **vercel.json**: Vercel 배포 설정
+
+설정 변경 시 `config/` 폴더 내의 파일들을 수정하면 됩니다.
 
 ## 🏗️ 아키텍처 특징
 
@@ -123,9 +110,9 @@ npx cap open android
 - **Presentation Layer**: UI 컴포넌트와 상태 관리
 
 ### 다중 플랫폼 지원
-- **웹**: Progressive Web App
-- **모바일**: Capacitor를 통한 네이티브 앱
-- **데스크톱**: Electron (향후 지원 예정)
+- **웹**: Progressive Web App 기능 포함
+- **모바일**: Capacitor를 통한 네이티브 앱 생성
+- **데스크톱**: Electron 지원 (향후 계획)
 
 ## 📋 개발 상태
 

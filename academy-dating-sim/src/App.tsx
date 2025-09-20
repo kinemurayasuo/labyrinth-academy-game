@@ -12,6 +12,10 @@ import CharacterCardPage from './components/character/CharacterCardPage';
 import AccountCreation from './components/pages/AccountCreation';
 import GameInfo from './components/pages/GameInfo';
 import Settings from './components/pages/Settings';
+import Achievements from './components/game/Achievements';
+import Collection from './components/game/Collection';
+import DailyQuests from './components/game/DailyQuests';
+import EventCalendar from './components/game/EventCalendar';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,6 +73,10 @@ function App() {
           <Route path="/dungeon" element={<DungeonPage />} />
           <Route path="/shopping" element={<ShoppingPage />} />
           <Route path="/characters" element={<CharacterCardPage />} />
+          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/quests" element={<DailyQuests />} />
+          <Route path="/calendar" element={<EventCalendar />} />
           <Route
             path="/game"
             element={gameEnding ? <EndingScreen /> : <GameUI />}
