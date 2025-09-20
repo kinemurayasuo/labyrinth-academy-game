@@ -1,9 +1,0 @@
-:root {
-  --background: #1a1a2e;
-  --primary: #9c27b0;
-  --secondary: #e91e63;
-  --accent: #f1c40f;
-  --text-primary: #ffffff;
-  --text-secondary: #a9a9a9;
-  --border: #4a4a6a;
-}
