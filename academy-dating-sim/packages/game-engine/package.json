@@ -1,0 +1,29 @@
+{
+  "name": "@academy-dating-sim/game-engine",
+  "version": "1.0.0",
+  "description": "게임 엔진 및 비즈니스 로직",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@academy-dating-sim/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "rimraf": "^6.0.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
