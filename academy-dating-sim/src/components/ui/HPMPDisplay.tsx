@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGameStore } from '../store/useGameStore';
+import { useGameStore } from '../../store/useGameStore';
 
 const HPMPDisplay: React.FC = () => {
   const { player } = useGameStore();

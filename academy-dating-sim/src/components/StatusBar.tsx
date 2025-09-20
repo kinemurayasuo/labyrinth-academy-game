@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGameStore } from '../store/useGameStore';
+import { useGameStore } from '../../store/useGameStore';
 
 const StatusBar: React.FC = () => {
   const player = useGameStore((state) => state.player);

@@ -1,5 +1,11 @@
+# Project Structure - Academy Dating Sim
+# Updated for clean folder organization
+
 # Dependencies
 node_modules/
+*/node_modules/
+academy-dating-sim/node_modules/
+web-app/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

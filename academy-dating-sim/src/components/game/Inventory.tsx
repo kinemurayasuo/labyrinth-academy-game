@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import type { Item } from '../types/game';
-import { useGameStore } from '../store/useGameStore';
-import itemsData from '../data/items.json';
-import charactersData from '../data/characters.json';
+import type { Item } from '../../types/game';
+import { useGameStore } from '../../store/useGameStore';
+import itemsData from '../../data/items.json';
+import charactersData from '../../data/characters.json';
 
 interface InventoryProps {
   onClose?: () => void;

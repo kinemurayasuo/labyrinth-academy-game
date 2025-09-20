@@ -221,6 +221,181 @@
         "bossDefeated": true,
         "itemRequired": "mysteryKey"
       }
+    },
+    {
+      "id": 4,
+      "name": "얼음 동굴",
+      "description": "영원히 얼어붙은 동굴. 극한의 추위가 모험자를 시험한다.",
+      "layout": [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 2, 0, 0, 0, 1, 1, 0, 0, 0, 3, 1],
+        [1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1],
+        [1, 0, 0, 1, 0, 5, 5, 0, 1, 0, 0, 1],
+        [1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 1],
+        [1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1],
+        [1, 0, 0, 1, 0, 5, 5, 0, 1, 0, 0, 1],
+        [1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ],
+      "enemies": [
+        {
+          "id": "iceGolem",
+          "name": "얼음 골렘",
+          "hp": 80,
+          "maxHp": 80,
+          "attack": 18,
+          "defense": 15,
+          "agility": 3,
+          "experience": 60,
+          "gold": 80,
+          "drops": [
+            { "itemId": "iceShard", "chance": 0.3, "quantity": 1 }
+          ],
+          "sprite": "🧊",
+          "description": "얼음으로 만들어진 거대한 골렘"
+        },
+        {
+          "id": "frostSprite",
+          "name": "서리 정령",
+          "hp": 45,
+          "maxHp": 45,
+          "attack": 22,
+          "defense": 8,
+          "agility": 12,
+          "experience": 45,
+          "gold": 60,
+          "sprite": "❄️",
+          "description": "차가운 바람을 조종하는 정령"
+        }
+      ],
+      "treasures": [
+        {
+          "id": "iceChest1",
+          "position": { "x": 5, "y": 5 },
+          "contents": [
+            { "itemId": "frostArmor", "chance": 0.8, "quantity": 1 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "iceChest2",
+          "position": { "x": 6, "y": 5 },
+          "contents": [
+            { "itemId": "healingPotion", "chance": 1.0, "quantity": 10 }
+          ],
+          "opened": false
+        }
+      ],
+      "boss": {
+        "id": "iceQueen",
+        "name": "얼음 여왕",
+        "hp": 250,
+        "maxHp": 250,
+        "attack": 35,
+        "defense": 20,
+        "agility": 10,
+        "experience": 300,
+        "gold": 500,
+        "drops": [
+          { "itemId": "iceQueenCrown", "chance": 0.7, "quantity": 1 },
+          { "itemId": "experienceScroll", "chance": 1.0, "quantity": 10 }
+        ],
+        "sprite": "👸",
+        "description": "얼음 동굴의 절대적인 지배자"
+      },
+      "nextFloorRequirement": {
+        "bossDefeated": true
+      }
+    },
+    {
+      "id": 5,
+      "name": "용암 지대",
+      "description": "뜨거운 용암이 흐르는 위험한 지역. 한 걸음 실수하면 끝이다.",
+      "layout": [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 3, 1],
+        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 1, 1, 1, 6, 6, 1, 1, 1, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ],
+      "enemies": [
+        {
+          "id": "lavaSerpent",
+          "name": "용암 뱀",
+          "hp": 90,
+          "maxHp": 90,
+          "attack": 28,
+          "defense": 10,
+          "agility": 15,
+          "experience": 80,
+          "gold": 100,
+          "sprite": "🐍",
+          "description": "용암 속에서 태어난 불의 뱀"
+        },
+        {
+          "id": "fireElemental",
+          "name": "화염 정령",
+          "hp": 70,
+          "maxHp": 70,
+          "attack": 32,
+          "defense": 5,
+          "agility": 8,
+          "experience": 70,
+          "gold": 90,
+          "sprite": "🔥",
+          "description": "순수한 화염으로 이루어진 정령"
+        }
+      ],
+      "treasures": [
+        {
+          "id": "lavaChest1",
+          "position": { "x": 6, "y": 5 },
+          "contents": [
+            { "itemId": "fireResistRing", "chance": 0.9, "quantity": 1 }
+          ],
+          "opened": false
+        },
+        {
+          "id": "lavaChest2",
+          "position": { "x": 7, "y": 5 },
+          "contents": [
+            { "itemId": "phoenixFeather", "chance": 0.5, "quantity": 1 }
+          ],
+          "opened": false
+        }
+      ],
+      "boss": {
+        "id": "firedragon",
+        "name": "화염 드래곤",
+        "hp": 400,
+        "maxHp": 400,
+        "attack": 45,
+        "defense": 25,
+        "agility": 12,
+        "experience": 500,
+        "gold": 1000,
+        "drops": [
+          { "itemId": "dragonScale", "chance": 0.8, "quantity": 1 },
+          { "itemId": "legendaryWeapon", "chance": 0.3, "quantity": 1 }
+        ],
+        "sprite": "🐲",
+        "description": "용암 지대의 최강자, 전설의 화염 드래곤"
+      },
+      "nextFloorRequirement": {
+        "bossDefeated": true,
+        "levelRequired": 30
+      }
     }
   ],
   "legend": {

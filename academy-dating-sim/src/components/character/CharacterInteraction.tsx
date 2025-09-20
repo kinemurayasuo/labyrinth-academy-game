@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Character, Item } from '../types/game';
-import { useGameStore } from '../store/useGameStore';
+import { useGameStore } from '../../store/useGameStore';
 
 interface CharacterInteractionProps {
   characters: Record<string, Character>;
