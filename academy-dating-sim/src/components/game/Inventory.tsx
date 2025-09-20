@@ -20,34 +20,6 @@ const Inventory: React.FC<InventoryProps> = ({
   const [showGiftTarget, setShowGiftTarget] = useState(false);
   const [filter, setFilter] = useState<'all' | 'gift' | 'consumable' | 'special' | 'weapon' | 'armor' | 'accessory'>('all');
 
-  const getItemIcon = (item: Item) => {
-    if (item.icon) return item.icon;
-
-    if (item.type === 'gift') {
-      if (item.name.includes('꽃')) return '🌸';
-      if (item.name.includes('초콜릿')) return '🍫';
-      if (item.name.includes('편지')) return '💌';
-      if (item.name.includes('케이크')) return '🎂';
-      return '🎁';
-    }
-    if (item.type === 'consumable') {
-      if (item.name.includes('커피')) return '☕';
-      if (item.name.includes('에너지')) return '⚡';
-      if (item.name.includes('책')) return '📚';
-      if (item.name.includes('음료')) return '🥤';
-      return '💊';
-    }
-    if (item.type === 'weapon') return '⚔️';
-    if (item.type === 'armor') return '🛡️';
-    if (item.type === 'accessory') return '💍';
-    if (item.type === 'special') {
-      if (item.name.includes('열쇠')) return '🗝️';
-      if (item.name.includes('카드')) return '💳';
-      return '⭐';
-    }
-    return '📦';
-  };
-
   const getItemRarity = (item: Item) => {
     const rarityColors = {
       common: { color: 'border-gray-400 bg-gray-500/10', text: 'text-gray-400', name: '일반' },
@@ -207,7 +179,7 @@ const Inventory: React.FC<InventoryProps> = ({
                 className={`bg-black/30 rounded-lg p-4 border transition-all duration-200 hover:scale-105 cursor-pointer ${rarity.color}`}>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{getItemIcon(item)}</span>
+                    <span className="text-2xl">{item.icon}</span>
                     <div>
                       <h3 className="font-bold text-text-primary">{item.name}</h3>
                       <p className={`text-xs ${rarity.text} capitalize`}>{item.type}</p>
@@ -376,7 +348,7 @@ const Inventory: React.FC<InventoryProps> = ({
 
               <div className="bg-black/30 rounded-lg p-4 mb-6">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">{getItemIcon(detailedItem)}</span>
+                  <span className="text-2xl">{detailedItem.icon}</span>
                   <div>
                     <div className="font-bold text-text-primary">{detailedItem.name}</div>
                     <div className="text-sm text-text-secondary">{detailedItem.description}</div>
@@ -405,7 +377,7 @@ const Inventory: React.FC<InventoryProps> = ({
 
               <div className="bg-black/30 rounded-lg p-4 mb-6">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">{getItemIcon(selectedItem)}</span>
+                  <span className="text-2xl">{selectedItem.icon}</span>
                   <div>
                     <div className="font-bold text-text-primary">{selectedItem.name}</div>
                     <div className="text-sm text-text-secondary">{selectedItem.description}</div>

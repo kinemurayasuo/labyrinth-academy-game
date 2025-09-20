@@ -255,6 +255,18 @@ const Homepage: React.FC<HomepageProps> = React.memo(({
                   <span>게임 정보</span>
                 </div>
               </button>
+
+              <button
+                onClick={() => navigate('/api-test')}
+                className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+                aria-label="API 연결 테스트 페이지로 이동"
+                role="button"
+              >
+                <div className="flex items-center justify-center gap-3">
+                  <span className="text-xl" aria-hidden="true">🔗</span>
+                  <span>API 테스트</span>
+                </div>
+              </button>
             </div>
           </div>
 
