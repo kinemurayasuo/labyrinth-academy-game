@@ -1,0 +1,354 @@
+{
+  "events": [
+    {
+      "id": "sakura_training",
+      "name": "검술 훈련",
+      "trigger": {
+        "location": "training",
+        "character": "sakura",
+        "minAffection": 20,
+        "chance": 0.5
+      },
+      "description": "사쿠라가 검술 훈련을 제안한다.",
+      "choices": [
+        {
+          "text": "좋아, 함께 훈련하자!",
+          "effects": {
+            "affection": { "sakura": 10 },
+            "stats": { "stamina": 2 },
+            "text": "사쿠라와 즐거운 훈련 시간을 보냈다."
+          }
+        },
+        {
+          "text": "오늘은 좀 피곤해서...",
+          "effects": {
+            "affection": { "sakura": -5 },
+            "text": "사쿠라가 실망한 표정을 지었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yuki_library",
+      "name": "도서관 데이트",
+      "trigger": {
+        "location": "library",
+        "character": "yuki",
+        "minAffection": 30,
+        "chance": 0.4
+      },
+      "description": "유키가 함께 책을 읽자고 제안한다.",
+      "choices": [
+        {
+          "text": "좋은 생각이야!",
+          "effects": {
+            "affection": { "yuki": 15 },
+            "stats": { "intelligence": 3 },
+            "text": "유키와 조용한 시간을 보내며 친해졌다."
+          }
+        },
+        {
+          "text": "미안, 다른 약속이 있어.",
+          "effects": {
+            "affection": { "yuki": -3 },
+            "text": "유키가 아쉬워하는 표정을 지었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "luna_magic",
+      "name": "마법 수업",
+      "trigger": {
+        "location": "classroom",
+        "character": "luna",
+        "minAffection": 15,
+        "chance": 0.6
+      },
+      "description": "루나가 특별한 마법을 보여주겠다고 한다.",
+      "choices": [
+        {
+          "text": "와! 보고 싶어!",
+          "effects": {
+            "affection": { "luna": 12 },
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "루나의 환상적인 마법에 매료되었다."
+          }
+        },
+        {
+          "text": "마법은 위험하지 않아?",
+          "effects": {
+            "affection": { "luna": 5 },
+            "text": "루나가 안전하다고 안심시켜준다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "random_exam",
+      "name": "깜짝 시험",
+      "trigger": {
+        "location": "classroom",
+        "minDay": 5,
+        "chance": 0.2
+      },
+      "description": "갑작스러운 시험이 시작된다!",
+      "choices": [
+        {
+          "text": "열심히 푼다",
+          "condition": { "minIntelligence": 15 },
+          "effects": {
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "시험을 잘 봤다! 모두가 감탄한다."
+          }
+        },
+        {
+          "text": "대충 찍는다",
+          "effects": {
+            "stats": { "stamina": -1 },
+            "text": "시험을 망쳤다..."
+          }
+        }
+      ]
+    },
+    {
+      "id": "confession_sakura",
+      "name": "사쿠라의 고백",
+      "trigger": {
+        "character": "sakura",
+        "minAffection": 80,
+        "minDay": 20,
+        "once": true
+      },
+      "description": "사쿠라가 진지한 표정으로 다가온다...",
+      "choices": [
+        {
+          "text": "나도 좋아해",
+          "effects": {
+            "affection": { "sakura": 20 },
+            "flag": "sakura_route",
+            "text": "사쿠라와 연인이 되었다!"
+          }
+        },
+        {
+          "text": "미안, 친구로 남자",
+          "effects": {
+            "affection": { "sakura": -30 },
+            "text": "사쿠라가 슬픈 미소를 지으며 돌아섰다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mystery_encounter",
+      "name": "신비한 만남",
+      "trigger": {
+        "minDay": 10,
+        "totalAffection": 150,
+        "chance": 0.1,
+        "once": true
+      },
+      "description": "어둠 속에서 누군가 나타난다...",
+      "choices": [
+        {
+          "text": "누구세요?",
+          "effects": {
+            "unlockCharacter": "mystery",
+            "text": "신비로운 전학생을 만났다!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sakura_secret_garden",
+      "name": "비밀 정원에서의 검술 연습",
+      "trigger": {
+        "location": "secretGarden",
+        "character": "sakura",
+        "minAffection": 50,
+        "chance": 0.6
+      },
+      "description": "비밀 정원에서 사쿠라가 달빛 아래 검술을 연습하고 있다. 아름다운 자세에 감탄하게 된다.",
+      "choices": [
+        {
+          "text": "같이 연습해도 될까?",
+          "effects": {
+            "affection": { "sakura": 20 },
+            "stats": { "stamina": 3, "charm": 2 },
+            "text": "사쿠라와 달빛 아래에서 특별한 검술 연습을 했다. 둘 사이의 거리가 더욱 가까워졌다."
+          }
+        },
+        {
+          "text": "조용히 감상하기",
+          "effects": {
+            "affection": { "sakura": 15 },
+            "stats": { "charm": 1 },
+            "text": "사쿠라의 우아한 검술을 감상했다. 그녀의 진지한 모습이 인상깊었다."
+          }
+        },
+        {
+          "text": "다른 곳으로 가기",
+          "effects": {
+            "text": "조용히 자리를 떠났다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yuki_secret_garden",
+      "name": "비밀 정원의 독서 시간",
+      "trigger": {
+        "location": "secretGarden",
+        "character": "yuki",
+        "minAffection": 50,
+        "chance": 0.6
+      },
+      "description": "유키가 비밀 정원의 벤치에서 책을 읽고 있다. 달빛이 그녀의 은색 머리를 비추어 환상적인 모습이다.",
+      "choices": [
+        {
+          "text": "옆에 앉아서 함께 읽기",
+          "effects": {
+            "affection": { "yuki": 20 },
+            "stats": { "intelligence": 3, "charm": 2 },
+            "text": "유키와 함께 달빛 아래에서 책을 읽었다. 조용하고 로맨틱한 시간이었다."
+          }
+        },
+        {
+          "text": "책에 대해 이야기하기",
+          "effects": {
+            "affection": { "yuki": 15 },
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "유키와 책에 대한 깊은 대화를 나누었다. 그녀의 지적인 매력에 빠져들었다."
+          }
+        },
+        {
+          "text": "방해하지 않고 떠나기",
+          "effects": {
+            "affection": { "yuki": 5 },
+            "text": "유키의 독서를 방해하지 않기 위해 조용히 떠났다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "luna_secret_garden",
+      "name": "비밀 정원의 마법 의식",
+      "trigger": {
+        "location": "secretGarden",
+        "character": "luna",
+        "minAffection": 50,
+        "chance": 0.6
+      },
+      "description": "루나가 비밀 정원 중앙에서 신비한 마법 의식을 행하고 있다. 주변에 반짝이는 마법의 빛들이 춤추고 있다.",
+      "choices": [
+        {
+          "text": "의식에 참여하기",
+          "condition": {
+            "minIntelligence": 15
+          },
+          "effects": {
+            "affection": { "luna": 25 },
+            "stats": { "intelligence": 2, "charm": 3, "luck": 1 },
+            "text": "루나와 함께 신비한 마법 의식에 참여했다. 마법의 힘이 몸 안으로 흘러들어오는 것을 느꼈다."
+          }
+        },
+        {
+          "text": "경외심으로 지켜보기",
+          "effects": {
+            "affection": { "luna": 15 },
+            "stats": { "charm": 2 },
+            "text": "루나의 아름다운 마법 의식을 감상했다. 그녀의 신비한 매력에 마음이 설렜다."
+          }
+        },
+        {
+          "text": "조용히 물러나기",
+          "effects": {
+            "text": "신성한 의식을 방해하지 않기 위해 조용히 물러났다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "secret_garden_stargazing",
+      "name": "비밀 정원에서의 별보기",
+      "trigger": {
+        "location": "secretGarden",
+        "time": "night",
+        "minAffection": 30,
+        "chance": 0.4
+      },
+      "description": "비밀 정원에서 혼자 별을 보고 있는데, 누군가가 조용히 다가온다.",
+      "choices": [
+        {
+          "text": "함께 별을 보자고 제안하기",
+          "effects": {
+            "stats": { "charm": 2, "luck": 1 },
+            "text": "아름다운 별빛 아래에서 로맨틱한 시간을 보냈다."
+          }
+        },
+        {
+          "text": "별자리에 대해 이야기하기",
+          "effects": {
+            "stats": { "intelligence": 2, "charm": 1 },
+            "text": "별자리와 신화에 대한 흥미로운 대화를 나누었다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "secret_garden_confession",
+      "name": "비밀 정원에서의 고백",
+      "trigger": {
+        "location": "secretGarden",
+        "minAffection": 80,
+        "chance": 0.3,
+        "once": true
+      },
+      "description": "비밀 정원의 아름다운 분위기 속에서 특별한 누군가와 마주한다. 이제 마음을 전할 때인 것 같다.",
+      "choices": [
+        {
+          "text": "솔직한 마음을 고백하기",
+          "effects": {
+            "flag": "secret_garden_confession",
+            "text": "비밀 정원에서 진심어린 고백을 했다. 특별한 추억이 만들어졌다."
+          }
+        },
+        {
+          "text": "아직은 때가 아닌 것 같다",
+          "effects": {
+            "text": "마음을 전하지 못했지만, 이 순간만으로도 충분히 아름다웠다."
+          }
+        }
+      ]
+    }
+  ],
+  "randomEvents": [
+    {
+      "id": "found_money",
+      "name": "동전 발견",
+      "chance": 0.1,
+      "effects": {
+        "item": "동전",
+        "text": "바닥에서 반짝이는 동전을 발견했다!"
+      }
+    },
+    {
+      "id": "cat_encounter",
+      "name": "고양이와의 만남",
+      "chance": 0.15,
+      "effects": {
+        "stats": { "charm": 1 },
+        "text": "귀여운 고양이를 쓰다듬었다. 기분이 좋아진다!"
+      }
+    },
+    {
+      "id": "rain_day",
+      "name": "비오는 날",
+      "chance": 0.2,
+      "effects": {
+        "stats": { "stamina": -1 },
+        "text": "갑작스런 비에 젖었다. 조금 피곤해진다."
+      }
+    }
+  ]
+}

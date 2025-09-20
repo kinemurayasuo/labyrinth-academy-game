@@ -1,0 +1,53 @@
+{
+  "name": "@academy-dating-sim/frontend",
+  "version": "1.6.0",
+  "type": "module",
+  "description": "Academy Dating Sim 프론트엔드 웹 애플리케이션",
+  "scripts": {
+    "dev": "vite --config ../../configs/vite.config.ts",
+    "build": "vite build --config ../../configs/vite.config.ts",
+    "preview": "vite preview --config ../../configs/vite.config.ts",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf dist",
+    
+    "lint": "eslint . --config ../../configs/eslint.config.js",
+    "lint:fix": "eslint . --config ../../configs/eslint.config.js --fix",
+    
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    
+    "deploy": "npm run build && npx gh-pages -d dist"
+  },
+  "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.1",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.2",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.3.3",
+    "vite": "^7.1.6",
+    "vitest": "^2.0.0",
+    "rimraf": "^5.0.5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

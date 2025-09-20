@@ -1,0 +1,552 @@
+{
+  "items": {
+    "flower": {
+      "id": "flower",
+      "name": "꽃다발",
+      "description": "라비린스 아카데미 정원에서 직접 따온 신선한 꽃다발. 장미, 백합, 벚꽃이 조화롭게 어우러져 있어 누구에게나 기쁨을 선사한다.",
+      "detailedDescription": "학원 내 플로리스트 샵에서 구매할 수 있는 기본적인 선물용 꽃다발입니다.",
+      "usage": "캐릭터와의 대화 중 선물하기 옵션에서 사용",
+      "useLocation": "모든 캐릭터와의 만남 장소",
+      "usableBy": "모든 캐릭터에게 선물 가능",
+      "lore": "학원의 마법적인 환경으로 인해 이 꽃들은 일반 꽃보다 오래 시들지 않으며, 은은한 마법의 향기를 내뿜는다.",
+      "type": "gift",
+      "rarity": "common",
+      "value": 100,
+      "effect": {
+        "affection": 10
+      },
+      "preferredBy": ["sakura", "luna"],
+      "icon": "🌸",
+      "category": "선물"
+    },
+    "book": {
+      "id": "book",
+      "name": "희귀한 책",
+      "description": "고대 마법 이론을 다룬 희귀한 서적. 학원 도서관에서도 찾기 힘든 귀중한 지식이 담겨 있어 학자들에게는 보물과 같은 존재다.",
+      "detailedDescription": "도서관의 제한 구역이나 고서점에서만 구할 수 있는 희귀 도서입니다. 특히 독서를 좋아하는 캐릭터들에게 큰 감동을 줍니다.",
+      "usage": "도서부 부장 유키에게 선물하거나, 마법학 수업에서 추가 점수 획득용으로 사용",
+      "useLocation": "도서관, 캐릭터 선물하기, 마법학부 교실",
+      "usableBy": "주로 유키, 지적인 캐릭터들에게 효과적",
+      "lore": "전설의 마법사가 쓴 이 책은 읽는 자의 지혜를 깨우치고, 숨겨진 마법의 비밀을 알려준다고 전해진다.",
+      "type": "gift",
+      "rarity": "uncommon",
+      "value": 200,
+      "effect": {
+        "affection": 15
+      },
+      "preferredBy": ["yuki"],
+      "icon": "📚",
+      "category": "선물"
+    },
+    "charm": {
+      "id": "charm",
+      "name": "마법 부적",
+      "description": "고대 룬 문자가 새겨진 신비한 부적. 착용자를 악운으로부터 보호하고 마법력을 증진시키는 효과가 있다고 전해진다.",
+      "detailedDescription": "학원의 마법상점에서 판매하는 특별한 부적으로, 마법에 관심 있는 학생들 사이에서 인기가 높습니다.",
+      "usage": "마법학부 학생들에게 선물하거나, 던전 탐험 시 행운 증가 효과로 사용 가능",
+      "useLocation": "마법학부, 던전, 캐릭터 선물하기",
+      "usableBy": "루나, 미스터리 캐릭터 등 마법 관련 캐릭터들",
+      "lore": "학원 창립자가 직접 제작한 부적의 복제품으로, 원본의 10% 정도 효과를 지니고 있다.",
+      "type": "gift",
+      "rarity": "rare",
+      "value": 300,
+      "effect": {
+        "affection": 12
+      },
+      "preferredBy": ["luna", "mystery"],
+      "icon": "🧿",
+      "category": "선물"
+    },
+    "studyGuide": {
+      "id": "studyGuide",
+      "name": "공부 가이드",
+      "description": "라비린스 아카데미의 모든 과목을 망라한 종합 학습 가이드북. 효율적인 공부법과 핵심 요점이 정리되어 있어 단기간에 지식을 늘릴 수 있다.",
+      "detailedDescription": "학원 서점에서 판매하는 공식 교재로, 모든 학생들이 한 권씩은 가지고 있을 정도로 유용합니다.",
+      "usage": "인벤토리에서 직접 사용하여 지력 상승, 시험 기간에 사용하면 추가 보너스",
+      "useLocation": "도서관, 개인 기숙사, 교실",
+      "usableBy": "플레이어 캐릭터 전용",
+      "lore": "우수한 졸업생들이 후배들을 위해 만든 학습서로, 실제 시험에서 높은 적중률을 보인다.",
+      "type": "consumable",
+      "rarity": "common",
+      "value": 150,
+      "effect": {
+        "intelligence": 5
+      },
+      "icon": "📖",
+      "category": "소모품"
+    },
+    "energyDrink": {
+      "id": "energyDrink",
+      "name": "에너지 드링크",
+      "description": "학원 내 카페테리아에서 판매하는 특제 에너지 음료. 마법적 성분이 첨가되어 일반 음료보다 피로 회복 효과가 뛰어나며, 체력과 정신력을 동시에 보충해준다.",
+      "detailedDescription": "시험 기간이나 던전 탐험 전후에 많이 찾는 인기 음료입니다.",
+      "usage": "피로하거나 HP가 부족할 때 즉시 사용하여 체력과 스태미나 회복",
+      "useLocation": "어디서든 사용 가능, 카페테리아에서 구매",
+      "usableBy": "모든 캐릭터",
+      "lore": "학원의 연금술사들이 개발한 특별한 배합으로, 부작용 없이 안전하게 에너지를 보충할 수 있다.",
+      "type": "consumable",
+      "rarity": "common",
+      "value": 50,
+      "effect": {
+        "stamina": 3,
+        "hp": 20
+      },
+      "icon": "🥤",
+      "category": "소모품"
+    },
+    "mirror": {
+      "id": "mirror",
+      "name": "마법 거울",
+      "description": "사용자의 외모를 일시적으로 보정해주는 마법이 걸린 소형 거울. 자신감을 높이고 타인에게 더 매력적으로 보이게 해주는 효과가 있다.",
+      "detailedDescription": "마법상점에서 판매하는 뷰티 아이템으로, 특히 데이트나 중요한 만남 전에 사용하면 효과적입니다.",
+      "usage": "중요한 대화나 이벤트 전에 사용하여 매력도 일시 증가",
+      "useLocation": "기숙사, 화장실, 데이트 장소",
+      "usableBy": "플레이어 캐릭터",
+      "lore": "옛날 왕실에서 사용하던 마법 거울의 소형 버전으로, 진실한 아름다움을 비춰준다고 한다.",
+      "type": "consumable",
+      "rarity": "uncommon",
+      "value": 120,
+      "effect": {
+        "charm": 3
+      },
+      "icon": "🪞",
+      "category": "소모품"
+    },
+    "lunchbox": {
+      "id": "lunchbox",
+      "name": "도시락",
+      "description": "직접 만든 정성 가득한 도시락. 영양 균형을 고려한 메뉴 구성과 예쁜 플레이팅으로 받는 이의 마음까지 따뜻하게 만들어주는 특별한 선물이다.",
+      "detailedDescription": "요리 수업에서 배운 기술로 직접 만들거나 카페테리아에서 주문 제작할 수 있습니다.",
+      "usage": "캐릭터에게 선물하여 호감도 상승, 함께 먹으면서 친밀도 증진",
+      "useLocation": "학원 곳곳, 피크닉 장소, 데이트 스팟",
+      "usableBy": "모든 캐릭터가 좋아함",
+      "lore": "수제 음식에는 만든 이의 마음이 담겨있어, 먹는 이에게 특별한 힘을 준다는 믿음이 있다.",
+      "type": "gift",
+      "rarity": "common",
+      "value": 80,
+      "effect": {
+        "affection": 8,
+        "stamina": 2
+      },
+      "preferredBy": ["sakura", "yuki", "luna"],
+      "icon": "🍱",
+      "category": "선물"
+    },
+    "trainingGear": {
+      "id": "trainingGear",
+      "name": "훈련 장비",
+      "description": "최고급 강철로 제작된 검술 훈련용 장비 세트. 검, 갑옷, 보호구가 모두 포함되어 있으며, 실제 검술부에서 사용하는 전문가급 장비다.",
+      "detailedDescription": "무기상점에서 특별 주문으로만 구할 수 있는 고급 훈련 장비입니다.",
+      "usage": "검술부 에이스 사쿠라에게 선물하면 큰 감동, 훈련 효율 증가 효과",
+      "useLocation": "검술부 도장, 훈련장",
+      "usableBy": "주로 사쿠라, 전투 관련 캐릭터들",
+      "lore": "전설의 검사가 사용했다는 장비를 모델로 제작되었으며, 사용자의 잠재력을 끌어낸다.",
+      "type": "gift",
+      "rarity": "rare",
+      "value": 500,
+      "effect": {
+        "affection": 20
+      },
+      "preferredBy": ["sakura"],
+      "icon": "⚔️",
+      "category": "선물"
+    },
+    "mysteryKey": {
+      "id": "mysteryKey",
+      "name": "수수께끼의 열쇠",
+      "description": "고대 룬 문자가 새겨진 신비로운 황금 열쇠. 학원 어딘가에 숨겨진 비밀의 방이나 보물고를 열 수 있는 것으로 추정되며, 특별한 이벤트를 해금할 수 있다.",
+      "detailedDescription": "전설적인 희귀 아이템으로, 특정 조건을 만족해야만 획득할 수 있습니다.",
+      "usage": "학원의 숨겨진 구역 해금, 미스터리 캐릭터 만남, 특별 엔딩 루트 개방",
+      "useLocation": "학원 지하, 금지된 탑, 비밀 통로",
+      "usableBy": "플레이어 캐릭터, 특정 조건 충족 시",
+      "lore": "학원 창립자가 남긴 마지막 비밀을 담고 있다고 전해지며, 진정한 졸업의 열쇠라고 불린다.",
+      "type": "special",
+      "rarity": "legendary",
+      "value": 1000,
+      "effect": {
+        "unlockSecret": true
+      },
+      "icon": "🗝️",
+      "category": "특별"
+    },
+    "basicSword": {
+      "id": "basicSword",
+      "name": "연습용 검",
+      "description": "검술부 신입생들이 첫 수업에서 사용하는 나무 연습검. 가벼워서 다루기 쉬우며, 기본적인 검술 동작을 익히는 데 적합하다. 안전을 위해 끝이 둥글게 처리되어 있다.",
+      "detailedDescription": "모든 신입생에게 지급되는 기본 장비로, 무기상점에서도 저렴하게 구매할 수 있습니다.",
+      "usage": "검술 훈련, 기본 전투, 던전 초급 층 탐험",
+      "useLocation": "검술부 도장, 훈련장, 던전",
+      "usableBy": "레벨 1 이상 모든 캐릭터",
+      "lore": "전설의 검사들도 이 같은 나무검으로 수련을 시작했다고 한다. 모든 위대한 여정의 첫 걸음이다.",
+      "type": "weapon",
+      "rarity": "common",
+      "value": 200,
+      "effect": {
+        "strength": 5,
+        "agility": 2
+      },
+      "requirements": {
+        "level": 1
+      },
+      "icon": "🗡️",
+      "category": "무기"
+    },
+    "steelSword": {
+      "id": "steelSword",
+      "name": "강철 검",
+      "description": "전문 대장장이가 제작한 고품질 강철 검. 정교한 단조 과정을 거쳐 만들어졌으며, 날카로움과 내구성을 모두 지니고 있다. 중급자용 무기로 인기가 높다.",
+      "detailedDescription": "어느 정도 실력을 쌓은 학생들이 사용하는 중급자용 무기입니다.",
+      "usage": "중급 수준의 검술 훈련, 던전 중급 층 탐험, 실전 전투",
+      "useLocation": "검술부 고급 도장, 던전, 전투 관련 이벤트",
+      "usableBy": "레벨 5 이상, 힘 15 이상의 캐릭터",
+      "lore": "학원의 대장장이가 직접 단조한 작품으로, 착용자의 의지에 따라 그 위력이 달라진다고 한다.",
+      "type": "weapon",
+      "rarity": "uncommon",
+      "value": 800,
+      "effect": {
+        "strength": 12,
+        "agility": 5
+      },
+      "requirements": {
+        "level": 5,
+        "stats": { "strength": 15 }
+      },
+      "icon": "⚔️",
+      "category": "무기"
+    },
+    "mysticStaff": {
+      "id": "mysticStaff",
+      "name": "신비한 지팡이",
+      "description": "고대 마법사의 지팡이를 모델로 제작된 신비로운 무기. 각종 마법 보석이 박혀있으며, 마법력 증폭과 주문 성공률 상승 효과가 있다. 우아한 디자인으로 인해 매력도 날씬하게 해준다.",
+      "detailedDescription": "마법학부 고급생들에게 인기가 높은 고급 마법 무기입니다.",
+      "usage": "고급 마법 주문 시전, 마법학 연구, 던전 고급 층 탐험",
+      "useLocation": "마법학부, 마법 연구실, 던전",
+      "usableBy": "레벨 8 이상, 지력 20 이상의 마법사 타입 캐릭터",
+      "lore": "전설의 대마법사가 사용했다는 지팡이의 복제품으로, 사용자의 지혜와 마음에 반응한다.",
+      "type": "weapon",
+      "rarity": "rare",
+      "value": 1200,
+      "effect": {
+        "intelligence": 15,
+        "mp": 30,
+        "charm": 8
+      },
+      "requirements": {
+        "level": 8,
+        "stats": { "intelligence": 20 }
+      },
+      "icon": "🪄",
+      "category": "무기"
+    },
+    "leatherArmor": {
+      "id": "leatherArmor",
+      "name": "가죽 갑옷",
+      "description": "마수 거시에서 얻은 고급 가죽으로 제작한 경량 방어구. 유연성과 내구성을 모두 갖춘 실용적인 갑옷으로, 민첩성을 해치지 않으면서도 효과적인 방어를 제공한다.",
+      "detailedDescription": "초보자들이 가장 먼저 구입하는 기본적인 방어구입니다.",
+      "usage": "일반적인 던전 탐험, 기본 방어력 확보, 전투 훈련",
+      "useLocation": "던전, 훈련장, 일상 활동",
+      "usableBy": "레벨 2 이상 모든 캐릭터",
+      "lore": "모험가들의 기본 장비로 여겨지는 가죽 갑옷은 수많은 영웅들이 첫 모험에서 착용했던 동료이다.",
+      "type": "armor",
+      "rarity": "common",
+      "value": 300,
+      "effect": {
+        "hp": 20,
+        "agility": 3
+      },
+      "requirements": {
+        "level": 2
+      },
+      "icon": "🛡️",
+      "category": "방어구"
+    },
+    "plateArmor": {
+      "id": "plateArmor",
+      "name": "판갑옷",
+      "description": "최고급 강철로 제작된 중장 방어구. 각 부분이 정밀하게 설계되어 최대한의 방어력을 제공하며, 무게감으로 인해 착용자의 힘도 증가시킨다. 기사들의 상징이다.",
+      "detailedDescription": "고급 전사들이 선호하는 중무장 방어구로, 높은 체력이 필요합니다.",
+      "usage": "고난이도 전투, 던전 보스전, 중요한 미션",
+      "useLocation": "던전 심층, 고난이도 전투 지역",
+      "usableBy": "레벨 6 이상, 힘 18 이상의 전사 타입 캐릭터",
+      "lore": "기사단의 정예 멤버들이 착용하는 갑옷으로, 착용자에게 불굴의 의지를 부여한다고 전해진다.",
+      "type": "armor",
+      "rarity": "uncommon",
+      "value": 1000,
+      "effect": {
+        "hp": 50,
+        "strength": 8
+      },
+      "requirements": {
+        "level": 6,
+        "stats": { "strength": 18 }
+      },
+      "icon": "🛡️",
+      "category": "방어구"
+    },
+    "mageRobe": {
+      "id": "mageRobe",
+      "name": "마법사 로브",
+      "description": "고대 마법사들이 착용했던 신비한 로브를 복원한 고급 마법 방어구. 마법 증폭 효과와 마나 회복 속도 향상 효과가 있으며, 우아한 디자인으로 인해 매력도 높여준다.",
+      "detailedDescription": "마법학부 고급생들의 선망의 대상이 되는 최고급 마법 장비입니다.",
+      "usage": "고등 마법 사용, 마법 연구, 중요한 마법 시연",
+      "useLocation": "마법학부, 마법 연구실, 개인 실험실",
+      "usableBy": "레벨 7 이상, 지력 22 이상의 마법사 타입 캐릭터",
+      "lore": "마법학부의 창립자가 직접 디자인한 로브으로, 착용자의 마법적 잠재력을 극대한 끌어낸다.",
+      "type": "armor",
+      "rarity": "rare",
+      "value": 1500,
+      "effect": {
+        "mp": 40,
+        "intelligence": 12,
+        "charm": 10
+      },
+      "requirements": {
+        "level": 7,
+        "stats": { "intelligence": 22 }
+      },
+      "icon": "👘",
+      "category": "방어구"
+    },
+    "luckRing": {
+      "id": "luckRing",
+      "name": "행운의 반지",
+      "description": "고대 점술사가 제작한 특별한 반지. 착용자에게 마법적인 행운을 선사하며, 예상치 못한 기회를 가져다준다. 매력적인 디자인으로 인해 평소에도 착용하기 좋다.",
+      "detailedDescription": "장신구 상점에서 인기가 높은 액세서리로, 학생들 사이에서 행운의 상징이다.",
+      "usage": "던전 탐험 시 드롭률 증가, 도박이나 게임에서 유리, 우연한 좋은 사건 발생 빈도 증가",
+      "useLocation": "던전, 카지노, 중요한 이벤트 지역",
+      "usableBy": "레벨 3 이상 모든 캐릭터",
+      "lore": "저주를 받은 가문의 상속녀가 운명을 바꿨다는 전설의 반지를 모델로 제작되었다.",
+      "type": "accessory",
+      "rarity": "uncommon",
+      "value": 600,
+      "effect": {
+        "luck": 10,
+        "charm": 5
+      },
+      "requirements": {
+        "level": 3
+      },
+      "icon": "💍",
+      "category": "장신구"
+    },
+    "strengthAmulet": {
+      "id": "strengthAmulet",
+      "name": "힘의 부적",
+      "description": "고대 전사들이 사용했다는 신비로운 부적. 착용자의 부력에 까지 이어지는 빨간 힘줄이 보이며, 유사시 어디서나 힘이 손솔해 나온다. 체력과 지구력도 함께 증가시키는 전사들의 필수품이다.",
+      "detailedDescription": "전사들에게 매우 인기가 높은 액세서리로, 늨성 학생들 사이에서 특히 인기가 높다.",
+      "usage": "고난이도 전투, 무거운 물건 운반, 체력이 요구되는 활동",
+      "useLocation": "던전, 훈련장, 노동 현장",
+      "usableBy": "레벨 5 이상, 힘 중심 캐릭터",
+      "lore": "전설의 용사가 마왕을 쓰러뜨릴 때 착용했다는 부적의 복제품으로, 정의로운 마음을 지닌 자에게만 그 힘을 드러낸다.",
+      "type": "accessory",
+      "rarity": "rare",
+      "value": 900,
+      "effect": {
+        "strength": 8,
+        "stamina": 6,
+        "hp": 25
+      },
+      "requirements": {
+        "level": 5
+      },
+      "icon": "🧿",
+      "category": "장신구"
+    },
+    "wisdomPendant": {
+      "id": "wisdomPendant",
+      "name": "지혜의 펜던트",
+      "description": "학원 역사상 가장 위대한 학자가 사용했다는 전설의 펜던트. 착용자의 지적 능력을 극대한 끌어올리며, 마법력과 학습 능력도 큕길하게 증진시킨다. 모든 마법사의 꿈이다.",
+      "detailedDescription": "가장 뛰어난 학생들만이 착용할 수 있는 전설적인 아이템입니다.",
+      "usage": "최고 수준의 마법 연구, 대학원 진학, 특별한 마법 시연",
+      "useLocation": "대학원 연구실, 특별 마법 실험실, 마법학 연구소",
+      "usableBy": "레벨 10 이상, 지력 25 이상의 최고 수준 학생",
+      "lore": "차원의 비밀을 해명한 대마법사의 유물로, 착용자에게 무한한 지식에 대한 갈망과 능력을 선사한다.",
+      "type": "accessory",
+      "rarity": "epic",
+      "value": 1800,
+      "effect": {
+        "intelligence": 15,
+        "mp": 35,
+        "experience": 50
+      },
+      "requirements": {
+        "level": 10,
+        "stats": { "intelligence": 25 }
+      },
+      "icon": "📿",
+      "category": "장신구"
+    },
+    "healingPotion": {
+      "id": "healingPotion",
+      "name": "치유 물약",
+      "description": "학원의 연금술사들이 제조한 효과적인 치유 물약. 대다수의 상처와 피로를 즉시 회복시켜주며, 달콤한 딥기 맛이 나서 아이들도 부담 없이 마실 수 있다.",
+      "detailedDescription": "던전 탐험이나 전투 후 필수품으로, 모든 모험가들이 항상 지니고 다니는 기본 아이템입니다.",
+      "usage": "체력이 낮을 때 즉시 사용하여 생명력 회복, 전투 중 응급 치료",
+      "useLocation": "던전, 전투 지역, 응급 상황",
+      "usableBy": "모든 캐릭터",
+      "lore": "연금술의 기본 쓰임으로 여겨지는 치유 물약은 수많은 생명을 구해온 경이로운 발명품이다.",
+      "type": "consumable",
+      "rarity": "common",
+      "value": 100,
+      "effect": {
+        "hp": 50
+      },
+      "icon": "🧪",
+      "category": "소모품"
+    },
+    "manaPotion": {
+      "id": "manaPotion",
+      "name": "마나 물약",
+      "description": "마법의 힐을 담은 신비한 파란색 물약. 마법사들이 소진한 마나를 즉시 회복시켜주며, 마법 사용으로 인한 정신적 피로도 완화시켜준다. 연금술의 공정에서 원생 마나를 낙륙시켜 만든다.",
+      "detailedDescription": "마법사들에게는 마치 생명선과 같은 존재로, 마법을 많이 사용하는 학생들에게 필수품입니다.",
+      "usage": "마나가 부족할 때 사용하여 마법력 회복, 연속적인 마법 사용 전",
+      "useLocation": "마법 수업 중, 마법 실험, 던전 탐험",
+      "usableBy": "마법을 사용하는 모든 캐릭터",
+      "lore": "고대부터 마법사들의 동반자가 되어온 물약으로, 마법의 발전과 함께 함께 진보해왔다.",
+      "type": "consumable",
+      "rarity": "common",
+      "value": 120,
+      "effect": {
+        "mp": 40
+      },
+      "icon": "🧪",
+      "category": "소모품"
+    },
+    "experienceScroll": {
+      "id": "experienceScroll",
+      "name": "경험치 두루마리",
+      "description": "전인들의 지식과 경험이 압축되어 담겨진 신비로운 두루마리. 사용하면 마치 오랜 수련을 한 것처럼 경험치를 얻을 수 있으며, 새로운 통찰력과 이해력이 얻어진다.",
+      "detailedDescription": "특별한 이벤트나 보상으로만 얻을 수 있는 귀중한 아이템입니다.",
+      "usage": "빠른 레벨 업을 위해 사용, 시험 기간 전 집중 학습",
+      "useLocation": "도서관, 개인 스터디룸, 명상 공간",
+      "usableBy": "모든 캐릭터",
+      "lore": "학원의 대선배들이 후배들의 성장을 위해 자신들의 경험을 흑어넣은 소중한 선물이다.",
+      "type": "consumable",
+      "rarity": "uncommon",
+      "value": 250,
+      "effect": {
+        "experience": 100
+      },
+      "icon": "📜",
+      "category": "소모품"
+    },
+    "statBooster": {
+      "id": "statBooster",
+      "name": "능력치 강화제",
+      "description": "전설의 연금술사가 개발한 최고급 강화 물약. 모든 능력치를 동시에 강화시켜주는 기적의 약물로, 마시는 순간 전신에 활력이 넘친다. 하지만 강력한 효과로 인해 자주 사용할 수는 없다.",
+      "detailedDescription": "극히 희귀한 고급 소모품으로, 신중하게 사용해야 합니다.",
+      "usage": "중요한 시험이나 대회 전, 위기 상황에서 비상 용도로 사용",
+      "useLocation": "중요한 이벤트 전, 보스 전투 전, 합격 선언 직전",
+      "usableBy": "모든 캐릭터 (단, 과도한 사용 금지)",
+      "lore": "오직 단 한 번의 시험만을 위해 일년을 공들인 연금술사의 작품으로, 모든 능력의 조화를 이룬다.",
+      "type": "consumable",
+      "rarity": "rare",
+      "value": 500,
+      "effect": {
+        "intelligence": 3,
+        "charm": 3,
+        "stamina": 3,
+        "strength": 3,
+        "agility": 3,
+        "luck": 3
+      },
+      "icon": "⚗️",
+      "category": "소모품"
+    },
+    "chocolateBox": {
+      "id": "chocolateBox",
+      "name": "고급 초콜릿 세트",
+      "description": "유명 파티시에가 만든 프리미엄 초콜릿 세트. 각기 다른 맛과 모양의 초콜릿 12개가 아름다운 상자에 정성스럽게 포장되어 있어, 받는 이의 마음을 설레게 한다.",
+      "detailedDescription": "발렌타인 데이나 특별한 기념일에 인기가 높은 선물입니다.",
+      "usage": "로맨틱한 이벤트나 고백 시 사용, 달콤함을 좋아하는 캐릭터들에게 효과적",
+      "useLocation": "카페, 데이트 장소, 기념일 이벤트",
+      "usableBy": "유키, 루나 등 단것을 좋아하는 캐릭터들",
+      "lore": "사랑의 감정을 달콤함으로 표현한다는 초콜릿의 전통을 이어받은 특별한 선물이다.",
+      "type": "gift",
+      "rarity": "uncommon",
+      "value": 350,
+      "effect": {
+        "affection": 18
+      },
+      "preferredBy": ["yuki", "luna"],
+      "icon": "🍫",
+      "category": "선물"
+    },
+    "jewelryBox": {
+      "id": "jewelryBox",
+      "name": "보석함",
+      "description": "희귀한 마법 보석들이 들어있는 최고급 장신구 상자. 루비, 사파이어, 에메랄드 등 각각 다른 마법적 속성을 지닌 보석들이 벨벳 안감의 상자에 정교하게 배치되어 있다.",
+      "detailedDescription": "왕실 보석상에서만 구할 수 있는 초고급 선물로, 진정한 사랑의 증표로 여겨집니다.",
+      "usage": "최고 수준의 호감도가 필요한 고백이나 프로포즈 시 사용",
+      "useLocation": "로맨틱한 장소, 특별한 이벤트",
+      "usableBy": "루나, 미스터리 등 고급스러운 것을 좋아하는 캐릭터들",
+      "lore": "각 보석에는 영원한 사랑을 기원하는 고대 마법이 깃들어 있어, 진실한 마음으로 선물할 때만 그 진가를 발휘한다.",
+      "type": "gift",
+      "rarity": "epic",
+      "value": 1200,
+      "effect": {
+        "affection": 35
+      },
+      "preferredBy": ["luna", "mystery"],
+      "icon": "💎",
+      "category": "선물"
+    }
+  },
+  "shop": [
+    {
+      "itemId": "flower",
+      "price": 100,
+      "stock": -1
+    },
+    {
+      "itemId": "book",
+      "price": 200,
+      "stock": 3
+    },
+    {
+      "itemId": "energyDrink",
+      "price": 50,
+      "stock": -1
+    },
+    {
+      "itemId": "studyGuide",
+      "price": 150,
+      "stock": 2
+    },
+    {
+      "itemId": "lunchbox",
+      "price": 80,
+      "stock": -1
+    },
+    {
+      "itemId": "healingPotion",
+      "price": 100,
+      "stock": -1
+    },
+    {
+      "itemId": "manaPotion",
+      "price": 120,
+      "stock": -1
+    },
+    {
+      "itemId": "basicSword",
+      "price": 200,
+      "stock": 1
+    },
+    {
+      "itemId": "leatherArmor",
+      "price": 300,
+      "stock": 1
+    },
+    {
+      "itemId": "luckRing",
+      "price": 600,
+      "stock": 1
+    },
+    {
+      "itemId": "chocolateBox",
+      "price": 350,
+      "stock": 5
+    }
+  ]
+}

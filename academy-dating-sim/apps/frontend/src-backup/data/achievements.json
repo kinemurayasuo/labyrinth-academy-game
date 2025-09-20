@@ -1,0 +1,184 @@
+{
+  "achievements": [
+    {
+      "id": "first_love",
+      "name": "첫사랑",
+      "description": "첫 번째 히로인과 호감도 50 달성",
+      "icon": "💕",
+      "points": 10,
+      "category": "romance",
+      "condition": {
+        "type": "affection",
+        "value": 50
+      }
+    },
+    {
+      "id": "popular",
+      "name": "인기남/인기녀",
+      "description": "모든 히로인과 호감도 30 이상",
+      "icon": "🌟",
+      "points": 20,
+      "category": "romance",
+      "condition": {
+        "type": "all_affection",
+        "value": 30
+      }
+    },
+    {
+      "id": "true_love",
+      "name": "진정한 사랑",
+      "description": "한 히로인과 호감도 100 달성",
+      "icon": "❤️",
+      "points": 30,
+      "category": "romance",
+      "condition": {
+        "type": "max_affection",
+        "value": 100
+      }
+    },
+    {
+      "id": "monster_slayer",
+      "name": "몬스터 슬레이어",
+      "description": "몬스터 100마리 처치",
+      "icon": "⚔️",
+      "points": 15,
+      "category": "combat",
+      "condition": {
+        "type": "monsters_defeated",
+        "value": 100
+      }
+    },
+    {
+      "id": "dragon_slayer",
+      "name": "드래곤 슬레이어",
+      "description": "화염 드래곤 처치",
+      "icon": "🐉",
+      "points": 50,
+      "category": "combat",
+      "condition": {
+        "type": "boss_defeated",
+        "value": "fire_dragon"
+      }
+    },
+    {
+      "id": "dungeon_master",
+      "name": "던전 마스터",
+      "description": "모든 던전 층 클리어",
+      "icon": "🏰",
+      "points": 40,
+      "category": "exploration",
+      "condition": {
+        "type": "dungeon_clear",
+        "value": 5
+      }
+    },
+    {
+      "id": "treasure_hunter",
+      "name": "보물 사냥꾼",
+      "description": "보물 50개 발견",
+      "icon": "💎",
+      "points": 20,
+      "category": "exploration",
+      "condition": {
+        "type": "treasures_found",
+        "value": 50
+      }
+    },
+    {
+      "id": "millionaire",
+      "name": "백만장자",
+      "description": "100만 골드 보유",
+      "icon": "💰",
+      "points": 25,
+      "category": "wealth",
+      "condition": {
+        "type": "gold",
+        "value": 1000000
+      }
+    },
+    {
+      "id": "quiz_master",
+      "name": "퀴즈 마스터",
+      "description": "퀴즈 게임 10회 연속 정답",
+      "icon": "🧠",
+      "points": 15,
+      "category": "minigame",
+      "condition": {
+        "type": "quiz_streak",
+        "value": 10
+      }
+    },
+    {
+      "id": "card_shark",
+      "name": "카드 샤크",
+      "description": "카드 매칭 30초 이내 클리어",
+      "icon": "🃏",
+      "points": 15,
+      "category": "minigame",
+      "condition": {
+        "type": "card_time",
+        "value": 30
+      }
+    },
+    {
+      "id": "level_50",
+      "name": "레벨 50 달성",
+      "description": "캐릭터 레벨 50 도달",
+      "icon": "⭐",
+      "points": 30,
+      "category": "growth",
+      "condition": {
+        "type": "level",
+        "value": 50
+      }
+    },
+    {
+      "id": "stat_master",
+      "name": "스탯 마스터",
+      "description": "모든 스탯 50 이상",
+      "icon": "📊",
+      "points": 35,
+      "category": "growth",
+      "condition": {
+        "type": "all_stats",
+        "value": 50
+      }
+    },
+    {
+      "id": "perfect_attendance",
+      "name": "개근상",
+      "description": "30일 연속 로그인",
+      "icon": "📅",
+      "points": 20,
+      "category": "dedication",
+      "condition": {
+        "type": "login_streak",
+        "value": 30
+      }
+    },
+    {
+      "id": "night_owl",
+      "name": "올빼미",
+      "description": "자정 이후 플레이",
+      "icon": "🦉",
+      "points": 5,
+      "category": "special",
+      "condition": {
+        "type": "play_time",
+        "value": "midnight"
+      }
+    },
+    {
+      "id": "completionist",
+      "name": "완벽주의자",
+      "description": "모든 업적 달성",
+      "icon": "🏆",
+      "points": 100,
+      "category": "special",
+      "condition": {
+        "type": "all_achievements",
+        "value": true
+      }
+    }
+  ]
+}
