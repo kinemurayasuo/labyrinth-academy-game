@@ -56,10 +56,6 @@ const Homepage: React.FC<HomepageProps> = React.memo(({
     navigate('/login');
   }, [navigate]);
 
-  const handleSettings = useCallback(() => {
-    navigate('/settings');
-  }, [navigate]);
-
   const handleGameInfo = useCallback(() => {
     navigate('/game-info');
   }, [navigate]);
@@ -220,51 +216,41 @@ const Homepage: React.FC<HomepageProps> = React.memo(({
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-text-primary mb-4">계정 관리</h3>
 
-              <button
-                onClick={isLoggedIn ? handleLogout : handleLogin}
-                className="w-full py-4 px-6 btn-secondary font-bold rounded-xl transition-all duration-300 transform hover:scale-105"
-                aria-label={isLoggedIn ? '계정에서 로그아웃하기' : '계정에 로그인하기'}
-                role="button"
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-2xl" aria-hidden="true">{isLoggedIn ? '🚪' : '🔐'}</span>
-                  <span>{isLoggedIn ? '로그아웃' : '로그인'}</span>
-                </div>
-              </button>
-
-              <button
-                onClick={handleSettings}
-                className="w-full py-3 px-6 btn-ghost font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 border border-border"
-                aria-label="게임 설정 페이지로 이동"
-                role="button"
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-xl" aria-hidden="true">⚙️</span>
-                  <span>설정</span>
-                </div>
-              </button>
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  className="w-full py-4 px-6 btn-secondary font-bold rounded-xl transition-all duration-300 transform hover:scale-105"
+                  aria-label="계정에서 로그아웃하기"
+                  role="button"
+                >
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-2xl" aria-hidden="true">🚪</span>
+                    <span>로그아웃</span>
+                  </div>
+                </button>
+              ) : (
+                <button
+                  onClick={handleLogin}
+                  className="w-full py-4 px-6 btn-secondary font-bold rounded-xl transition-all duration-300 transform hover:scale-105"
+                  aria-label="계정에 로그인하기"
+                  role="button"
+                >
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-2xl" aria-hidden="true">🔐</span>
+                    <span>로그인</span>
+                  </div>
+                </button>
+              )}
 
               <button
                 onClick={handleGameInfo}
-                className="w-full py-3 px-6 btn-ghost font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 border border-border"
+                className="w-full py-4 px-6 btn-glass font-bold rounded-xl transition-all duration-300 transform hover:scale-105"
                 aria-label="게임 정보 페이지로 이동"
                 role="button"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-xl" aria-hidden="true">ℹ️</span>
+                  <span className="text-2xl" aria-hidden="true">ℹ️</span>
                   <span>게임 정보</span>
-                </div>
-              </button>
-
-              <button
-                onClick={() => navigate('/api-test')}
-                className="w-full py-3 px-6 btn-ghost font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 border border-primary/30"
-                aria-label="API 연결 테스트 페이지로 이동"
-                role="button"
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-xl" aria-hidden="true">🔗</span>
-                  <span>API 테스트</span>
                 </div>
               </button>
             </div>

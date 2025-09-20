@@ -25,6 +25,8 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
   const [battleEnded, setBattleEnded] = useState(false);
   const [showRewards, setShowRewards] = useState(false);
   const [animation, setAnimation] = useState<'playerAttack' | 'enemyAttack' | null>(null);
+  const [isKnockedOut, setIsKnockedOut] = useState(false);
+  const [canEscape, setCanEscape] = useState(true);
 
   const addLog = (message: string) => {
     setBattleLog(prev => [...prev.slice(-4), message]);
@@ -102,7 +104,7 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
     setTimeout(() => {
       setAnimation(null);
       if (newPlayerHp <= 0) {
-        handleDefeat();
+        handleKnockOut();
       } else {
         setIsPlayerTurn(true);
       }
@@ -125,25 +127,69 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
     }, 2000);
   };
 
+  const handleKnockOut = () => {
+    setIsKnockedOut(true);
+    addLog('당신은 쓰러졌습니다! 도망칠 수 있는 기회가 있습니다.');
+    setCanEscape(true);
+    setIsPlayerTurn(true);
+  };
+
   const handleDefeat = () => {
     setBattleEnded(true);
-    addLog('패배했습니다...');
+    addLog('완전히 패배했습니다... 던전 입구로 돌아갑니다.');
     setTimeout(() => {
       onDefeat();
     }, 2000);
   };
 
+  const handleRecoverAttempt = () => {
+    if (!isPlayerTurn || battleEnded || playerMp < 20) return;
+
+    const recoverChance = Math.random();
+    if (recoverChance > 0.5) {
+      const recoverHp = Math.floor(player.maxHp * 0.3);
+      setPlayerHp(recoverHp);
+      setPlayerMp(prev => Math.max(0, prev - 20));
+      setIsKnockedOut(false);
+      addLog(`회복에 성공했습니다! HP가 ${recoverHp} 회복되었습니다.`);
+      setIsPlayerTurn(false);
+      setTimeout(() => enemyTurn(), 1000);
+    } else {
+      setPlayerMp(prev => Math.max(0, prev - 20));
+      addLog('회복에 실패했습니다...');
+      setIsPlayerTurn(false);
+      setTimeout(() => {
+        // Enemy attacks again
+        if (!canEscape) {
+          handleDefeat();
+        } else {
+          setCanEscape(false);
+          enemyTurn();
+        }
+      }, 1000);
+    }
+  };
+
   const handleFlee = () => {
     if (!isPlayerTurn || battleEnded) return;
 
+    // Knocked out state has higher escape chance
     const fleeChance = Math.random();
-    if (fleeChance > 0.5) {
-      addLog('도망쳤습니다!');
+    const escapeThreshold = isKnockedOut ? 0.2 : 0.5;
+
+    if (fleeChance > escapeThreshold) {
+      addLog(isKnockedOut ? '간신히 도망쳤습니다!' : '도망쳤습니다!');
       setTimeout(() => onFlee(), 1000);
     } else {
       addLog('도망치지 못했습니다!');
-      setIsPlayerTurn(false);
-      setTimeout(() => enemyTurn(), 1000);
+      if (isKnockedOut && !canEscape) {
+        // If knocked out and failed to escape twice, it's defeat
+        handleDefeat();
+      } else {
+        setIsPlayerTurn(false);
+        if (isKnockedOut) setCanEscape(false);
+        setTimeout(() => enemyTurn(), 1000);
+      }
     }
   };
 
@@ -236,54 +282,85 @@ const BattleScreen: React.FC<BattleScreenProps> = ({
             ))}
           </div>
 
+          {/* Knocked Out Warning */}
+          {isKnockedOut && (
+            <div className="bg-red-900/50 border border-red-500 rounded-lg p-3 mb-4">
+              <p className="text-red-300 text-center font-bold">
+                ⚠️ 위험! 당신은 쓰러진 상태입니다!
+                {canEscape ? ' (도망 기회 남음)' : ' (마지막 기회!)'}
+              </p>
+            </div>
+          )}
+
           {/* Action Buttons */}
           <div className="grid grid-cols-4 gap-3">
-            <button
-              onClick={handlePlayerAttack}
-              disabled={!isPlayerTurn || battleEnded}
-              className={`px-4 py-3 rounded-lg font-bold transition-all ${
-                isPlayerTurn && !battleEnded
-                  ? 'bg-red-600 hover:bg-red-700 text-white transform hover:scale-105'
-                  : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-              }`}
-            >
-              ⚔️ 공격
-            </button>
+            {!isKnockedOut ? (
+              <>
+                <button
+                  onClick={handlePlayerAttack}
+                  disabled={!isPlayerTurn || battleEnded}
+                  className={`px-4 py-3 rounded-lg font-bold transition-all ${
+                    isPlayerTurn && !battleEnded
+                      ? 'bg-red-600 hover:bg-red-700 text-white transform hover:scale-105'
+                      : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  ⚔️ 공격
+                </button>
 
-            <button
-              onClick={handleSkillAttack}
-              disabled={!isPlayerTurn || battleEnded || playerMp < 10}
-              className={`px-4 py-3 rounded-lg font-bold transition-all ${
-                isPlayerTurn && !battleEnded && playerMp >= 10
-                  ? 'bg-primary hover:bg-secondary text-white transform hover:scale-105'
-                  : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-              }`}
-            >
-              ✨ 스킬 (10 MP)
-            </button>
+                <button
+                  onClick={handleSkillAttack}
+                  disabled={!isPlayerTurn || battleEnded || playerMp < 10}
+                  className={`px-4 py-3 rounded-lg font-bold transition-all ${
+                    isPlayerTurn && !battleEnded && playerMp >= 10
+                      ? 'bg-primary hover:bg-secondary text-white transform hover:scale-105'
+                      : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  ✨ 스킬 (10 MP)
+                </button>
 
-            <button
-              onClick={handleHeal}
-              disabled={!isPlayerTurn || battleEnded || playerMp < 5}
-              className={`px-4 py-3 rounded-lg font-bold transition-all ${
-                isPlayerTurn && !battleEnded && playerMp >= 5
-                  ? 'bg-green-600 hover:bg-green-700 text-white transform hover:scale-105'
-                  : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-              }`}
-            >
-              💚 회복 (5 MP)
-            </button>
+                <button
+                  onClick={handleHeal}
+                  disabled={!isPlayerTurn || battleEnded || playerMp < 5}
+                  className={`px-4 py-3 rounded-lg font-bold transition-all ${
+                    isPlayerTurn && !battleEnded && playerMp >= 5
+                      ? 'bg-green-600 hover:bg-green-700 text-white transform hover:scale-105'
+                      : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  💚 회복 (5 MP)
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={handleRecoverAttempt}
+                  disabled={!isPlayerTurn || battleEnded || playerMp < 20}
+                  className={`px-4 py-3 rounded-lg font-bold transition-all col-span-2 ${
+                    isPlayerTurn && !battleEnded && playerMp >= 20
+                      ? 'bg-purple-600 hover:bg-purple-700 text-white transform hover:scale-105'
+                      : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  💫 회복 시도 (20 MP)
+                </button>
+                <div className="col-span-1"></div>
+              </>
+            )}
 
             <button
               onClick={handleFlee}
               disabled={!isPlayerTurn || battleEnded}
               className={`px-4 py-3 rounded-lg font-bold transition-all ${
                 isPlayerTurn && !battleEnded
-                  ? 'bg-yellow-600 hover:bg-yellow-700 text-white transform hover:scale-105'
+                  ? isKnockedOut
+                    ? 'bg-orange-600 hover:bg-orange-700 text-white transform hover:scale-105 animate-pulse'
+                    : 'bg-yellow-600 hover:bg-yellow-700 text-white transform hover:scale-105'
                   : 'bg-gray-700 text-gray-400 cursor-not-allowed'
               }`}
             >
-              🏃 도망
+              🏃 {isKnockedOut ? '긴급 탈출!' : '도망'}
             </button>
           </div>
         </div>

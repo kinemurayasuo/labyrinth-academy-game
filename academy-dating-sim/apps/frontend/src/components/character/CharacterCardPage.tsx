@@ -15,7 +15,18 @@ const CharacterCardPage: React.FC = React.memo(() => {
   // Use Zustand store
   const player = useGameStore((state: any) => state.player);
   const unlockedCharacters = useGameStore((state: any) => state.unlockedCharacters);
-  const [selectedCharacter, setSelectedCharacter] = useState<string>(unlockedCharacters[0] || 'sakura');
+
+  // Get all character IDs
+  const allCharacterIds = useMemo(() => Object.keys(characters), []);
+
+  // Determine which characters have been met (affection > 0)
+  const metCharacters = useMemo(() => {
+    return allCharacterIds.filter(charId =>
+      (player.affection[charId] || 0) > 0
+    );
+  }, [allCharacterIds, player.affection]);
+
+  const [selectedCharacter, setSelectedCharacter] = useState<string>(metCharacters[0] || unlockedCharacters[0] || 'sakura');
 
   // Memoize location map to prevent recreation on every render
   const locationMap = useMemo(() => ({
@@ -154,32 +165,51 @@ const CharacterCardPage: React.FC = React.memo(() => {
                             <div className="bg-black/30 backdrop-blur-md rounded-t-lg shadow-lg p-4 border-b border-border">
                               <h3 className="text-lg font-bold mb-4 text-text-primary text-center">캐릭터 선택</h3>
                               <div className="flex gap-4 justify-center overflow-x-auto pb-2">
-                                {unlockedCharacters.map((characterId: any) => {
+                                {allCharacterIds.map((characterId: any) => {
                                   const character = characters[characterId];
                                   if (!character) return null;
-                
+
+                                  const isMet = (player.affection[characterId] || 0) > 0;
+                                  const isLocked = !isMet;
+
                                   return (
                                     <button
                                       key={characterId}
-                                      onClick={() => setSelectedCharacter(characterId)}
-                                      className={`px-6 py-3 rounded-lg transition-all border-2 flex flex-col items-center gap-2 min-w-[120px] ${
-                                        selectedCharacter === characterId
+                                      onClick={() => {
+                                        if (!isLocked) {
+                                          setSelectedCharacter(characterId);
+                                        }
+                                      }}
+                                      disabled={isLocked}
+                                      className={`px-6 py-3 rounded-lg transition-all border-2 flex flex-col items-center gap-2 min-w-[120px] relative ${
+                                        isLocked
+                                          ? 'border-gray-600 bg-gray-900/50 opacity-60 cursor-not-allowed'
+                                          : selectedCharacter === characterId
                                           ? 'border-primary bg-primary/20 scale-105 shadow-lg'
                                           : 'border-border hover:border-primary hover:bg-primary/10 hover:shadow-md'
                                       }`}
-                                      aria-label={`${character.name} 캐릭터 선택하기`}
-                                      aria-pressed={selectedCharacter === characterId}
+                                      aria-label={`${isLocked ? '잠긴 캐릭터' : character.name + ' 캐릭터 선택하기'}`}
+                                      aria-pressed={!isLocked && selectedCharacter === characterId}
                                       role="button"
                                     >
-                                      <span className="text-3xl" aria-hidden="true">{character.sprite}</span>
-                                      <div className="font-bold text-text-primary text-sm whitespace-nowrap">{character.name}</div>
+                                      {isLocked && (
+                                        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/60">
+                                          <span className="text-4xl">🔒</span>
+                                        </div>
+                                      )}
+                                      <span className="text-3xl" aria-hidden="true">
+                                        {isLocked ? '❓' : character.sprite}
+                                      </span>
+                                      <div className="font-bold text-text-primary text-sm whitespace-nowrap">
+                                        {isLocked ? '???' : character.name}
+                                      </div>
                                     </button>
                                   );
                                 })}
                               </div>
                             </div>
                 
-                            {selectedCharacterData && (
+                            {selectedCharacterData && !((player.affection[selectedCharacter] || 0) <= 0) ? (
                               <div className="bg-black/30 backdrop-blur-md rounded-b-2xl shadow-2xl overflow-hidden border border-border border-t-0">
                                 <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[700px]">
                                   {/* Character Portrait Section */}
@@ -456,6 +486,19 @@ const CharacterCardPage: React.FC = React.memo(() => {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            ) : (
+              /* Locked Character Display */
+              <div className="bg-black/30 backdrop-blur-md rounded-b-2xl shadow-2xl overflow-hidden border border-border border-t-0">
+                <div className="flex flex-col items-center justify-center p-16">
+                  <div className="text-8xl mb-6">🔒</div>
+                  <h2 className="text-3xl font-bold text-gray-400 mb-4">잠긴 캐릭터</h2>
+                  <p className="text-gray-500 text-center max-w-md">
+                    이 캐릭터를 만나려면 먼저 게임을 진행하고 상호작용해야 합니다.
+                    <br /><br />
+                    힙트: 각 캐릭터는 특정 장소에서 만날 수 있습니다.
+                  </p>
                 </div>
               </div>
             )}

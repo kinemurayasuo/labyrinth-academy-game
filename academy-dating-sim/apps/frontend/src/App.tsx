@@ -7,6 +7,9 @@ import Homepage from './components/pages/Homepage';
 import Login from './components/pages/Login';
 import CharacterCreation from './components/character/CharacterCreation';
 import SimpleDungeonPage from './components/game/SimpleDungeonPage';
+import DungeonSelection from './components/game/DungeonSelection';
+import DiarySystem from './components/game/DiarySystem';
+import HeroineStorylines from './components/character/HeroineStorylines';
 import ShoppingPage from './components/game/ShoppingPage';
 import CharacterCardPage from './components/character/CharacterCardPage';
 import AccountCreation from './components/pages/AccountCreation';
@@ -96,7 +99,10 @@ function App() {
           <Route path="/game-intro" element={<GameIntro />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/api-test" element={<ApiTestPage />} />
+          <Route path="/dungeon-selection" element={<DungeonSelection />} />
           <Route path="/dungeon" element={<SimpleDungeonPage />} />
+          <Route path="/diary" element={<DiarySystem />} />
+          <Route path="/heroine-stories" element={<HeroineStorylines />} />
           <Route path="/shopping" element={<ShoppingPage />} />
           <Route path="/characters" element={<CharacterCardPage />} />
           <Route path="/achievements" element={<Achievements />} />

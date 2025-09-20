@@ -170,7 +170,7 @@ const GameUI: React.FC = () => {
                 📋 퀘스트
               </button>
               <button
-                onClick={() => navigate('/dungeon')}
+                onClick={() => navigate('/dungeon-selection')}
                 className="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 aria-label="던전 탐험"
                 role="button"
@@ -192,6 +192,22 @@ const GameUI: React.FC = () => {
                 role="button"
               >
                 🐾 펫
+              </button>
+              <button
+                onClick={() => navigate('/diary')}
+                className="px-4 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="일기장"
+                role="button"
+              >
+                📖 일기장
+              </button>
+              <button
+                onClick={() => navigate('/heroine-stories')}
+                className="px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-xl hover:from-pink-600 hover:to-red-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="히로인 스토리"
+                role="button"
+              >
+                💕 스토리
               </button>
               <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
               <button
