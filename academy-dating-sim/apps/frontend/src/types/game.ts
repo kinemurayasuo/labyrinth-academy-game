@@ -47,6 +47,17 @@ export interface Player {
   collectedItems?: string[];
   unlockedEndings?: string[];
   participatedEvents?: string[];
+  characterStates?: Record<string, CharacterState>; // Issue #33: Character emotional states
+}
+
+// Issue #33: Character emotional state interface
+export interface CharacterState {
+  calmness: number;      // 침착함 (0-100)
+  stress: number;        // 스트레스 (0-100)
+  excitement: number;    // 흥분도 (0-100)
+  trust: number;         // 신뢰도 (0-100)
+  energy: number;        // 활력 (0-100)
+  meetingContext: string; // 만난 장소/상황
 }
 
 export interface Character {

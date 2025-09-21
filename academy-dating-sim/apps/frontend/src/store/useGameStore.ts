@@ -56,11 +56,198 @@ const INITIAL_PLAYER: Player = {
   defeatedBosses: [],
   collectedItems: [],
   unlockedEndings: [],
-  participatedEvents: []
+  participatedEvents: [],
+  characterStates: {} // Issue #33: Track character emotional states
 };
 
 const TIME_PHASES = ['morning', 'noon', 'afternoon', 'evening', 'night'] as const;
 const MAX_DAYS = 30;
+
+// Issue #31: Gift preference system
+const characterGiftPreferences: Record<string, {
+  loves: string[];
+  likes: string[];
+  neutral: string[];
+  dislikes: string[];
+  hates: string[];
+  specialReactions: Record<string, string>;
+}> = {
+  sakura: {
+    loves: ['flower', 'trainingGear', 'jewelryBox'],
+    likes: ['chocolateBox', 'lunchbox', 'energyDrink'],
+    neutral: ['book', 'studyGuide', 'mirror'],
+    dislikes: ['charm', 'mysteryKey'],
+    hates: ['manaPotion'],
+    specialReactions: {
+      flower: '벚꽃...? 내 이름과 같네. 특별한 의미가 있는 거야?',
+      trainingGear: '훈련 장비라니! 정말 고마워, 더 강해질게!',
+      chocolateBox: '달콤한 초콜릿... 훈련 후에 먹으면 기운이 날 것 같아.'
+    }
+  },
+  yuki: {
+    loves: ['book', 'charm', 'mysteryKey', 'studyGuide'],
+    likes: ['chocolateBox', 'mirror', 'manaPotion'],
+    neutral: ['flower', 'lunchbox', 'energyDrink'],
+    dislikes: ['trainingGear'],
+    hates: ['healingPotion'],
+    specialReactions: {
+      book: '희귀한 책! 마법 연구에 도움이 될 것 같아!',
+      mysteryKey: '수수께끼의 열쇠... 무엇을 열 수 있을까?',
+      studyGuide: '공부 가이드야? 마법 이론 정리에 좋겠어.'
+    }
+  },
+  luna: {
+    loves: ['mirror', 'jewelryBox', 'mysteryKey'],
+    likes: ['flower', 'chocolateBox', 'charm'],
+    neutral: ['book', 'studyGuide', 'lunchbox'],
+    dislikes: ['trainingGear', 'energyDrink'],
+    hates: ['healingPotion', 'manaPotion'],
+    specialReactions: {
+      mirror: '마법 거울... 정말 아름답네. 고마워.',
+      mysteryKey: '신비로운 열쇠... 비밀스러워서 좋아.',
+      jewelryBox: '보석함이야? 달빛처럼 반짝이네!'
+    }
+  },
+  mystery: {
+    loves: ['mysteryKey', 'charm', 'jewelryBox'],
+    likes: ['book', 'mirror', 'manaPotion'],
+    neutral: ['flower', 'chocolateBox', 'studyGuide'],
+    dislikes: ['lunchbox', 'energyDrink'],
+    hates: ['trainingGear', 'healingPotion'],
+    specialReactions: {
+      mysteryKey: '...이 열쇠는... 특별해. 고마워.',
+      charm: '마법 부적... 흥미로운 마력이 감지돼.',
+      book: '...지식은 언제나 소중해.'
+    }
+  }
+};
+
+const calculateGiftReaction = (characterId: string, itemId: string): { affectionChange: number; reactionMessage: string } => {
+  const preferences = characterGiftPreferences[characterId];
+  if (!preferences) {
+    return { affectionChange: 5, reactionMessage: '고마워.' };
+  }
+
+  // Check for special reactions first
+  if (preferences.specialReactions[itemId]) {
+    return { affectionChange: 15, reactionMessage: preferences.specialReactions[itemId] };
+  }
+
+  // Check preference levels
+  if (preferences.loves.includes(itemId)) {
+    return { affectionChange: 20, reactionMessage: '우와! 정말 좋아하는 거야! 어떻게 알았어?' };
+  }
+  if (preferences.likes.includes(itemId)) {
+    return { affectionChange: 10, reactionMessage: '고마워! 마음에 들어!' };
+  }
+  if (preferences.dislikes.includes(itemId)) {
+    return { affectionChange: -5, reactionMessage: '음... 고맙긴 한데...' };
+  }
+  if (preferences.hates.includes(itemId)) {
+    return { affectionChange: -10, reactionMessage: '이건... 별로야...' };
+  }
+
+  // Neutral/default reaction
+  return { affectionChange: 5, reactionMessage: '고마워. 소중히 할게.' };
+};
+
+// Issue #33: Generate random character states based on meeting conditions
+interface CharacterState {
+  calmness: number;    // 침착함 (0-100)
+  stress: number;      // 스트레스 (0-100)
+  excitement: number;  // 흥분도 (0-100)
+  trust: number;       // 신뢰도 (0-100)
+  energy: number;      // 활력 (0-100)
+  meetingContext: string;
+}
+
+const generateRandomCharacterState = (characterId: string, meetingLocation: string): CharacterState => {
+  const baseState = {
+    calmness: 50,
+    stress: 30,
+    excitement: 40,
+    trust: 30,
+    energy: 70,
+    meetingContext: meetingLocation
+  };
+
+  // Character-specific base modifications
+  const characterModifiers: Record<string, Partial<CharacterState>> = {
+    sakura: { calmness: 60, stress: 25, excitement: 45, energy: 80 },
+    yuki: { calmness: 80, stress: 20, excitement: 30, energy: 60 },
+    luna: { calmness: 70, stress: 35, excitement: 25, energy: 50 },
+    mystery: { calmness: 90, stress: 10, excitement: 20, energy: 40 },
+    akane: { calmness: 30, stress: 50, excitement: 70, energy: 90 },
+    hana: { calmness: 75, stress: 20, excitement: 40, energy: 65 },
+    rin: { calmness: 85, stress: 15, excitement: 35, energy: 55 },
+    mei: { calmness: 40, stress: 30, excitement: 60, energy: 85 },
+    sora: { calmness: 95, stress: 10, excitement: 15, energy: 45 }
+  };
+
+  // Location-based modifications
+  const locationModifiers: Record<string, Partial<CharacterState>> = {
+    dungeon: {
+      calmness: -20,      // 던전에서 만나면 침착함 감소
+      stress: +25,        // 스트레스 증가
+      excitement: +15,    // 흥분도 증가
+      trust: -10,         // 신뢰도 약간 감소
+      energy: -15         // 에너지 감소
+    },
+    library: {
+      calmness: +15,      // 도서관에서는 침착함 증가
+      stress: -10,        // 스트레스 감소
+      excitement: -5,     // 흥분도 감소
+      trust: +10,         // 신뢰도 증가
+      energy: +5          // 에너지 약간 증가
+    },
+    classroom: {
+      calmness: +5,       // 교실에서는 평상시
+      stress: -5,
+      excitement: 0,
+      trust: +5,
+      energy: 0
+    },
+    cafeteria: {
+      calmness: +10,      // 카페테리아는 편안함
+      stress: -15,
+      excitement: +10,
+      trust: +15,
+      energy: +10
+    },
+    garden: {
+      calmness: +20,      // 정원은 매우 평화로움
+      stress: -20,
+      excitement: +5,
+      trust: +10,
+      energy: +15
+    },
+    dormitory: {
+      calmness: +25,      // 기숙사는 가장 편안함
+      stress: -25,
+      excitement: -10,
+      trust: +20,
+      energy: +5
+    }
+  };
+
+  // Apply base character modifiers
+  const characterMod = characterModifiers[characterId] || {};
+  const locationMod = locationModifiers[meetingLocation] || {};
+
+  // Add random variation (±10)
+  const randomVariation = () => Math.floor(Math.random() * 21) - 10;
+
+  const finalState: CharacterState = {
+    calmness: Math.max(0, Math.min(100, baseState.calmness + (characterMod.calmness || 0) + (locationMod.calmness || 0) + randomVariation())),
+    stress: Math.max(0, Math.min(100, baseState.stress + (characterMod.stress || 0) + (locationMod.stress || 0) + randomVariation())),
+    excitement: Math.max(0, Math.min(100, baseState.excitement + (characterMod.excitement || 0) + (locationMod.excitement || 0) + randomVariation())),
+    trust: Math.max(0, Math.min(100, baseState.trust + (characterMod.trust || 0) + (locationMod.trust || 0) + randomVariation())),
+    energy: Math.max(0, Math.min(100, baseState.energy + (characterMod.energy || 0) + (locationMod.energy || 0) + randomVariation())),
+    meetingContext: meetingLocation
+  };
+
+  return finalState;
+};
 
 interface GameState {
   player: Player;
@@ -99,7 +286,8 @@ interface GameState {
     gainExperience: (amount: number) => void;
     addGold: (amount: number) => void;
     clearLastActivity: () => void;
-    markCharacterAsMet: (characterId: string) => void;
+    markCharacterAsMet: (characterId: string, meetingLocation?: string) => void;
+    updateCharacterState: (characterId: string, stateChanges: Partial<CharacterState>) => void;
     triggerRandomHeroineInteraction: () => void;
   };
 }
@@ -359,7 +547,8 @@ export const useGameStore = create<GameState>((set, get) => ({
             return;
         }
 
-        // Check if item can be used based on current state
+        // Issue #30: Enhanced item usage restrictions
+        // Check if item can be used based on current state and type
         switch (itemId) {
             case 'healingPotion':
                 if (player.hp >= player.maxHp) {
@@ -370,6 +559,25 @@ export const useGameStore = create<GameState>((set, get) => ({
             case 'manaPotion':
                 if (player.mp >= player.maxMp) {
                     set({ gameMessage: 'MP가 이미 최대입니다. 포션을 사용할 수 없습니다.' });
+                    return;
+                }
+                break;
+            case 'energyDrink':
+                if (player.hp >= player.maxHp && player.stamina >= player.maxStamina) {
+                    set({ gameMessage: 'HP와 스태미나가 이미 최대입니다. 에너지 드링크를 사용할 수 없습니다.' });
+                    return;
+                }
+                break;
+            case 'statBooster':
+                // Prevent overuse of stat boosters
+                if (player.level < 5) {
+                    set({ gameMessage: '레벨이 낮아 능력치 강화제를 사용할 수 없습니다. (레벨 5 이상 필요)' });
+                    return;
+                }
+                break;
+            case 'lunchbox':
+                if (player.stamina >= player.maxStamina) {
+                    set({ gameMessage: '스태미나가 이미 최대입니다. 도시락을 먹을 수 없습니다.' });
                     return;
                 }
                 break;
@@ -390,23 +598,65 @@ export const useGameStore = create<GameState>((set, get) => ({
                 message = `체력 포션을 사용했습니다. HP +${healAmount}`;
                 break;
             case 'manaPotion':
-                const manaAmount = Math.min(30, newPlayer.maxMp - newPlayer.mp);
-                newPlayer.mp = Math.min(newPlayer.mp + 30, newPlayer.maxMp);
+                const manaAmount = Math.min(40, newPlayer.maxMp - newPlayer.mp);
+                newPlayer.mp = Math.min(newPlayer.mp + 40, newPlayer.maxMp);
                 message = `마나 포션을 사용했습니다. MP +${manaAmount}`;
                 break;
             case 'energyDrink':
-                newPlayer.stats.stamina += 2;
-                message = '에너지 드링크를 마셨습니다. 체력 +2';
+                const hpGain = Math.min(20, newPlayer.maxHp - newPlayer.hp);
+                const staminaGain = Math.min(3, newPlayer.maxStamina - newPlayer.stamina);
+                newPlayer.hp = Math.min(newPlayer.hp + 20, newPlayer.maxHp);
+                newPlayer.stamina = Math.min(newPlayer.stamina + 3, newPlayer.maxStamina);
+                message = `에너지 드링크를 마셨습니다. HP +${hpGain}, 스태미나 +${staminaGain}`;
                 break;
-            default:
-                // For gift items, increase affection with target character
+            case 'studyGuide':
+                newPlayer.stats.intelligence += 5;
+                message = '공부 가이드를 사용했습니다. 지력 +5';
+                get().actions.gainExperience(20);
+                break;
+            case 'mirror':
+                newPlayer.stats.charm += 3;
+                message = '마법 거울을 사용했습니다. 매력 +3';
+                break;
+            case 'lunchbox':
+                const lunchStaminaGain = Math.min(2, newPlayer.maxStamina - newPlayer.stamina);
+                newPlayer.stamina = Math.min(newPlayer.stamina + 2, newPlayer.maxStamina);
                 if (targetCharacter) {
-                    const affectionBonus = itemId.includes('flower') ? 10 : 5;
                     newPlayer.affection = {
                         ...newPlayer.affection,
-                        [targetCharacter]: Math.min((newPlayer.affection[targetCharacter] || 0) + affectionBonus, 100)
+                        [targetCharacter]: Math.min((newPlayer.affection[targetCharacter] || 0) + 8, 100)
                     };
-                    message = `${targetCharacter}에게 ${itemId}을(를) 선물했습니다. 호감도 +${affectionBonus}`;
+                    message = `${targetCharacter}에게 도시락을 선물했습니다. 호감도 +8, 스태미나 +${lunchStaminaGain}`;
+                } else {
+                    message = `도시락을 먹었습니다. 스태미나 +${lunchStaminaGain}`;
+                }
+                break;
+            case 'experienceScroll':
+                get().actions.gainExperience(100);
+                message = '경험치 두루마리를 사용했습니다. 경험치 +100';
+                break;
+            case 'statBooster':
+                newPlayer.stats.intelligence += 3;
+                newPlayer.stats.charm += 3;
+                newPlayer.stats.strength += 3;
+                newPlayer.stats.agility += 3;
+                newPlayer.stats.luck += 3;
+                newPlayer.stamina = Math.min(newPlayer.stamina + 3, newPlayer.maxStamina);
+                message = '능력치 강화제를 사용했습니다. 모든 능력치 +3, 스태미나 +3';
+                break;
+            default:
+                // Issue #31: Enhanced gift preference system with character reactions
+                if (targetCharacter) {
+                    // Character preference system for gift reactions
+                    const { affectionChange, reactionMessage } = calculateGiftReaction(targetCharacter, itemId);
+
+                    newPlayer.affection = {
+                        ...newPlayer.affection,
+                        [targetCharacter]: Math.min((newPlayer.affection[targetCharacter] || 0) + affectionChange, 100)
+                    };
+                    message = `${targetCharacter}: "${reactionMessage}" (호감도 ${affectionChange > 0 ? '+' : ''}${affectionChange})`;
+                } else {
+                    message = `${itemId}을(를) 사용했습니다.`;
                 }
                 break;
         }
@@ -694,10 +944,46 @@ export const useGameStore = create<GameState>((set, get) => ({
       }
     })),
     clearLastActivity: () => set({ lastActivity: null }),
-    markCharacterAsMet: (characterId: string) => {
-      const { metCharacters } = get();
+    markCharacterAsMet: (characterId: string, meetingLocation?: string) => {
+      const { metCharacters, player } = get();
       if (!metCharacters.includes(characterId)) {
-        set({ metCharacters: [...metCharacters, characterId] });
+        // Issue #33: Random initial character states based on meeting conditions
+        const initialState = generateRandomCharacterState(characterId, meetingLocation || player.location);
+
+        set({
+          metCharacters: [...metCharacters, characterId],
+          player: {
+            ...player,
+            characterStates: {
+              ...player.characterStates,
+              [characterId]: initialState
+            }
+          }
+        });
+      }
+    },
+    updateCharacterState: (characterId: string, stateChanges: Partial<CharacterState>) => {
+      const { player } = get();
+      const currentState = player.characterStates?.[characterId];
+
+      if (currentState) {
+        const newState = { ...currentState, ...stateChanges };
+        // Ensure values stay within 0-100 range
+        Object.keys(newState).forEach(key => {
+          if (typeof newState[key as keyof CharacterState] === 'number') {
+            newState[key as keyof CharacterState] = Math.max(0, Math.min(100, newState[key as keyof CharacterState] as number));
+          }
+        });
+
+        set({
+          player: {
+            ...player,
+            characterStates: {
+              ...player.characterStates,
+              [characterId]: newState
+            }
+          }
+        });
       }
     },
     triggerRandomHeroineInteraction: () => {

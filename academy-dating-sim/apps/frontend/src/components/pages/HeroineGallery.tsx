@@ -52,7 +52,16 @@ const HeroineGallery: React.FC = () => {
     return { level: '낯선', color: 'text-gray-400', stars: '★☆☆☆☆' };
   };
 
+  // Issue #32: Enhanced lock system based on met characters
+  const metCharacters = useGameStore((state: any) => state.metCharacters) || [];
+
   const getUnlockStatus = (characterId: string) => {
+    // First check if character has been met
+    if (!metCharacters.includes(characterId)) {
+      return { locked: true, reason: '아직 만나지 못한 히로인입니다' };
+    }
+
+    // If met but not unlocked, check unlock conditions
     if (!unlockedCharacters.includes(characterId)) {
       const character = characters[characterId];
       if (character?.unlockCondition) {
@@ -61,7 +70,7 @@ const HeroineGallery: React.FC = () => {
           reason: `Day ${character.unlockCondition.day || 0} 이후, 총 호감도 ${character.unlockCondition.totalAffection || 0} 필요`
         };
       }
-      return { locked: true, reason: '아직 만나지 못함' };
+      return { locked: true, reason: '특별한 조건이 필요합니다' };
     }
     return { locked: false };
   };
@@ -108,7 +117,7 @@ const HeroineGallery: React.FC = () => {
               const affection = player.affection[character.id] || 0;
               const affectionInfo = getAffectionLevel(affection);
               const unlockStatus = getUnlockStatus(character.id);
-              const isUnlocked = unlockedCharacters.includes(character.id);
+              const isUnlocked = metCharacters.includes(character.id) && unlockedCharacters.includes(character.id);
 
               return (
                 <div
@@ -170,9 +179,11 @@ const HeroineGallery: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Description */}
+                      {/* Description - Issue #34: Progressive info unlock */}
                       <p className="text-sm text-text-secondary mb-4 line-clamp-2">
-                        {character.baseText}
+                        {affection >= 20 ? character.baseText :
+                         affection >= 10 ? character.baseText.substring(0, 50) + '...' :
+                         '더 친해지면 정보를 알 수 있을 것 같다...'}
                       </p>
 
                       {/* View Details Button */}
@@ -235,45 +246,96 @@ const HeroineGallery: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Character Traits */}
+                  {/* Character Traits - Issue #34: Progressive unlock */}
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold text-green-400 mb-2">좋아하는 것</h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedCharacter.likes.map((like: string, idx: number) => (
+                        {selectedAffection >= 30 ? selectedCharacter.likes.map((like: string, idx: number) => (
                           <span key={idx} className="badge badge-success">
                             {like}
                           </span>
-                        ))}
+                        )) : (
+                          <div className="text-sm text-gray-400 italic flex items-center gap-2">
+                            🔒 호감도 30 이상 필요 (현재: {selectedAffection})
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div>
                       <h4 className="font-semibold text-red-400 mb-2">싫어하는 것</h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedCharacter.dislikes.map((dislike: string, idx: number) => (
+                        {selectedAffection >= 40 ? selectedCharacter.dislikes.map((dislike: string, idx: number) => (
                           <span key={idx} className="badge badge-error">
                             {dislike}
                           </span>
-                        ))}
+                        )) : (
+                          <div className="text-sm text-gray-400 italic flex items-center gap-2">
+                            🔒 호감도 40 이상 필요 (현재: {selectedAffection})
+                          </div>
+                        )}
                       </div>
                     </div>
+                    {/* Character State Display - Issue #33 & #34 */}
+                    {selectedAffection >= 50 && player.characterStates?.[selectedHeroine!] && (
+                      <div>
+                        <h4 className="font-semibold text-purple-400 mb-2">현재 상태</h4>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          {Object.entries(player.characterStates[selectedHeroine!]).map(([key, value]) => {
+                            if (key === 'meetingContext') return null;
+                            const displayName = {
+                              calmness: '침착함',
+                              stress: '스트레스',
+                              excitement: '흥분도',
+                              trust: '신뢰도',
+                              energy: '활력'
+                            }[key] || key;
+
+                            const color = value > 70 ? 'text-green-400' :
+                                        value > 40 ? 'text-yellow-400' : 'text-red-400';
+
+                            return (
+                              <div key={key} className="bg-background-dark p-2 rounded">
+                                <div className={`font-medium ${color}`}>{displayName}</div>
+                                <div className="text-white">{value}/100</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-2">
+                          처음 만난 곳: {player.characterStates[selectedHeroine!].meetingContext}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Character Details & Dialogues */}
               <div className="lg:col-span-2 space-y-6">
-                {/* Character Story */}
+                {/* Character Story - Issue #34: Progressive unlock */}
                 <div className="glass-card p-6">
                   <h3 className="text-2xl font-bold text-text-primary mb-4">캐릭터 스토리</h3>
                   <div className="prose prose-invert max-w-none">
                     <p className="text-text-secondary leading-relaxed">
-                      {selectedCharacter.baseText}
+                      {selectedAffection >= 20 ? selectedCharacter.baseText :
+                       selectedAffection >= 10 ? selectedCharacter.baseText.substring(0, 100) + '... (더 친해지면 알 수 있을 것 같다)' :
+                       '아직 이 캐릭터에 대해 잘 알지 못한다. 더 많은 대화를 나누어 보자.'}
                     </p>
-                    {selectedCharacter.backstory && (
-                      <div className="mt-4 p-4 bg-background-dark rounded-lg">
-                        <h4 className="text-lg font-semibold text-text-primary mb-2">배경 이야기</h4>
+                    {selectedCharacter.backstory && selectedAffection >= 60 && (
+                      <div className="mt-4 p-4 bg-background-dark rounded-lg border border-purple-500/30">
+                        <h4 className="text-lg font-semibold text-text-primary mb-2">✨ 비밀 이야기</h4>
                         <p className="text-text-secondary">{selectedCharacter.backstory}</p>
+                        <div className="text-xs text-purple-400 mt-2">호감도 60 달성으로 해금됨</div>
+                      </div>
+                    )}
+                    {selectedCharacter.backstory && selectedAffection < 60 && (
+                      <div className="mt-4 p-4 bg-background-dark/50 rounded-lg border border-gray-600">
+                        <div className="text-center text-gray-400">
+                          <div className="text-lg mb-2">🔒</div>
+                          <h4 className="text-lg font-semibold mb-2">비밀 이야기</h4>
+                          <p className="text-sm">호감도 60 이상 필요 (현재: {selectedAffection})</p>
+                        </div>
                       </div>
                     )}
                   </div>

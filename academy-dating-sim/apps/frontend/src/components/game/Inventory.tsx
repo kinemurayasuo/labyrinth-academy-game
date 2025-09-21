@@ -19,7 +19,7 @@ const Inventory: React.FC<InventoryProps> = ({
   const [detailedItem, setDetailedItem] = useState<Item | null>(null);
   const [showGiftTarget, setShowGiftTarget] = useState(false);
   const [filter, setFilter] = useState<'all' | 'gift' | 'consumable' | 'special' | 'weapon' | 'armor' | 'accessory'>('all');
-  const [clickedItems, setClickedItems] = useState<Set<string>>(new Set());
+  const [clickedItem, setClickedItem] = useState<string | null>(null); // Issue #29: Track clicked item
   const [sortBy, setSortBy] = useState<'name' | 'rarity' | 'type' | 'value'>('type');
   const [showDetails, setShowDetails] = useState(true);
 
@@ -232,10 +232,18 @@ const Inventory: React.FC<InventoryProps> = ({
               <div
                 key={item.id}
                 onClick={() => {
-                  setClickedItems(prev => new Set(prev).add(item.id));
-                  setDetailedItem(item);
+                  // Issue #29: Toggle clicked item to show/hide details
+                  if (clickedItem === item.id) {
+                    setClickedItem(null);
+                    setDetailedItem(null);
+                  } else {
+                    setClickedItem(item.id);
+                    setDetailedItem(item);
+                  }
                 }}
-                className={`bg-black/30 rounded-lg p-4 border transition-all duration-200 hover:scale-105 cursor-pointer ${rarity.color}`}>
+                className={`bg-black/30 rounded-lg p-4 border transition-all duration-200 hover:scale-105 cursor-pointer ${rarity.color} ${
+                  clickedItem === item.id ? 'ring-2 ring-primary' : ''
+                }`}>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{item.icon}</span>
@@ -252,12 +260,17 @@ const Inventory: React.FC<InventoryProps> = ({
                   )}
                 </div>
 
-                <p className="text-sm text-text-secondary mb-4">
-                  {item.description}
-                </p>
+                {/* Issue #29: Only show description and details when clicked */}
+                {clickedItem === item.id && (
+                  <>
+                    <p className="text-sm text-text-secondary mb-4 animate-fadeIn">
+                      {item.description}
+                    </p>
+                  </>
+                )}
 
-                {/* Item Effects */}
-                {showDetails && (
+                {/* Item Effects - Only show when clicked */}
+                {clickedItem === item.id && showDetails && (
                 <div className="space-y-1 mb-4">
                   {item.effect.affection && (
                     <div className="text-xs text-pink-300 flex items-center gap-1">
@@ -317,8 +330,8 @@ const Inventory: React.FC<InventoryProps> = ({
                 </div>
                 )}
 
-                {/* Item Requirements */}
-                {showDetails && item.requirements && (
+                {/* Item Requirements - Only show when clicked */}
+                {clickedItem === item.id && showDetails && item.requirements && (
                   <div className="mb-4 p-2 bg-red-900/20 rounded border border-red-500/30">
                     <div className="text-xs text-red-300 font-medium mb-1">필요 조건:</div>
                     <div className="space-y-1">
