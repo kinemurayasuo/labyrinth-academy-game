@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGameStore } from '../../store/useGameStore';
 import type { Monster } from '../../types/game';
@@ -6,28 +6,48 @@ import DungeonMap from './DungeonMap';
 import Battle from './Battle';
 import Inventory from './Inventory';
 import dungeonsData from '../../data/dungeons.json';
+import { DungeonGenerator, DungeonFloor } from '../../utils/dungeonGenerator';
 
 // Type assertions for JSON data
 const dungeonFloors = dungeonsData.floors as any[];
 
 const DungeonPage: React.FC = () => {
   const navigate = useNavigate();
-  
+
   // Use Zustand store
   const player = useGameStore((state: any) => state.player);
   const { updateHpMp, advanceTime, addItem, goToNextFloor } = useGameStore((state: any) => state.actions);
-  
-  // Get current dungeon floor
-  const getCurrentDungeonFloor = () => {
-    return dungeonFloors.find(floor => floor.id === player.dungeonProgress.currentFloor) || dungeonFloors[0];
-  };
-  
-  const currentFloor = getCurrentDungeonFloor();
+
+  const [currentFloor, setCurrentFloor] = useState<any>(null);
+  const [randomizedFloor, setRandomizedFloor] = useState<DungeonFloor | null>(null);
   const [isInBattle, setIsInBattle] = useState(false);
   const [currentEnemy, setCurrentEnemy] = useState<Monster | null>(null);
   const [gameMessage, setGameMessage] = useState('던전에 입장했습니다!');
   const [showInventory, setShowInventory] = useState(false);
-  const [playerPosition, setPlayerPosition] = useState(player.dungeonProgress.position);
+  const [playerPosition, setPlayerPosition] = useState({ x: 1, y: 1 });
+
+  // Generate random dungeon on mount or floor change
+  useEffect(() => {
+    const floorId = player.dungeonProgress?.currentFloor || 1;
+    const floorData = dungeonFloors.find(floor => floor.id === floorId) || dungeonFloors[0];
+
+    // Generate random dungeon
+    const generator = new DungeonGenerator(15, 15, floorId, floorData.theme || 'forest');
+    const generatedFloor = generator.generateFloor();
+
+    setCurrentFloor(floorData);
+    setRandomizedFloor(generatedFloor);
+    setPlayerPosition(generatedFloor.startPosition);
+    setGameMessage(`던전 ${floorId}층에 입장했습니다!`);
+  }, [player.dungeonProgress?.currentFloor]);
+
+  // Use randomized layout if available
+  const getLayoutCell = (x: number, y: number) => {
+    if (randomizedFloor) {
+      return randomizedFloor.layout[y]?.[x] ?? 1;
+    }
+    return currentFloor?.layout?.[y]?.[x] ?? 1;
+  };
 
   const handleExitDungeon = () => {
     navigate('/game');
@@ -40,7 +60,7 @@ const DungeonPage: React.FC = () => {
     }
 
     // Check if it's a wall
-    if (currentFloor.layout[newY][newX] === 1) {
+    if (getLayoutCell(newX, newY) === 1) {
       return;
     }
 
@@ -59,7 +79,7 @@ const DungeonPage: React.FC = () => {
     }));
 
     // Check cell type for special encounters
-    const cellType = currentFloor.layout[newY][newX];
+    const cellType = getLayoutCell(newX, newY);
 
     // Monster encounter on specific cells or random chance
     if (cellType === 5 || (cellType === 0 && Math.random() < 0.2)) {
@@ -102,7 +122,7 @@ const DungeonPage: React.FC = () => {
   };
 
   const handleCellInteract = (x: number, y: number) => {
-    const cell = currentFloor.layout[y][x];
+    const cell = getLayoutCell(x, y);
 
     switch (cell) {
       case 3: // treasure
@@ -152,9 +172,9 @@ const DungeonPage: React.FC = () => {
     setGameMessage(`승리! 경험치 +${rewards.exp}, 골드 +${rewards.gold}를 획득했습니다!`);
 
     // Mark cell as cleared if it was a monster spawn point
-    const cellType = currentFloor.layout[playerPosition.y][playerPosition.x];
-    if (cellType === 5 || cellType === 6) {
-      currentFloor.layout[playerPosition.y][playerPosition.x] = 0;
+    const cellType = getLayoutCell(playerPosition.x, playerPosition.y);
+    if ((cellType === 5 || cellType === 6) && randomizedFloor) {
+      randomizedFloor.layout[playerPosition.y][playerPosition.x] = 0;
     }
   };
 
@@ -248,6 +268,7 @@ const DungeonPage: React.FC = () => {
           <div className="lg:col-span-3">
             <div className="bg-black/50 backdrop-blur-md rounded-lg shadow-lg p-4 border border-border">
               <h3 className="text-lg font-bold text-text-primary mb-4">🗺️ 던전 지도</h3>
+              {randomizedFloor && (
               <DungeonMap
                 player={{
                   ...player,
@@ -256,10 +277,14 @@ const DungeonPage: React.FC = () => {
                     position: playerPosition
                   }
                 }}
-                currentFloor={currentFloor}
+                currentFloor={{
+                  ...currentFloor,
+                  layout: randomizedFloor.layout
+                }}
                 onMovePlayer={handlePlayerMove}
                 onInteract={handleCellInteract}
               />
+              )}
             </div>
           </div>
 

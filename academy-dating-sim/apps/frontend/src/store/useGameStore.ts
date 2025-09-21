@@ -207,14 +207,30 @@ export const useGameStore = create<GameState>((set, get) => ({
                         ...state.player,
                         day: nextDay,
                         timeOfDay: 'morning',
+                        location: 'dormitory',  // Force return to dormitory at new day
                         hp: Math.min(state.player.hp + 20, state.player.maxHp),
                         mp: Math.min(state.player.mp + 10, state.player.maxMp),
                         stamina: state.player.maxStamina  // Reset stamina to max for new day
                     },
-                    dailyActivitiesCount: 0  // Reset activity count for new day
+                    dailyActivitiesCount: 0,  // Reset activity count for new day
+                    gameMessage: '새로운 날이 밝았습니다. 기숙사에서 일어났습니다.'
                 };
             }
-            return { player: { ...state.player, timeOfDay: TIME_PHASES[nextPhaseIndex] } };
+
+            // Force return to dormitory at night time
+            const newTimeOfDay = TIME_PHASES[nextPhaseIndex];
+            const shouldReturnToDorm = newTimeOfDay === 'night' && state.player.location !== 'dormitory';
+
+            return {
+                player: {
+                    ...state.player,
+                    timeOfDay: newTimeOfDay,
+                    location: shouldReturnToDorm ? 'dormitory' : state.player.location
+                },
+                gameMessage: shouldReturnToDorm
+                    ? '밤이 되어 기숙사로 돌아왔습니다.'
+                    : state.gameMessage
+            };
         });
     },
     checkForEvents: (locationId?: string) => {
@@ -327,10 +343,26 @@ export const useGameStore = create<GameState>((set, get) => ({
     useItem: (itemId, targetCharacter) => {
         const { player } = get();
         const itemIndex = player.inventory.indexOf(itemId);
-        
+
         if (itemIndex === -1) {
             set({ gameMessage: '아이템을 찾을 수 없습니다.' });
             return;
+        }
+
+        // Check if item can be used based on current state
+        switch (itemId) {
+            case 'healingPotion':
+                if (player.hp >= player.maxHp) {
+                    set({ gameMessage: 'HP가 이미 최대입니다. 포션을 사용할 수 없습니다.' });
+                    return;
+                }
+                break;
+            case 'manaPotion':
+                if (player.mp >= player.maxMp) {
+                    set({ gameMessage: 'MP가 이미 최대입니다. 포션을 사용할 수 없습니다.' });
+                    return;
+                }
+                break;
         }
 
         // Remove item from inventory
@@ -343,12 +375,14 @@ export const useGameStore = create<GameState>((set, get) => ({
 
         switch (itemId) {
             case 'healingPotion':
+                const healAmount = Math.min(50, newPlayer.maxHp - newPlayer.hp);
                 newPlayer.hp = Math.min(newPlayer.hp + 50, newPlayer.maxHp);
-                message = '체력 포션을 사용했습니다. HP +50';
+                message = `체력 포션을 사용했습니다. HP +${healAmount}`;
                 break;
             case 'manaPotion':
+                const manaAmount = Math.min(30, newPlayer.maxMp - newPlayer.mp);
                 newPlayer.mp = Math.min(newPlayer.mp + 30, newPlayer.maxMp);
-                message = '마나 포션을 사용했습니다. MP +30';
+                message = `마나 포션을 사용했습니다. MP +${manaAmount}`;
                 break;
             case 'energyDrink':
                 newPlayer.stats.stamina += 2;
