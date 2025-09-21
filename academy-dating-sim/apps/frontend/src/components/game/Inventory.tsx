@@ -20,6 +20,8 @@ const Inventory: React.FC<InventoryProps> = ({
   const [showGiftTarget, setShowGiftTarget] = useState(false);
   const [filter, setFilter] = useState<'all' | 'gift' | 'consumable' | 'special' | 'weapon' | 'armor' | 'accessory'>('all');
   const [clickedItems, setClickedItems] = useState<Set<string>>(new Set());
+  const [sortBy, setSortBy] = useState<'name' | 'rarity' | 'type' | 'value'>('type');
+  const [showDetails, setShowDetails] = useState(true);
 
   const getItemRarity = (item: Item) => {
     const rarityColors = {
@@ -45,10 +47,34 @@ const Inventory: React.FC<InventoryProps> = ({
     return acc;
   }, {} as Record<string, { item: Item; count: number }>);
 
-  const filteredItems = Object.values(inventoryItems).filter(({ item }) => {
-    if (filter === 'all') return true;
-    return item.type === filter;
-  });
+  const filteredItems = Object.values(inventoryItems)
+    .filter(({ item }) => {
+      if (filter === 'all') return true;
+      return item.type === filter;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.item.name.localeCompare(b.item.name);
+        case 'rarity':
+          const rarityOrder = { legendary: 5, epic: 4, rare: 3, uncommon: 2, common: 1 };
+          const aRarity = rarityOrder[a.item.rarity as keyof typeof rarityOrder] || 0;
+          const bRarity = rarityOrder[b.item.rarity as keyof typeof rarityOrder] || 0;
+          return bRarity - aRarity;
+        case 'value':
+          return (b.item.value || 0) - (a.item.value || 0);
+        case 'type':
+        default:
+          return a.item.type.localeCompare(b.item.type);
+      }
+    });
+
+  // Count items per category
+  const categoryCounts = Object.values(inventoryItems).reduce((acc, { item, count }) => {
+    acc.all = (acc.all || 0) + count;
+    acc[item.type] = (acc[item.type] || 0) + count;
+    return acc;
+  }, {} as Record<string, number>);
 
   const handleUseItem = (item: Item) => {
     if (item.type === 'gift') {
@@ -126,22 +152,44 @@ const Inventory: React.FC<InventoryProps> = ({
           인벤토리
         </h2>
 
-        <div className="text-sm text-text-secondary">
-          총 {Object.values(inventoryItems).reduce((sum, { count }) => sum + count, 0)}개 아이템
+        <div className="flex gap-4 items-center">
+          {/* Sort Options */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as any)}
+            className="bg-black/30 text-text-primary px-3 py-1 rounded-lg text-sm border border-border"
+          >
+            <option value="type">종류순</option>
+            <option value="name">이름순</option>
+            <option value="rarity">희귀도순</option>
+            <option value="value">가치순</option>
+          </select>
+
+          {/* Toggle Details */}
+          <button
+            onClick={() => setShowDetails(!showDetails)}
+            className={`px-3 py-1 rounded-lg text-sm transition-all ${showDetails ? 'bg-primary/50' : 'bg-black/30'} text-text-primary border border-border`}
+          >
+            {showDetails ? '📋 상세보기' : '📝 간단보기'}
+          </button>
+
+          <div className="text-sm text-text-secondary">
+            총 {Object.values(inventoryItems).reduce((sum, { count }) => sum + count, 0)}개 아이템
+          </div>
         </div>
       </div>
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
         {[
-          { key: 'all', label: '전체', icon: '📦' },
-          { key: 'gift', label: '선물', icon: '🎁' },
-          { key: 'consumable', label: '소모품', icon: '💊' },
-          { key: 'weapon', label: '무기', icon: '⚔️' },
-          { key: 'armor', label: '방어구', icon: '🛡️' },
-          { key: 'accessory', label: '장신구', icon: '💍' },
-          { key: 'special', label: '특별', icon: '⭐' },
-        ].map(({ key, label, icon }) => (
+          { key: 'all', label: '전체', icon: '📦', count: categoryCounts.all || 0 },
+          { key: 'gift', label: '선물', icon: '🎁', count: categoryCounts.gift || 0 },
+          { key: 'consumable', label: '소모품', icon: '💊', count: categoryCounts.consumable || 0 },
+          { key: 'weapon', label: '무기', icon: '⚔️', count: categoryCounts.weapon || 0 },
+          { key: 'armor', label: '방어구', icon: '🛡️', count: categoryCounts.armor || 0 },
+          { key: 'accessory', label: '장신구', icon: '💍', count: categoryCounts.accessory || 0 },
+          { key: 'special', label: '특별', icon: '⭐', count: categoryCounts.special || 0 },
+        ].map(({ key, label, icon, count }) => (
           <button
             key={key}
             onClick={() => setFilter(key as any)}
@@ -153,6 +201,13 @@ const Inventory: React.FC<InventoryProps> = ({
           >
             <span>{icon}</span>
             {label}
+            {count > 0 && (
+              <span className={`px-1.5 py-0.5 text-xs rounded-full ${
+                filter === key ? 'bg-white/20' : 'bg-primary/30'
+              }`}>
+                {count}
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -197,16 +252,12 @@ const Inventory: React.FC<InventoryProps> = ({
                   )}
                 </div>
 
-                {clickedItems.has(item.id) ? (
-                  <p className="text-sm text-text-secondary mb-4">{item.description}</p>
-                ) : (
-                  <p className="text-sm text-text-secondary mb-4 italic opacity-60">
-                    클릭하여 상세 정보 확인...
-                  </p>
-                )}
+                <p className="text-sm text-text-secondary mb-4">
+                  {item.description}
+                </p>
 
                 {/* Item Effects */}
-                {clickedItems.has(item.id) && (
+                {showDetails && (
                 <div className="space-y-1 mb-4">
                   {item.effect.affection && (
                     <div className="text-xs text-pink-300 flex items-center gap-1">
@@ -267,7 +318,7 @@ const Inventory: React.FC<InventoryProps> = ({
                 )}
 
                 {/* Item Requirements */}
-                {clickedItems.has(item.id) && item.requirements && (
+                {showDetails && item.requirements && (
                   <div className="mb-4 p-2 bg-red-900/20 rounded border border-red-500/30">
                     <div className="text-xs text-red-300 font-medium mb-1">필요 조건:</div>
                     <div className="space-y-1">
@@ -283,24 +334,20 @@ const Inventory: React.FC<InventoryProps> = ({
                   </div>
                 )}
 
-                {/* Item Value */}
-                {item.value && (
-                  <div className="mb-3">
+                {/* Item Value and Rarity Badge */}
+                <div className="flex justify-between items-center mb-3">
+                  {item.value && (
                     <div className="text-xs text-yellow-300 flex items-center gap-1">
-                      💰 <span>가치: {item.value} 골드</span>
+                      💰 <span>{item.value}G</span>
                     </div>
-                  </div>
-                )}
-
-                {/* Rarity */}
-                <div className="mb-4">
-                  <div className={`text-xs font-medium ${rarity.text}`}>
-                    등급: {rarity.name}
+                  )}
+                  <div className={`text-xs font-medium px-2 py-0.5 rounded-full ${rarity.color} ${rarity.text}`}>
+                    {rarity.name}
                   </div>
                 </div>
 
                 {/* Preferred By */}
-                {item.preferredBy && item.preferredBy.length > 0 && (
+                {showDetails && item.preferredBy && item.preferredBy.length > 0 && (
                   <div className="mb-4">
                     <div className="text-xs text-yellow-300 mb-1">⭐ 선호 캐릭터:</div>
                     <div className="flex flex-wrap gap-1">
