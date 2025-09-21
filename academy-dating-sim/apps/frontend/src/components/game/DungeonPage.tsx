@@ -164,8 +164,12 @@ const DungeonPage: React.FC = () => {
       case 4: // stairs
         const nextFloorExists = dungeonFloors.some(floor => floor.id === currentFloor.id + 1);
         if (nextFloorExists) {
-          setGameMessage('다음 층으로 이동합니다.');
-          goToNextFloor();
+          if (window.confirm('다음 층으로 이동하시겠습니까?')) {
+            setGameMessage('다음 층으로 이동합니다.');
+            goToNextFloor();
+            generateFloor(player.dungeonProgress.currentFloor + 1);
+            setPlayerPosition({ x: 1, y: 1 });
+          }
         } else {
           setGameMessage('더 이상 내려갈 곳이 없습니다. 여기가 마지막 층입니다.');
         }
@@ -189,6 +193,8 @@ const DungeonPage: React.FC = () => {
     if ((cellType === 5 || cellType === 6) && randomizedFloor) {
       randomizedFloor.layout[playerPosition.y][playerPosition.x] = 0;
     }
+
+    // Issue #18: HP/MP persists after battle - no reset needed
   };
 
   const handleBattleDefeat = () => {
@@ -196,13 +202,15 @@ const DungeonPage: React.FC = () => {
     setCurrentEnemy(null);
     setGameMessage('패배했습니다... 던전 입구로 돌아갑니다.');
 
-    // Reset player position to start and restore 1 HP
+    // Reset player position to start
     const startPos = { x: 1, y: 1 };
     setPlayerPosition(startPos);
+
+    // Issue #18: Keep HP/MP as is after defeat, just ensure minimum 1 HP
     useGameStore.setState((state: any) => ({
       player: {
         ...state.player,
-        hp: Math.max(1, state.player.hp), // Ensure at least 1 HP
+        hp: Math.max(1, state.player.hp), // Maintain HP, ensure at least 1
         dungeonProgress: {
           ...state.player.dungeonProgress,
           position: startPos
@@ -370,6 +378,39 @@ const DungeonPage: React.FC = () => {
                   className="w-full p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
                 >
                   🎒 인벤토리
+                </button>
+                {/* Exit dungeon button */}
+                <button
+                  onClick={handleExitDungeon}
+                  className="w-full p-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition"
+                >
+                  🚪 던전 나가기
+                </button>
+                {/* Issue #19: Emergency escape button */}
+                <button
+                  onClick={() => {
+                    if (window.confirm('긴급 탈출을 사용하여 다음 층으로 이동하시겠습니까? (HP 10% 소모)')) {
+                      const hpCost = Math.floor(player.maxHp * 0.1);
+                      if (player.hp > hpCost) {
+                        useGameStore.setState((state: any) => ({
+                          player: {
+                            ...state.player,
+                            hp: state.player.hp - hpCost
+                          }
+                        }));
+                        goToNextFloor();
+                        setGameMessage('긴급 탈출! 다음 층으로 이동했습니다.');
+                        generateFloor(player.dungeonProgress.currentFloor + 1);
+                        setPlayerPosition({ x: 1, y: 1 });
+                      } else {
+                        setGameMessage('HP가 부족하여 긴급 탈출을 사용할 수 없습니다.');
+                      }
+                    }
+                  }}
+                  className="w-full p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition"
+                  title="HP 10%를 소모하여 다음 층으로 즉시 이동"
+                >
+                  🚨 긴급 탈출 (다음 층)
                 </button>
               </div>
             </div>

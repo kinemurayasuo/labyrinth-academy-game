@@ -356,8 +356,45 @@ const HeroineGallery: React.FC = () => {
                 <div className="flex gap-4">
                   <button
                     onClick={() => {
-                      navigate('/game');
-                      // Can add logic to auto-select this character in game
+                      // Issue #21 fix: Directly open dialogue with character
+                      if (selectedCharacter) {
+                        // Set the character interaction event in game store
+                        useGameStore.setState((state: any) => ({
+                          currentEvent: {
+                            id: `dialogue_${selectedCharacter.id}`,
+                            title: `${selectedCharacter.name}와의 대화`,
+                            description: selectedCharacter.description,
+                            choices: [
+                              {
+                                text: "안녕하세요!",
+                                effects: {
+                                  affection: { [selectedCharacter.id]: 2 },
+                                  text: `${selectedCharacter.name}이(가) 밝게 웃으며 인사합니다.`
+                                }
+                              },
+                              {
+                                text: "오늘 날씨가 좋네요",
+                                effects: {
+                                  affection: { [selectedCharacter.id]: 1 },
+                                  text: `${selectedCharacter.name}이(가) 하늘을 올려다보며 동의합니다.`
+                                }
+                              },
+                              {
+                                text: "잠시 이야기할 시간 있나요?",
+                                effects: {
+                                  affection: { [selectedCharacter.id]: 3 },
+                                  text: `${selectedCharacter.name}이(가) 기쁘게 시간을 내줍니다.`
+                                }
+                              }
+                            ],
+                            trigger: {
+                              location: 'gallery',
+                              character: selectedCharacter.id
+                            }
+                          }
+                        }));
+                        navigate('/game');
+                      }
                     }}
                     className="flex-1 btn-primary px-6 py-3 rounded-xl font-semibold"
                   >
