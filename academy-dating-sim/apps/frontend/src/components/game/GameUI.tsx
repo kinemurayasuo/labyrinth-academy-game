@@ -7,6 +7,7 @@ import CharacterInteraction from '../character/CharacterInteraction';
 import VisualNovelDialog from '../ui/VisualNovelDialog';
 import Inventory from './Inventory';
 import HeroineEvents from '../character/HeroineEvents';
+import CharacterEquipment from '../character/CharacterEquipment';
 import dialogueData from '../../data/dialogues.json';
 import charactersData from '../../data/characters.json';
 import locationsData from '../../data/locations.json';
@@ -40,7 +41,8 @@ const GameUI: React.FC = () => {
 
   // Component state
   const [showInventory, setShowInventory] = React.useState(false);
-  const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters'>('location');
+  const [showEquipment, setShowEquipment] = React.useState(false);
+  const [selectedTab, setSelectedTab] = React.useState<'location' | 'characters' | 'stats'>('location');
   const [showHeroineEvents, setShowHeroineEvents] = React.useState(false);
   const [selectedHeroine, setSelectedHeroine] = React.useState<string | null>(null);
   const [showCharacterDialog, setShowCharacterDialog] = React.useState(false);
@@ -192,6 +194,15 @@ const GameUI: React.FC = () => {
                 role="button"
               >
                 🏪 쇼핑
+              </button>
+              {/* Issue #22: Equipment Window Button */}
+              <button
+                onClick={() => setShowEquipment(!showEquipment)}
+                className="px-4 py-2 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="장비"
+                role="button"
+              >
+                ⚔️ 장비
               </button>
               <button
                 onClick={() => navigate('/enhancement')}
@@ -510,6 +521,26 @@ const GameUI: React.FC = () => {
                     닫기
                   </button>
                 )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Equipment Modal - Issue #22 */}
+        {showEquipment && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+            <div className="bg-background rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border">
+              <div className="sticky top-0 bg-background/90 backdrop-blur-md p-4 border-b border-border flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-text-primary">⚔️ 캐릭터 장비</h2>
+                <button
+                  onClick={() => setShowEquipment(false)}
+                  className="text-text-secondary hover:text-text-primary text-2xl"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="p-4">
+                <CharacterEquipment />
               </div>
             </div>
           </div>
