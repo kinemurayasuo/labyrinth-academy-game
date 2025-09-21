@@ -174,9 +174,11 @@ const PetSystem: React.FC = () => {
 
   const adoptPet = (pet: Pet) => {
     const cost = pet.rarity === 'legendary' ? 5000 : pet.rarity === 'epic' ? 2000 : pet.rarity === 'rare' ? 800 : 300;
+    const currentMoney = player.money || 0;
 
-    if ((player.money || 0) < cost) {
-      alert(`${cost} 골드가 필요합니다! 현재 보유: ${player.money}원`);
+    // Check if player has enough money
+    if (currentMoney < cost) {
+      alert(`${cost} 골드가 필요합니다! 현재 보유: ${currentMoney}골드`);
       return;
     }
 
@@ -186,6 +188,17 @@ const PetSystem: React.FC = () => {
       return;
     }
 
+    // Check if pet was already adopted (prevent duplicate adoptions)
+    if (myPets.some(p => p.id === pet.id || p.name === pet.name)) {
+      alert('이미 같은 종류의 펫을 입양했습니다!');
+      return;
+    }
+
+    // Deduct money first to prevent race conditions
+    const newMoney = currentMoney - cost;
+    updatePlayer({ money: newMoney });
+
+    // Create and add new pet
     const newPet = { ...pet, id: `${pet.id}_${Date.now()}` };
     const updatedPets = [...myPets, newPet];
     setMyPets(updatedPets);
@@ -193,12 +206,8 @@ const PetSystem: React.FC = () => {
     // Save to localStorage for persistence
     localStorage.setItem('myPets', JSON.stringify(updatedPets));
 
-    // Update money using the store action
-    const newMoney = (player.money || 0) - cost;
-    updatePlayer({ money: newMoney });
-
     soundManager.playSuccessSound();
-    alert(`${pet.name}을(를) 입양했습니다! (${cost}원 사용)`);
+    alert(`${pet.name}을(를) 입양했습니다! (${cost}골드 사용, 남은 골드: ${newMoney})`);
     setShowPetShop(false);
   };
 
@@ -517,12 +526,15 @@ const PetSystem: React.FC = () => {
             <div className="bg-gradient-to-br from-green-900 to-emerald-900 rounded-xl p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold text-white">🏪 펫 상점</h3>
-                <button
-                  onClick={() => setShowPetShop(false)}
-                  className="text-white hover:text-red-400 text-2xl"
-                >
-                  ✕
-                </button>
+                <div className="flex items-center gap-4">
+                  <span className="text-yellow-400 font-bold">💰 보유 골드: {player.money || 0}G</span>
+                  <button
+                    onClick={() => setShowPetShop(false)}
+                    className="text-white hover:text-red-400 text-2xl"
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -549,9 +561,14 @@ const PetSystem: React.FC = () => {
                               <span className="text-yellow-400 font-bold">{cost} G</span>
                               <button
                                 onClick={() => adoptPet(pet)}
-                                className="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg font-bold hover:shadow-lg transition-all"
+                                disabled={(player.money || 0) < cost || myPets.length >= 6}
+                                className={`px-3 py-1 rounded-lg font-bold transition-all ${
+                                  (player.money || 0) < cost || myPets.length >= 6
+                                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                    : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:shadow-lg'
+                                }`}
                               >
-                                입양하기
+                                {(player.money || 0) < cost ? '골드 부족' : myPets.length >= 6 ? '최대 보유' : '입양하기'}
                               </button>
                             </div>
                           </div>
