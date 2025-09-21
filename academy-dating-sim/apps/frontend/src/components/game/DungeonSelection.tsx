@@ -118,7 +118,7 @@ const DungeonSelection: React.FC = () => {
 
   const handleEnterDungeon = () => {
     if (selectedDungeon) {
-      // Store selected dungeon in game state
+      // Store selected dungeon in game state with timestamp for regeneration
       useGameStore.setState((state: any) => ({
         player: {
           ...state.player,
@@ -126,7 +126,8 @@ const DungeonSelection: React.FC = () => {
           dungeonProgress: {
             ...state.player.dungeonProgress,
             currentFloor: 1,
-            position: { x: 1, y: 1 }
+            position: { x: 1, y: 1 },
+            enteredAt: Date.now() // Force regeneration
           }
         }
       }));

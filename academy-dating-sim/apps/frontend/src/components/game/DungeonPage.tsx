@@ -26,20 +26,26 @@ const DungeonPage: React.FC = () => {
   const [showInventory, setShowInventory] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 1, y: 1 });
 
-  // Generate random dungeon on mount or floor change
+  // Generate random dungeon on mount, floor change, or re-entry
   useEffect(() => {
     const floorId = player.dungeonProgress?.currentFloor || 1;
     const floorData = dungeonFloors.find(floor => floor.id === floorId) || dungeonFloors[0];
 
-    // Generate random dungeon
-    const generator = new DungeonGenerator(15, 15, floorId, floorData.theme || 'forest');
+    // Generate random dungeon with timestamp seed for uniqueness
+    const seed = Date.now();
+    const generator = new DungeonGenerator(
+      15 + Math.floor(Math.random() * 5), // Random size 15-19
+      15 + Math.floor(Math.random() * 5), // Random size 15-19
+      floorId,
+      floorData.theme || 'forest'
+    );
     const generatedFloor = generator.generateFloor();
 
     setCurrentFloor(floorData);
     setRandomizedFloor(generatedFloor);
     setPlayerPosition(generatedFloor.startPosition);
-    setGameMessage(`던전 ${floorId}층에 입장했습니다!`);
-  }, [player.dungeonProgress?.currentFloor]);
+    setGameMessage(`던전 ${floorId}층에 입장했습니다! (새로운 레이아웃)`);
+  }, [player.dungeonProgress?.currentFloor, player.dungeonProgress?.enteredAt]);
 
   // Use randomized layout if available
   const getLayoutCell = (x: number, y: number) => {
