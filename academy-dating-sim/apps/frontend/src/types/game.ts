@@ -48,6 +48,7 @@ export interface Player {
   unlockedEndings?: string[];
   participatedEvents?: string[];
   characterStates?: Record<string, CharacterState>; // Issue #33: Character emotional states
+  heroineStats?: Record<string, HeroineStats>; // Issue #35: Heroine stats and equipment
 }
 
 // Issue #33: Character emotional state interface
@@ -58,6 +59,31 @@ export interface CharacterState {
   trust: number;         // 신뢰도 (0-100)
   energy: number;        // 활력 (0-100)
   meetingContext: string; // 만난 장소/상황
+}
+
+// Issue #35: Heroine stats and equipment system
+export interface HeroineStats {
+  level: number;
+  experience: number;
+  hp: number;
+  maxHp: number;
+  mp: number;
+  maxMp: number;
+  stats: {
+    intelligence: number;
+    charm: number;
+    strength: number;
+    agility: number;
+    luck: number;
+    magic: number;
+  };
+  equipment: {
+    weapon?: string;
+    armor?: string;
+    accessory?: string;
+  };
+  skills: string[];
+  unlocked: boolean;
 }
 
 export interface Character {

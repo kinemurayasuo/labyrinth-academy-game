@@ -57,7 +57,8 @@ const INITIAL_PLAYER: Player = {
   collectedItems: [],
   unlockedEndings: [],
   participatedEvents: [],
-  characterStates: {} // Issue #33: Track character emotional states
+  characterStates: {}, // Issue #33: Track character emotional states
+  heroineStats: {} // Issue #35: Heroine stats and equipment
 };
 
 const TIME_PHASES = ['morning', 'noon', 'afternoon', 'evening', 'night'] as const;
@@ -249,6 +250,34 @@ const generateRandomCharacterState = (characterId: string, meetingLocation: stri
   return finalState;
 };
 
+// Issue #35: Initialize heroine stats based on character
+const initializeHeroineStats = (characterId: string): any => {
+  const baseStats = {
+    sakura: { intelligence: 15, charm: 20, strength: 25, agility: 20, luck: 15, magic: 5 },
+    yuki: { intelligence: 30, charm: 15, strength: 8, agility: 12, luck: 20, magic: 35 },
+    luna: { intelligence: 20, charm: 25, strength: 10, agility: 15, luck: 25, magic: 25 },
+    mystery: { intelligence: 35, charm: 18, strength: 12, agility: 18, luck: 30, magic: 40 },
+    akane: { intelligence: 12, charm: 18, strength: 22, agility: 25, luck: 18, magic: 10 },
+    hana: { intelligence: 18, charm: 22, strength: 15, agility: 20, luck: 20, magic: 15 },
+    rin: { intelligence: 25, charm: 20, strength: 18, agility: 22, luck: 25, magic: 30 },
+    mei: { intelligence: 16, charm: 25, strength: 14, agility: 18, luck: 22, magic: 12 },
+    sora: { intelligence: 28, charm: 15, strength: 10, agility: 15, luck: 20, magic: 25 }
+  }[characterId] || { intelligence: 15, charm: 15, strength: 15, agility: 15, luck: 15, magic: 15 };
+
+  return {
+    level: 1,
+    experience: 0,
+    hp: 80,
+    maxHp: 80,
+    mp: 40,
+    maxMp: 40,
+    stats: baseStats,
+    equipment: {},
+    skills: ['기본 공격'],
+    unlocked: false
+  };
+};
+
 interface GameState {
   player: Player;
   unlockedCharacters: string[];
@@ -288,6 +317,8 @@ interface GameState {
     clearLastActivity: () => void;
     markCharacterAsMet: (characterId: string, meetingLocation?: string) => void;
     updateCharacterState: (characterId: string, stateChanges: Partial<CharacterState>) => void;
+    initializeHeroineStats: (characterId: string) => void;
+    updateHeroineStats: (characterId: string, updates: Partial<any>) => void;
     triggerRandomHeroineInteraction: () => void;
   };
 }
@@ -950,6 +981,9 @@ export const useGameStore = create<GameState>((set, get) => ({
         // Issue #33: Random initial character states based on meeting conditions
         const initialState = generateRandomCharacterState(characterId, meetingLocation || player.location);
 
+        // Issue #35: Initialize heroine stats when first met
+        const heroineStats = initializeHeroineStats(characterId);
+
         set({
           metCharacters: [...metCharacters, characterId],
           player: {
@@ -957,6 +991,10 @@ export const useGameStore = create<GameState>((set, get) => ({
             characterStates: {
               ...player.characterStates,
               [characterId]: initialState
+            },
+            heroineStats: {
+              ...player.heroineStats,
+              [characterId]: heroineStats
             }
           }
         });
@@ -981,6 +1019,39 @@ export const useGameStore = create<GameState>((set, get) => ({
             characterStates: {
               ...player.characterStates,
               [characterId]: newState
+            }
+          }
+        });
+      }
+    },
+    initializeHeroineStats: (characterId: string) => {
+      const { player } = get();
+      if (!player.heroineStats?.[characterId]) {
+        const stats = initializeHeroineStats(characterId);
+        set({
+          player: {
+            ...player,
+            heroineStats: {
+              ...player.heroineStats,
+              [characterId]: stats
+            }
+          }
+        });
+      }
+    },
+    updateHeroineStats: (characterId: string, updates: Partial<any>) => {
+      const { player } = get();
+      const currentStats = player.heroineStats?.[characterId];
+
+      if (currentStats) {
+        const newStats = { ...currentStats, ...updates };
+
+        set({
+          player: {
+            ...player,
+            heroineStats: {
+              ...player.heroineStats,
+              [characterId]: newStats
             }
           }
         });

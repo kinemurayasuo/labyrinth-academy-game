@@ -307,6 +307,53 @@ const HeroineGallery: React.FC = () => {
                         </div>
                       </div>
                     )}
+                    {/* Heroine Stats Display - Issue #35 */}
+                    {selectedAffection >= 70 && player.heroineStats?.[selectedHeroine!] && (
+                      <div>
+                        <h4 className="font-semibold text-blue-400 mb-2">전투 능력</h4>
+                        <div className="grid grid-cols-3 gap-2 text-xs">
+                          {Object.entries(player.heroineStats[selectedHeroine!].stats).map(([stat, value]) => {
+                            const displayName = {
+                              intelligence: '지력',
+                              charm: '매력',
+                              strength: '힘',
+                              agility: '민첩',
+                              luck: '행운',
+                              magic: '마법'
+                            }[stat] || stat;
+
+                            return (
+                              <div key={stat} className="bg-background-dark p-2 rounded">
+                                <div className="text-blue-400 font-medium">{displayName}</div>
+                                <div className="text-white">{value}</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+                          <div className="bg-background-dark p-2 rounded">
+                            <div className="text-red-400 font-medium">레벨</div>
+                            <div className="text-white">{player.heroineStats[selectedHeroine!].level}</div>
+                          </div>
+                          <div className="bg-background-dark p-2 rounded">
+                            <div className="text-yellow-400 font-medium">스킬</div>
+                            <div className="text-white">{player.heroineStats[selectedHeroine!].skills.length}</div>
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-400 mt-2">
+                          호감도 70 달성으로 능력치 확인 가능
+                        </div>
+                      </div>
+                    )}
+                    {selectedAffection < 70 && (
+                      <div className="text-center p-4 bg-background-dark/50 rounded-lg border border-gray-600">
+                        <div className="text-gray-400">
+                          <div className="text-lg mb-2">🔒</div>
+                          <h4 className="text-lg font-semibold mb-2">전투 능력</h4>
+                          <p className="text-sm">호감도 70 이상 필요 (현재: {selectedAffection})</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
