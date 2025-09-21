@@ -9,6 +9,7 @@ interface LocationViewProps {
   availableLocations: Record<string, Location>;
   characters: Record<string, Character>;
   onInteractCharacter?: (characterId: string) => void;
+  canPerformActivity?: boolean;
 }
 
 const LocationView: React.FC<LocationViewProps> = ({
@@ -19,6 +20,7 @@ const LocationView: React.FC<LocationViewProps> = ({
   availableLocations,
   characters,
   onInteractCharacter,
+  canPerformActivity = true,
 }) => {
   const getActivityIcon = (activityName: string) => {
     const icons: Record<string, string> = {
@@ -51,7 +53,12 @@ const LocationView: React.FC<LocationViewProps> = ({
     return icons[locationId] || '📍';
   };
 
-  const canPerformActivity = (activity: any) => {
+  const canDoActivity = (activity: any) => {
+    // Issue #27: When daily activities are done, only allow rest and diary writing at dormitory
+    if (!canPerformActivity && currentLocation.id === 'dormitory') {
+      return activity.name === '휴식하기' || activity.name === '휴식' || activity.name === '일기 쓰기';
+    }
+
     if (activity.time !== 'any' && activity.time !== player.timeOfDay) {
       return false;
     }
@@ -100,6 +107,15 @@ const LocationView: React.FC<LocationViewProps> = ({
         </div>
       </div>
 
+      {/* Issue #27: Show notification when forced to dormitory */}
+      {!canPerformActivity && currentLocation.id === 'dormitory' && (
+        <div className="bg-yellow-900/30 border border-yellow-600/50 rounded-lg p-3 mb-4">
+          <p className="text-yellow-200 text-sm">
+            ⚠️ 오늘의 활동이 모두 끝났습니다. 휴식하거나 일기를 쓸 수 있습니다.
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Activities */}
         <div className="bg-purple-900/40 rounded-lg p-4">
@@ -111,7 +127,7 @@ const LocationView: React.FC<LocationViewProps> = ({
           {currentLocation.activities.length > 0 ? (
             <div className="space-y-3">
               {currentLocation.activities.map((activity, index) => {
-                const canPerform = canPerformActivity(activity);
+                const canPerform = canDoActivity(activity);
 
                 return (
                   <button
@@ -167,7 +183,9 @@ const LocationView: React.FC<LocationViewProps> = ({
             {Object.entries(availableLocations)
               .filter(([id]) => id !== currentLocation.id)
               .map(([locationId, location]) => {
-                const canAccess = canAccessLocation(location);
+                // Issue #27: Only allow movement to dormitory when daily activities are done
+                const canAccess = canAccessLocation(location) &&
+                  (canPerformActivity || locationId === 'dormitory');
 
                 return (
                   <button

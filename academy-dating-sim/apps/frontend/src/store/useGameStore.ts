@@ -544,6 +544,14 @@ export const useGameStore = create<GameState>((set, get) => ({
             newActivityCount++;
         }
 
+        // Issue #27: Force return to dormitory after 2 activities
+        let forcedToDormitory = false;
+        if (newActivityCount >= 2 && player.location !== 'dormitory' && mainActivities.includes(activityName)) {
+            newPlayer.location = 'dormitory';
+            message += ' 오늘의 활동이 끝났습니다. 기숙사로 돌아왔습니다.';
+            forcedToDormitory = true;
+        }
+
         set({
             player: newPlayer,
             gameMessage: message,
@@ -554,6 +562,13 @@ export const useGameStore = create<GameState>((set, get) => ({
         if (shouldAdvanceTime) {
             actions.advanceTime();
             actions.checkForEvents();
+        }
+
+        // Navigate to dormitory if forced
+        if (forcedToDormitory && navigate) {
+            setTimeout(() => {
+                set({ gameMessage: '기숙사에서 휴식하거나 일기를 쓸 수 있습니다.' });
+            }, 2000);
         }
     },
     checkEnding: () => {
