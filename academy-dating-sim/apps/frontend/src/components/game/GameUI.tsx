@@ -195,6 +195,15 @@ const GameUI: React.FC = () => {
               >
                 🏪 쇼핑
               </button>
+              {/* Character Status Button - Issue #26 */}
+              <button
+                onClick={() => navigate('/character-status')}
+                className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="캐릭터 상태"
+                role="button"
+              >
+                📊 캐릭터 상태
+              </button>
               {/* Issue #22: Equipment Window Button */}
               <button
                 onClick={() => setShowEquipment(!showEquipment)}
@@ -395,30 +404,46 @@ const GameUI: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Stats */}
+              {/* Daily Schedule & Calendar - Issue #26 */}
               <div className="bg-black/30 backdrop-blur-md rounded-2xl shadow-xl border border-border p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white text-sm">
-                    📊
+                    📅
                   </div>
-                  <h3 className="text-lg font-bold text-text-primary">플레이어 상태</h3>
+                  <h3 className="text-lg font-bold text-text-primary">오늘의 일정</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">레벨</span>
-                    <span className="font-bold text-yellow-400">Lv.{player.level}</span>
+                  <div className="bg-black/20 rounded-lg p-3 border border-border/50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm text-text-secondary">🌅 아침</span>
+                    </div>
+                    <p className="text-xs text-text-primary">수업 참석 가능</p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">골드</span>
-                    <span className="font-bold text-green-400">{player.money}G</span>
+                  <div className="bg-black/20 rounded-lg p-3 border border-border/50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm text-text-secondary">☀️ 점심</span>
+                    </div>
+                    <p className="text-xs text-text-primary">자유 활동 시간</p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">체력</span>
-                    <span className="font-bold text-red-400">{player.hp}/{player.maxHp}</span>
+                  <div className="bg-black/20 rounded-lg p-3 border border-border/50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm text-text-secondary">🌆 오후</span>
+                    </div>
+                    <p className="text-xs text-text-primary">동아리 활동</p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">마나</span>
-                    <span className="font-bold text-blue-400">{player.mp}/{player.maxMp}</span>
+                  <div className="bg-black/20 rounded-lg p-3 border border-border/50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm text-text-secondary">🌙 저녁</span>
+                    </div>
+                    <p className="text-xs text-text-primary">휴식 시간</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-border/50">
+                    <button
+                      onClick={() => navigate('/calendar')}
+                      className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all text-sm font-medium"
+                    >
+                      전체 일정 보기 →
+                    </button>
                   </div>
                 </div>
               </div>

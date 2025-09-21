@@ -40,6 +40,7 @@ import ClubSystem from './components/game/ClubSystem';
 import HeroineGallery from './components/pages/HeroineGallery';
 import GameIntro from './components/pages/GameIntro';
 import CharacterInitialStates from './components/character/CharacterInitialStates';
+import CharacterStatus from './components/pages/CharacterStatus';
 import MinigameHub from './components/pages/MinigameHub';
 import EnhancedWeatherSystem from './components/game/EnhancedWeatherSystem';
 import AchievementRewards from './components/game/AchievementRewards';
@@ -169,6 +170,7 @@ function App() {
           <Route path="/save-load" element={<SaveLoadSystem />} />
           <Route path="/shopping" element={<ShoppingPage />} />
           <Route path="/characters" element={<CharacterCardPage />} />
+          <Route path="/character-status" element={<CharacterStatus />} />
           <Route path="/achievements" element={<AchievementRewards />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/quests" element={<DailyQuests />} />
