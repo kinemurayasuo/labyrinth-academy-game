@@ -289,16 +289,6 @@ const NewHomepage: React.FC<NewHomepageProps> = React.memo(({
                       <span>게임 설정</span>
                     </div>
                   </button>
-
-                  <button
-                    onClick={() => navigate('/game-info')}
-                    className="w-full py-3 px-6 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 border border-white/20"
-                  >
-                    <div className="flex items-center justify-center gap-3">
-                      <span className="text-xl">ℹ️</span>
-                      <span>게임 가이드</span>
-                    </div>
-                  </button>
                 </div>
               </div>
             </div>
