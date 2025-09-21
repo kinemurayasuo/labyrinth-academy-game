@@ -89,6 +89,9 @@ const DungeonPage: React.FC = () => {
 
     // Monster encounter on specific cells or random chance
     if (cellType === 5 || (cellType === 0 && Math.random() < 0.2)) {
+      const floorId = player.dungeonProgress?.currentFloor || 1;
+      const difficultyMultiplier = 1 + (floorId - 1) * 0.3; // 30% stronger per floor
+
       const enemyList = currentFloor.enemies || [];
       const randomEnemy = enemyList[Math.floor(Math.random() * enemyList.length)] || {
         id: 'slime',
@@ -105,8 +108,12 @@ const DungeonPage: React.FC = () => {
 
       const enemy: Monster = {
         ...randomEnemy,
-        hp: randomEnemy.hp || randomEnemy.maxHp,
-        gold: randomEnemy.gold || Math.floor(Math.random() * 50) + 20
+        hp: Math.floor((randomEnemy.hp || randomEnemy.maxHp) * difficultyMultiplier),
+        maxHp: Math.floor((randomEnemy.maxHp || 30) * difficultyMultiplier),
+        attack: Math.floor((randomEnemy.attack || 10) * difficultyMultiplier),
+        defense: Math.floor((randomEnemy.defense || 5) * difficultyMultiplier),
+        experience: Math.floor(20 + (floorId * 20)), // 20, 40, 60 exp per floor
+        gold: Math.floor(15 + (floorId * 15)) // 15, 30, 45 gold per floor
       };
 
       setCurrentEnemy(enemy);

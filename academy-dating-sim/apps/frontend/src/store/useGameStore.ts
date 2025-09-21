@@ -595,13 +595,15 @@ export const useGameStore = create<GameState>((set, get) => ({
     gainExperience: (amount: number) => set((state) => {
       let newExperience = state.player.experience + amount;
       let newLevel = state.player.level;
-      let leveledUp = false;
+      let levelsGained = 0;
+      const initialLevel = state.player.level;
 
-      // Check for level up (100 exp per level)
-      while (newExperience >= newLevel * 100) {
-        newExperience -= newLevel * 100;
+      // Check for level up (progressive exp requirement: 50 + level * 30)
+      // This makes early levels faster and more rewarding
+      while (newExperience >= (50 + newLevel * 30)) {
+        newExperience -= (50 + newLevel * 30);
         newLevel++;
-        leveledUp = true;
+        levelsGained++;
       }
 
       const newPlayer = {
@@ -611,29 +613,48 @@ export const useGameStore = create<GameState>((set, get) => ({
       };
 
       // If leveled up, increase max stats and restore HP/MP
-      if (leveledUp) {
-        newPlayer.maxHp = 100 + (newLevel - 1) * 10;
-        newPlayer.maxMp = 50 + (newLevel - 1) * 5;
+      if (levelsGained > 0) {
+        // Calculate stat bonuses for all levels gained
+        newPlayer.maxHp = 100 + (newLevel - 1) * 15; // More HP per level
+        newPlayer.maxMp = 50 + (newLevel - 1) * 8;   // More MP per level
         newPlayer.hp = newPlayer.maxHp;  // Restore HP on level up
         newPlayer.mp = newPlayer.maxMp;  // Restore MP on level up
-        // Bonus stats on level up
+
+        // Bonus stats on level up (multiplied by levels gained)
         newPlayer.stats = {
           ...newPlayer.stats,
-          intelligence: newPlayer.stats.intelligence + 1,
-          charm: newPlayer.stats.charm + 1,
-          strength: newPlayer.stats.strength + 1,
-          agility: newPlayer.stats.agility + 1,
-          luck: newPlayer.stats.luck + 1
+          intelligence: newPlayer.stats.intelligence + levelsGained * 2, // +2 per level
+          charm: newPlayer.stats.charm + levelsGained * 2,
+          strength: newPlayer.stats.strength + levelsGained * 2,
+          agility: newPlayer.stats.agility + levelsGained * 2,
+          luck: newPlayer.stats.luck + levelsGained
         };
-        newPlayer.maxStamina = Math.min(newPlayer.maxStamina + 5, 200);
+        newPlayer.maxStamina = Math.min(newPlayer.maxStamina + (levelsGained * 10), 200);
         newPlayer.stamina = newPlayer.maxStamina; // Restore stamina on level up
+
+        // Store statistics about leveling
+        if (newPlayer.statistics) {
+          newPlayer.statistics = {
+            ...newPlayer.statistics,
+            totalLevelsGained: (newPlayer.statistics.totalLevelsGained || 0) + levelsGained
+          };
+        }
+      }
+
+      // Create appropriate message based on levels gained
+      let message = '';
+      if (levelsGained > 1) {
+        message = `🎉 대량 레벨업! Lv.${initialLevel} → Lv.${newLevel} (${levelsGained}레벨 상승!) HP/MP 완전 회복! 모든 능력치 +${levelsGained * 2}`;
+      } else if (levelsGained === 1) {
+        message = `✨ 레벨업! Lv.${newLevel}이 되었습니다! HP/MP가 회복되었습니다. 모든 능력치 +2`;
+      } else {
+        const expNeeded = (50 + newLevel * 30) - newExperience;
+        message = `경험치를 ${amount} 획득했습니다. (${newExperience}/${50 + newLevel * 30}) 다음 레벨까지 ${expNeeded}`;
       }
 
       return {
         player: newPlayer,
-        gameMessage: leveledUp ?
-          `레벨업! Lv.${newLevel}이 되었습니다! HP/MP가 회복되었습니다. 모든 능력치 +1` :
-          `경험치를 ${amount} 획득했습니다. (${newExperience}/${newLevel * 100})`
+        gameMessage: message
       };
     }),
     addGold: (amount: number) => set((state) => ({
