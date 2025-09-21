@@ -45,6 +45,10 @@ import EnhancedWeatherSystem from './components/game/EnhancedWeatherSystem';
 import AchievementRewards from './components/game/AchievementRewards';
 import EnhancedDialogueSystem from './components/character/EnhancedDialogueSystem';
 import GiftPreferenceSystem from './components/game/GiftPreferenceSystem';
+import SeasonalEvents from './components/game/SeasonalEvents';
+import EndingVariations from './components/game/EndingVariations';
+import RomanceEvents from './components/character/RomanceEvents';
+import HiddenContent from './components/game/HiddenContent';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -141,9 +145,13 @@ function App() {
           <Route path="/weather" element={<EnhancedWeatherSystem />} />
           <Route path="/dialogue" element={<EnhancedDialogueSystem />} />
           <Route path="/gifts" element={<GiftPreferenceSystem />} />
+          <Route path="/seasonal-events" element={<SeasonalEvents />} />
+          <Route path="/ending" element={<EndingVariations />} />
+          <Route path="/romance-events" element={<RomanceEvents />} />
+          <Route path="/hidden-content" element={<HiddenContent />} />
           <Route
             path="/game"
-            element={gameEnding ? <EndingScreen /> : <GameUI />}
+            element={gameEnding ? <EndingVariations /> : <GameUI />}
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
