@@ -43,6 +43,8 @@ import CharacterInitialStates from './components/character/CharacterInitialState
 import MinigameHub from './components/pages/MinigameHub';
 import EnhancedWeatherSystem from './components/game/EnhancedWeatherSystem';
 import AchievementRewards from './components/game/AchievementRewards';
+import EnhancedDialogueSystem from './components/character/EnhancedDialogueSystem';
+import GiftPreferenceSystem from './components/game/GiftPreferenceSystem';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -137,6 +139,8 @@ function App() {
           <Route path="/character-meeting" element={<CharacterInitialStates />} />
           <Route path="/minigames" element={<MinigameHub />} />
           <Route path="/weather" element={<EnhancedWeatherSystem />} />
+          <Route path="/dialogue" element={<EnhancedDialogueSystem />} />
+          <Route path="/gifts" element={<GiftPreferenceSystem />} />
           <Route
             path="/game"
             element={gameEnding ? <EndingScreen /> : <GameUI />}
