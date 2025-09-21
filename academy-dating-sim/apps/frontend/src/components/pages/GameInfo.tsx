@@ -10,13 +10,13 @@ const GameInfo: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-            게임 정보
+            게임 도움말
           </h1>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(-1)}
             className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
           >
-            ← 메인으로
+            ← 돌아가기
           </button>
         </div>
 
@@ -117,7 +117,7 @@ const GameInfo: React.FC = () => {
             <div>
               <h3 className="text-lg font-semibold text-yellow-300 mb-3">⏰ 시간 시스템</h3>
               <div className="text-purple-200 space-y-2">
-                <p>• 하루는 4개의 시간대로 나뉩니다: 아침, 오후, 저녁, 밤</p>
+                <p>• 하루는 5개의 시간대로 나뉩니다: 아침, 점심, 오후, 저녁, 밤</p>
                 <p>• 각 시간대마다 다른 활동과 캐릭터를 만날 수 있습니다</p>
                 <p>• 밤 시간에는 기숙사에서만 활동 가능합니다</p>
                 <p>• 스태미나를 관리하며 효율적으로 시간을 사용해야 합니다</p>
