@@ -100,6 +100,7 @@ interface GameState {
     addGold: (amount: number) => void;
     clearLastActivity: () => void;
     markCharacterAsMet: (characterId: string) => void;
+    triggerRandomHeroineInteraction: () => void;
   };
 }
 
@@ -235,6 +236,12 @@ export const useGameStore = create<GameState>((set, get) => ({
                     : state.gameMessage
             };
         });
+
+        // Issue #28: Random heroine interactions
+        const randomChance = Math.random();
+        if (randomChance < 0.3) { // 30% chance for random heroine interaction
+            get().actions.triggerRandomHeroineInteraction();
+        }
     },
     checkForEvents: (locationId?: string) => {
         const { player, completedEvents } = get();
@@ -570,6 +577,14 @@ export const useGameStore = create<GameState>((set, get) => ({
                 set({ gameMessage: '기숙사에서 휴식하거나 일기를 쓸 수 있습니다.' });
             }, 2000);
         }
+
+        // Issue #28: Trigger random heroine interaction after activities
+        const randomChance = Math.random();
+        if (randomChance < 0.2 && mainActivities.includes(activityName)) { // 20% chance after main activities
+            setTimeout(() => {
+                get().actions.triggerRandomHeroineInteraction();
+            }, 1000);
+        }
     },
     checkEnding: () => {
         const { player } = get();
@@ -684,6 +699,109 @@ export const useGameStore = create<GameState>((set, get) => ({
       if (!metCharacters.includes(characterId)) {
         set({ metCharacters: [...metCharacters, characterId] });
       }
+    },
+    triggerRandomHeroineInteraction: () => {
+      // Issue #28: Random heroine interactions
+      const { player, metCharacters } = get();
+      if (!metCharacters || metCharacters.length === 0) return;
+
+      // Select a random heroine from met characters
+      const randomHeroineId = metCharacters[Math.floor(Math.random() * metCharacters.length)];
+
+      // Get heroine name
+      const heroineNames: Record<string, string> = {
+        sakura: '사쿠라',
+        yuki: '유키',
+        luna: '루나',
+        mystery: '???',
+        akane: '아카네',
+        hana: '하나',
+        rin: '린',
+        mei: '메이',
+        sora: '소라'
+      };
+      const randomHeroine = heroineNames[randomHeroineId] || randomHeroineId;
+
+      // Different interaction types based on location and time
+      const interactionTypes = [
+        {
+          type: 'greeting',
+          messages: [
+            `${randomHeroine}와(과) 복도에서 마주쳤습니다!`,
+            `${randomHeroine}가 당신에게 손을 흔들며 인사합니다.`,
+            `${randomHeroine}와(과) 눈이 마주쳤습니다.`
+          ],
+          affectionChange: 2
+        },
+        {
+          type: 'help',
+          messages: [
+            `${randomHeroine}가 책을 떨어뜨렸습니다. 도와주시겠습니까?`,
+            `${randomHeroine}가 길을 물어봅니다.`,
+            `${randomHeroine}가 무언가 도움을 청합니다.`
+          ],
+          affectionChange: 5
+        },
+        {
+          type: 'casual',
+          messages: [
+            `${randomHeroine}와(과) 잠시 대화를 나눕니다.`,
+            `${randomHeroine}가 오늘 날씨에 대해 이야기합니다.`,
+            `${randomHeroine}와(과) 최근 수업에 대해 이야기합니다.`
+          ],
+          affectionChange: 3
+        }
+      ];
+
+      // Select random interaction type
+      const interaction = interactionTypes[Math.floor(Math.random() * interactionTypes.length)];
+      const message = interaction.messages[Math.floor(Math.random() * interaction.messages.length)];
+
+      // Update affection
+      const currentAffection = player.affection[randomHeroineId] || 0;
+      if (currentAffection < 100) {
+        get().actions.updateAffection(randomHeroineId, interaction.affectionChange);
+      }
+
+      // Create a random interaction event
+      const randomEvent: GameEvent = {
+        id: `random_${randomHeroineId}_${Date.now()}`,
+        name: `Random Interaction with ${randomHeroine}`,
+        description: message,
+        trigger: {
+          character: randomHeroineId,
+          random: true
+        },
+        choices: [
+          {
+            text: '친절하게 대답하기',
+            effects: {
+              affection: { [randomHeroineId]: 3 }
+            },
+            response: `${randomHeroine}가 밝게 웃습니다.`
+          },
+          {
+            text: '간단히 인사만 하기',
+            effects: {
+              affection: { [randomHeroineId]: 1 }
+            },
+            response: `${randomHeroine}가 고개를 끄덕입니다.`
+          },
+          {
+            text: '무시하고 지나가기',
+            effects: {
+              affection: { [randomHeroineId]: -2 }
+            },
+            response: `${randomHeroine}가 실망한 표정을 짓습니다.`
+          }
+        ]
+      };
+
+      // Set the event to trigger
+      set({
+        currentEvent: randomEvent,
+        gameMessage: message
+      });
     },
   },
 }));
