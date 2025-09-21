@@ -1,0 +1,599 @@
+{
+  "sakura": {
+    "characterBackstory": {
+      "origin": "키리시마 가문의 후계자로 태어나 어린 시절부터 검술을 배웠다. 가문의 전통과 책임감에 짓눌려 자신만의 길을 찾지 못하고 있었다.",
+      "personality": "강하고 직접적이지만 내면은 외로움으로 가득하다. 완벽함을 추구하지만 진정한 자신을 보여주는 것을 두려워한다.",
+      "deepestFear": "가문의 기대에 부응하지 못하고 모든 사람들이 자신을 떠날 것이라는 두려움",
+      "trueDream": "검술을 통해 자신만의 길을 개척하고, 진정으로 이해해주는 사람과 함께 살아가는 것",
+      "darkSecret": "가문에 전해지는 봉인된 마검의 존재와 그것을 지켜야 하는 운명",
+      "familyHistory": "300년 전부터 학원 지하의 고대 미궁을 봉인하고 지켜온 검술 명가"
+    },
+    "storyArcs": [
+      {
+        "id": "sakura_arc_1",
+        "title": "첫 만남과 검술 수업",
+        "requiredAffection": 0,
+        "events": [
+          {
+            "id": "sakura_first_training",
+            "title": "새벽 훈련장의 만남",
+            "description": "이른 새벽, 훈련장에서 홀로 검술을 연마하는 사쿠라를 만난다.",
+            "choices": [
+              {
+                "text": "검술을 가르쳐 달라고 부탁한다",
+                "outcomes": {
+                  "affection": 8,
+                  "relationshipChange": "검술 동반자 관계 시작",
+                  "unlocks": ["morning_training_routine", "basic_sword_lessons"]
+                }
+              },
+              {
+                "text": "조용히 지켜보기만 한다",
+                "outcomes": {
+                  "affection": 3,
+                  "relationshipChange": "조심스러운 관찰자",
+                  "unlocks": ["silent_observer_path"]
+                }
+              }
+            ]
+          },
+          {
+            "id": "sakura_family_pressure",
+            "title": "가문의 압박",
+            "description": "사쿠라가 가족으로부터 받는 압박과 기대에 대해 털어놓는다.",
+            "unlockCondition": "morning_training_routine",
+            "choices": [
+              {
+                "text": "당신만의 길을 가라고 격려한다",
+                "outcomes": {
+                  "affection": 10,
+                  "relationshipChange": "지지자이자 이해자",
+                  "characterStateChange": {
+                    "stress": -15,
+                    "trust": 20
+                  }
+                }
+              },
+              {
+                "text": "가문의 전통도 중요하다고 말한다",
+                "outcomes": {
+                  "affection": 2,
+                  "relationshipChange": "전통주의자",
+                  "characterStateChange": {
+                    "stress": 10,
+                    "trust": -5
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sakura_arc_2",
+        "title": "미궁의 비밀",
+        "requiredAffection": 30,
+        "events": [
+          {
+            "id": "sakura_dungeon_secret",
+            "title": "지하 미궁의 진실",
+            "description": "사쿠라가 학원 지하에 봉인된 고대 미궁과 가문의 역할에 대해 밝힌다.",
+            "choices": [
+              {
+                "text": "함께 미궁을 탐험하자고 제안한다",
+                "outcomes": {
+                  "affection": 15,
+                  "relationshipChange": "운명의 동반자",
+                  "unlocks": ["dungeon_exploration_with_sakura", "ancient_mystery_quest"]
+                }
+              },
+              {
+                "text": "너무 위험하니 혼자 하지 말라고 말한다",
+                "outcomes": {
+                  "affection": 8,
+                  "relationshipChange": "걱정하는 친구",
+                  "characterStateChange": {
+                    "trust": 10,
+                    "calmness": -10
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "sakura_cursed_sword",
+            "title": "저주받은 마검",
+            "description": "가문에 전해져 내려오는 마검이 사쿠라의 생명력을 조금씩 갉아먹고 있다는 사실이 밝혀진다.",
+            "unlockCondition": "ancient_mystery_quest",
+            "choices": [
+              {
+                "text": "마검을 없애는 방법을 함께 찾겠다",
+                "outcomes": {
+                  "affection": 20,
+                  "relationshipChange": "구원자이자 사랑하는 사람",
+                  "unlocks": ["curse_breaking_quest", "true_love_power"]
+                }
+              },
+              {
+                "text": "가문의 의무보다 자신의 목숨이 더 소중하다",
+                "outcomes": {
+                  "affection": 12,
+                  "relationshipChange": "자신을 걱정해주는 사람",
+                  "characterStateChange": {
+                    "stress": -20,
+                    "trust": 15
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sakura_arc_3",
+        "title": "진정한 검의 길",
+        "requiredAffection": 60,
+        "events": [
+          {
+            "id": "sakura_new_technique",
+            "title": "새로운 검술의 창조",
+            "description": "사쿠라가 전통 검술과 자신만의 스타일을 결합한 새로운 기술을 개발한다.",
+            "choices": [
+              {
+                "text": "함께 새로운 검술을 완성시키자",
+                "outcomes": {
+                  "affection": 18,
+                  "relationshipChange": "검술의 동반자",
+                  "unlocks": ["dual_sword_technique", "perfect_harmony_style"]
+                }
+              },
+              {
+                "text": "당신의 독창성을 인정하고 응원한다",
+                "outcomes": {
+                  "affection": 12,
+                  "relationshipChange": "든든한 후원자",
+                  "characterStateChange": {
+                    "excitement": 25,
+                    "trust": 20
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sakura_arc_4",
+        "title": "사랑의 고백",
+        "requiredAffection": 75,
+        "events": [
+          {
+            "id": "sakura_confession_scene",
+            "title": "벚꽃 아래의 고백",
+            "description": "만개한 벚꽃나무 아래에서 사쿠라가 자신의 진심을 털어놓는다.",
+            "isConfessionEvent": true,
+            "choices": [
+              {
+                "text": "나도 당신을 사랑합니다",
+                "outcomes": {
+                  "affection": 25,
+                  "relationshipChange": "연인",
+                  "unlocks": ["romantic_relationship", "couple_activities", "future_together"]
+                }
+              },
+              {
+                "text": "소중한 친구로 지내고 싶어요",
+                "outcomes": {
+                  "affection": -10,
+                  "relationshipChange": "거절당한 사랑",
+                  "characterStateChange": {
+                    "stress": 30,
+                    "calmness": -25
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "yuki": {
+    "characterBackstory": {
+      "origin": "마법 명문가 출신의 천재 마법사. 어린 시절부터 남들과 다른 재능으로 인해 고립되어 왔다.",
+      "personality": "냉정하고 완벽주의적이지만, 내면에는 온정과 외로움이 공존한다.",
+      "deepestFear": "자신의 마법 때문에 사랑하는 사람을 해치게 될 것",
+      "trueDream": "마법으로 모든 사람을 행복하게 만들고, 진정한 동반자를 찾는 것",
+      "darkSecret": "시공간을 조작하는 금지된 마법을 연구하고 있으며, 그 대가로 수명이 단축되고 있다",
+      "familyHistory": "대대로 왕실의 궁정 마법사를 배출한 명문가"
+    },
+    "storyArcs": [
+      {
+        "id": "yuki_arc_1",
+        "title": "금지된 도서관의 만남",
+        "requiredAffection": 0,
+        "events": [
+          {
+            "id": "yuki_library_first",
+            "title": "마법 도서관에서의 첫 만남",
+            "description": "일반인 출입 금지 구역인 고대 마법서 보관소에서 유키와 만난다.",
+            "choices": [
+              {
+                "text": "마법을 배우고 싶다고 말한다",
+                "outcomes": {
+                  "affection": 8,
+                  "relationshipChange": "마법 수업 시작",
+                  "unlocks": ["magic_lessons", "ancient_library_access"]
+                }
+              },
+              {
+                "text": "그녀의 아름다움에 감탄한다",
+                "outcomes": {
+                  "affection": 12,
+                  "relationshipChange": "특별한 관심 대상",
+                  "characterStateChange": {
+                    "excitement": 15,
+                    "trust": 10
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "yuki_magic_lesson_1",
+            "title": "첫 번째 마법 수업",
+            "description": "유키가 기초 마법 이론과 실습을 가르쳐준다.",
+            "unlockCondition": "magic_lessons",
+            "choices": [
+              {
+                "text": "열심히 배워서 그녀를 놀라게 하고 싶다",
+                "outcomes": {
+                  "affection": 10,
+                  "relationshipChange": "유망한 제자",
+                  "unlocks": ["advanced_magic_theory"]
+                }
+              },
+              {
+                "text": "마법보다 그녀 자신에게 더 관심이 있다",
+                "outcomes": {
+                  "affection": 15,
+                  "relationshipChange": "마음을 열기 시작",
+                  "characterStateChange": {
+                    "trust": 20,
+                    "excitement": 10
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "yuki_arc_2",
+        "title": "금지된 마법의 연구",
+        "requiredAffection": 35,
+        "events": [
+          {
+            "id": "yuki_forbidden_research",
+            "title": "시공간 마법의 비밀",
+            "description": "유키가 비밀리에 연구하고 있는 위험한 시공간 마법에 대해 알게 된다.",
+            "choices": [
+              {
+                "text": "위험해도 함께 연구하겠다",
+                "outcomes": {
+                  "affection": 18,
+                  "relationshipChange": "연구 파트너",
+                  "unlocks": ["time_magic_research", "dangerous_experiments"]
+                }
+              },
+              {
+                "text": "당신의 안전이 더 걱정된다",
+                "outcomes": {
+                  "affection": 12,
+                  "relationshipChange": "걱정해주는 사람",
+                  "characterStateChange": {
+                    "trust": 25,
+                    "stress": -10
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "yuki_time_accident",
+            "title": "시간 마법의 폭주",
+            "description": "실험 중 시간 마법이 폭주하여 과거의 기억들이 뒤섞이는 사고가 발생한다.",
+            "unlockCondition": "time_magic_research",
+            "choices": [
+              {
+                "text": "그녀를 안고 현실로 되돌려준다",
+                "outcomes": {
+                  "affection": 22,
+                  "relationshipChange": "현실의 닻",
+                  "unlocks": ["memory_restoration", "emotional_connection"]
+                }
+              },
+              {
+                "text": "마법으로 해결하려고 시도한다",
+                "outcomes": {
+                  "affection": 8,
+                  "relationshipChange": "동료 마법사",
+                  "characterStateChange": {
+                    "stress": 20,
+                    "trust": -5
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "yuki_arc_3",
+        "title": "과거의 상처",
+        "requiredAffection": 55,
+        "events": [
+          {
+            "id": "yuki_childhood_trauma",
+            "title": "어린 시절의 상처",
+            "description": "유키가 어린 시절 마법 때문에 친구들을 다치게 했던 트라우마를 고백한다.",
+            "choices": [
+              {
+                "text": "과거는 과거일 뿐, 지금의 당신이 중요하다",
+                "outcomes": {
+                  "affection": 20,
+                  "relationshipChange": "마음의 치유자",
+                  "unlocks": ["trauma_healing", "emotional_support"]
+                }
+              },
+              {
+                "text": "그런 경험이 당신을 더 강하게 만들었다",
+                "outcomes": {
+                  "affection": 12,
+                  "relationshipChange": "이해하는 친구",
+                  "characterStateChange": {
+                    "calmness": 15,
+                    "trust": 15
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "yuki_arc_4",
+        "title": "완벽함을 초월한 사랑",
+        "requiredAffection": 75,
+        "events": [
+          {
+            "id": "yuki_confession_scene",
+            "title": "환상의 정원에서의 고백",
+            "description": "유키가 마법으로 만든 환상의 정원에서 자신의 마음을 털어놓는다.",
+            "isConfessionEvent": true,
+            "choices": [
+              {
+                "text": "불완전한 우리가 함께 완전해지자",
+                "outcomes": {
+                  "affection": 30,
+                  "relationshipChange": "운명의 연인",
+                  "unlocks": ["perfect_love", "magic_harmony", "shared_dreams"]
+                }
+              },
+              {
+                "text": "천천히 서로를 알아가고 싶다",
+                "outcomes": {
+                  "affection": 5,
+                  "relationshipChange": "신중한 관계",
+                  "characterStateChange": {
+                    "trust": 10,
+                    "calmness": 20
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "luna": {
+    "characterBackstory": {
+      "origin": "고대 뱀파이어 혈족의 마지막 후예. 500년 전 인간들의 박해로 가족을 모두 잃었다.",
+      "personality": "신비롭고 우아하지만 깊은 슬픔과 외로움을 간직하고 있다.",
+      "deepestFear": "자신의 정체 때문에 사랑하는 사람을 잃는 것",
+      "trueDream": "인간과 뱀파이어가 공존하는 세상을 만드는 것",
+      "darkSecret": "불멸의 저주로 인해 사랑하는 사람들을 계속 잃어왔고, 피에 대한 갈망을 억누르며 살고 있다",
+      "familyHistory": "달의 여신을 섬기던 고대 뱀파이어 왕가의 혈통"
+    },
+    "storyArcs": [
+      {
+        "id": "luna_arc_1",
+        "title": "달빛 아래의 만남",
+        "requiredAffection": 0,
+        "events": [
+          {
+            "id": "luna_moonlight_first",
+            "title": "옥상에서의 신비로운 만남",
+            "description": "보름달이 뜬 밤, 학교 옥상에서 신비로운 소녀를 만난다.",
+            "choices": [
+              {
+                "text": "무서운 것보다 아름다운 게 먼저 보인다",
+                "outcomes": {
+                  "affection": 12,
+                  "relationshipChange": "특별한 인간",
+                  "unlocks": ["night_meetings", "vampire_hints"]
+                }
+              },
+              {
+                "text": "뱀파이어인가요?",
+                "outcomes": {
+                  "affection": 6,
+                  "relationshipChange": "진실을 아는 자",
+                  "characterStateChange": {
+                    "trust": -10,
+                    "excitement": 15
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "luna_night_walks",
+            "title": "달밤의 산책",
+            "description": "루나와 함께 달빛 아래를 걸으며 이야기를 나눈다.",
+            "unlockCondition": "night_meetings",
+            "choices": [
+              {
+                "text": "당신의 외로움이 느껴진다",
+                "outcomes": {
+                  "affection": 15,
+                  "relationshipChange": "마음을 이해하는 사람",
+                  "unlocks": ["emotional_connection"]
+                }
+              },
+              {
+                "text": "밤의 세계가 신비롭다",
+                "outcomes": {
+                  "affection": 8,
+                  "relationshipChange": "밤의 동반자",
+                  "characterStateChange": {
+                    "excitement": 20,
+                    "trust": 10
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "luna_arc_2",
+        "title": "피의 갈망",
+        "requiredAffection": 30,
+        "events": [
+          {
+            "id": "luna_blood_thirst",
+            "title": "피의 달이 뜬 밤",
+            "description": "붉은 달이 뜬 밤, 루나의 뱀파이어 본능이 깨어나 괴로워한다.",
+            "choices": [
+              {
+                "text": "내 피를 마셔도 된다",
+                "outcomes": {
+                  "affection": 25,
+                  "relationshipChange": "영원한 유대",
+                  "unlocks": ["blood_bond", "vampire_connection", "shared_life_force"]
+                }
+              },
+              {
+                "text": "다른 방법을 찾아보자",
+                "outcomes": {
+                  "affection": 10,
+                  "relationshipChange": "도움을 주려는 친구",
+                  "characterStateChange": {
+                    "trust": 20,
+                    "stress": 15
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "luna_vampire_nature",
+            "title": "뱀파이어의 진실",
+            "description": "루나가 자신의 정체와 뱀파이어로서의 삶에 대해 털어놓는다.",
+            "unlockCondition": "vampire_connection",
+            "choices": [
+              {
+                "text": "당신은 괴물이 아니라 상처받은 영혼이다",
+                "outcomes": {
+                  "affection": 22,
+                  "relationshipChange": "구원의 빛",
+                  "unlocks": ["soul_healing", "redemption_path"]
+                }
+              },
+              {
+                "text": "함께 새로운 길을 찾아보자",
+                "outcomes": {
+                  "affection": 15,
+                  "relationshipChange": "희망의 동반자",
+                  "characterStateChange": {
+                    "trust": 25,
+                    "calmness": 20
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "luna_arc_3",
+        "title": "과거의 비극",
+        "requiredAffection": 55,
+        "events": [
+          {
+            "id": "luna_family_tragedy",
+            "title": "잃어버린 가족의 이야기",
+            "description": "루나가 500년 전 가족을 잃었던 비극적인 과거를 들려준다.",
+            "choices": [
+              {
+                "text": "과거의 상처를 치유해주고 싶다",
+                "outcomes": {
+                  "affection": 20,
+                  "relationshipChange": "마음의 치유자",
+                  "unlocks": ["past_healing", "family_memories"]
+                }
+              },
+              {
+                "text": "이제는 혼자가 아니다",
+                "outcomes": {
+                  "affection": 18,
+                  "relationshipChange": "새로운 가족",
+                  "characterStateChange": {
+                    "trust": 30,
+                    "calmness": 25
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "luna_arc_4",
+        "title": "영원한 사랑의 맹세",
+        "requiredAffection": 80,
+        "events": [
+          {
+            "id": "luna_confession_scene",
+            "title": "월식의 밤, 영원의 맹세",
+            "description": "천년에 한 번 나타나는 성역에서 루나가 불멸을 포기하고 인간이 되겠다고 맹세한다.",
+            "isConfessionEvent": true,
+            "choices": [
+              {
+                "text": "함께 살고 함께 죽자. 그게 진정한 영원이다",
+                "outcomes": {
+                  "affection": 35,
+                  "relationshipChange": "영원한 연인",
+                  "unlocks": ["mortal_love", "shared_lifetime", "true_eternity"]
+                }
+              },
+              {
+                "text": "불멸을 포기하지 마라",
+                "outcomes": {
+                  "affection": 10,
+                  "relationshipChange": "걱정하는 친구",
+                  "characterStateChange": {
+                    "trust": 15,
+                    "stress": 20
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

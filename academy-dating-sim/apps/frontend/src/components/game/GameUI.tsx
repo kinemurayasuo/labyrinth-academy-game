@@ -245,6 +245,14 @@ const GameUI: React.FC = () => {
               >
                 💕 스토리
               </button>
+              <button
+                onClick={() => navigate('/enhanced-romance')}
+                className="px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-xl hover:from-rose-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="로맨스 허브"
+                role="button"
+              >
+                💝 로맨스 허브
+              </button>
               <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
               <button
                 onClick={() => navigate('/save-load')}

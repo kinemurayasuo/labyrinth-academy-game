@@ -50,6 +50,7 @@ import SeasonalEvents from './components/game/SeasonalEvents';
 import EndingVariations from './components/game/EndingVariations';
 import RomanceEvents from './components/character/RomanceEvents';
 import HiddenContent from './components/game/HiddenContent';
+import EnhancedGameInterface from './components/enhanced/EnhancedGameInterface';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -201,6 +202,7 @@ function App() {
           <Route path="/ending" element={<EndingVariations />} />
           <Route path="/romance-events" element={<RomanceEvents />} />
           <Route path="/hidden-content" element={<HiddenContent />} />
+          <Route path="/enhanced-romance" element={<EnhancedGameInterface />} />
           <Route
             path="/game"
             element={gameEnding ? <EndingVariations /> : <GameUI />}
