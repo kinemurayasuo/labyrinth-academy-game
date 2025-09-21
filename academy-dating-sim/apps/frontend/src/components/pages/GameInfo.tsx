@@ -117,75 +117,16 @@ const GameInfo: React.FC = () => {
             <div>
               <h3 className="text-lg font-semibold text-yellow-300 mb-3">⏰ 시간 시스템</h3>
               <div className="text-purple-200 space-y-2">
-                <p>• 하루는 5개의 시간대로 나뉩니다: 아침, 점심, 오후, 저녁, 밤</p>
+                <p>• 하루는 4개의 시간대로 나뉩니다: 아침, 오후, 저녁, 밤</p>
                 <p>• 각 시간대마다 다른 활동과 캐릭터를 만날 수 있습니다</p>
-                <p>• 총 30일의 제한된 시간 내에 목표를 달성해야 합니다</p>
+                <p>• 밤 시간에는 기숙사에서만 활동 가능합니다</p>
+                <p>• 스태미나를 관리하며 효율적으로 시간을 사용해야 합니다</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Characters */}
-        <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-white/20 mb-6">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            👥 캐릭터 소개
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-pink-500/20 p-4 rounded-lg border border-pink-400/30">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl">🌸</span>
-                <div>
-                  <h3 className="text-lg font-bold text-white">사쿠라</h3>
-                  <p className="text-pink-300">검술부 에이스</p>
-                </div>
-              </div>
-              <p className="text-purple-200 text-sm">
-                강하고 당당한 성격의 검술부 부장. 정의감이 강하고 친구들을 아끼는 마음이 깊습니다.
-              </p>
-            </div>
-
-            <div className="bg-blue-500/20 p-4 rounded-lg border border-blue-400/30">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl">📚</span>
-                <div>
-                  <h3 className="text-lg font-bold text-white">유키</h3>
-                  <p className="text-blue-300">도서부 부장</p>
-                </div>
-              </div>
-              <p className="text-purple-200 text-sm">
-                조용하고 지적인 성격의 도서부 부장. 책을 사랑하며 깊은 지식을 가지고 있습니다.
-              </p>
-            </div>
-
-            <div className="bg-purple-500/20 p-4 rounded-lg border border-purple-400/30">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl">🌙</span>
-                <div>
-                  <h3 className="text-lg font-bold text-white">루나</h3>
-                  <p className="text-purple-300">마법학부 수석</p>
-                </div>
-              </div>
-              <p className="text-purple-200 text-sm">
-                신비로운 마법학부의 수석. 천재적인 마법 실력을 가지고 있지만 어딘가 외로워 보입니다.
-              </p>
-            </div>
-
-            <div className="bg-gray-500/20 p-4 rounded-lg border border-gray-400/30">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl">❓</span>
-                <div>
-                  <h3 className="text-lg font-bold text-white">???</h3>
-                  <p className="text-gray-300">수수께끼의 전학생</p>
-                </div>
-              </div>
-              <p className="text-purple-200 text-sm">
-                정체를 알 수 없는 신비한 전학생. 특별한 조건에서만 만날 수 있습니다.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Tips */}
+{/* Tips */}
         <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 border border-white/20 mb-6">
           <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
             💡 게임 팁

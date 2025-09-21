@@ -11,23 +11,21 @@
     "start:dev": "ts-node src/server.ts",
     "type-check": "tsc --noEmit",
     "clean": "rimraf dist",
-    
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:seed": "ts-node prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
-    
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",
+    "@supabase/supabase-js": "^2.57.4",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",

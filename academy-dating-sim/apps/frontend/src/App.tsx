@@ -63,26 +63,76 @@ function App() {
     }
   }, []);
 
-  const handleLogin = (username: string, password: string) => {
-    if (username === 'demo' && password === 'password') {
-      const userData = { username, email: 'demo@example.com' };
-      setIsLoggedIn(true);
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      return true;
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        const userData = {
+          username: result.user.username,
+          email: result.user.email,
+          id: result.user.id
+        };
+        setIsLoggedIn(true);
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('authToken', result.token);
+        return true;
+      } else {
+        alert(result.error || '로그인에 실패했습니다.');
+        return false;
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('서버 연결에 실패했습니다.');
+      return false;
     }
-    return false;
   };
 
-  const handleCreateAccount = (data: any) => {
-    const userData = {
-      username: data.username,
-      email: data.email,
-    };
-    setIsLoggedIn(true);
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    return true;
+  const handleCreateAccount = async (data: any) => {
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          username: data.username,
+          password: data.password
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        const userData = {
+          username: result.user.username,
+          email: result.user.email,
+          id: result.user.id
+        };
+        setIsLoggedIn(true);
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('authToken', result.token);
+        return true;
+      } else {
+        alert(result.error || '계정 생성에 실패했습니다.');
+        return false;
+      }
+    } catch (error) {
+      console.error('Account creation error:', error);
+      alert('서버 연결에 실패했습니다.');
+      return false;
+    }
   };
 
   const handleLogout = () => {

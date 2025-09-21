@@ -26,7 +26,10 @@
       "Bash(git checkout:*)",
       "Bash(npx gh-pages:*)",
       "Bash(npm run dev:*)",
-      "Bash(find \"C:\\Users\\a\\OneDrive\\바탕 화면\\새 폴더 (2)\\academy-dating-sim\" -name \"*.json\" -not -path \"*/node_modules/*\")"
+      "Bash(find \"C:\\Users\\a\\OneDrive\\바탕 화면\\새 폴더 (2)\\academy-dating-sim\" -name \"*.json\" -not -path \"*/node_modules/*\")",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

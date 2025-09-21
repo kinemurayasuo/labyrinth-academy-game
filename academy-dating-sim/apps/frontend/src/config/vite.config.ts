@@ -7,5 +7,17 @@ export default defineConfig({
   base: '/',
   css: {
     postcss: './postcss.config.js'
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
+      },
+      '/health': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
+      }
+    }
   }
 })
