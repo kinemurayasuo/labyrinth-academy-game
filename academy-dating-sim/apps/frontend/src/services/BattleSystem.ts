@@ -134,12 +134,14 @@ export class BattleSystem {
   private elementChart: Record<ElementType, Record<ElementType, number>>;
   private comboSystem: ComboSystem;
   private formationSystem: FormationSystem;
+  private onBattleEnd?: (result: BattleState) => void;
 
-  constructor() {
+  constructor(onBattleEnd?: (result: BattleState) => void) {
     this.battleState = this.initializeBattleState();
     this.elementChart = this.initializeElementChart();
     this.comboSystem = new ComboSystem();
     this.formationSystem = new FormationSystem();
+    this.onBattleEnd = onBattleEnd;
   }
 
   private initializeBattleState(): BattleState {
@@ -537,8 +539,28 @@ export class BattleSystem {
   }
 
   private endBattle() {
-    // Clean up battle state
-    // Trigger battle end events
+    // Save battle results
+    const battleResult = { ...this.battleState };
+
+    // Handle defeat - reset player HP to 1 to prevent death loop
+    if (this.battleState.status === 'defeat') {
+      // Restore 1 HP to player team to prevent permanent death
+      this.battleState.playerTeam.forEach(unit => {
+        if (unit.hp <= 0) {
+          unit.hp = 1;
+        }
+      });
+    }
+
+    // Call the callback if provided
+    if (this.onBattleEnd) {
+      this.onBattleEnd(battleResult);
+    }
+
+    // Reset battle state
+    this.battleState.status = 'preparing';
+    this.battleState.currentTurn = 0;
+    this.battleState.battleLog = [];
   }
 
   private getUnitById(id: string): BattleUnit | undefined {

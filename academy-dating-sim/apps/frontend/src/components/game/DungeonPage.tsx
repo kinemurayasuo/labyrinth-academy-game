@@ -183,12 +183,13 @@ const DungeonPage: React.FC = () => {
     setCurrentEnemy(null);
     setGameMessage('패배했습니다... 던전 입구로 돌아갑니다.');
 
-    // Reset player position to start
+    // Reset player position to start and restore 1 HP
     const startPos = { x: 1, y: 1 };
     setPlayerPosition(startPos);
     useGameStore.setState((state: any) => ({
       player: {
         ...state.player,
+        hp: Math.max(1, state.player.hp), // Ensure at least 1 HP
         dungeonProgress: {
           ...state.player.dungeonProgress,
           position: startPos
