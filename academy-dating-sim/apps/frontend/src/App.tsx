@@ -30,6 +30,8 @@ import GameMenu from './components/pages/GameMenu';
 import Tutorial from './components/Tutorial';
 import CardMatchingGame from './components/game/MiniGames/CardMatchingGame';
 import QuizGame from './components/game/MiniGames/QuizGame';
+import RhythmGame from './components/game/MiniGames/RhythmGame';
+import PuzzleGame from './components/game/MiniGames/PuzzleGame';
 import PvPBattleSystem from './components/game/PvPBattleSystem';
 import SocialSystem from './components/game/SocialSystem';
 import ItemEnhancement from './components/game/ItemEnhancement';
@@ -37,6 +39,9 @@ import ApiTestPage from './components/pages/ApiTestPage';
 import ClubSystem from './components/game/ClubSystem';
 import HeroineGallery from './components/pages/HeroineGallery';
 import GameIntro from './components/pages/GameIntro';
+import CharacterInitialStates from './components/character/CharacterInitialStates';
+import MinigameHub from './components/pages/MinigameHub';
+import EnhancedWeatherSystem from './components/game/EnhancedWeatherSystem';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -121,11 +126,16 @@ function App() {
           <Route path="/tutorial" element={<Tutorial onComplete={() => {}} onSkip={() => {}} />} />
           <Route path="/card-matching" element={<CardMatchingGame />} />
           <Route path="/quiz" element={<QuizGame onComplete={(score: number) => console.log('Quiz completed with score:', score)} />} />
+          <Route path="/rhythm" element={<RhythmGame />} />
+          <Route path="/puzzle" element={<PuzzleGame />} />
           <Route path="/pvp" element={<PvPBattleSystem />} />
           <Route path="/social" element={<SocialSystem />} />
           <Route path="/enhancement" element={<ItemEnhancement />} />
           <Route path="/clubs" element={<ClubSystem />} />
           <Route path="/heroines" element={<HeroineGallery />} />
+          <Route path="/character-meeting" element={<CharacterInitialStates />} />
+          <Route path="/minigames" element={<MinigameHub />} />
+          <Route path="/weather" element={<EnhancedWeatherSystem />} />
           <Route
             path="/game"
             element={gameEnding ? <EndingScreen /> : <GameUI />}

@@ -24,6 +24,7 @@ const GameUI: React.FC = () => {
   const currentEvent = useGameStore((state: any) => state.currentEvent);
   const gameMessage = useGameStore((state: any) => state.gameMessage);
   const dailyActivitiesCount = useGameStore((state: any) => state.dailyActivitiesCount || 0);
+  const metCharacters = useGameStore((state: any) => state.metCharacters || []);
   const {
     saveGame,
     loadGame,
@@ -52,6 +53,13 @@ const GameUI: React.FC = () => {
   const handleCharacterInteraction = useCallback((characterId: string) => {
     const character = characters[characterId];
     if (!character) return;
+
+    // Check if this is the first meeting
+    if (!metCharacters.includes(characterId)) {
+      // Navigate to initial meeting scene
+      navigate(`/character-meeting?character=${characterId}&location=${player.location}`);
+      return;
+    }
 
     // Get appropriate conversation based on affection
     const affection = player.affection[characterId] || 0;

@@ -72,6 +72,7 @@ interface GameState {
   gameDate: { year: number; month: number; day: number };
   lastActivity: string | null;
   dailyActivitiesCount: number;
+  metCharacters: string[];
   actions: {
     loadInitialGame: () => void;
     saveGame: () => void;
@@ -98,6 +99,7 @@ interface GameState {
     gainExperience: (amount: number) => void;
     addGold: (amount: number) => void;
     clearLastActivity: () => void;
+    markCharacterAsMet: (characterId: string) => void;
   };
 }
 
@@ -111,6 +113,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   gameDate: { year: 2024, month: 4, day: 1 },
   lastActivity: null,
   dailyActivitiesCount: 0,
+  metCharacters: [],
   actions: {
     loadInitialGame: () => {
         const savedGame = localStorage.getItem('academyDatingSim');
@@ -640,5 +643,11 @@ export const useGameStore = create<GameState>((set, get) => ({
       }
     })),
     clearLastActivity: () => set({ lastActivity: null }),
+    markCharacterAsMet: (characterId: string) => {
+      const { metCharacters } = get();
+      if (!metCharacters.includes(characterId)) {
+        set({ metCharacters: [...metCharacters, characterId] });
+      }
+    },
   },
 }));
