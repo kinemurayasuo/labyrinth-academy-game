@@ -1,8 +1,6 @@
 // API service for backend communication
 // 개발환경에서는 Vite 프록시를 통해 백엔드 연결
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'http://localhost:9000'  // 프로덕션 환경
-  : '';  // 개발환경 - Vite 프록시 사용
+const API_BASE_URL = ''; // Always use proxy in both dev and production for now
 
 class ApiService {
   private baseUrl: string;
