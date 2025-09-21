@@ -42,6 +42,7 @@ import GameIntro from './components/pages/GameIntro';
 import CharacterInitialStates from './components/character/CharacterInitialStates';
 import MinigameHub from './components/pages/MinigameHub';
 import EnhancedWeatherSystem from './components/game/EnhancedWeatherSystem';
+import AchievementRewards from './components/game/AchievementRewards';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -112,7 +113,7 @@ function App() {
           <Route path="/save-load" element={<SaveLoadSystem />} />
           <Route path="/shopping" element={<ShoppingPage />} />
           <Route path="/characters" element={<CharacterCardPage />} />
-          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/achievements" element={<AchievementRewards />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/quests" element={<DailyQuests />} />
           <Route path="/calendar" element={<EventCalendar />} />
