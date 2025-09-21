@@ -211,20 +211,12 @@ const GameUI: React.FC = () => {
               </button>
               <div className="border-l border-border mx-2 h-10" aria-hidden="true"></div>
               <button
-                onClick={saveGame}
+                onClick={() => navigate('/save-load')}
                 className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                aria-label="현재 게임 진행상황 저장"
+                aria-label="저장 시스템"
                 role="button"
               >
-                💾 저장
-              </button>
-              <button
-                onClick={loadGame}
-                className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                aria-label="저장된 게임 불러오기"
-                role="button"
-              >
-                📂 불러오기
+                💾 저장/불러오기
               </button>
               <button
                 onClick={() => setShowInventory(!showInventory)}

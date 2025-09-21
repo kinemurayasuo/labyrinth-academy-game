@@ -10,6 +10,7 @@ import SimpleDungeonPage from './components/game/SimpleDungeonPage';
 import DungeonSelection from './components/game/DungeonSelection';
 import DiarySystem from './components/game/DiarySystem';
 import HeroineStorylines from './components/character/HeroineStorylines';
+import SaveLoadSystem from './components/game/SaveLoadSystem';
 import ShoppingPage from './components/game/ShoppingPage';
 import CharacterCardPage from './components/character/CharacterCardPage';
 import AccountCreation from './components/pages/AccountCreation';
@@ -103,6 +104,7 @@ function App() {
           <Route path="/dungeon" element={<SimpleDungeonPage />} />
           <Route path="/diary" element={<DiarySystem />} />
           <Route path="/heroine-stories" element={<HeroineStorylines />} />
+          <Route path="/save-load" element={<SaveLoadSystem />} />
           <Route path="/shopping" element={<ShoppingPage />} />
           <Route path="/characters" element={<CharacterCardPage />} />
           <Route path="/achievements" element={<Achievements />} />
