@@ -194,6 +194,14 @@ const GameUI: React.FC = () => {
                 🏪 쇼핑
               </button>
               <button
+                onClick={() => navigate('/enhancement')}
+                className="px-4 py-2 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                aria-label="아이템 강화"
+                role="button"
+              >
+                ⚒️ 강화
+              </button>
+              <button
                 onClick={() => navigate('/pets')}
                 className="px-4 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 aria-label="펫 시스템"
