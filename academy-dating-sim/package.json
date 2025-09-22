@@ -4,10 +4,10 @@
   "version": "1.6.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --config config/vite.config.ts",
-    "build": "vite build --config config/vite.config.ts",
+    "dev": "vite --config apps/frontend/vite.config.js",
+    "build": "vite build --config apps/frontend/vite.config.js",
     "lint": "eslint . --config config/eslint.config.js",
-    "preview": "vite preview --config config/vite.config.ts",
+    "preview": "vite preview --config apps/frontend/vite.config.js",
     "deploy": "npm run build && npx gh-pages -d dist",
     "android:build": "npm run build && npx cap sync android",
     "android:open": "npx cap open android",

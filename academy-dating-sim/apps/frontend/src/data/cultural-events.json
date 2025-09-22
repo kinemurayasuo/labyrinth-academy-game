@@ -1,0 +1,545 @@
+{
+  "annualEvents": {
+    "springEvents": {
+      "cherryBlossomFestival": {
+        "name": "벚꽃 축제",
+        "duration": "3일",
+        "date": "4월 첫째 주",
+        "description": "봄의 시작을 알리는 아카데미 최대 축제. 사랑의 고백이 가장 많이 일어나는 시기.",
+        "activities": [
+          {
+            "name": "벚꽃 터널 산책",
+            "description": "캠퍼스를 가로지르는 벚꽃 터널. 연인과 걸으면 영원한 사랑이 이루어진다는 전설.",
+            "rewards": ["affection +20", "special memory"],
+            "dialogues": {
+              "sakura": "벚꽃이 정말 아름답죠? 이 꽃들처럼 우리의 인연도 아름답게 피어났으면 좋겠어요.",
+              "akane": "벚꽃도 좋지만... 난 네가 더 예쁜 것 같은데? 아, 아니다! 그냥 잊어!",
+              "yuki": "벚꽃의 수명은 짧지만 그 아름다움은 영원히 기억되죠. 우리도 그럴 수 있을까요?"
+            }
+          },
+          {
+            "name": "꽃잎 점술",
+            "description": "떨어지는 벚꽃잎을 잡으면 소원이 이루어진다",
+            "rewards": ["luck +10", "random positive event"],
+            "dialogues": {
+              "luna": "7장을 잡으면 운명의 사람을 만날 수 있대요. 당신은 이미 만난 건 아닐까요?",
+              "hana": "꽃잎이 춤추는 것 같아요! 마치 우리를 축복하는 것처럼!"
+            }
+          },
+          {
+            "name": "벚꽃 모찌 만들기",
+            "description": "메이가 주도하는 특별 요리 클래스",
+            "rewards": ["cooking skill +5", "special item: 사랑의 벚꽃 모찌"],
+            "dialogues": {
+              "mei": "벚꽃 모찌에는 봄의 설렘을 담았어요! 함께 먹으면 더 맛있을 거예요!"
+            }
+          },
+          {
+            "name": "봄의 연주회",
+            "description": "하나가 이끄는 야외 음악 공연",
+            "rewards": ["mood boost", "music appreciation +10"],
+            "dialogues": {
+              "hana": "벚꽃 아래서 연주하는 이 순간... 평생 잊지 못할 거예요. 당신과 함께여서 더욱..."
+            }
+          }
+        ],
+        "specialEvents": {
+          "confessionTree": {
+            "name": "고백의 나무",
+            "description": "천 년 된 벚나무 아래서 고백하면 이루어진다는 전설",
+            "successRate": 0.8,
+            "dialogue": "이 나무 아래서... 전하고 싶은 마음이 있어요. 들어주실래요?"
+          },
+          "nightIllumination": {
+            "name": "야간 조명 행사",
+            "description": "밤에 마법 조명으로 빛나는 벚꽃",
+            "rewards": ["romantic atmosphere", "confession chance +30%"],
+            "dialogue": "빛나는 벚꽃이 마치 별처럼 아름다워요. 이 순간이 영원했으면..."
+          }
+        }
+      },
+      "springBall": {
+        "name": "봄의 무도회",
+        "date": "5월 둘째 주 토요일",
+        "description": "정장을 입고 참석하는 격식 있는 무도회",
+        "activities": [
+          {
+            "name": "파트너 신청",
+            "description": "무도회 파트너 정식 신청",
+            "requirements": ["affection > 50", "formal wear"],
+            "rewards": ["relationship progress", "special CG"]
+          },
+          {
+            "name": "왈츠 레슨",
+            "description": "무도회 전 특별 댄스 레슨",
+            "rewards": ["dance skill +10", "closer relationship"]
+          },
+          {
+            "name": "미드나잇 댄스",
+            "description": "자정의 특별한 마지막 춤",
+            "rewards": ["confession opportunity", "memorable moment"]
+          }
+        ]
+      }
+    },
+    "summerEvents": {
+      "heroTournament": {
+        "name": "영웅 토너먼트",
+        "duration": "1주일",
+        "date": "7월 셋째 주",
+        "description": "아카데미 최강을 가리는 연례 대회. 우승자에게는 '영웅의 별' 칭호 수여.",
+        "categories": [
+          {
+            "name": "전투 부문",
+            "participants": ["akane", "yuki", "sora"],
+            "rewards": ["combat skill +20", "legendary weapon", "hero title"],
+            "specialMoments": {
+              "akane": "이 대회에서 우승하면... 당신에게 고백할 용기가 생길 것 같아!",
+              "yuki": "승부는 중요하지 않아요. 당신이 응원해준다면 그것만으로 충분해요."
+            }
+          },
+          {
+            "name": "마법 부문",
+            "participants": ["sakura", "luna", "rin"],
+            "rewards": ["magic power +20", "ancient grimoire", "sage title"],
+            "specialMoments": {
+              "luna": "운명은 이미 정해져 있지만... 당신의 응원이 그것을 바꿀 수도 있어요.",
+              "rin": "내 발명품으로 모두를 놀라게 할 거야! 특히 당신을!"
+            }
+          },
+          {
+            "name": "예술 부문",
+            "participants": ["hana", "mei"],
+            "rewards": ["creativity +20", "legendary instrument", "artist title"],
+            "specialMoments": {
+              "hana": "당신을 위한 특별한 공연을 준비했어요. 내 마음이 전해지길...",
+              "mei": "우승 요리는 당신을 생각하며 만든 '사랑의 풀코스'예요!"
+            }
+          }
+        ],
+        "finals": {
+          "name": "최종 결선",
+          "description": "각 부문 우승자들의 최종 대결",
+          "reward": "Ultimate Hero Title",
+          "specialEvent": "우승자가 한 가지 소원을 이룰 수 있는 특권"
+        }
+      },
+      "summerFestival": {
+        "name": "여름 축제",
+        "date": "8월 보름",
+        "description": "일본식 여름 축제를 아카데미 식으로 재해석한 행사",
+        "activities": [
+          {
+            "name": "유카타 데이트",
+            "description": "전통 의상을 입고 축제 구경",
+            "rewards": ["special CG", "intimacy +15"],
+            "dialogues": {
+              "all": "유카타가 정말 잘 어울려요! 오늘은 특별한 날이 될 것 같아요."
+            }
+          },
+          {
+            "name": "불꽃놀이",
+            "description": "린이 개발한 마법 불꽃놀이",
+            "rewards": ["romantic moment", "confession chance +40%"],
+            "specialMoment": "불꽃 아래서 손을 잡으면 영원히 함께한다는 전설"
+          },
+          {
+            "name": "축제 부스",
+            "description": "각종 게임과 먹거리 부스",
+            "games": [
+              "금붕어 낚시 (마법 물고기)",
+              "사격 게임 (마법 표적)",
+              "귀신의 집 (진짜 유령?!)",
+              "타코야키 가게 (메이의 특제)"
+            ]
+          },
+          {
+            "name": "소원 등불",
+            "description": "소원을 적어 하늘로 날리는 등불",
+            "reward": "wish fulfillment chance",
+            "dialogue": "우리의 소원이 이루어지기를... 영원히 함께할 수 있기를..."
+          }
+        ]
+      }
+    },
+    "autumnEvents": {
+      "harvestFestival": {
+        "name": "추수 감사제",
+        "duration": "3일",
+        "date": "10월 둘째 주",
+        "description": "한 해의 수확을 감사하고 나누는 축제",
+        "activities": [
+          {
+            "name": "수확 체험",
+            "description": "아카데미 농장에서 작물 수확",
+            "rewards": ["stamina +10", "fresh ingredients"],
+            "dialogues": {
+              "mei": "직접 수확한 재료로 특별한 요리를 만들어드릴게요!",
+              "sakura": "자연의 축복을 느낄 수 있는 소중한 시간이에요."
+            }
+          },
+          {
+            "name": "호박 조각 대회",
+            "description": "마법 호박으로 조각품 만들기",
+            "rewards": ["art skill +10", "decorative item"],
+            "dialogues": {
+              "rin": "과학적으로 완벽한 호박 조각 기계를... 농담이에요!",
+              "sora": "자유로운 영혼을 호박에 담아볼까요?"
+            }
+          },
+          {
+            "name": "감사의 만찬",
+            "description": "모두가 함께 준비하는 대규모 만찬",
+            "rewards": ["friendship all +10", "gratitude blessing"],
+            "specialMoment": "각자가 감사한 것을 발표하는 시간"
+          }
+        ]
+      },
+      "halloweenNight": {
+        "name": "할로윈 나이트",
+        "date": "10월 31일",
+        "description": "신비로운 마법의 밤",
+        "activities": [
+          {
+            "name": "코스튬 파티",
+            "description": "특별한 의상을 입고 참가",
+            "costumes": {
+              "sakura": "천사",
+              "yuki": "얼음 여왕",
+              "luna": "마녀",
+              "akane": "뱀파이어 헌터",
+              "hana": "요정",
+              "rin": "매드 사이언티스트",
+              "mei": "마법 요리사",
+              "sora": "유령",
+              "mystery": "??? (계속 변함)"
+            },
+            "rewards": ["special costume CG", "halloween memory"]
+          },
+          {
+            "name": "담력 시험",
+            "description": "진짜 유령이 나온다는 구교사 탐험",
+            "rewards": ["courage +10", "special item", "closer bond"],
+            "specialEvent": "위기의 순간 서로를 지키며 관계 발전"
+          },
+          {
+            "name": "트릭 오어 트릿",
+            "description": "기숙사를 돌며 과자 수집",
+            "rewards": ["candy collection", "fun interactions"],
+            "dialogue": "과자보다 달콤한 건... 당신과 함께하는 이 시간이에요."
+          }
+        ]
+      }
+    },
+    "winterEvents": {
+      "winterBall": {
+        "name": "겨울 무도회",
+        "date": "12월 24일",
+        "description": "한 해를 마무리하는 가장 로맨틱한 행사",
+        "activities": [
+          {
+            "name": "파트너 프로포즈",
+            "description": "공식적으로 무도회 파트너 신청",
+            "requirements": ["affection > 70", "previous events attended"],
+            "rewards": ["relationship milestone", "exclusive route"]
+          },
+          {
+            "name": "크리스마스 선물 교환",
+            "description": "특별한 선물 준비와 교환",
+            "gifts": {
+              "sakura": "손수 만든 부적",
+              "yuki": "얼음 조각 작품",
+              "luna": "운명의 타로 카드",
+              "akane": "승리의 팔찌",
+              "hana": "작곡한 노래",
+              "rin": "특별한 발명품",
+              "mei": "영원 보존 초콜릿",
+              "sora": "하늘의 깃털",
+              "mystery": "시공간 조각"
+            }
+          },
+          {
+            "name": "미드나잇 키스",
+            "description": "자정의 종이 울릴 때의 특별한 순간",
+            "requirements": ["affection > 80", "confession completed"],
+            "rewards": ["relationship MAX", "true ending unlock"]
+          }
+        ],
+        "specialMoments": {
+          "snowDance": "눈 내리는 야외에서의 특별한 춤",
+          "starWish": "겨울 별자리에 비는 소원",
+          "warmthSharing": "추운 날씨에 서로를 따뜻하게 해주는 순간"
+        }
+      },
+      "newYearCelebration": {
+        "name": "신년 축하 행사",
+        "date": "1월 1일",
+        "description": "새해의 시작을 함께 축하",
+        "activities": [
+          {
+            "name": "일출 보기",
+            "description": "아카데미 최고층에서 첫 일출 관람",
+            "rewards": ["New Year's blessing", "resolution power"],
+            "dialogue": "새해의 첫 순간을 당신과 함께해서 행복해요. 올해도 잘 부탁해요!"
+          },
+          {
+            "name": "신년 소원",
+            "description": "소원 나무에 새해 소망 걸기",
+            "rewards": ["wish power +20", "luck for the year"],
+            "wishes": {
+              "common": "영원히 함께하기",
+              "personal": "각 캐릭터별 특별한 소원"
+            }
+          },
+          {
+            "name": "떡국 파티",
+            "description": "메이가 준비한 특별한 신년 요리",
+            "rewards": ["all stats +5", "good fortune"],
+            "dialogue": "새해 첫 음식을 함께 먹으면 1년 내내 행복하대요!"
+          }
+        ]
+      },
+      "snowFestival": {
+        "name": "눈 축제",
+        "date": "2월 첫째 주",
+        "description": "겨울의 마지막을 장식하는 눈 축제",
+        "activities": [
+          {
+            "name": "눈 조각 대회",
+            "description": "마법을 이용한 눈 조각품 만들기",
+            "rewards": ["creativity +15", "ice magic skill"],
+            "specialEntry": {
+              "yuki": "완벽한 얼음 성",
+              "akane": "불타는 얼음 용",
+              "duo": "함께 만든 사랑의 조각품"
+            }
+          },
+          {
+            "name": "눈싸움 대전",
+            "description": "전교생이 참여하는 대규모 눈싸움",
+            "rewards": ["teamwork +10", "winter warrior title"],
+            "teams": "기숙사별 대항전"
+          },
+          {
+            "name": "온천 여행",
+            "description": "축제 후 근처 마법 온천 방문",
+            "rewards": ["fatigue recovery", "intimacy +20"],
+            "specialMoment": "온천에서의 진솔한 대화"
+          }
+        ]
+      }
+    }
+  },
+  "weeklyEvents": {
+    "monday": {
+      "morningAssembly": {
+        "name": "주간 조회",
+        "description": "한 주를 시작하는 전체 집회",
+        "announcements": ["주간 일정", "특별 공지", "표창"],
+        "interactions": "히로인들과 짧은 인사"
+      }
+    },
+    "wednesday": {
+      "clubDay": {
+        "name": "동아리 활동의 날",
+        "description": "오후 전체가 동아리 활동 시간",
+        "clubs": {
+          "cooking": "메이와 요리 클럽",
+          "music": "하나와 음악 동아리",
+          "combat": "아카네와 검술부",
+          "research": "린과 발명가 클럽",
+          "gardening": "사쿠라와 정원 가꾸기",
+          "astronomy": "루나와 천문 관측",
+          "philosophy": "소라와 철학 토론",
+          "library": "유키와 독서 모임",
+          "mystery": "미스테리와... 비밀 클럽?"
+        }
+      }
+    },
+    "friday": {
+      "marketDay": {
+        "name": "주말 시장",
+        "description": "마을 상인들이 아카데미를 방문",
+        "activities": ["쇼핑", "특별 아이템 구매", "데이트 아이템 준비"],
+        "specialVendors": [
+          "마법 도구상",
+          "고서적상",
+          "액세서리 가게",
+          "꽃집",
+          "과자 가게"
+        ]
+      }
+    },
+    "saturday": {
+      "weekendFreedom": {
+        "name": "자유 시간",
+        "description": "수업이 없는 자유로운 토요일",
+        "dateSpots": [
+          "마을 카페",
+          "호숫가 산책",
+          "도서관 데이트",
+          "훈련장 특훈",
+          "음악실 개인 레슨",
+          "옥상 별 관찰",
+          "비밀 정원 탐험"
+        ]
+      }
+    },
+    "sunday": {
+      "restDay": {
+        "name": "휴식의 날",
+        "description": "재충전과 개인 시간",
+        "activities": [
+          "기숙사에서 휴식",
+          "편지 쓰기",
+          "일기 작성",
+          "다음 주 준비"
+        ]
+      }
+    }
+  },
+  "specialTraditions": {
+    "academyAnthem": {
+      "name": "아카데미 찬가",
+      "description": "매일 아침과 저녁에 울려 퍼지는 아카데미 노래",
+      "lyrics": "빛과 지혜의 전당, 세이렌 아카데미...",
+      "tradition": "모든 학생이 일어서서 함께 부름"
+    },
+    "mentorSystem": {
+      "name": "선후배 멘토 제도",
+      "description": "상급생이 하급생을 지도하는 전통",
+      "pairs": {
+        "sakura-mei": "치유와 요리의 멘토링",
+        "yuki-rin": "연구 멘토링",
+        "akane-freshmen": "전투 훈련 지도"
+      }
+    },
+    "oathCeremony": {
+      "name": "입학/졸업 선서",
+      "description": "마법 계약으로 이루어지는 신성한 의식",
+      "vows": [
+        "지식을 추구할 것",
+        "동료를 배신하지 않을 것",
+        "아카데미를 지킬 것"
+      ]
+    },
+    "legendTrials": {
+      "name": "전설의 시련",
+      "description": "특별한 학생들만 도전할 수 있는 비밀 시험",
+      "trials": {
+        "courageTest": "용기의 시련 - 최대 공포와 마주하기",
+        "wisdomTest": "지혜의 시련 - 불가능한 수수께끼 풀기",
+        "loveTest": "사랑의 시련 - 진정한 마음 증명하기",
+        "powerTest": "힘의 시련 - 한계 극복하기"
+      },
+      "reward": "Hidden True Ending 해금"
+    },
+    "midnightTeaTime": {
+      "name": "한밤의 다과회",
+      "description": "기숙사에서 몰래 열리는 야간 모임",
+      "activities": [
+        "고민 상담",
+        "연애 이야기",
+        "귀신 이야기",
+        "비밀 공유"
+      ],
+      "risk": "들키면 벌점이지만 친밀도 대폭 상승"
+    },
+    "wishTree": {
+      "name": "소원 나무",
+      "description": "캠퍼스 중앙의 천 년 된 나무",
+      "tradition": "중요한 소원을 적어 걸면 이루어진다",
+      "specialDays": [
+        "입학식",
+        "생일",
+        "고백 전",
+        "졸업식"
+      ]
+    },
+    "secretGarden": {
+      "name": "비밀 정원",
+      "description": "특별한 조건에서만 나타나는 환상의 정원",
+      "conditions": [
+        "보름달",
+        "진정한 사랑",
+        "순수한 마음"
+      ],
+      "events": "최고의 고백 장소, True Love 엔딩 필수"
+    }
+  },
+  "hiddenEvents": {
+    "eclipsePhenomenon": {
+      "name": "일식의 날",
+      "description": "100년에 한 번 오는 마법 일식",
+      "condition": "모든 히로인과 친밀도 60 이상",
+      "specialEvent": "모든 히로인의 숨겨진 힘이 각성",
+      "reward": "Secret Harem Route 오픈"
+    },
+    "timeLoop": {
+      "name": "시간 고리",
+      "description": "미스테리와 관련된 시간 루프 이벤트",
+      "trigger": "Mystery route deep progress",
+      "content": "같은 하루를 반복하며 완벽한 선택 찾기",
+      "reward": "All Heroines Perfect Day"
+    },
+    "ancientAwakening": {
+      "name": "고대의 각성",
+      "description": "봉인된 고대 악이 깨어남",
+      "condition": "모든 메인 스토리 완료",
+      "finalBattle": "모든 히로인과 협력하여 세계를 구하기",
+      "reward": "True Ending - Eternal Bonds"
+    }
+  },
+  "dateEvents": {
+    "locations": {
+      "library": {
+        "name": "도서관 데이트",
+        "suitable": ["yuki", "luna", "sakura"],
+        "activities": ["함께 공부", "고서 탐험", "조용한 대화"],
+        "special": "금서고 몰래 들어가기"
+      },
+      "trainingGround": {
+        "name": "훈련장 데이트",
+        "suitable": ["akane", "sora"],
+        "activities": ["대련", "훈련", "체력 단련"],
+        "special": "일대일 특훈"
+      },
+      "kitchen": {
+        "name": "주방 데이트",
+        "suitable": ["mei"],
+        "activities": ["요리 수업", "시식", "레시피 개발"],
+        "special": "둘만의 특별 요리"
+      },
+      "musicRoom": {
+        "name": "음악실 데이트",
+        "suitable": ["hana"],
+        "activities": ["연주", "작곡", "듀엣"],
+        "special": "사랑의 세레나데"
+      },
+      "laboratory": {
+        "name": "연구실 데이트",
+        "suitable": ["rin"],
+        "activities": ["실험", "발명", "연구"],
+        "special": "둘만의 발명품 제작"
+      },
+      "rooftop": {
+        "name": "옥상 데이트",
+        "suitable": ["sora", "luna"],
+        "activities": ["별 관찰", "철학 대화", "자유 비행"],
+        "special": "일출/일몰 함께 보기"
+      },
+      "garden": {
+        "name": "정원 데이트",
+        "suitable": ["sakura", "mei"],
+        "activities": ["정원 가꾸기", "꽃 구경", "피크닉"],
+        "special": "비밀 정원 발견"
+      },
+      "town": {
+        "name": "마을 데이트",
+        "suitable": ["all"],
+        "activities": ["쇼핑", "카페", "영화", "축제"],
+        "special": "우연한 사건으로 더 가까워지기"
+      }
+    }
+  }
+}

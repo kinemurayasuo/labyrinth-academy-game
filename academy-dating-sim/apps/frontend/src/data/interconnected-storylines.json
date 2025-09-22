@@ -1,0 +1,528 @@
+{
+  "crossCharacterEvents": {
+    "trainingTournament": {
+      "title": "영웅 토너먼트 - 운명의 대결",
+      "participants": ["akane", "yuki", "luna", "sora"],
+      "description": "아카데미 최강을 가리는 연례 토너먼트. 각자의 이유로 우승을 노리는 히로인들의 열전.",
+      "storyline": {
+        "setup": "토너먼트 개막식에서 모든 히로인들이 모입니다. 각자의 목표와 의지를 다지며 대회에 임합니다.",
+        "conflicts": {
+          "akane_vs_yuki": {
+            "description": "준결승전 - 불과 얼음의 숙명적 대결",
+            "dialogue": [
+              {
+                "speaker": "akane",
+                "text": "드디어 정식으로 겨룰 때가 왔네, 유키! 오늘은 내 불꽃이 네 얼음을 녹일 거야!",
+                "emotion": "excited"
+              },
+              {
+                "speaker": "yuki",
+                "text": "열정만으로는 부족해요, 아카네. 차가운 전략이 뜨거운 충동을 이긴다는 걸 보여드리죠.",
+                "emotion": "confident"
+              }
+            ],
+            "outcome": "치열한 접전 끝에 두 사람은 무승부. 서로를 진정한 라이벌로 인정하게 됨."
+          },
+          "luna_observation": {
+            "description": "루나는 예언의 눈으로 대회를 관찰",
+            "dialogue": [
+              {
+                "speaker": "luna",
+                "text": "이 토너먼트... 단순한 대회가 아니에요. 운명의 실이 얽히고 있어요. 오늘 일어날 일이 모두의 미래를 바꿀 거예요.",
+                "emotion": "mysterious"
+              }
+            ]
+          },
+          "sora_freedom": {
+            "description": "소라는 자유로운 전투 스타일로 주목",
+            "dialogue": [
+              {
+                "speaker": "sora",
+                "text": "승부에 얽매이지 않아요. 바람처럼 자유롭게, 하늘처럼 넓게... 이것이 제 방식이에요.",
+                "emotion": "peaceful"
+              }
+            ]
+          }
+        },
+        "resolution": "토너먼트를 통해 모든 히로인들이 서로를 더 깊이 이해하고 존경하게 됨. 진정한 승자는 우정."
+      },
+      "playerChoice": {
+        "supportAkane": "아카네를 응원하며 그녀의 투지에 힘을 더한다",
+        "supportYuki": "유키의 전략을 도와 승리를 향한 길을 연다",
+        "supportLuna": "루나와 함께 대회의 숨겨진 의미를 찾는다",
+        "supportSora": "소라의 자유로운 정신을 지지한다"
+      }
+    },
+    "culturalFestival": {
+      "title": "벚꽃 축제 - 마음이 피어나는 날",
+      "participants": ["sakura", "hana", "mei", "rin"],
+      "description": "봄의 시작을 알리는 벚꽃 축제. 각자의 재능을 선보이며 마음을 전하는 특별한 날.",
+      "storyline": {
+        "setup": "축제 준비로 분주한 캠퍼스. 각 히로인들이 특별한 이벤트를 준비합니다.",
+        "events": {
+          "sakura_garden": {
+            "description": "사쿠라의 치유 정원",
+            "dialogue": [
+              {
+                "speaker": "sakura",
+                "text": "이 정원에는 모두의 마음을 치유하는 꽃들을 심었어요. 당신과 함께 가꾼 이 정원이 모두에게 평화를 주었으면 좋겠어요.",
+                "emotion": "gentle"
+              },
+              {
+                "speaker": "mei",
+                "text": "사쿠라 선배! 이 꽃들로 특별한 차를 만들면 어때요? 우리가 함께하면 최고의 힐링 카페를 만들 수 있을 거예요!",
+                "emotion": "excited"
+              }
+            ],
+            "collaboration": "사쿠라와 메이가 합작한 '치유의 다과회' 대성공"
+          },
+          "hana_concert": {
+            "description": "하나의 봄의 선율 콘서트",
+            "dialogue": [
+              {
+                "speaker": "hana",
+                "text": "이번 축제를 위해 특별한 곡을 준비했어요. '벚꽃 아래서 피어나는 사랑'이라는 제목이에요. 모두의 마음에 봄이 찾아왔으면...",
+                "emotion": "dreamy"
+              },
+              {
+                "speaker": "rin",
+                "text": "하나! 내가 만든 홀로그램 장치로 음악을 시각화하면 어때? 음표가 벚꽃잎처럼 흩날리게 만들 수 있어!",
+                "emotion": "enthusiastic"
+              }
+            ],
+            "collaboration": "하나와 린의 환상적인 멀티미디어 공연"
+          }
+        },
+        "climax": {
+          "description": "축제의 하이라이트 - 모든 히로인들의 합동 공연",
+          "dialogue": [
+            {
+              "speaker": "all",
+              "text": "우리 모두가 하나가 되어 만드는 이 순간... 이것이 진정한 아카데미의 봄이에요!",
+              "emotion": "united"
+            }
+          ]
+        },
+        "resolution": "축제를 통해 히로인들 간의 유대가 더욱 깊어지고, 각자의 재능이 어우러져 더 큰 기적을 만들어냄."
+      }
+    },
+    "midnightMystery": {
+      "title": "한밤의 미스테리 - 사라진 보물",
+      "participants": ["luna", "mystery", "yuki", "rin"],
+      "description": "도서관에서 사라진 고대의 마법서. 미스테리한 사건을 해결하기 위해 뭉친 히로인들.",
+      "storyline": {
+        "setup": "금서고에서 전설의 마법서가 사라지고, 이상한 현상들이 일어나기 시작합니다.",
+        "investigation": {
+          "luna_prophecy": {
+            "description": "루나가 본 불길한 예언",
+            "dialogue": [
+              {
+                "speaker": "luna",
+                "text": "이 사건... 단순한 도난이 아니에요. 어둠의 그림자가 아카데미를 덮으려 하고 있어요. 우리가 힘을 합쳐야 해요.",
+                "emotion": "worried"
+              }
+            ]
+          },
+          "mystery_revelation": {
+            "description": "미스테리가 아는 진실",
+            "dialogue": [
+              {
+                "speaker": "mystery",
+                "text": "그 책은 다른 차원으로 이동했어요. 누군가가 시공간을 조작하고 있는 것 같아요. 제가 그 흔적을 추적할 수 있어요.",
+                "emotion": "serious"
+              }
+            ]
+          },
+          "yuki_analysis": {
+            "description": "유키의 논리적 분석",
+            "dialogue": [
+              {
+                "speaker": "yuki",
+                "text": "범인은 내부자예요. 금서고의 마법 보안을 이렇게 쉽게 뚫을 수 있는 사람은 많지 않아요. 동기와 기회를 분석해보면...",
+                "emotion": "analytical"
+              }
+            ]
+          },
+          "rin_technology": {
+            "description": "린의 추적 장치",
+            "dialogue": [
+              {
+                "speaker": "rin",
+                "text": "내가 만든 마법 에너지 추적기로 찾을 수 있어! 모든 마법은 흔적을 남기거든. 특히 이렇게 강력한 마법이라면...",
+                "emotion": "confident"
+              }
+            ]
+          }
+        },
+        "resolution": "네 사람의 협력으로 사건을 해결하고, 아카데미를 위기에서 구함. 각자의 능력이 퍼즐 조각처럼 맞아떨어짐."
+      }
+    },
+    "summerBeachTrip": {
+      "title": "여름 해변 수련회 - 파도 속의 인연",
+      "participants": ["all"],
+      "description": "전원이 참가하는 여름 방학 특별 수련회. 해변에서 펼쳐지는 우정과 사랑의 이야기.",
+      "storyline": {
+        "day1": {
+          "description": "도착과 숙소 배정",
+          "events": {
+            "room_assignment": "룸메이트 결정으로 인한 소동",
+            "first_swim": "첫 해수욕과 물놀이",
+            "beach_volleyball": "격렬한 비치발리볼 대결"
+          },
+          "dialogue": [
+            {
+              "speaker": "akane",
+              "text": "좋아! 해변 훈련이라니 최고야! 모래사장 달리기로 시작하자!",
+              "emotion": "energetic"
+            },
+            {
+              "speaker": "mei",
+              "text": "여러분! 제가 특별한 바비큐를 준비했어요! 마법으로 맛을 더한 특제 요리예요!",
+              "emotion": "happy"
+            }
+          ]
+        },
+        "day2": {
+          "description": "담력 시험과 캠프파이어",
+          "events": {
+            "courage_test": "밤바다 담력 시험에서 생긴 해프닝",
+            "campfire": "캠프파이어를 둘러싸고 나누는 진심",
+            "shooting_stars": "별똥별을 보며 소원 빌기"
+          },
+          "dialogue": [
+            {
+              "speaker": "sora",
+              "text": "바다 위의 밤하늘은 정말 특별해요. 별들이 파도에 비치는 모습이... 마치 하늘과 바다가 하나 된 것 같아요.",
+              "emotion": "peaceful"
+            },
+            {
+              "speaker": "luna",
+              "text": "오늘 밤 별똥별이 떨어질 거예요. 모두의 소원이 이루어지는 특별한 밤이 될 거예요.",
+              "emotion": "mysterious"
+            }
+          ]
+        },
+        "day3": {
+          "description": "이별의 아침",
+          "events": {
+            "sunrise": "함께 보는 일출",
+            "promise": "다음 여름의 약속",
+            "group_photo": "추억의 단체 사진"
+          },
+          "dialogue": [
+            {
+              "speaker": "sakura",
+              "text": "이렇게 모두가 함께한 시간... 평생 잊지 못할 거예요. 우리의 우정이 영원하길...",
+              "emotion": "touched"
+            },
+            {
+              "speaker": "hana",
+              "text": "내년에도, 그 다음 해에도... 계속 이렇게 함께할 수 있으면 좋겠어요!",
+              "emotion": "hopeful"
+            }
+          ]
+        }
+      }
+    },
+    "rivalryArcs": {
+      "akane_yuki": {
+        "title": "불과 얼음의 라이벌",
+        "description": "극과 극의 성격과 능력을 가진 두 사람의 경쟁과 인정",
+        "events": [
+          {
+            "stage": "initial",
+            "description": "첫 만남부터 시작된 대립",
+            "dialogue": [
+              {
+                "speaker": "akane",
+                "text": "넌 너무 차가워! 감정도 없는 거야?",
+                "emotion": "frustrated"
+              },
+              {
+                "speaker": "yuki",
+                "text": "당신은 너무 충동적이에요. 생각이라는 걸 해보세요.",
+                "emotion": "cold"
+              }
+            ]
+          },
+          {
+            "stage": "development",
+            "description": "서로의 강점을 인정하기 시작",
+            "dialogue": [
+              {
+                "speaker": "akane",
+                "text": "네 전략... 인정할게. 하지만 때론 직진도 필요해!",
+                "emotion": "respectful"
+              },
+              {
+                "speaker": "yuki",
+                "text": "당신의 열정도... 나쁘지 않네요. 가끔은 부럽기도 해요.",
+                "emotion": "soft"
+              }
+            ]
+          },
+          {
+            "stage": "friendship",
+            "description": "라이벌에서 친구로",
+            "dialogue": [
+              {
+                "speaker": "both",
+                "text": "우리가 힘을 합치면 최강이야!",
+                "emotion": "united"
+              }
+            ]
+          }
+        ]
+      },
+      "luna_mystery": {
+        "title": "운명과 가능성의 만남",
+        "description": "예언자와 수수께끼, 정해진 것과 변하는 것의 대화",
+        "events": [
+          {
+            "stage": "curiosity",
+            "description": "서로에 대한 호기심",
+            "dialogue": [
+              {
+                "speaker": "luna",
+                "text": "당신은... 제 예언에 나타나지 않아요. 왜죠?",
+                "emotion": "puzzled"
+              },
+              {
+                "speaker": "mystery",
+                "text": "저는 운명 밖의 존재니까요. 당신의 예언도 하나의 가능성일 뿐이에요.",
+                "emotion": "enigmatic"
+              }
+            ]
+          },
+          {
+            "stage": "understanding",
+            "description": "서로를 이해하기 시작",
+            "dialogue": [
+              {
+                "speaker": "luna",
+                "text": "당신과 있으면 무한한 가능성이 보여요. 고정된 미래가 아닌...",
+                "emotion": "wondering"
+              },
+              {
+                "speaker": "mystery",
+                "text": "당신은 제게 의미를 가르쳐줘요. 무한함 속의 하나의 선택.",
+                "emotion": "thoughtful"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "friendshipArcs": {
+      "sakura_mei": {
+        "title": "치유와 영양의 조화",
+        "description": "마음과 몸을 치유하는 두 사람의 따뜻한 우정",
+        "events": [
+          {
+            "activity": "healing_cafe",
+            "description": "치유 카페 프로젝트",
+            "dialogue": [
+              {
+                "speaker": "sakura",
+                "text": "메이의 요리와 제 치유 마법을 합치면 모두를 행복하게 할 수 있어요!",
+                "emotion": "excited"
+              },
+              {
+                "speaker": "mei",
+                "text": "사쿠라 선배와 함께라면 최고의 치유 공간을 만들 수 있을 거예요!",
+                "emotion": "determined"
+              }
+            ]
+          }
+        ]
+      },
+      "hana_rin": {
+        "title": "예술과 과학의 만남",
+        "description": "창의성의 다른 형태를 가진 두 사람의 콜라보레이션",
+        "events": [
+          {
+            "activity": "art_tech_fusion",
+            "description": "예술과 기술의 융합 프로젝트",
+            "dialogue": [
+              {
+                "speaker": "hana",
+                "text": "린의 기술로 제 음악을 시각화할 수 있다니 놀라워요!",
+                "emotion": "amazed"
+              },
+              {
+                "speaker": "rin",
+                "text": "하나의 예술성이 내 발명품에 영혼을 불어넣어줘!",
+                "emotion": "inspired"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "groupDynamics": {
+      "studyGroup": {
+        "title": "시험 기간 스터디 그룹",
+        "description": "모두가 모여 공부하는 특별한 시간",
+        "participants": ["all"],
+        "events": [
+          {
+            "description": "각자의 공부법 공유",
+            "dialogue": [
+              {
+                "speaker": "yuki",
+                "text": "체계적인 노트 정리가 중요해요. 제 방법을 공유할게요.",
+                "emotion": "helpful"
+              },
+              {
+                "speaker": "akane",
+                "text": "난 몸으로 익히는 게 최고야! 실습이 답이라고!",
+                "emotion": "confident"
+              },
+              {
+                "speaker": "luna",
+                "text": "시험 문제를 예언... 아니, 예측해볼게요.",
+                "emotion": "playful"
+              }
+            ]
+          }
+        ]
+      },
+      "birthdayParties": {
+        "title": "생일 파티 이벤트",
+        "description": "각 히로인의 생일을 다른 히로인들이 축하",
+        "events": [
+          {
+            "sakura_birthday": {
+              "description": "사쿠라의 생일 서프라이즈",
+              "dialogue": [
+                {
+                  "speaker": "all",
+                  "text": "생일 축하해, 사쿠라! 항상 우리를 치유해줘서 고마워!",
+                  "emotion": "celebrating"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "relationshipWeb": {
+    "friendships": {
+      "sakura_yuki": "룸메이트에서 절친으로",
+      "sakura_mei": "치유 듀오",
+      "yuki_luna": "지적 라이벌이자 친구",
+      "akane_hana": "예상 외의 공통점",
+      "rin_everyone": "모두의 발명가 친구",
+      "sora_luna": "철학적 대화 친구",
+      "mystery_all": "모두와 특별한 연결"
+    },
+    "rivalries": {
+      "akane_yuki": "불과 얼음의 경쟁",
+      "luna_rin": "신비와 과학의 대립",
+      "hana_sora": "자유의 정의에 대한 차이"
+    },
+    "mentorships": {
+      "sakura_mei": "선배와 후배",
+      "yuki_rin": "연구 멘토링",
+      "luna_mystery": "운명의 가이드"
+    }
+  },
+  "sharedBackstories": {
+    "ancientProphecy": {
+      "description": "아카데미를 구할 아홉 영웅에 대한 고대 예언",
+      "content": "빛과 얼음, 달과 불꽃, 선율과 지혜, 요리와 하늘, 그리고 수수께끼... 아홉 개의 별이 모일 때, 어둠은 물러가리라.",
+      "relevantCharacters": ["all"],
+      "impact": "모든 히로인이 운명적으로 연결되어 있음을 암시"
+    },
+    "shadowWar": {
+      "description": "200년 전 그림자 전쟁의 영향",
+      "connections": {
+        "sakura": "전생이 당시의 성녀",
+        "akane": "조상이 전쟁 영웅",
+        "luna": "예언자 가문이 전쟁을 예견",
+        "mystery": "전쟁의 숨겨진 진실을 알고 있음"
+      }
+    },
+    "academyFoundation": {
+      "description": "아카데미 설립과 관련된 비밀",
+      "connections": {
+        "mystery": "설립자 중 한 명일 가능성",
+        "luna": "설립 예언을 보관하는 가문",
+        "sakura": "설립자의 후손"
+      }
+    }
+  },
+  "conflictResolutions": {
+    "loveTriangle": {
+      "description": "같은 사람을 좋아하게 된 히로인들의 갈등과 해결",
+      "example": {
+        "participants": ["akane", "yuki"],
+        "conflict": "둘 다 플레이어를 좋아하게 됨",
+        "dialogue": [
+          {
+            "speaker": "akane",
+            "text": "정정당당하게 겨루자! 진 사람은 깨끗이 포기하는 거야!",
+            "emotion": "determined"
+          },
+          {
+            "speaker": "yuki",
+            "text": "...좋아요. 하지만 우정은 지켜야 해요. 우리의 선택을 존중하면서.",
+            "emotion": "serious"
+          }
+        ],
+        "resolution": "서로의 감정을 인정하고 공정한 경쟁을 약속. 결과에 관계없이 우정 유지."
+      }
+    },
+    "misunderstandings": {
+      "description": "오해로 인한 갈등과 화해",
+      "example": {
+        "participants": ["hana", "rin"],
+        "conflict": "린의 발명품이 하나의 공연을 망칠 뻔함",
+        "dialogue": [
+          {
+            "speaker": "hana",
+            "text": "린... 내 공연이 그렇게 시시해서 '개선'이 필요했던 거야?",
+            "emotion": "hurt"
+          },
+          {
+            "speaker": "rin",
+            "text": "아니야! 난 단지 네 공연을 더 특별하게 만들고 싶었을 뿐이야! 미안해...",
+            "emotion": "apologetic"
+          }
+        ],
+        "resolution": "진심을 이해하고 서로 협력하여 더 나은 공연 창조"
+      }
+    }
+  },
+  "seasonalEvents": {
+    "spring": {
+      "sakuraViewing": {
+        "description": "벚꽃 구경",
+        "groupActivity": "모두가 함께 벚꽃나무 아래서 피크닉",
+        "specialMoments": "각자의 방식으로 봄을 즐기는 모습"
+      }
+    },
+    "summer": {
+      "fireworks": {
+        "description": "여름 불꽃축제",
+        "groupActivity": "유카타를 입고 축제 참가",
+        "specialMoments": "불꽃 아래서 나누는 소원들"
+      }
+    },
+    "autumn": {
+      "harvestFestival": {
+        "description": "추수 감사제",
+        "groupActivity": "함께 요리하고 수확물 나누기",
+        "specialMoments": "감사의 마음을 전하는 시간"
+      }
+    },
+    "winter": {
+      "snowDay": {
+        "description": "첫 눈 오는 날",
+        "groupActivity": "눈싸움과 눈사람 만들기",
+        "specialMoments": "따뜻한 코코아를 마시며 나누는 이야기"
+      }
+    }
+  }
+}
