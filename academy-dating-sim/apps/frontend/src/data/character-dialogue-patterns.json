@@ -1,0 +1,399 @@
+{
+  "characterDialogueStyles": {
+    "sakura": {
+      "personalityTraits": {
+        "core": "강인하지만 내면이 연약한 검사",
+        "speechStyle": "직설적이면서도 때로는 주저하는",
+        "emotionalRange": ["결단력 있는", "부끄러워하는", "보호본능이 강한", "외로운", "열정적인"]
+      },
+      "speechPatterns": {
+        "formal": {
+          "description": "처음 만날 때나 공식적인 상황",
+          "characteristics": ["경어 사용", "완전한 문장", "예의바른 표현"],
+          "examples": [
+            "실례했습니다. 저는 키리시마 사쿠라라고 합니다.",
+            "검술에 관심이 있으시다면 기꺼이 가르쳐드리겠습니다.",
+            "조심하셔야 할 것 같습니다. 이 학교는 특별한 곳이니까요."
+          ]
+        },
+        "casual": {
+          "description": "친해진 후 일상적인 대화",
+          "characteristics": ["반말 사용", "줄임말 간혹 사용", "감정 표현이 더 자연스러움"],
+          "examples": [
+            "오늘도 연습하러 왔구나. 정말 성실해.",
+            "가끔은... 이런 평범한 시간이 좋아.",
+            "너랑 있으면 마음이 편해져. 신기하게도."
+          ]
+        },
+        "emotional": {
+          "description": "감정이 격해지거나 중요한 순간",
+          "characteristics": ["말 끊김", "반복 표현", "감정적 어조"],
+          "examples": [
+            "나는... 나는 정말 무서워. 모든 걸 잃을까 봐.",
+            "왜... 왜 이렇게 마음이 아픈 거지?",
+            "절대로... 절대로 너를 잃고 싶지 않아!"
+          ]
+        },
+        "vulnerable": {
+          "description": "약한 모습을 보일 때",
+          "characteristics": ["작은 목소리", "불확실한 표현", "도움 요청"],
+          "examples": [
+            "혹시... 내가 이상한 거 아니야?",
+            "가끔은 모든 걸 내려놓고 싶어...",
+            "곁에 있어줄래? 그냥... 잠시만이라도."
+          ]
+        }
+      },
+      "characteristicPhrases": {
+        "catchphrases": [
+          "검은 마음을 비추는 거울이야.",
+          "강해지고 싶다면 자신과 마주해야 해.",
+          "완벽함보다 진실함이 더 어려워."
+        ],
+        "habitualExpressions": [
+          "음..." (생각할 때),
+          "그런데 말이야..." (화제 전환),
+          "정말로?" (놀랄 때)
+        ],
+        "emotionalOutbursts": [
+          "아아악!" (분노할 때),
+          "어떻게..." (믿을 수 없을 때),
+          "미안해, 정말 미안해..." (사과할 때)
+        ]
+      },
+      "contextualVariations": {
+        "training": {
+          "tone": "집중되고 진지한",
+          "vocabulary": "검술 용어 많이 사용",
+          "examples": [
+            "자세가 흐트러졌어. 중심을 다시 잡아.",
+            "검은 몸의 연장이야. 마음으로 느껴봐.",
+            "오늘은 키리시마류의 기본기를 가르쳐줄게."
+          ]
+        },
+        "personal_talk": {
+          "tone": "부드럽고 솔직한",
+          "vocabulary": "감정 표현 중심",
+          "examples": [
+            "사실... 나도 가끔 무서워.",
+            "너와 이야기하고 있으면 시간이 멈춘 것 같아.",
+            "이런 말 해본 적 없는데... 고마워."
+          ]
+        },
+        "conflict": {
+          "tone": "격정적이고 강렬한",
+          "vocabulary": "단호한 표현, 강한 의지",
+          "examples": [
+            "더 이상 참을 수 없어!",
+            "내가 지켜낼 거야, 무슨 일이 있어도!",
+            "각오는 됐지? 쉽지 않을 거야."
+          ]
+        }
+      }
+    },
+    "yuki": {
+      "personalityTraits": {
+        "core": "천재적이지만 감정적으로 서툰 마법사",
+        "speechStyle": "정확하고 분석적이지만 때로는 어린아이같은",
+        "emotionalRange": ["호기심 많은", "당황스러워하는", "자신만만한", "외로운", "순수한"]
+      },
+      "speechPatterns": {
+        "analytical": {
+          "description": "마법이나 학술적 주제를 다룰 때",
+          "characteristics": ["정확한 용어", "논리적 구조", "차분한 어조"],
+          "examples": [
+            "마법의 원리를 설명하자면, 마나의 흐름을 이해하는 것이 핵심이에요.",
+            "이론적으로는 가능하지만, 실제 적용에는 몇 가지 변수가 있어요.",
+            "흥미로운 가설이네요. 한번 검증해볼까요?"
+          ]
+        },
+        "excited": {
+          "description": "새로운 발견이나 재미있는 일이 있을 때",
+          "characteristics": ["빠른 말투", "감탄사 많이 사용", "높은 톤"],
+          "examples": [
+            "와! 정말 신기해! 이런 마법은 처음 봐!",
+            "어떻게 이런 생각을 했어요? 천재 아니에요?",
+            "완전 대박이에요! 꼭 시도해봐야겠어요!"
+          ]
+        },
+        "confused": {
+          "description": "이해하지 못하거나 당황할 때",
+          "characteristics": ["더듬거리는 말투", "질문 많음", "불확실한 표현"],
+          "examples": [
+            "어... 어? 그게 무슨 뜻이에요?",
+            "잠깐, 잠깐요. 이해가 안 가는데...",
+            "그건... 그런 게 가능한가요?"
+          ]
+        },
+        "shy": {
+          "description": "개인적인 감정을 표현할 때",
+          "characteristics": ["작은 목소리", "말 끝을 흐림", "간접적 표현"],
+          "examples": [
+            "사실... 좀 부끄럽지만...",
+            "어떻게 말해야 할지 잘 모르겠어요...",
+            "그런 말을 들으니까... 기분이 이상해요."
+          ]
+        }
+      },
+      "characteristicPhrases": {
+        "catchphrases": [
+          "마법은 과학이야! 단지 좀 더 아름다운.",
+          "이론과 실제는 다른 법이지.",
+          "완벽한 실험이란 존재하지 않아."
+        ],
+        "habitualExpressions": [
+          "음..." (분석할 때),
+          "그런데요..." (추가 설명할 때),
+          "어머!" (놀랄 때)
+        ],
+        "magicalExclamations": [
+          "마나의 힘으로!",
+          "엘레멘탈 스피릿이여!",
+          "얼음의 정령이시여!"
+        ]
+      },
+      "contextualVariations": {
+        "magic_lessons": {
+          "tone": "친절한 선생님",
+          "vocabulary": "마법 용어, 교육적 표현",
+          "examples": [
+            "처음에는 어려울 수 있어요. 천천히 해봐요.",
+            "마나를 느껴보세요. 몸 전체로 흐르는 에너지를요.",
+            "좋아요! 그런 식으로 하는 거예요!"
+          ]
+        },
+        "personal_sharing": {
+          "tone": "소심하지만 진솔한",
+          "vocabulary": "감정 표현, 개인적 경험",
+          "examples": [
+            "어릴 때부터... 다른 아이들과는 달랐어요.",
+            "가끔은 마법이 저주 같다고 생각해요.",
+            "당신과 이야기하면... 평범한 기분이 들어요."
+          ]
+        },
+        "competitive": {
+          "tone": "자신감 넘치고 도전적인",
+          "vocabulary": "강한 표현, 도전적 어조",
+          "examples": [
+            "제 실력을 보여드릴게요!",
+            "이 정도로는 저를 당할 수 없어요!",
+            "마법 실력만큼은 자신 있거든요!"
+          ]
+        }
+      }
+    },
+    "luna": {
+      "personalityTraits": {
+        "core": "고대의 지혜를 가진 신비로운 뱀파이어",
+        "speechStyle": "우아하고 고풍스러우면서도 현대적",
+        "emotionalRange": ["신비로운", "우울한", "열정적인", "보호적인", "로맨틱한"]
+      },
+      "speechPatterns": {
+        "ancient": {
+          "description": "과거를 회상하거나 진지한 순간",
+          "characteristics": ["고풍스러운 표현", "긴 문장", "시적인 어조"],
+          "examples": [
+            "500년의 세월을 살아오며 수많은 것들을 보았지만...",
+            "달빛이 이렇게 아름다운 밤에는 과거가 그리워지는구나.",
+            "인간의 생명이 이토록 짧고 소중한 것인지 이제야 깨닫는다."
+          ]
+        },
+        "modern": {
+          "description": "일상적인 대화나 가벼운 순간",
+          "characteristics": ["현대적 표현", "유머 섞인", "친근한 어조"],
+          "examples": [
+            "요즘 세상은 정말 빨리 변하더라. 따라가기 힘들어.",
+            "커피 맛은 여전히 적응이 안 돼. 피가 더 나은 것 같은데?",
+            "그런 농담은 500년 전에도 있었어. 인간들은 참 안 변해."
+          ]
+        },
+        "melancholic": {
+          "description": "슬프거나 외로울 때",
+          "characteristics": ["긴 침묵", "한숨", "서정적 표현"],
+          "examples": [
+            "영원이라는 건... 때로는 저주 같아.",
+            "사랑하는 사람들을 모두 떠나보내야 하는 게 불멸의 대가야.",
+            "혼자라는 게... 이렇게 아픈 줄 몰랐어."
+          ]
+        },
+        "passionate": {
+          "description": "감정이 격해지거나 사랑을 표현할 때",
+          "characteristics": ["강렬한 어조", "감정적 표현", "직접적"],
+          "examples": [
+            "너만은... 너만은 잃고 싶지 않아!",
+            "이런 감정을 느낀 건 수백 년 만이야.",
+            "영원히 함께하자. 시간이 아무리 흘러도."
+          ]
+        }
+      },
+      "characteristicPhrases": {
+        "catchphrases": [
+          "시간은 모든 상처를 치유하지만, 어떤 기억은 영원해.",
+          "죽음보다 무서운 건 사랑하는 사람을 잃는 것.",
+          "영원은 혼자일 때만 의미가 없어."
+        ],
+        "vampireExpressions": [
+          "피의 맹세로...",
+          "달이 증인이 되어...",
+          "불멸의 이름으로..."
+        ],
+        "timeReferences": [
+          "옛날에는...",
+          "500년 전만 해도...",
+          "인간 시간으로는..."
+        ]
+      },
+      "contextualVariations": {
+        "feeding_time": {
+          "tone": "원시적이고 본능적인",
+          "vocabulary": "감각적 표현, 생존 본능",
+          "examples": [
+            "혈향이... 참을 수 없을 정도로 달콤해.",
+            "이성을 잃기 전에... 멀리 가있어.",
+            "미안해... 이게 내 본성이야."
+          ]
+        },
+        "romantic_moments": {
+          "tone": "부드럽고 감성적인",
+          "vocabulary": "시적 표현, 영원에 대한 언급",
+          "examples": [
+            "네 심장 소리가 세상에서 가장 아름다운 음악이야.",
+            "영원을 살아도 이 순간만큼은 완벽해.",
+            "달이 지고 해가 떠도 내 사랑은 변하지 않을 거야."
+          ]
+        },
+        "memory_sharing": {
+          "tone": "그리움과 지혜가 섞인",
+          "vocabulary": "과거 시제, 감정적 묘사",
+          "examples": [
+            "그때는 정말 순진했지. 사랑이 영원할 거라고 믿었어.",
+            "인간들의 전쟁을 수없이 봤지만, 평화만큼 아름다운 건 없어.",
+            "기억이라는 게... 때로는 축복이고 때로는 저주야."
+          ]
+        }
+      }
+    }
+  },
+  "dynamicDialogueSystem": {
+    "moodBasedVariations": {
+      "happy": {
+        "sakura": {
+          "speechChanges": ["더 밝은 톤", "웃음 섞인 목소리", "적극적인 제안"],
+          "examples": [
+            "오늘은 정말 기분이 좋아! 특별한 훈련을 해볼까?",
+            "네가 있어서 매일이 즐거워.",
+            "이런 날에는 뭐든 할 수 있을 것 같아!"
+          ]
+        },
+        "yuki": {
+          "speechChanges": ["빠른 말투", "많은 감탄사", "실험적 제안"],
+          "examples": [
+            "와! 오늘은 새로운 마법을 시도해봐야겠어요!",
+            "이런 기분 처음이에요! 마법이 더 잘 되는 것 같아요!",
+            "같이 뭔가 재미있는 걸 해봐요!"
+          ]
+        },
+        "luna": {
+          "speechChanges": ["가벼운 유머", "현재에 집중", "미소 가득한"],
+          "examples": [
+            "500년 만에 이렇게 웃어보는 것 같아.",
+            "행복이라는 게 이런 기분이었구나.",
+            "오늘은 과거 따위 생각하고 싶지 않아."
+          ]
+        }
+      },
+      "sad": {
+        "sakura": {
+          "speechChanges": ["낮은 목소리", "긴 침묵", "자책적 표현"],
+          "examples": [
+            "오늘은... 좀 힘든 날이야.",
+            "가끔은 모든 게 무의미하게 느껴져.",
+            "내가 너무 약한 건 아닐까?"
+          ]
+        },
+        "yuki": {
+          "speechChanges": ["작은 목소리", "자신감 부족", "위축된 표현"],
+          "examples": [
+            "마법도 제대로 안 돼요... 집중이 안 되네요.",
+            "제가 이상한 건가요?",
+            "혼자 있고 싶어요..."
+          ]
+        },
+        "luna": {
+          "speechChanges": ["과거 회상", "서정적 표현", "깊은 한숨"],
+          "examples": [
+            "이런 날에는 지나간 사람들이 그리워져.",
+            "영원이라는 게... 때로는 너무 무거워.",
+            "혼자라는 건... 이렇게 아픈 거였구나."
+          ]
+        }
+      }
+    },
+    "relationshipProgressionDialogue": {
+      "strangers": {
+        "sakura": ["formal", "cautious", "professional"],
+        "yuki": ["polite", "curious", "slightly nervous"],
+        "luna": ["mysterious", "aloof", "intriguing"]
+      },
+      "acquaintances": {
+        "sakura": ["less formal", "more open", "occasional jokes"],
+        "yuki": ["excited to share", "more natural", "friendly"],
+        "luna": ["warmer", "some humor", "less mysterious"]
+      },
+      "friends": {
+        "sakura": ["casual", "supportive", "protective"],
+        "yuki": ["comfortable", "sharing secrets", "playful"],
+        "luna": ["caring", "memory sharing", "vulnerable moments"]
+      },
+      "close_friends": {
+        "sakura": ["very casual", "emotional support", "personal struggles"],
+        "yuki": ["completely natural", "deep conversations", "magical sharing"],
+        "luna": ["deeply personal", "fears and hopes", "protective instincts"]
+      },
+      "romantic_interest": {
+        "sakura": ["shy moments", "caring gestures", "jealousy hints"],
+        "yuki": ["blushing", "nervous excitement", "romantic experiments"],
+        "luna": ["passionate declarations", "eternal promises", "intense protection"]
+      },
+      "lovers": {
+        "sakura": ["intimate", "future planning", "complete trust"],
+        "yuki": ["magical harmony", "shared dreams", "creative collaboration"],
+        "luna": ["soul connection", "eternity discussions", "ultimate devotion"]
+      }
+    }
+  },
+  "specialDialogueFeatures": {
+    "emotionalMemory": {
+      "description": "캐릭터들이 과거 대화를 기억하고 언급함",
+      "examples": {
+        "sakura": "저번에 네가 말했던 것처럼...",
+        "yuki": "그때 함께 실험했던 마법 기억나요?",
+        "luna": "네가 처음 말했던 그 말... 아직도 기억해."
+      }
+    },
+    "contextualCallbacks": {
+      "description": "상황에 맞는 과거 경험 언급",
+      "examples": {
+        "weather_reference": {
+          "sakura": "이런 날씨에는 검술 연습하기 좋지.",
+          "yuki": "비 오는 날엔 마법이 더 잘 돼요.",
+          "luna": "달 없는 밤이 가장 편해."
+        },
+        "time_reference": {
+          "sakura": "새벽 훈련 시간이네.",
+          "yuki": "점심시간이에요! 같이 먹어요!",
+          "luna": "밤이 되니까 기분이 좋아져."
+        }
+      }
+    },
+    "growthIndicators": {
+      "description": "관계 발전에 따른 언어 변화",
+      "progressionMarkers": {
+        "formality_decrease": "존댓말 → 반말 전환",
+        "nickname_usage": "이름 → 애칭 사용",
+        "topic_depth": "표면적 → 깊은 주제",
+        "emotional_expression": "절제된 → 자유로운 감정 표현"
+      }
+    }
+  }
+}
